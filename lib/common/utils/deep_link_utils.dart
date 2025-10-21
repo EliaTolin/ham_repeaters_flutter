@@ -1,4 +1,4 @@
-import 'package:app_template/config/app_configs.dart';
+import 'package:quiz_radioamatori/config/app_configs.dart';
 
 class DeepLinkUtils {
   static String buildDeepLink(String path) {

@@ -1,7 +1,7 @@
-import 'package:app_template/common/extension/l10n_extension.dart';
-import 'package:app_template/common/widgets/snackbars/show_error_snackbar.dart';
-import 'package:app_template/config/app_configs.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/extension/l10n_extension.dart';
+import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
+import 'package:quiz_radioamatori/config/app_configs.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 Future<void> showTelegramInviteDialog(BuildContext context) async {
@@ -9,9 +9,7 @@ Future<void> showTelegramInviteDialog(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -21,10 +19,7 @@ Future<void> showTelegramInviteDialog(BuildContext context) async {
               const SizedBox(height: 10),
               Text(
                 context.localization.joinCommunityTitle,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
@@ -66,10 +61,7 @@ Future<void> showTelegramInviteDialog(BuildContext context) async {
                         await launchUrlString(telegramUrl);
                       } else {
                         if (context.mounted) {
-                          showErrorSnackbar(
-                            context,
-                            context.localization.errorOpenTelegram,
-                          );
+                          showErrorSnackbar(context, context.localization.errorOpenTelegram);
                         }
                       }
                     },

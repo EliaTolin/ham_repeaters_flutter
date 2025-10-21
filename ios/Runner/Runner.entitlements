@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:app_template.auroradigital.it</string>
+		<string>applinks:quiz_radioamatori.auroradigital.it</string>
 	</array>
 </dict>
 </plist>

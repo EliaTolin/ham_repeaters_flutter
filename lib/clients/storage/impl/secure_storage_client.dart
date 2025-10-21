@@ -1,5 +1,5 @@
-import 'package:app_template/clients/storage/storage_client.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:quiz_radioamatori/clients/storage/storage_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'secure_storage_client.g.dart';
@@ -37,9 +37,7 @@ FlutterSecureStorage _flutterSecureStorage(Ref ref) {
 }
 
 @riverpod
-Future<StorageClient> secureStorageClient(
-  Ref ref,
-) async {
+Future<StorageClient> secureStorageClient(Ref ref) async {
   final storage = ref.watch(_flutterSecureStorageProvider);
   return SecureStorageClient(storage: storage);
 }

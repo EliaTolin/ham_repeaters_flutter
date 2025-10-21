@@ -1,5 +1,5 @@
-import 'package:app_template/src/features/profile/domain/profile.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:quiz_radioamatori/src/features/profile/domain/profile.dart';
 
 part 'user_state.freezed.dart';
 

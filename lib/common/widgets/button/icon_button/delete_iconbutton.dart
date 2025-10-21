@@ -1,5 +1,5 @@
-import 'package:app_template/common/widgets/button/icon_button/generic_iconbutton.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/widgets/button/icon_button/generic_iconbutton.dart';
 
 class DeleteIconButton extends StatelessWidget {
   const DeleteIconButton({required this.onPressed, super.key});
@@ -7,10 +7,6 @@ class DeleteIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GenericIconButton(
-      onPressed: onPressed,
-      icon: Icons.delete,
-      color: Colors.red,
-    );
+    return GenericIconButton(onPressed: onPressed, icon: Icons.delete, color: Colors.red);
   }
 }

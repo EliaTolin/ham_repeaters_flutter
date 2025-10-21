@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:app_template/clients/image_picker/image_picker.dart';
-import 'package:app_template/common/extension/hard_coded_string.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:quiz_radioamatori/clients/image_picker/image_picker.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 
 class UploadImageButton extends ConsumerWidget {
   const UploadImageButton({required this.uploadImage, super.key});

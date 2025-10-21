@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.auroradigital.app_template",
+      "package_name": "it.auroradigital.quizradiamatori",
       "sha256_cert_fingerprints": [
         "8F:E1:26:6A:92:D0:9A:5F:0A:FC:1E:2C:16:BE:C8:47:7D:69:E9:EF:C7:FC:91:E1:BC:67:A4:C0:56:06:DA:7F"
       ]

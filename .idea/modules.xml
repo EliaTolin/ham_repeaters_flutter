@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app_template.iml" filepath="$PROJECT_DIR$/app_template.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/app_template_android.iml" filepath="$PROJECT_DIR$/android/app_template_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quiz_radioamatori.iml" filepath="$PROJECT_DIR$/quiz_radioamatori.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/quiz_radioamatori_android.iml" filepath="$PROJECT_DIR$/android/quiz_radioamatori_android.iml" />
     </modules>
   </component>
 </project>

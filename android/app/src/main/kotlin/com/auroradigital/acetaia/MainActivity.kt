@@ -1,4 +1,4 @@
-package com.auroradigital.app_template
+package it.auroradigital.quizradiamatori
 
 import io.flutter.embedding.android.FlutterActivity
 

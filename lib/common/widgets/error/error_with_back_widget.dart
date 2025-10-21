@@ -1,11 +1,9 @@
-import 'package:app_template/common/extension/l10n_extension.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/extension/l10n_extension.dart';
 
 class ErrorWidgetWithBack extends StatelessWidget {
-  const ErrorWidgetWithBack({
-    super.key,
-  });
+  const ErrorWidgetWithBack({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,26 +13,20 @@ class ErrorWidgetWithBack extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.error_outline,
-              color: Theme.of(context).colorScheme.error,
-              size: 64,
-            ),
+            Icon(Icons.error_outline, color: Theme.of(context).colorScheme.error, size: 64),
             const SizedBox(height: 16),
             Text(
               context.localization.error,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.error,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: Theme.of(context).colorScheme.error,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               context.localization.error_message_retry,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
             ),
             const SizedBox(height: 24),
             ElevatedButton(
@@ -44,9 +36,7 @@ class ErrorWidgetWithBack extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               ),
               child: Text(

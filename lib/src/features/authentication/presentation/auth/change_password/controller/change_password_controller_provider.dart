@@ -1,4 +1,4 @@
-import 'package:app_template/src/features/authentication/provider/change_password_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/change_password_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'change_password_controller_provider.g.dart';

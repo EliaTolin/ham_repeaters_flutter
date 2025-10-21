@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:app_template/config/app_configs.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:quiz_radioamatori/config/app_configs.dart';
 
 class InterstitialAdService {
   InterstitialAdService();

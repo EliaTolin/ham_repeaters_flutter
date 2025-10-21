@@ -1,16 +1,14 @@
-import 'package:app_template/common/extension/hard_coded_string.dart';
-import 'package:app_template/common/extension/l10n_extension.dart';
-import 'package:app_template/common/widgets/ads/controller/auto_banner_controller.dart';
-import 'package:app_template/common/widgets/button/icon_button/share_iconbutton.dart';
-import 'package:app_template/resources/resources.dart';
-import 'package:app_template/router/app_router.dart';
-import 'package:app_template/src/features/splashscreen/provider/set_onboarding_seen_provider.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
+import 'package:quiz_radioamatori/common/extension/l10n_extension.dart';
+import 'package:quiz_radioamatori/common/widgets/ads/controller/auto_banner_controller.dart';
+import 'package:quiz_radioamatori/common/widgets/button/icon_button/share_iconbutton.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen_provider.dart';
 
 @RoutePage()
 class OnboardingPage extends ConsumerWidget {
@@ -20,21 +18,21 @@ class OnboardingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final params = ConsentRequestParameters();
-      ConsentInformation.instance.requestConsentInfoUpdate(
-        params,
-        () async {
-          if (await ConsentInformation.instance.isConsentFormAvailable()) {
-            await ConsentForm.loadAndShowConsentFormIfRequired((loadAndShowError) {
-              if (loadAndShowError != null) {
-              } else {
-                ref.invalidate(autoBannerControllerProvider);
-              }
-            });
-          }
-        },
-        (FormError error) {},
-      );
+      ConsentInformation.instance.requestConsentInfoUpdate(params, () async {
+        if (await ConsentInformation.instance.isConsentFormAvailable()) {
+          await ConsentForm.loadAndShowConsentFormIfRequired((loadAndShowError) {
+            if (loadAndShowError != null) {
+              // opzionale: log error
+            } else {
+              ref.invalidate(autoBannerControllerProvider);
+            }
+          });
+        }
+      }, (FormError error) {
+        // opzionale: log error
+      });
     });
+
     return Scaffold(
       body: IntroductionScreen(
         autoScrollDuration: 9999999,
@@ -61,13 +59,13 @@ class OnboardingPage extends ConsumerWidget {
           activeColor: Theme.of(context).colorScheme.primary,
           color: Colors.black26,
           spacing: const EdgeInsets.symmetric(horizontal: 3),
-          activeShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
+          activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
         ),
       ),
     );
   }
+
+  // --- UI helpers -----------------------------------------------------------
 
   Widget getTitle(BuildContext context, String title) {
     return Padding(
@@ -88,70 +86,101 @@ class OnboardingPage extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Text(
         body,
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(),
+        style: Theme.of(context).textTheme.headlineSmall,
         textAlign: TextAlign.center,
       ),
     );
   }
 
+  // Icon fallback (nessun asset richiesto)
+  Widget buildIcon(IconData icon) {
+    return Icon(icon, size: 150);
+  }
+
+  // Se preferisci usare i tuoi asset, tieni questo helper e scommenta dove indicato
+  Widget buildImage(String path) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: SizedBox(width: 350, child: Image.asset(path)),
+    );
+  }
+
+  // --- Pagine onboarding -----------------------------------------------------
+
   List<PageViewModel> getListPages(BuildContext context, WidgetRef ref) {
     return [
       PageViewModel(
-        image: SizedBox(
-          width: MediaQuery.sizeOf(context).width * 0.5,
-          child: SvgPicture.asset(SvgImageAssets.barrel),
-        ),
-        titleWidget: getTitle(context, 'Benvenuto in App_template'.hardcoded),
-        bodyWidget: getBody(context, 'Tradizione, Innovazione, Aceto Balsamico.'.hardcoded),
-      ),
-      PageViewModel(
-        titleWidget: getTitle(context, 'Gestisci le tue Acetaie'.hardcoded),
+        // image: buildImage(ImageAssets.onboarding_welcome), // asset (opzionale)
+        image: buildIcon(Icons.radio), // icona fallback
+        titleWidget: getTitle(context, 'Benvenuto in Quiz Radioamatori'.hardcoded),
         bodyWidget: getBody(
           context,
-          'Con App_template potrai inserire le tue Acetaie e tenere traccia delle misurazioni.'
+          'Allena la teoria, memorizza le sigle e prepara la patente da radioamatore con quiz aggiornati.'
               .hardcoded,
         ),
-        image: buildImage(ImageAssets.app_template),
       ),
       PageViewModel(
-        titleWidget: getTitle(context, 'Gestisci Batterie e Botti'.hardcoded),
+        // image: buildImage(ImageAssets.onboarding_topics),
+        image: buildIcon(Icons.category),
+        titleWidget: getTitle(context, 'Argomenti & Banche Dati'.hardcoded),
         bodyWidget: getBody(
           context,
-          'Organizza e gestisci le tue batterie e botti di Aceto Balsamico in modo semplice.'
+          'Abbreviazioni, Alfabeto, Bande di frequenza, Normativa, Circuiti, Componenti e molto altro.'
               .hardcoded,
         ),
-        image: buildImage(ImageAssets.battery),
       ),
       PageViewModel(
-        titleWidget: getTitle(context, 'Misura e Monitora'.hardcoded),
+        // image: buildImage(ImageAssets.onboarding_modes),
+        image: buildIcon(Icons.playlist_add_check),
+        titleWidget: getTitle(context, 'Modalità Esame'.hardcoded),
         bodyWidget: getBody(
           context,
-          'Misura e tieni traccia dei parametri delle tue batterie e botti di Aceto Balsamico.'
-              .hardcoded,
+          'Scegli tra PARZIALE (per topic specifici) o COMPLETO (simulazione d’esame).'.hardcoded,
         ),
-        image: buildImage(ImageAssets.misurations),
       ),
       PageViewModel(
-        titleWidget: getTitle(context, 'Condividi la tua App_template'.hardcoded),
+        // image: buildImage(ImageAssets.onboarding_practice),
+        image: buildIcon(Icons.psychology),
+        titleWidget: getTitle(context, 'Allenamento intelligente'.hardcoded),
+        bodyWidget: getBody(
+          context,
+          'Ripetizioni mirate sugli errori, domande casuali, timer e sessioni salvate per riprendere da dove hai lasciato.'
+              .hardcoded,
+        ),
+      ),
+      PageViewModel(
+        // image: buildImage(ImageAssets.onboarding_stats),
+        image: buildIcon(Icons.insights),
+        titleWidget: getTitle(context, 'Statistiche & Obiettivi'.hardcoded),
+        bodyWidget: getBody(
+          context,
+          'Monitora i progressi per argomento, scopri i punti deboli e punta al 100% con sessioni dedicate.'
+              .hardcoded,
+        ),
+      ),
+      PageViewModel(
+        // image: buildImage(ImageAssets.onboarding_share),
+        image: buildIcon(Icons.emoji_events),
+        titleWidget: getTitle(context, 'Sfide & Condivisione'.hardcoded),
         bodyWidget: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             getBody(
               context,
-              'Condividi la tua app_template con altri utenti per una gestione collaborativa.'
+              'Condividi i risultati, sfida gli amici e confronta i punteggi tra radioamatori.'
                   .hardcoded,
             ),
+            const SizedBox(height: 8),
             ShareIconButton(onPressed: () {}),
           ],
         ),
-        image: buildImage(ImageAssets.share),
       ),
       PageViewModel(
-        titleWidget: getTitle(context, 'Inizia'),
+        titleWidget: getTitle(context, 'Iniziamo!'.hardcoded),
         image: Icon(Icons.check_circle, size: 150, color: Theme.of(context).colorScheme.primary),
         bodyWidget: getBody(
           context,
-          'Per iniziare a gestire la tua App_template, registrati ora!'.hardcoded,
+          'Accedi o registrati per iniziare subito il tuo percorso verso la patente.'.hardcoded,
         ),
         footer: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -162,12 +191,10 @@ class OnboardingPage extends ConsumerWidget {
                 width: MediaQuery.sizeOf(context).width * 0.5,
                 child: FilledButton(
                   style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(
-                      Colors.green,
-                    ),
+                    backgroundColor: WidgetStateProperty.all(Colors.green),
                   ),
                   onPressed: () => onDone(context, ref),
-                  child: Text('Iniziamo!'.hardcoded),
+                  child: Text('Vai alla app'.hardcoded),
                 ),
               ),
             ),
@@ -177,24 +204,16 @@ class OnboardingPage extends ConsumerWidget {
     ];
   }
 
-  Widget buildImage(String path) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: SizedBox(
-        width: 350,
-        child: Image.asset(path),
-      ),
-    );
-  }
+  // --- Done handler ----------------------------------------------------------
 
   Future<void> onDone(BuildContext context, WidgetRef ref) async {
-    // Navigazione alla pagina principale o HomePage
     await ref.read(setOnboardingSeenProvider.future);
     if (context.mounted) {
       await context.router.replace(const AuthRoute());
     }
   }
 
+  // (Invariato) dialog opzionale per tracking
   Future<void> showCustomTrackingDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,

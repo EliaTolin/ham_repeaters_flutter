@@ -4,22 +4,22 @@ import 'package:flutter/foundation.dart';
 
 class AppConfigs {
   static String getSite() {
-    return 'https://app_template.auroradigital.it/';
+    return 'https://quiz_radioamatori.auroradigital.it/';
   }
 
   static String getSupabaseKey() {
     if (kDebugMode) {
-      return 'supabaseKeyDev';
+      return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpqb21yeW92bWVqY2J2aXBqZ3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2NjU1MDYsImV4cCI6MjA3NjI0MTUwNn0.17DlxMoJDv0n6Yg9i7GCUgfBpHMPuVwwz7CZXCI7hmM';
     } else {
-      return 'supabaseKeyProd';
+      return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpqb21yeW92bWVqY2J2aXBqZ3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2NjU1MDYsImV4cCI6MjA3NjI0MTUwNn0.17DlxMoJDv0n6Yg9i7GCUgfBpHMPuVwwz7CZXCI7hmM';
     }
   }
 
   static String getSupabaseUrl() {
     if (kDebugMode) {
-      return 'supabaseUrlDev';
+      return 'https://zjomryovmejcbvipjgui.supabase.co';
     } else {
-      return 'supabaseUrlProd';
+      return 'https://zjomryovmejcbvipjgui.supabase.co';
     }
   }
 
@@ -49,6 +49,6 @@ class AppConfigs {
   }
 
   static String getTelegramLink() {
-    return 'https://t.me/app_template';
+    return 'https://t.me/quiz_radioamatori';
   }
 }

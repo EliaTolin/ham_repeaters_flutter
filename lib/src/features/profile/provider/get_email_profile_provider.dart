@@ -1,4 +1,4 @@
-import 'package:app_template/clients/supabase/supabase_client.dart';
+import 'package:quiz_radioamatori/clients/supabase/supabase_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'get_email_profile_provider.g.dart';

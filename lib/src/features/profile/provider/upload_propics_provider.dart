@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:app_template/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:app_template/src/features/profile/data/repository/profile_repository.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/data/repository/profile_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'upload_propics_provider.g.dart';

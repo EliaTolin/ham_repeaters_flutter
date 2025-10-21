@@ -1,13 +1,9 @@
-import 'package:app_template/common/extension/hard_coded_string.dart';
-import 'package:app_template/common/widgets/form/base_field.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
+import 'package:quiz_radioamatori/common/widgets/form/base_field.dart';
 
 class PasswordField extends StatelessWidget {
-  const PasswordField({
-    required this.controller,
-    required this.label,
-    super.key,
-  });
+  const PasswordField({required this.controller, required this.label, super.key});
 
   final TextEditingController controller;
   final String label;

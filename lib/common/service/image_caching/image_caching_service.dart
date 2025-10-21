@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:app_template/clients/storage/impl/shared_pref_storage_client.dart';
-import 'package:app_template/clients/storage/storage_client.dart';
-import 'package:app_template/common/entity/image_entity.dart';
-import 'package:app_template/common/service/image_caching/model/image_cached.dart';
-import 'package:app_template/config/app_configs.dart';
+import 'package:quiz_radioamatori/clients/storage/impl/shared_pref_storage_client.dart';
+import 'package:quiz_radioamatori/clients/storage/storage_client.dart';
+import 'package:quiz_radioamatori/common/entity/image_entity.dart';
+import 'package:quiz_radioamatori/common/service/image_caching/model/image_cached.dart';
+import 'package:quiz_radioamatori/config/app_configs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'image_caching_service.g.dart';
@@ -20,12 +20,8 @@ class ImageCachingService {
     DateTime? expiring,
   }) async {
     final imageCached = ImageCached(
-      expiresAt: expiring ??
-          DateTime.now().add(
-            Duration(
-              days: AppConfigs.defaultExpiresInSecondsImage(),
-            ),
-          ),
+      expiresAt:
+          expiring ?? DateTime.now().add(Duration(days: AppConfigs.defaultExpiresInSecondsImage())),
       url: url,
       path: path,
     );
@@ -60,9 +56,7 @@ class ImageCachingService {
 }
 
 @riverpod
-Future<ImageCachingService> imageCachingService(
-  Ref ref,
-) async {
+Future<ImageCachingService> imageCachingService(Ref ref) async {
   final storageClient = await ref.watch(sharedPrefStorageClientProvider.future);
   return ImageCachingService(storageClient: storageClient);
 }

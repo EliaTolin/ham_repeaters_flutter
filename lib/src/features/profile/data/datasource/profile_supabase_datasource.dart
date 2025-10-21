@@ -1,10 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:app_template/clients/supabase/supabase_client.dart';
-import 'package:app_template/constant/supabase/supabase_table_name.dart';
-import 'package:app_template/src/features/profile/data/datasource/profile_datasource.dart';
-import 'package:app_template/src/features/profile/data/model/profile_model.dart';
+import 'package:quiz_radioamatori/clients/supabase/supabase_client.dart';
+import 'package:quiz_radioamatori/constant/supabase/supabase_table_name.dart';
+import 'package:quiz_radioamatori/src/features/profile/data/datasource/profile_datasource.dart';
+import 'package:quiz_radioamatori/src/features/profile/data/model/profile_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -17,8 +17,11 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
   @override
   Future<ProfileModel> getProfile(String userId) async {
     try {
-      final data =
-          await _client.from(SupabaseTable.profiles.name).select().eq('id', userId).single();
+      final data = await _client
+          .from(SupabaseTable.profiles.name)
+          .select()
+          .eq('id', userId)
+          .single();
       return ProfileModel.fromJson(data);
     } catch (e) {
       log('Error to fetch profile: $e');
@@ -43,27 +46,19 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
       if (profile.propic != null) {
         await _client.storage.from('propics').remove([profile.propic!]);
       }
-      await _client.storage.from('propics').upload(
-            fileName,
-            image,
-            fileOptions: const FileOptions(
-              upsert: true,
-            ),
-          );
+      await _client.storage
+          .from('propics')
+          .upload(fileName, image, fileOptions: const FileOptions(upsert: true));
       await _client
           .from(SupabaseTable.profiles.name)
-          .update(
-            {'propic': fileName},
-          )
+          .update({'propic': fileName})
           .eq('id', userId)
-          .onError(
-            (error, stackTrace) {
-              log('$error', stackTrace: stackTrace);
-              if (error is Exception) {
-                throw error;
-              }
-            },
-          );
+          .onError((error, stackTrace) {
+            log('$error', stackTrace: stackTrace);
+            if (error is Exception) {
+              throw error;
+            }
+          });
     } catch (e) {
       log('$e');
       rethrow;
@@ -73,10 +68,7 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
   @override
   Future<String> getImagePropicUrl(String path) {
     try {
-      return _client.storage.from('propics').createSignedUrl(
-            path,
-            60,
-          );
+      return _client.storage.from('propics').createSignedUrl(path, 60);
     } catch (e) {
       log('Error to get propic: $e');
       rethrow;
@@ -89,9 +81,7 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
       final profile = await getProfile(userId);
       if (profile.propic != null) {
         await _client.storage.from('propics').remove([profile.propic!]);
-        await _client.from(SupabaseTable.profiles.name).update(
-          {'propic': null},
-        ).eq('id', userId);
+        await _client.from(SupabaseTable.profiles.name).update({'propic': null}).eq('id', userId);
       }
     } catch (e) {
       rethrow;

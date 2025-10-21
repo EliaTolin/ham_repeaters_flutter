@@ -1,5 +1,5 @@
-import 'package:app_template/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/l10n/app_localizations.dart';
 
 extension BuildContextEntension<T> on BuildContext {
   AppLocalizations get localization =>

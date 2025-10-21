@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:app_template/src/features/authentication/provider/delete_account_provider.dart';
-import 'package:app_template/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:app_template/src/features/profile/data/repository/profile_repository.dart';
-import 'package:app_template/src/features/profile/domain/profile.dart';
-import 'package:app_template/src/features/profile/domain/state/user_state.dart';
-import 'package:app_template/src/features/profile/provider/delete_image_profile_provider.dart';
-import 'package:app_template/src/features/profile/provider/get_email_profile_provider.dart';
-import 'package:app_template/src/features/profile/provider/get_image_profile_provider.dart';
-import 'package:app_template/src/features/profile/provider/get_profile_provider.dart';
-import 'package:app_template/src/features/profile/provider/update_profile_provider.dart';
-import 'package:app_template/src/features/profile/provider/upload_propics_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/delete_account_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/data/repository/profile_repository.dart';
+import 'package:quiz_radioamatori/src/features/profile/domain/profile.dart';
+import 'package:quiz_radioamatori/src/features/profile/domain/state/user_state.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/delete_image_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/get_email_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/get_image_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/get_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/update_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/upload_propics_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_settings_controller.g.dart';

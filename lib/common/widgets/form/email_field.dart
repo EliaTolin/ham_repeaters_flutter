@@ -1,12 +1,9 @@
-import 'package:app_template/common/extension/hard_coded_string.dart';
-import 'package:app_template/common/widgets/form/base_field.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
+import 'package:quiz_radioamatori/common/widgets/form/base_field.dart';
 
 class EmailField extends StatelessWidget {
-  const EmailField({
-    required this.controller,
-    super.key,
-  });
+  const EmailField({required this.controller, super.key});
   final TextEditingController controller;
 
   @override

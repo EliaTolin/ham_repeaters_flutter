@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:app_template/clients/mobile_ads/mobile_ads_client.dart';
-import 'package:app_template/router/app_router.dart';
-import 'package:app_template/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:app_template/src/features/splashscreen/provider/get_has_seen_onboarding_provider.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:quiz_radioamatori/clients/mobile_ads/mobile_ads_client.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/provider/get_has_seen_onboarding_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'splash_controller.g.dart';

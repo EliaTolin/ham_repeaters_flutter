@@ -1,13 +1,13 @@
-import 'package:app_template/clients/package_info/package_info.dart';
-import 'package:app_template/common/extension/hard_coded_string.dart';
-import 'package:app_template/common/widgets/profile_avatar.dart';
-import 'package:app_template/common/widgets/snackbars/show_error_snackbar.dart';
-import 'package:app_template/router/app_router.dart';
-import 'package:app_template/src/features/profile/presentation/profile/controller/profile_controller.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_radioamatori/clients/package_info/package_info.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
+import 'package:quiz_radioamatori/common/widgets/profile_avatar.dart';
+import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/profile/presentation/profile/controller/profile_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
@@ -17,26 +17,23 @@ class ProfileScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profilo'.hardcoded),
-      ),
-      body: ref.watch(profileControllerProvider).when(
+      appBar: AppBar(title: Text('Profilo'.hardcoded)),
+      body: ref
+          .watch(profileControllerProvider)
+          .when(
             data: (state) {
               final profile = state.profile;
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    ProfileAvatar(
-                      imageProfileUrl: state.imageProfileUrl,
-                      size: 200,
-                    ),
+                    ProfileAvatar(imageProfileUrl: state.imageProfileUrl, size: 200),
                     const Gap(20),
                     Text(
                       '${profile.name} ${profile.surname}',
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     const Gap(10),
@@ -50,9 +47,7 @@ class ProfileScreen extends HookConsumerWidget {
                     // Impostazioni
                     Card(
                       elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       child: ListTile(
                         leading: const Icon(Icons.settings, color: Colors.blueAccent),
                         title: Text(
@@ -70,9 +65,7 @@ class ProfileScreen extends HookConsumerWidget {
                     // Logout
                     Card(
                       elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       child: ListTile(
                         leading: const Icon(Icons.logout, color: Colors.redAccent),
                         title: Text(
@@ -92,9 +85,7 @@ class ProfileScreen extends HookConsumerWidget {
                     // Contattaci
                     Card(
                       elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       child: ListTile(
                         leading: const Icon(Icons.email, color: Colors.greenAccent),
                         title: Text(
@@ -106,9 +97,7 @@ class ProfileScreen extends HookConsumerWidget {
                           final emailLaunchUri = Uri(
                             scheme: 'mailto',
                             path: 'info@auroradigital.it',
-                            queryParameters: {
-                              'subject': 'App_template-Supporto',
-                            },
+                            queryParameters: {'subject': 'QuizRadioamatori-Supporto'},
                           );
                           if (await canLaunchUrl(emailLaunchUri)) {
                             await launchUrl(emailLaunchUri);
@@ -127,12 +116,14 @@ class ProfileScreen extends HookConsumerWidget {
                     const Gap(30),
 
                     // Versione dell'app
-                    ref.watch(packageInfoProvider).when(
+                    ref
+                        .watch(packageInfoProvider)
+                        .when(
                           data: (packageInfo) => Text(
                             'Versione: ${packageInfo.version}+${packageInfo.buildNumber}',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Colors.grey[600],
-                                ),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
                           ),
                           loading: () => const SizedBox.shrink(),
                           error: (error, _) => Text('Errore: $error'.hardcoded),
@@ -142,9 +133,7 @@ class ProfileScreen extends HookConsumerWidget {
               );
             },
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => Center(
-              child: Text('Errore: $error'.hardcoded),
-            ),
+            error: (error, _) => Center(child: Text('Errore: $error'.hardcoded)),
           ),
     );
   }

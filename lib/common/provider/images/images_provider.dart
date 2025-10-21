@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app_template/clients/supabase/supabase_client.dart';
+import 'package:quiz_radioamatori/clients/supabase/supabase_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -15,12 +15,8 @@ Future<String> uploadImage(
   bool upsert = true,
 }) async {
   final supabase = ref.read(supabaseClientProvider);
-  final fullPath = await supabase.storage.from(bucketName).upload(
-        filePath,
-        image,
-        fileOptions: FileOptions(
-          upsert: upsert,
-        ),
-      );
+  final fullPath = await supabase.storage
+      .from(bucketName)
+      .upload(filePath, image, fileOptions: FileOptions(upsert: upsert));
   return fullPath;
 }

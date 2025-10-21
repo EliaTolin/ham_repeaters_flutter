@@ -1,15 +1,15 @@
 import 'dart:developer';
 
-import 'package:app_template/src/features/authentication/presentation/auth/auth_screen.dart';
-import 'package:app_template/src/features/authentication/presentation/auth/change_password/change_password_screen.dart';
-import 'package:app_template/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:app_template/src/features/home/presentation/home_page.dart';
-import 'package:app_template/src/features/onboarding/presentation/onboarding_page.dart';
-import 'package:app_template/src/features/profile/presentation/profile/profile_screen.dart';
-import 'package:app_template/src/features/profile/presentation/user_settings/user_settings_screen.dart';
-import 'package:app_template/src/features/simple/presentation/simple_page.dart';
-import 'package:app_template/src/features/splashscreen/presentation/splashscreen.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/auth_screen.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/change_password/change_password_screen.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/home/presentation/home_page.dart';
+import 'package:quiz_radioamatori/src/features/onboarding/presentation/onboarding_page.dart';
+import 'package:quiz_radioamatori/src/features/profile/presentation/profile/profile_screen.dart';
+import 'package:quiz_radioamatori/src/features/profile/presentation/user_settings/user_settings_screen.dart';
+import 'package:quiz_radioamatori/src/features/simple/presentation/simple_page.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/presentation/splashscreen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -22,53 +22,31 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
 
   @override
   List<AutoRoute> get routes => [
+    AutoRoute(path: '/splash', page: SplashRoute.page, initial: true),
+    AutoRoute(page: OnboardingRoute.page),
+    AutoRoute(page: AuthRoute.page),
+    AutoRoute(path: '/change-password', page: ChangePasswordRoute.page),
+    AutoRoute(
+      page: HomeRoute.page,
+      guards: [this],
+      children: [
         AutoRoute(
-          path: '/splash',
-          page: SplashRoute.page,
-          initial: true,
+          page: const EmptyShellRoute('MainRouter'),
+          children: [AutoRoute(page: SimpleRoute.page)],
         ),
         AutoRoute(
-          page: OnboardingRoute.page,
-        ),
-        AutoRoute(
-          page: AuthRoute.page,
-        ),
-        AutoRoute(
-          path: '/change-password',
-          page: ChangePasswordRoute.page,
-        ),
-        AutoRoute(
-          page: HomeRoute.page,
-          guards: [this],
+          page: const EmptyShellRoute('ProfileRouter'),
           children: [
-            AutoRoute(
-              page: const EmptyShellRoute('MainRouter'),
-              children: [
-                AutoRoute(
-                  page: SimpleRoute.page,
-                ),
-              ],
-            ),
-            AutoRoute(
-              page: const EmptyShellRoute('ProfileRouter'),
-              children: [
-                AutoRoute(
-                  page: ProfileRoute.page,
-                ),
-                AutoRoute(
-                  page: UserSettingsRoute.page,
-                ),
-              ],
-            ),
+            AutoRoute(page: ProfileRoute.page),
+            AutoRoute(page: UserSettingsRoute.page),
           ],
         ),
-      ];
+      ],
+    ),
+  ];
 
   @override
-  Future<void> onNavigation(
-    NavigationResolver resolver,
-    StackRouter router,
-  ) async {
+  Future<void> onNavigation(NavigationResolver resolver, StackRouter router) async {
     // Check if the route is splash or login page
     final isRequiredAuth = switch (resolver.route.name) {
       SplashRoute.name => false,

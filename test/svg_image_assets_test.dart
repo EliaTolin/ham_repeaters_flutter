@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:app_template/resources/resources.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:quiz_radioamatori/resources/resources.dart';
 
 void main() {
   test('svg_image_assets assets test', () {

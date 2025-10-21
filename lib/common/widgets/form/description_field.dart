@@ -1,13 +1,9 @@
-import 'package:app_template/common/extension/hard_coded_string.dart';
-import 'package:app_template/common/widgets/form/base_field.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
+import 'package:quiz_radioamatori/common/widgets/form/base_field.dart';
 
 class DescriptionField extends StatelessWidget {
-  const DescriptionField({
-    required this.controller,
-    required this.isRequired,
-    super.key,
-  });
+  const DescriptionField({required this.controller, required this.isRequired, super.key});
   final TextEditingController controller;
   final bool isRequired;
 

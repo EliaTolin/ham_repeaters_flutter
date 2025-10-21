@@ -1,5 +1,5 @@
-import 'package:app_template/common/extension/hard_coded_string.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 
 class EditButton extends StatelessWidget {
   const EditButton({required this.onEdit, this.text, super.key});
@@ -9,20 +9,12 @@ class EditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      icon: const Icon(
-        Icons.edit,
-        color: Colors.orange,
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.orange.shade50,
-      ),
+      icon: const Icon(Icons.edit, color: Colors.orange),
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.orange.shade50),
       onPressed: onEdit,
       label: Text(
         text ?? 'Modifica'.hardcoded,
-        style: const TextStyle(
-          color: Colors.orange,
-          fontWeight: FontWeight.bold,
-        ),
+        style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
       ),
     );
   }

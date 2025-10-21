@@ -1,5 +1,5 @@
-import 'package:app_template/common/extension/hard_coded_string.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 
 Future<bool> showAreYouSureToDeleteDialog(BuildContext context) async {
   return await showDialog(

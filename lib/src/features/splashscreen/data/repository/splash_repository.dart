@@ -1,5 +1,5 @@
-import 'package:app_template/src/features/splashscreen/data/datasource/splash_datasource.dart';
-import 'package:app_template/src/features/splashscreen/data/datasource/splash_local_datasource.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/data/datasource/splash_datasource.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/data/datasource/splash_local_datasource.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'splash_repository.g.dart';

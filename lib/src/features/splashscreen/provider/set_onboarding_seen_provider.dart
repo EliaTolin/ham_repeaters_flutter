@@ -1,4 +1,4 @@
-import 'package:app_template/src/features/splashscreen/data/repository/splash_repository.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/data/repository/splash_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'set_onboarding_seen_provider.g.dart';

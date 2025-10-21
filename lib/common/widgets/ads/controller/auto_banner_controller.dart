@@ -1,6 +1,6 @@
-import 'package:app_template/config/app_configs.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:quiz_radioamatori/config/app_configs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auto_banner_controller.g.dart';

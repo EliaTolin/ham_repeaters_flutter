@@ -1,4 +1,4 @@
-import 'package:app_template/src/features/authentication/data/repository/auth_repository.dart';
+import 'package:quiz_radioamatori/src/features/authentication/data/repository/auth_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'get_user_id_from_email_provider.g.dart';

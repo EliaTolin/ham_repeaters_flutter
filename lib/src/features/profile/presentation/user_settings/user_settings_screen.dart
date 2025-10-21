@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:app_template/common/extension/hard_coded_string.dart';
-import 'package:app_template/common/widgets/button/save_button.dart';
-import 'package:app_template/common/widgets/profile_avatar.dart';
-import 'package:app_template/router/app_router.dart';
-import 'package:app_template/src/features/profile/presentation/user_settings/controller/user_settings_controller.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
+import 'package:quiz_radioamatori/common/widgets/button/save_button.dart';
+import 'package:quiz_radioamatori/common/widgets/profile_avatar.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/profile/presentation/user_settings/controller/user_settings_controller.dart';
 
 @RoutePage()
 class UserSettingsScreen extends HookConsumerWidget {
@@ -24,10 +24,10 @@ class UserSettingsScreen extends HookConsumerWidget {
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Impostazioni'.hardcoded),
-      ),
-      body: ref.watch(userSettingsControllerProvider).when(
+      appBar: AppBar(title: Text('Impostazioni'.hardcoded)),
+      body: ref
+          .watch(userSettingsControllerProvider)
+          .when(
             data: (state) {
               final profile = state.profile;
               nameController.text = profile.name;
@@ -41,10 +41,7 @@ class UserSettingsScreen extends HookConsumerWidget {
                     Stack(
                       alignment: Alignment.bottomRight,
                       children: [
-                        ProfileAvatar(
-                          imageProfileUrl: state.imageProfileUrl,
-                          size: 200,
-                        ),
+                        ProfileAvatar(imageProfileUrl: state.imageProfileUrl, size: 200),
                         Positioned(
                           top: 0,
                           left: 0,
@@ -68,8 +65,9 @@ class UserSettingsScreen extends HookConsumerWidget {
                             child: IconButton(
                               icon: const Icon(Icons.camera_alt, color: Colors.blue),
                               onPressed: () async {
-                                final pickedFile =
-                                    await picker.pickImage(source: ImageSource.gallery);
+                                final pickedFile = await picker.pickImage(
+                                  source: ImageSource.gallery,
+                                );
                                 if (pickedFile != null) {
                                   await ref
                                       .read(userSettingsControllerProvider.notifier)
@@ -85,9 +83,7 @@ class UserSettingsScreen extends HookConsumerWidget {
 
                     // Form per nome e cognome
                     Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       elevation: 3,
                       child: Padding(
                         padding: const EdgeInsets.all(16),
@@ -176,8 +172,9 @@ class UserSettingsScreen extends HookConsumerWidget {
                             context: context,
                             builder: (context) => AlertDialog(
                               title: Text('Elimina Account'.hardcoded),
-                              content:
-                                  Text('Sei sicuro di voler eliminare il tuo account?'.hardcoded),
+                              content: Text(
+                                'Sei sicuro di voler eliminare il tuo account?'.hardcoded,
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () {
@@ -212,9 +209,7 @@ class UserSettingsScreen extends HookConsumerWidget {
               );
             },
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, _) => Center(
-              child: Text('Errore: $error'.hardcoded),
-            ),
+            error: (error, _) => Center(child: Text('Errore: $error'.hardcoded)),
           ),
     );
   }

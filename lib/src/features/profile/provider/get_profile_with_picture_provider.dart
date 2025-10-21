@@ -1,14 +1,11 @@
-import 'package:app_template/src/features/profile/data/repository/profile_repository.dart';
-import 'package:app_template/src/features/profile/domain/profile_with_picture.dart';
+import 'package:quiz_radioamatori/src/features/profile/data/repository/profile_repository.dart';
+import 'package:quiz_radioamatori/src/features/profile/domain/profile_with_picture.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'get_profile_with_picture_provider.g.dart';
 
 @riverpod
-Future<ProfileWithPicture> getProfileWithPicture(
-  Ref ref,
-  String userId,
-) async {
+Future<ProfileWithPicture> getProfileWithPicture(Ref ref, String userId) async {
   final repository = ref.watch(profileRepositoryProvider);
   final profile = await repository.getProfile(userId);
   if (profile.propic == null) {

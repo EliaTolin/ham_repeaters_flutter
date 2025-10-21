@@ -1,4 +1,4 @@
-import 'package:app_template/clients/storage/storage_client.dart';
+import 'package:quiz_radioamatori/clients/storage/storage_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,9 +35,7 @@ Future<SharedPreferences> _sharedPreferences(Ref ref) async {
 }
 
 @riverpod
-Future<StorageClient> sharedPrefStorageClient(
-  Ref ref,
-) async {
+Future<StorageClient> sharedPrefStorageClient(Ref ref) async {
   final sharedPreferences = await ref.watch(_sharedPreferencesProvider.future);
   return SharedPrefStorageClient(sharedPreferences: sharedPreferences);
 }

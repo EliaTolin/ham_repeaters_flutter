@@ -1,14 +1,10 @@
-import 'package:app_template/common/dialogs/are_you_sure_to_delete_dialog.dart';
-import 'package:app_template/common/widgets/image/image_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/dialogs/are_you_sure_to_delete_dialog.dart';
+import 'package:quiz_radioamatori/common/widgets/image/image_card.dart';
 
 class ImageCarousel extends StatelessWidget {
-  const ImageCarousel({
-    required this.imageUrls,
-    this.onDeleteImage,
-    super.key,
-  });
+  const ImageCarousel({required this.imageUrls, this.onDeleteImage, super.key});
 
   final List<String> imageUrls;
   final void Function(String imageUrl)? onDeleteImage;
@@ -17,10 +13,7 @@ class ImageCarousel extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: CarouselSlider(
-        options: CarouselOptions(
-          enlargeCenterPage: true,
-          enableInfiniteScroll: false,
-        ),
+        options: CarouselOptions(enlargeCenterPage: true, enableInfiniteScroll: false),
         items: imageUrls.map((url) {
           return Stack(
             children: [

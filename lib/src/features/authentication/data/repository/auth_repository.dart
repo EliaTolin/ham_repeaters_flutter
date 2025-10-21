@@ -1,5 +1,5 @@
-import 'package:app_template/src/features/authentication/data/datasource/auth_datasource.dart';
-import 'package:app_template/src/features/authentication/data/datasource/auth_supabase_datasource.dart';
+import 'package:quiz_radioamatori/src/features/authentication/data/datasource/auth_datasource.dart';
+import 'package:quiz_radioamatori/src/features/authentication/data/datasource/auth_supabase_datasource.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_repository.g.dart';
@@ -26,6 +26,14 @@ class AuthRepository {
 
   Future<void> logout() {
     return authDatasource.logout();
+  }
+
+    Future<bool> signinWithGoogle() {
+    return authDatasource.signInGoogle();
+  }
+
+  Future<bool> signWithApple() {
+    return authDatasource.signWithApple();
   }
 }
 

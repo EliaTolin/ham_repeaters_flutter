@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:app_template/common/service/messaging/model/received_notification.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:quiz_radioamatori/common/service/messaging/model/received_notification.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class LocalPushNotification {
@@ -61,8 +61,8 @@ class LocalPushNotification {
   AndroidNotificationChannel _notificationChannelAndroid() {
     const channel = AndroidNotificationChannel(
       'firebase_local_notification',
-      'App_template Notifications',
-      description: 'Your App_template Notifications',
+      'QuizRadioamatori Notifications',
+      description: 'Your QuizRadioamatori Notifications',
       importance: Importance.max,
     );
     return channel;

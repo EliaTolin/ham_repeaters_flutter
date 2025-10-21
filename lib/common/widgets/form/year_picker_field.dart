@@ -1,7 +1,7 @@
-import 'package:app_template/common/dialogs/show_year_picker.dart';
-import 'package:app_template/common/extension/hard_coded_string.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:quiz_radioamatori/common/dialogs/show_year_picker.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 
 class YearPickerField extends StatelessWidget {
   const YearPickerField({
@@ -18,9 +18,7 @@ class YearPickerField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(
-          Icons.calendar_today,
-        ),
+        const Icon(Icons.calendar_today),
         const Gap(10),
         Expanded(
           child: TextFormField(

@@ -1,6 +1,6 @@
-import 'package:app_template/router/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -9,24 +9,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      routes: const [
-        SimpleRoute(),
-        ProfileRoute(),
-      ],
+      routes: const [SimpleRoute(), ProfileRoute()],
       bottomNavigationBuilder: (_, tabsRouter) {
         return NavigationBar(
           selectedIndex: tabsRouter.activeIndex,
           onDestinationSelected: tabsRouter.setActiveIndex,
           backgroundColor: Colors.white,
           destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.person),
-              label: 'Profilo',
-            ),
+            NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+            NavigationDestination(icon: Icon(Icons.person), label: 'Profilo'),
           ],
         );
       },

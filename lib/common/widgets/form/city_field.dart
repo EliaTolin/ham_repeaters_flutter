@@ -1,13 +1,9 @@
-import 'package:app_template/common/extension/hard_coded_string.dart';
-import 'package:app_template/common/widgets/form/base_field.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
+import 'package:quiz_radioamatori/common/widgets/form/base_field.dart';
 
 class CityField extends StatelessWidget {
-  const CityField({
-    required this.controller,
-    this.isRequired = false,
-    super.key,
-  });
+  const CityField({required this.controller, this.isRequired = false, super.key});
 
   final TextEditingController controller;
   final bool isRequired;
