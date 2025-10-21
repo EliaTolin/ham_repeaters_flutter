@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const Color primaryColor = Color(0xFF750800);
+const Color primaryColor = Color.fromARGB(255, 0, 116, 193);
 const Color secondaryColor = Colors.white;
+const Color tertiaryColor = Color.fromARGB(255, 0, 186, 22);
 const Color accentColor =
     Color(0xFFB71C1C); // Aggiunta per avere un accento più chiaro se necessario
 const Color textColor = Color(0xFF333333); // Colore per il testo generale
@@ -15,6 +16,8 @@ final lightTheme = ThemeData(
     onPrimary: Colors.white, // Colore del testo sugli elementi primari
     onSecondary: primaryColor, // Colore del testo sugli elementi secondari
     surface: secondaryColor, // Colore delle superfici, come card e liste
+    tertiary: tertiaryColor,
+    error: accentColor,
   ),
   dialogTheme: const DialogThemeData(
     backgroundColor: Colors.white,

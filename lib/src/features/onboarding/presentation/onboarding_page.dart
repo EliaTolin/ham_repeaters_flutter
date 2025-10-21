@@ -6,7 +6,6 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/extension/l10n_extension.dart';
 import 'package:quiz_radioamatori/common/widgets/ads/controller/auto_banner_controller.dart';
-import 'package:quiz_radioamatori/common/widgets/button/icon_button/share_iconbutton.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen_provider.dart';
 
@@ -144,8 +143,7 @@ class OnboardingPage extends ConsumerWidget {
         titleWidget: getTitle(context, 'Allenamento intelligente'.hardcoded),
         bodyWidget: getBody(
           context,
-          'Ripetizioni mirate sugli errori, domande casuali, timer e sessioni salvate per riprendere da dove hai lasciato.'
-              .hardcoded,
+          'Ripetizioni mirate sugli errori, domande casuali, timer e sessioni salvate.'.hardcoded,
         ),
       ),
       PageViewModel(
@@ -156,23 +154,6 @@ class OnboardingPage extends ConsumerWidget {
           context,
           'Monitora i progressi per argomento, scopri i punti deboli e punta al 100% con sessioni dedicate.'
               .hardcoded,
-        ),
-      ),
-      PageViewModel(
-        // image: buildImage(ImageAssets.onboarding_share),
-        image: buildIcon(Icons.emoji_events),
-        titleWidget: getTitle(context, 'Sfide & Condivisione'.hardcoded),
-        bodyWidget: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            getBody(
-              context,
-              'Condividi i risultati, sfida gli amici e confronta i punteggi tra radioamatori.'
-                  .hardcoded,
-            ),
-            const SizedBox(height: 8),
-            ShareIconButton(onPressed: () {}),
-          ],
         ),
       ),
       PageViewModel(

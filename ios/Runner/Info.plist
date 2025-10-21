@@ -51,8 +51,8 @@
 		<string>Quiz Radioamatori richiede l&apos;accesso alla fotocamera per scattare ai quiz</string>
 		<key>FlutterDeepLinkingEnabled</key>
 		<true/>
-		<!-- <key>GADApplicationIdentifier</key>
-		<string>ca-app-pub-7500053685536877~6909975629</string> -->
+		<key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-7500053685536877~6909975629</string>
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
