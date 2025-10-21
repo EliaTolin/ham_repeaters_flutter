@@ -1,0 +1,50 @@
+{
+  "error": "Errore",
+  "error_message": "Si è verificato un errore durante il caricamento",
+  "error_message_retry": "Si è verificato un errore durante il caricamento. Riprova più tardi",
+  "retry": "Riprova",
+  "back": "Indietro",
+  "loading": "Caricamento",
+  "details": "Dettagli",
+  "pages_number": "{number} pagine d'approfondire",
+  "@number": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "january": "Gennaio",
+  "february": "Febbraio",
+  "march": "Marzo",
+  "april": "Aprile",
+  "may": "Maggio",
+  "june": "Giugno",
+  "july": "Luglio",
+  "august": "Agosto",
+  "september": "Settembre",
+  "october": "Ottobre",
+  "november": "Novembre",
+  "december": "Dicembre",
+  "logout": "Logout",
+  "profile": "Profilo",
+  "settings": "Impostazioni",
+  "contact_us": "Contattaci",
+  "error_opening_email": "Si è verificato un errore durante l'apertura dell'email",
+  "register_now": "Registrati ora",
+  "tracking_permission_title": "Supporta l'App",
+  "tracking_permission_message": "Per migliorare la tua esperienza e mostrarti contenuti più rilevanti, aiutaci a mantenere gratuita l'app.\n\nClicca su Allow per supportarci.",
+  "tracking_permission_next": "Avanti",
+  "skip": "Salta",
+  "done": "Fatto",
+  "next": "Avanti",
+  "joinCommunityTitle": "Unisciti alla nostra Community!",
+  "joinCommunityDescription": "Scopri i vantaggi di entrare nella community Telegram:",
+  "benefitSupportMembers": "Supporto dai membri",
+  "benefitSuggestFeatures": "Proponi nuove funzionalità",
+  "benefitContactDevelopers": "Contatto con gli sviluppatori",
+  "benefitActiveCommunity": "Community attiva",
+  "joinNowButton": "Unisciti ora!",
+  "laterButton": "Più tardi",
+  "errorOpenTelegram": "Errore durante l'apertura di Telegram"
+}

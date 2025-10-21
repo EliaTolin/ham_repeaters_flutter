@@ -1,0 +1,107 @@
+import 'dart:developer';
+
+import 'package:app_template/src/features/authentication/presentation/auth/auth_screen.dart';
+import 'package:app_template/src/features/authentication/presentation/auth/change_password/change_password_screen.dart';
+import 'package:app_template/src/features/authentication/provider/get_user_id_provider.dart';
+import 'package:app_template/src/features/home/presentation/home_page.dart';
+import 'package:app_template/src/features/onboarding/presentation/onboarding_page.dart';
+import 'package:app_template/src/features/profile/presentation/profile/profile_screen.dart';
+import 'package:app_template/src/features/profile/presentation/user_settings/user_settings_screen.dart';
+import 'package:app_template/src/features/simple/presentation/simple_page.dart';
+import 'package:app_template/src/features/splashscreen/presentation/splashscreen.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'app_router.g.dart';
+part 'app_router.gr.dart';
+
+@AutoRouterConfig(replaceInRouteName: 'Screen|Page,Route')
+class AppRouter extends RootStackRouter implements AutoRouteGuard {
+  AppRouter(this.ref);
+  final Ref ref;
+
+  @override
+  List<AutoRoute> get routes => [
+        AutoRoute(
+          path: '/splash',
+          page: SplashRoute.page,
+          initial: true,
+        ),
+        AutoRoute(
+          page: OnboardingRoute.page,
+        ),
+        AutoRoute(
+          page: AuthRoute.page,
+        ),
+        AutoRoute(
+          path: '/change-password',
+          page: ChangePasswordRoute.page,
+        ),
+        AutoRoute(
+          page: HomeRoute.page,
+          guards: [this],
+          children: [
+            AutoRoute(
+              page: const EmptyShellRoute('MainRouter'),
+              children: [
+                AutoRoute(
+                  page: SimpleRoute.page,
+                ),
+              ],
+            ),
+            AutoRoute(
+              page: const EmptyShellRoute('ProfileRouter'),
+              children: [
+                AutoRoute(
+                  page: ProfileRoute.page,
+                ),
+                AutoRoute(
+                  page: UserSettingsRoute.page,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ];
+
+  @override
+  Future<void> onNavigation(
+    NavigationResolver resolver,
+    StackRouter router,
+  ) async {
+    // Check if the route is splash or login page
+    final isRequiredAuth = switch (resolver.route.name) {
+      SplashRoute.name => false,
+      AuthRoute.name => false,
+      ChangePasswordRoute.name => false,
+      _ => true,
+    };
+
+    // If the route is not required auth, go to next route
+    if (!isRequiredAuth) {
+      return resolver.next();
+    }
+
+    // Check permission
+    var isAuthenticated = false;
+    try {
+      final value = await ref.read(getUserIdProvider.future);
+      isAuthenticated = value != null;
+      log('isAuthenticated: $isAuthenticated, go to next route: ${resolver.route.name}');
+    } catch (e) {
+      log(e.toString());
+      isAuthenticated = false;
+    }
+    if (isAuthenticated) {
+      resolver.next();
+    } else {
+      await resolver.redirectUntil(const AuthRoute(), replace: true);
+    }
+  }
+}
+
+@Riverpod(keepAlive: true)
+// ignore: unsupported_provider_value
+AppRouter appRouter(Ref ref) {
+  return AppRouter(ref);
+}
