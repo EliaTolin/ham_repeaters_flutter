@@ -13,12 +13,8 @@ part of 'get_quiz_set_provider.dart';
 const getQuizSetProvider = GetQuizSetFamily._();
 
 final class GetQuizSetProvider extends $FunctionalProvider<
-        AsyncValue<Map<String, dynamic>>,
-        Map<String, dynamic>,
-        FutureOr<Map<String, dynamic>>>
-    with
-        $FutureModifier<Map<String, dynamic>>,
-        $FutureProvider<Map<String, dynamic>> {
+        AsyncValue<QuizSetResponse>, QuizSetResponse, FutureOr<QuizSetResponse>>
+    with $FutureModifier<QuizSetResponse>, $FutureProvider<QuizSetResponse> {
   const GetQuizSetProvider._(
       {required GetQuizSetFamily super.from,
       required ({
@@ -46,12 +42,12 @@ final class GetQuizSetProvider extends $FunctionalProvider<
 
   @$internal
   @override
-  $FutureProviderElement<Map<String, dynamic>> $createElement(
+  $FutureProviderElement<QuizSetResponse> $createElement(
           $ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<Map<String, dynamic>> create(Ref ref) {
+  FutureOr<QuizSetResponse> create(Ref ref) {
     final argument = this.argument as ({
       ExamType examType,
       String userId,
@@ -74,12 +70,12 @@ final class GetQuizSetProvider extends $FunctionalProvider<
   }
 }
 
-String _$getQuizSetHash() => r'4eeff4ee54984b3ff83007063e11da209b377b0a';
+String _$getQuizSetHash() => r'8a02105f18ef4f64afea971cc6a14065b2dc11e5';
 
 final class GetQuizSetFamily extends $Family
     with
         $FunctionalFamilyOverride<
-            FutureOr<Map<String, dynamic>>,
+            FutureOr<QuizSetResponse>,
             ({
               ExamType examType,
               String userId,

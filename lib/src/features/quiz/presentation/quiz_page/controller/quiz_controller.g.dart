@@ -10,14 +10,14 @@ part of 'quiz_controller.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(QuizController)
-const quizControllerProvider = QuizControllerProvider._();
+const quizControllerProvider = QuizControllerFamily._();
 
 final class QuizControllerProvider
-    extends $AsyncNotifierProvider<QuizController, Map<String, dynamic>?> {
-  const QuizControllerProvider._()
+    extends $AsyncNotifierProvider<QuizController, QuizState> {
+  const QuizControllerProvider._(
+      {required QuizControllerFamily super.from,
+      required ExamType super.argument})
       : super(
-          from: null,
-          argument: null,
           retry: null,
           name: r'quizControllerProvider',
           isAutoDispose: true,
@@ -28,24 +28,69 @@ final class QuizControllerProvider
   @override
   String debugGetCreateSourceHash() => _$quizControllerHash();
 
+  @override
+  String toString() {
+    return r'quizControllerProvider'
+        ''
+        '($argument)';
+  }
+
   @$internal
   @override
   QuizController create() => QuizController();
+
+  @override
+  bool operator ==(Object other) {
+    return other is QuizControllerProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
-String _$quizControllerHash() => r'71415e0e37a2e29e89a2ede8f93595a77ce53b98';
+String _$quizControllerHash() => r'7f5fca6fb873bffbb3af2d35f747a863e90d12c4';
 
-abstract class _$QuizController extends $AsyncNotifier<Map<String, dynamic>?> {
-  FutureOr<Map<String, dynamic>?> build();
+final class QuizControllerFamily extends $Family
+    with
+        $ClassFamilyOverride<QuizController, AsyncValue<QuizState>, QuizState,
+            FutureOr<QuizState>, ExamType> {
+  const QuizControllerFamily._()
+      : super(
+          retry: null,
+          name: r'quizControllerProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  QuizControllerProvider call(
+    ExamType examType,
+  ) =>
+      QuizControllerProvider._(argument: examType, from: this);
+
+  @override
+  String toString() => r'quizControllerProvider';
+}
+
+abstract class _$QuizController extends $AsyncNotifier<QuizState> {
+  late final _$args = ref.$arg as ExamType;
+  ExamType get examType => _$args;
+
+  FutureOr<QuizState> build(
+    ExamType examType,
+  );
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
-    final ref = this.ref
-        as $Ref<AsyncValue<Map<String, dynamic>?>, Map<String, dynamic>?>;
+    final created = build(
+      _$args,
+    );
+    final ref = this.ref as $Ref<AsyncValue<QuizState>, QuizState>;
     final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<Map<String, dynamic>?>, Map<String, dynamic>?>,
-        AsyncValue<Map<String, dynamic>?>,
+        AnyNotifier<AsyncValue<QuizState>, QuizState>,
+        AsyncValue<QuizState>,
         Object?,
         Object?>;
     element.handleValue(ref, created);

@@ -92,18 +92,49 @@ class ProfileRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [QuizPage]
-class QuizRoute extends PageRouteInfo<void> {
-  const QuizRoute({List<PageRouteInfo>? children})
-      : super(QuizRoute.name, initialChildren: children);
+class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
+  QuizRoute({
+    required ExamType examType,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          QuizRoute.name,
+          args: QuizRouteArgs(examType: examType, key: key),
+          initialChildren: children,
+        );
 
   static const String name = 'QuizRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const QuizPage();
+      final args = data.argsAs<QuizRouteArgs>();
+      return QuizPage(examType: args.examType, key: args.key);
     },
   );
+}
+
+class QuizRouteArgs {
+  const QuizRouteArgs({required this.examType, this.key});
+
+  final ExamType examType;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'QuizRouteArgs{examType: $examType, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! QuizRouteArgs) return false;
+    return examType == other.examType && key == other.key;
+  }
+
+  @override
+  int get hashCode => examType.hashCode ^ key.hashCode;
 }
 
 /// generated route for

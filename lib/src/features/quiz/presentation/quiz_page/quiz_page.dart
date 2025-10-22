@@ -6,12 +6,13 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/contr
 
 @RoutePage()
 class QuizPage extends ConsumerWidget {
-  const QuizPage({super.key});
+  const QuizPage({required this.examType, super.key});
+  final ExamType examType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizState = ref.watch(quizControllerProvider);
-
+    final quizState = ref.watch(quizControllerProvider(examType));
+    final quizController = ref.read(quizControllerProvider(examType).notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quiz Radioamatori'),
@@ -37,7 +38,8 @@ class QuizPage extends ConsumerWidget {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  ref.read(quizControllerProvider.notifier).generateQuizSet(ExamType.parziale);
+                  ref.read(quizControllerProvider(examType).notifier).generateQuizSet(examType);
+                  quizController.generateQuizSet(examType);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -58,7 +60,7 @@ class QuizPage extends ConsumerWidget {
               height: 60,
               child: ElevatedButton(
                 onPressed: () {
-                  ref.read(quizControllerProvider.notifier).generateQuizSet(ExamType.completo);
+                  ref.read(quizControllerProvider(examType).notifier).generateQuizSet(examType);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
@@ -76,13 +78,6 @@ class QuizPage extends ConsumerWidget {
             // Stato del quiz
             quizState.when(
               data: (data) {
-                if (data == null) {
-                  return const Text(
-                    'Premi un pulsante per iniziare il quiz',
-                    style: TextStyle(fontSize: 16),
-                  );
-                }
-
                 return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -100,11 +95,11 @@ class QuizPage extends ConsumerWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'ID Quiz: ${data['quizSetId']}',
+                          'ID Quiz: ${data.quizSetId}',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'Domande totali: ${data['totalQuestions']}',
+                          'Domande totali: ${data.totalQuestions}',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
