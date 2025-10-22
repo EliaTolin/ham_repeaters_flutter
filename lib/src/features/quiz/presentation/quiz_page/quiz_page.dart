@@ -12,7 +12,6 @@ class QuizPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizState = ref.watch(quizControllerProvider(examType));
-    final quizController = ref.read(quizControllerProvider(examType).notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quiz Radioamatori'),
@@ -23,59 +22,6 @@ class QuizPage extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Seleziona il tipo di esame',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 40),
-
-            // Bottone Esame Parziale
-            SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: ElevatedButton(
-                onPressed: () {
-                  ref.read(quizControllerProvider(examType).notifier).generateQuizSet(examType);
-                  quizController.generateQuizSet(examType);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text(
-                  'Esame Parziale',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Bottone Esame Totale
-            SizedBox(
-              width: double.infinity,
-              height: 60,
-              child: ElevatedButton(
-                onPressed: () {
-                  ref.read(quizControllerProvider(examType).notifier).generateQuizSet(examType);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text(
-                  'Esame Totale',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            // Stato del quiz
             quizState.when(
               data: (data) {
                 return Card(

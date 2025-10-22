@@ -91,6 +91,22 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [QuizDashboardPage]
+class QuizDashboardRoute extends PageRouteInfo<void> {
+  const QuizDashboardRoute({List<PageRouteInfo>? children})
+      : super(QuizDashboardRoute.name, initialChildren: children);
+
+  static const String name = 'QuizDashboardRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const QuizDashboardPage();
+    },
+  );
+}
+
+/// generated route for
 /// [QuizPage]
 class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
   QuizRoute({
