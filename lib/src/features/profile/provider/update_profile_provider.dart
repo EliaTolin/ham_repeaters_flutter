@@ -8,5 +8,4 @@ part 'update_profile_provider.g.dart';
 Future<void> updateProfile(Ref ref, Profile profile) async {
   final repository = ref.read(profileRepositoryProvider);
   await repository.updateProfile(profile);
-  ref.invalidate(profileRepositoryProvider);
 }

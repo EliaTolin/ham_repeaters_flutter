@@ -17,11 +17,8 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
   @override
   Future<ProfileModel> getProfile(String userId) async {
     try {
-      final data = await _client
-          .from(SupabaseTable.profiles.name)
-          .select()
-          .eq('id', userId)
-          .single();
+      final data =
+          await _client.from(SupabaseTable.profiles.name).select().eq('id', userId).single();
       return ProfileModel.fromJson(data);
     } catch (e) {
       log('Error to fetch profile: $e');

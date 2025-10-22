@@ -9,7 +9,10 @@ class ChangePasswordController extends _$ChangePasswordController {
   FutureOr<void> build() {}
 
   Future<void> resetPassword(String password) async {
-    state = const AsyncLoading();
-    await ref.read(changePasswordProvider(password).future);
+    try {
+      await ref.read(changePasswordProvider(password).future);
+    } on Exception catch (e) {
+      state = AsyncError(e, StackTrace.current);
+    }
   }
 }

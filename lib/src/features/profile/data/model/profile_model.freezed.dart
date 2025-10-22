@@ -15,8 +15,10 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileModel {
   String get id;
-  String get name;
-  String get surname;
+  @JsonKey(name: 'first_name')
+  String get firstName;
+  @JsonKey(name: 'last_name')
+  String get lastName;
   String? get propic;
 
   /// Create a copy of ProfileModel
@@ -36,18 +38,20 @@ mixin _$ProfileModel {
         (other.runtimeType == runtimeType &&
             other is ProfileModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
             (identical(other.propic, propic) || other.propic == propic));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, surname, propic);
+  int get hashCode => Object.hash(runtimeType, id, firstName, lastName, propic);
 
   @override
   String toString() {
-    return 'ProfileModel(id: $id, name: $name, surname: $surname, propic: $propic)';
+    return 'ProfileModel(id: $id, firstName: $firstName, lastName: $lastName, propic: $propic)';
   }
 }
 
@@ -57,7 +61,11 @@ abstract mixin class $ProfileModelCopyWith<$Res> {
           ProfileModel value, $Res Function(ProfileModel) _then) =
       _$ProfileModelCopyWithImpl;
   @useResult
-  $Res call({String id, String name, String surname, String? propic});
+  $Res call(
+      {String id,
+      @JsonKey(name: 'first_name') String firstName,
+      @JsonKey(name: 'last_name') String lastName,
+      String? propic});
 }
 
 /// @nodoc
@@ -73,8 +81,8 @@ class _$ProfileModelCopyWithImpl<$Res> implements $ProfileModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
-    Object? surname = null,
+    Object? firstName = null,
+    Object? lastName = null,
     Object? propic = freezed,
   }) {
     return _then(_self.copyWith(
@@ -82,13 +90,13 @@ class _$ProfileModelCopyWithImpl<$Res> implements $ProfileModelCopyWith<$Res> {
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
+      firstName: null == firstName
+          ? _self.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: null == surname
-          ? _self.surname
-          : surname // ignore: cast_nullable_to_non_nullable
+      lastName: null == lastName
+          ? _self.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
               as String,
       propic: freezed == propic
           ? _self.propic
@@ -191,14 +199,16 @@ extension ProfileModelPatterns on ProfileModel {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, String name, String surname, String? propic)?
+    TResult Function(String id, @JsonKey(name: 'first_name') String firstName,
+            @JsonKey(name: 'last_name') String lastName, String? propic)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ProfileModel() when $default != null:
-        return $default(_that.id, _that.name, _that.surname, _that.propic);
+        return $default(
+            _that.id, _that.firstName, _that.lastName, _that.propic);
       case _:
         return orElse();
     }
@@ -219,13 +229,15 @@ extension ProfileModelPatterns on ProfileModel {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String id, String name, String surname, String? propic)
+    TResult Function(String id, @JsonKey(name: 'first_name') String firstName,
+            @JsonKey(name: 'last_name') String lastName, String? propic)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ProfileModel():
-        return $default(_that.id, _that.name, _that.surname, _that.propic);
+        return $default(
+            _that.id, _that.firstName, _that.lastName, _that.propic);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -245,13 +257,15 @@ extension ProfileModelPatterns on ProfileModel {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, String name, String surname, String? propic)?
+    TResult? Function(String id, @JsonKey(name: 'first_name') String firstName,
+            @JsonKey(name: 'last_name') String lastName, String? propic)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ProfileModel() when $default != null:
-        return $default(_that.id, _that.name, _that.surname, _that.propic);
+        return $default(
+            _that.id, _that.firstName, _that.lastName, _that.propic);
       case _:
         return null;
     }
@@ -263,8 +277,8 @@ extension ProfileModelPatterns on ProfileModel {
 class _ProfileModel implements ProfileModel {
   const _ProfileModel(
       {required this.id,
-      required this.name,
-      required this.surname,
+      @JsonKey(name: 'first_name') required this.firstName,
+      @JsonKey(name: 'last_name') required this.lastName,
       required this.propic});
   factory _ProfileModel.fromJson(Map<String, dynamic> json) =>
       _$ProfileModelFromJson(json);
@@ -272,9 +286,11 @@ class _ProfileModel implements ProfileModel {
   @override
   final String id;
   @override
-  final String name;
+  @JsonKey(name: 'first_name')
+  final String firstName;
   @override
-  final String surname;
+  @JsonKey(name: 'last_name')
+  final String lastName;
   @override
   final String? propic;
 
@@ -299,18 +315,20 @@ class _ProfileModel implements ProfileModel {
         (other.runtimeType == runtimeType &&
             other is _ProfileModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.surname, surname) || other.surname == surname) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
             (identical(other.propic, propic) || other.propic == propic));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, surname, propic);
+  int get hashCode => Object.hash(runtimeType, id, firstName, lastName, propic);
 
   @override
   String toString() {
-    return 'ProfileModel(id: $id, name: $name, surname: $surname, propic: $propic)';
+    return 'ProfileModel(id: $id, firstName: $firstName, lastName: $lastName, propic: $propic)';
   }
 }
 
@@ -322,7 +340,11 @@ abstract mixin class _$ProfileModelCopyWith<$Res>
       __$ProfileModelCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, String name, String surname, String? propic});
+  $Res call(
+      {String id,
+      @JsonKey(name: 'first_name') String firstName,
+      @JsonKey(name: 'last_name') String lastName,
+      String? propic});
 }
 
 /// @nodoc
@@ -339,8 +361,8 @@ class __$ProfileModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? name = null,
-    Object? surname = null,
+    Object? firstName = null,
+    Object? lastName = null,
     Object? propic = freezed,
   }) {
     return _then(_ProfileModel(
@@ -348,13 +370,13 @@ class __$ProfileModelCopyWithImpl<$Res>
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
+      firstName: null == firstName
+          ? _self.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      surname: null == surname
-          ? _self.surname
-          : surname // ignore: cast_nullable_to_non_nullable
+      lastName: null == lastName
+          ? _self.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
               as String,
       propic: freezed == propic
           ? _self.propic

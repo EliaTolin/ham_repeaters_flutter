@@ -34,7 +34,7 @@ final class ChangePasswordControllerProvider
 }
 
 String _$changePasswordControllerHash() =>
-    r'd2da390a8173b90c31f8b23c95997ca833d1ef99';
+    r'bcfeb5b5e0a006c959f0e90134d452eddc999541';
 
 abstract class _$ChangePasswordController extends $AsyncNotifier<void> {
   FutureOr<void> build();

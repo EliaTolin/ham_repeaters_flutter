@@ -8,8 +8,8 @@ class ProfileMappers implements Mapper<Profile, ProfileModel> {
   Profile fromModel(ProfileModel user) {
     return Profile(
       id: user.id,
-      name: user.name,
-      surname: user.surname,
+      name: user.firstName,
+      surname: user.lastName,
       propic: user.propic.clearedValue(),
     );
   }
@@ -18,8 +18,8 @@ class ProfileMappers implements Mapper<Profile, ProfileModel> {
   ProfileModel toModel(Profile user) {
     return ProfileModel(
       id: user.id,
-      name: user.name,
-      surname: user.surname,
+      firstName: user.name,
+      lastName: user.surname,
       propic: user.propic.clearedValue(),
     );
   }

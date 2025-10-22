@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/widgets/button/save_button.dart';
+import 'package:quiz_radioamatori/common/widgets/card/error_card.dart';
 import 'package:quiz_radioamatori/common/widgets/form/password_field.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_success_snackbar.dart';
@@ -34,8 +35,7 @@ class ChangePasswordScreen extends HookConsumerWidget {
             ),
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, _) {
-              showErrorSnackbar(context, error.toString());
-              return const SizedBox();
+              return ErrorCard(errorMessage: error.toString());
             },
           ),
     );
@@ -61,15 +61,12 @@ class ChangePasswordScreen extends HookConsumerWidget {
               label: 'Nuova Password'.hardcoded,
             ),
             const SizedBox(height: 16),
-
             // Campo conferma nuova password
             PasswordField(
               controller: confirmPasswordController,
               label: 'Conferma Nuova Password'.hardcoded,
             ),
-
             const SizedBox(height: 24),
-
             // Bottone di salvataggio
             Center(
               child: SaveButton(
