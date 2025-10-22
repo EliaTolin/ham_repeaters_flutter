@@ -19,7 +19,7 @@ mixin _$QuestionModel {
   String get questionText;
   @JsonKey(name: 'topic_name')
   String get topicName;
-  ExamType get exam;
+  String get exam;
   @JsonKey(name: 'answer_a')
   String get answerA;
   @JsonKey(name: 'answer_b')
@@ -111,7 +111,7 @@ abstract mixin class $QuestionModelCopyWith<$Res> {
       {int id,
       @JsonKey(name: 'question_text') String questionText,
       @JsonKey(name: 'topic_name') String topicName,
-      ExamType exam,
+      String exam,
       @JsonKey(name: 'answer_a') String answerA,
       @JsonKey(name: 'answer_b') String answerB,
       @JsonKey(name: 'answer_c') String answerC,
@@ -166,7 +166,7 @@ class _$QuestionModelCopyWithImpl<$Res>
       exam: null == exam
           ? _self.exam
           : exam // ignore: cast_nullable_to_non_nullable
-              as ExamType,
+              as String,
       answerA: null == answerA
           ? _self.answerA
           : answerA // ignore: cast_nullable_to_non_nullable
@@ -304,7 +304,7 @@ extension QuestionModelPatterns on QuestionModel {
             int id,
             @JsonKey(name: 'question_text') String questionText,
             @JsonKey(name: 'topic_name') String topicName,
-            ExamType exam,
+            String exam,
             @JsonKey(name: 'answer_a') String answerA,
             @JsonKey(name: 'answer_b') String answerB,
             @JsonKey(name: 'answer_c') String answerC,
@@ -358,7 +358,7 @@ extension QuestionModelPatterns on QuestionModel {
             int id,
             @JsonKey(name: 'question_text') String questionText,
             @JsonKey(name: 'topic_name') String topicName,
-            ExamType exam,
+            String exam,
             @JsonKey(name: 'answer_a') String answerA,
             @JsonKey(name: 'answer_b') String answerB,
             @JsonKey(name: 'answer_c') String answerC,
@@ -410,7 +410,7 @@ extension QuestionModelPatterns on QuestionModel {
             int id,
             @JsonKey(name: 'question_text') String questionText,
             @JsonKey(name: 'topic_name') String topicName,
-            ExamType exam,
+            String exam,
             @JsonKey(name: 'answer_a') String answerA,
             @JsonKey(name: 'answer_b') String answerB,
             @JsonKey(name: 'answer_c') String answerC,
@@ -474,7 +474,7 @@ class _QuestionModel implements QuestionModel {
   @JsonKey(name: 'topic_name')
   final String topicName;
   @override
-  final ExamType exam;
+  final String exam;
   @override
   @JsonKey(name: 'answer_a')
   final String answerA;
@@ -581,7 +581,7 @@ abstract mixin class _$QuestionModelCopyWith<$Res>
       {int id,
       @JsonKey(name: 'question_text') String questionText,
       @JsonKey(name: 'topic_name') String topicName,
-      ExamType exam,
+      String exam,
       @JsonKey(name: 'answer_a') String answerA,
       @JsonKey(name: 'answer_b') String answerB,
       @JsonKey(name: 'answer_c') String answerC,
@@ -636,7 +636,7 @@ class __$QuestionModelCopyWithImpl<$Res>
       exam: null == exam
           ? _self.exam
           : exam // ignore: cast_nullable_to_non_nullable
-              as ExamType,
+              as String,
       answerA: null == answerA
           ? _self.answerA
           : answerA // ignore: cast_nullable_to_non_nullable

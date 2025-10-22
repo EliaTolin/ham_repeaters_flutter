@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      routes: const [SimpleRoute(), ProfileRoute()],
+      routes: const [SimpleRoute(), QuizRoute(), ProfileRoute()],
       bottomNavigationBuilder: (_, tabsRouter) {
         return NavigationBar(
           selectedIndex: tabsRouter.activeIndex,
@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.white,
           destinations: const [
             NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+            NavigationDestination(icon: Icon(Icons.quiz), label: 'Quiz'),
             NavigationDestination(icon: Icon(Icons.person), label: 'Profilo'),
           ],
         );

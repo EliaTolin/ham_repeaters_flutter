@@ -8,6 +8,7 @@ import 'package:quiz_radioamatori/src/features/home/presentation/home_page.dart'
 import 'package:quiz_radioamatori/src/features/onboarding/presentation/onboarding_page.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/profile/profile_screen.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/user_settings/user_settings_screen.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/quiz_page.dart';
 import 'package:quiz_radioamatori/src/features/simple/presentation/simple_page.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/presentation/splashscreen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -22,28 +23,28 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
 
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(path: '/splash', page: SplashRoute.page, initial: true),
-    AutoRoute(page: OnboardingRoute.page),
-    AutoRoute(page: AuthRoute.page),
-    AutoRoute(path: '/change-password', page: ChangePasswordRoute.page),
-    AutoRoute(
-      page: HomeRoute.page,
-      guards: [this],
-      children: [
+        AutoRoute(path: '/splash', page: SplashRoute.page, initial: true),
+        AutoRoute(page: OnboardingRoute.page),
+        AutoRoute(page: AuthRoute.page),
+        AutoRoute(path: '/change-password', page: ChangePasswordRoute.page),
         AutoRoute(
-          page: const EmptyShellRoute('MainRouter'),
-          children: [AutoRoute(page: SimpleRoute.page)],
-        ),
-        AutoRoute(
-          page: const EmptyShellRoute('ProfileRouter'),
+          page: HomeRoute.page,
+          guards: [this],
           children: [
-            AutoRoute(page: ProfileRoute.page),
-            AutoRoute(page: UserSettingsRoute.page),
+            AutoRoute(
+              page: const EmptyShellRoute('MainRouter'),
+              children: [AutoRoute(page: SimpleRoute.page), AutoRoute(page: QuizRoute.page)],
+            ),
+            AutoRoute(
+              page: const EmptyShellRoute('ProfileRouter'),
+              children: [
+                AutoRoute(page: ProfileRoute.page),
+                AutoRoute(page: UserSettingsRoute.page),
+              ],
+            ),
           ],
         ),
-      ],
-    ),
-  ];
+      ];
 
   @override
   Future<void> onNavigation(NavigationResolver resolver, StackRouter router) async {

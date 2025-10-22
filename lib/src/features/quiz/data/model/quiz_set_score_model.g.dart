@@ -43,5 +43,5 @@ const _$QuizModeEnumMap = {
 
 const _$ExamTypeEnumMap = {
   ExamType.parziale: 'parziale',
-  ExamType.totale: 'totale',
+  ExamType.completo: 'completo',
 };

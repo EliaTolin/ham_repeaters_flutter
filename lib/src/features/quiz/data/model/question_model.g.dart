@@ -11,7 +11,7 @@ _QuestionModel _$QuestionModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       questionText: json['question_text'] as String,
       topicName: json['topic_name'] as String,
-      exam: $enumDecode(_$ExamTypeEnumMap, json['exam']),
+      exam: json['exam'] as String,
       answerA: json['answer_a'] as String,
       answerB: json['answer_b'] as String,
       answerC: json['answer_c'] as String,
@@ -28,7 +28,7 @@ Map<String, dynamic> _$QuestionModelToJson(_QuestionModel instance) =>
       'id': instance.id,
       'question_text': instance.questionText,
       'topic_name': instance.topicName,
-      'exam': _$ExamTypeEnumMap[instance.exam]!,
+      'exam': instance.exam,
       'answer_a': instance.answerA,
       'answer_b': instance.answerB,
       'answer_c': instance.answerC,
@@ -39,8 +39,3 @@ Map<String, dynamic> _$QuestionModelToJson(_QuestionModel instance) =>
       'explanation': instance.explanation,
       'source_ref': instance.sourceRef,
     };
-
-const _$ExamTypeEnumMap = {
-  ExamType.parziale: 'parziale',
-  ExamType.totale: 'totale',
-};
