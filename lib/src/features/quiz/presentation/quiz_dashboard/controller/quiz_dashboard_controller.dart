@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/provider/dashboard_data_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/state/quiz_dashboard_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,9 +17,8 @@ class QuizDashboardController extends _$QuizDashboardController {
 
   Future<QuizDashboardState> _loadDashboardData() async {
     try {
-      final repository = ref.read(quizRepositoryProvider);
-      final recentScores = await repository.getRecentQuizScores();
-      final allScores = await repository.getAllQuizScores();
+      final recentScores = await ref.read(recentQuizScoresProvider.future);
+      final allScores = await ref.read(allQuizScoresProvider.future);
 
       // Calcola le statistiche reali
       final totalQuizzes = allScores.length;

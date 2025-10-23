@@ -217,12 +217,4 @@ class QuickActionsSection extends HookWidget {
   void _startQuiz(BuildContext context, ExamType examType) {
     context.router.push(QuizRoute(examType: examType));
   }
-
-  void _startCustomQuiz(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Quiz personalizzato in arrivo!'),
-      ),
-    );
-  }
 }
