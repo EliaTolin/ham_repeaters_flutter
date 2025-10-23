@@ -55,7 +55,6 @@ class _AccuracyChartWidgetState extends State<AccuracyChartWidget> with TickerPr
 
     // Get recent scores for trend
     final recentScores = widget.scores.take(10).toList();
-    final trend = _calculateTrend(recentScores);
 
     return AnimatedBuilder(
       animation: _progressAnimation,
@@ -90,12 +89,9 @@ class _AccuracyChartWidgetState extends State<AccuracyChartWidget> with TickerPr
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Spacer(),
-                  _buildTrendIndicator(trend),
                 ],
               ),
               const SizedBox(height: 24),
-
               // Circular progress chart
               Center(
                 child: Stack(
@@ -142,58 +138,6 @@ class _AccuracyChartWidgetState extends State<AccuracyChartWidget> with TickerPr
           ),
         );
       },
-    );
-  }
-
-  Widget _buildTrendIndicator(double trend) {
-    final isPositive = trend > 0;
-    final isNeutral = trend == 0;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: isPositive
-            ? Colors.green.withValues(alpha: 0.1)
-            : isNeutral
-                ? Colors.grey.withValues(alpha: 0.1)
-                : Colors.red.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            isPositive
-                ? Icons.trending_up
-                : isNeutral
-                    ? Icons.trending_flat
-                    : Icons.trending_down,
-            size: 16,
-            color: isPositive
-                ? Colors.green
-                : isNeutral
-                    ? Colors.grey
-                    : Colors.red,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            isPositive
-                ? 'In Crescita'
-                : isNeutral
-                    ? 'Stabile'
-                    : 'In Calo',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: isPositive
-                  ? Colors.green
-                  : isNeutral
-                      ? Colors.grey
-                      : Colors.red,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -294,15 +238,5 @@ class _AccuracyChartWidgetState extends State<AccuracyChartWidget> with TickerPr
       default:
         return Colors.red;
     }
-  }
-
-  double _calculateTrend(List<QuizSetScore> scores) {
-    if (scores.length < 2) return 0;
-
-    final recent = scores.take(5).fold<double>(0, (sum, score) => sum + score.accuracyPct) / 5;
-    final older =
-        scores.skip(5).take(5).fold<double>(0, (sum, score) => sum + score.accuracyPct) / 5;
-
-    return recent - older;
   }
 }

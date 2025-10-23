@@ -22,11 +22,7 @@ class QuickActionsSection extends HookWidget {
           ).animate(
             CurvedAnimation(
               parent: animationController,
-              curve: Interval(
-                index * 0.2,
-                (index * 0.2) + 0.6,
-                curve: Curves.easeOutCubic,
-              ),
+              curve: Curves.easeOutCubic,
             ),
           );
         });

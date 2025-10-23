@@ -9,197 +9,453 @@ class RecentQuizzesSection extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final animationController = useAnimationController(
-      duration: const Duration(milliseconds: 800),
-    );
+    final theme = Theme.of(context);
 
-    final slideAnimations = useMemoized(
-      () {
-        return List.generate(
-          scores.length.clamp(0, 3),
-          (index) => Tween<Offset>(
-            begin: const Offset(0, 0.5),
-            end: Offset.zero,
-          ).animate(
-            CurvedAnimation(
-              parent: animationController,
-              curve: Interval(
-                index * 0.1,
-                (index * 0.1) + 0.6,
-                curve: Curves.easeOutCubic,
-              ),
-            ),
-          ),
-        );
-      },
-      [scores.length],
+    // Animazioni in ingresso con vero "stagger"
+    final controller = useAnimationController(
+      duration: Duration(milliseconds: 250 + (scores.length * 80).clamp(0, 700)),
     );
 
     useEffect(
       () {
-        animationController.forward();
+        controller.forward();
         return null;
       },
       [],
     );
 
-    final theme = Theme.of(context);
-
-    return AnimatedBuilder(
-      animation: animationController,
-      builder: (context, child) {
-        return Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: theme.colorScheme.shadow.withValues(alpha: 0.1),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.history_rounded,
-                    color: theme.colorScheme.primary,
-                    size: 28,
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    'Quiz recenti',
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Spacer(),
-                  if (scores.isNotEmpty)
-                    Text(
-                      '${scores.length} quiz',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                      ),
-                    ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              if (scores.isEmpty)
-                _buildEmptyState(theme)
-              else
-                ...scores.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final score = entry.value;
-
-                  return SlideTransition(
-                    position: slideAnimations[index],
-                    child: _buildQuizCard(theme, score, index),
-                  );
-                }),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildEmptyState(ThemeData theme) {
     return Container(
-      padding: const EdgeInsets.all(32),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: theme.colorScheme.outlineVariant.withValues(alpha: .4)),
+        boxShadow: [
+          BoxShadow(
+            color: theme.colorScheme.shadow.withValues(alpha: .04),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(
-            Icons.quiz_outlined,
-            size: 48,
-            color: theme.colorScheme.primary.withValues(alpha: 0.3),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Nessun quiz recente',
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+          // Header compatto
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+            child: Row(
+              children: [
+                _softIcon(
+                  theme,
+                  icon: Icons.trending_up_rounded,
+                  bg: theme.colorScheme.primary.withValues(alpha: .1),
+                  fg: theme.colorScheme.primary,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Quiz passati',
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        scores.isEmpty
+                            ? 'Nessun quiz completato'
+                            : 'Ultimi ${scores.length} quiz completati',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (scores.isNotEmpty) _pill(theme, '${scores.length}', theme.colorScheme.primary),
+              ],
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Completa il tuo primo quiz per vederlo qui!',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+          const Divider(height: 1),
+          // Contenuto
+          if (scores.isEmpty)
+            _EmptyState(theme: theme)
+          else
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: scores.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 8),
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) {
+                  final score = scores[index];
+                  final curved = CurvedAnimation(
+                    parent: controller,
+                    curve: Interval(
+                      index / (scores.length.clamp(1, 999)),
+                      (index + 1) / (scores.length.clamp(1, 999)),
+                      curve: Curves.easeOutCubic,
+                    ),
+                  );
+                  return FadeTransition(
+                    opacity: curved,
+                    child: SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, .08),
+                        end: Offset.zero,
+                      ).animate(curved),
+                      child: _ClickableQuizCard(theme: theme, score: score),
+                    ),
+                  );
+                },
+              ),
             ),
-            textAlign: TextAlign.center,
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildQuizCard(ThemeData theme, QuizSetScore score, int index) {
-    final examType = score.exam?.value ?? 'Personalizzato';
+  // —— Helpers UI ——
 
+  static Widget _pill(ThemeData theme, String text, Color color) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: theme.colorScheme.primary.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(16),
+        color: color.withValues(alpha: .10),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: color.withValues(alpha: .25)),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Quiz $examType',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+      child: Text(
+        text,
+        style: theme.textTheme.labelMedium?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: color,
+        ),
+      ),
+    );
+  }
+
+  static Widget _softIcon(
+    ThemeData theme, {
+    required IconData icon,
+    required Color bg,
+    required Color fg,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Icon(icon, color: fg, size: 20),
+    );
+  }
+}
+
+// === TILE COMPATTO & CLICCABILE, SENZA OVERFLOW ===
+class _ClickableQuizCard extends StatelessWidget {
+  const _ClickableQuizCard({required this.theme, required this.score, this.onTap});
+  final ThemeData theme;
+  final QuizSetScore score;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final examType = score.exam?.value ?? 'Personalizzato';
+    final accuracy = score.accuracyPct.clamp(0, 100);
+    final perfLabel = _performanceLabel(accuracy.toDouble());
+    final perfColor = _performanceColor(accuracy.toDouble());
+
+    return Material(
+      color: theme.colorScheme.surfaceContainerLowest,
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          // Usiamo LayoutBuilder per riservare uno spazio fisso al trailing,
+          // evitando che il testo centrale lo "spinga" fuori.
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final trailingMaxW = (constraints.maxWidth * 0.34).clamp(96, 148);
+              return ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 64), // touch target
+                child: Row(
+                  children: [
+                    // Leading: anello progresso
+                    _ProgressRing(
+                      progress: accuracy / 100,
+                      size: 42,
+                      thickness: 5,
+                      color: perfColor,
+                      child:
+                          Icon(_quizIcon(examType), size: 18, color: theme.colorScheme.onSurface),
+                    ),
+                    const SizedBox(width: 12),
+
+                    // Testo centrale espandibile
+                    Expanded(
+                      child: _TitleSubtitle(
+                        theme: theme,
+                        title: 'Quiz ${examType.toUpperCase()}',
+                        subtitle: 'Corrette ${score.correct}/${score.total}',
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+
+                    // Trailing: chip + % (colonna stretta, NON si espande)
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: trailingMaxW.toDouble()),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          _chip(theme, perfLabel, perfColor),
+                          const SizedBox(height: 6),
+                          Text(
+                            '${accuracy.toStringAsFixed(1)}%',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: theme.colorScheme.onSurfaceVariant,
+                              fontFeatures: const [FontFeature.tabularFigures()],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: onTap,
+                      icon: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 18,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 4),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  // —— UI helpers
+  static Widget _chip(ThemeData theme, String text, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: .10),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: color.withValues(alpha: .25)),
+      ),
+      child: Text(
+        text,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: theme.textTheme.labelMedium?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: color,
+        ),
+      ),
+    );
+  }
+
+  static String _performanceLabel(double a) {
+    if (a >= 90) return 'Eccellente';
+    if (a >= 80) return 'Ottimo';
+    if (a >= 70) return 'Buono';
+    if (a >= 60) return 'Sufficiente';
+    return 'Insufficiente';
+  }
+
+  static Color _performanceColor(double a) {
+    if (a >= 90) return Colors.green;
+    if (a >= 80) return Colors.lightGreen;
+    if (a >= 70) return Colors.orange;
+    if (a >= 60) return Colors.deepOrange;
+    return Colors.red;
+  }
+
+  static IconData _quizIcon(String examType) {
+    switch (examType.toLowerCase()) {
+      case 'completo':
+        return Icons.quiz_rounded;
+      case 'parziale':
+        return Icons.quiz_outlined;
+      case 'personalizzato':
+        return Icons.tune_rounded;
+      default:
+        return Icons.quiz_rounded;
+    }
+  }
+}
+
+// Titolo/sottotitolo con gestione sicura degli spazi
+class _TitleSubtitle extends StatelessWidget {
+  const _TitleSubtitle({required this.theme, required this.title, required this.subtitle});
+  final ThemeData theme;
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final scale = MediaQuery.textScalerOf(context).scale;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          subtitle,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+            fontFeatures: const [FontFeature.tabularFigures()],
+            height: 1.1,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// =======================
+//  EMPTY STATE COMPATTO
+// =======================
+class _EmptyState extends StatelessWidget {
+  const _EmptyState({required this.theme});
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 28, 16, 28),
+      child: Column(
+        children: [
+          _ghost(theme),
+          const SizedBox(height: 14),
+          Text(
+            'Nessun quiz completato',
+            style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Inizia il tuo primo quiz per vedere i risultati qui.',
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withValues(alpha: .10),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: theme.colorScheme.primary.withValues(alpha: .20)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.lightbulb_outline, size: 18, color: theme.colorScheme.primary),
+                const SizedBox(width: 8),
                 Text(
-                  '${score.correct}/${score.total} risposte corrette',
+                  'Prova un quiz completo o parziale',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
             ),
           ),
-          // Accuracy display
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: _getAccuracyColor(score.accuracyPct).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  '${score.accuracyPct.toStringAsFixed(1)}%',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: _getAccuracyColor(score.accuracyPct),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
   }
 
-  Color _getAccuracyColor(double accuracy) {
-    if (accuracy >= 90) return Colors.green;
-    if (accuracy >= 80) return Colors.lightGreen;
-    if (accuracy >= 70) return Colors.orange;
-    if (accuracy >= 60) return Colors.deepOrange;
-    return Colors.red;
+  Widget _ghost(ThemeData theme) {
+    return Container(
+      width: 54,
+      height: 54,
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary.withValues(alpha: .10),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Icon(
+        Icons.quiz_outlined,
+        color: theme.colorScheme.primary.withValues(alpha: .60),
+        size: 28,
+      ),
+    );
+  }
+}
+
+// =======================
+//  PROGRESS RING
+// =======================
+class _ProgressRing extends StatelessWidget {
+  const _ProgressRing({
+    required this.progress,
+    required this.size,
+    required this.thickness,
+    required this.color,
+    this.child,
+  });
+
+  final double progress; // 0..1
+  final double size;
+  final double thickness;
+  final Color color;
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = Theme.of(context).colorScheme.outlineVariant.withValues(alpha: .35);
+
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: progress),
+      duration: const Duration(milliseconds: 900),
+      curve: Curves.easeOutCubic,
+      builder: (context, value, _) {
+        return SizedBox(
+          width: size,
+          height: size,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              CircularProgressIndicator(
+                value: 1,
+                strokeWidth: thickness,
+                valueColor: AlwaysStoppedAnimation<Color>(bg),
+              ),
+              CircularProgressIndicator(
+                value: value.clamp(0, 1),
+                strokeWidth: thickness,
+                valueColor: AlwaysStoppedAnimation<Color>(color),
+              ),
+              if (child != null) child!,
+            ],
+          ),
+        );
+      },
+    );
   }
 }

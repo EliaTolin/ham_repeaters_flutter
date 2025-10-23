@@ -27,7 +27,7 @@ class StatisticsPreviewSection extends HookWidget {
         ).animate(
           CurvedAnimation(
             parent: animationController,
-            curve: const Interval(0.3, 1, curve: Curves.easeOut),
+            curve: Curves.easeOut,
           ),
         );
       },
@@ -108,7 +108,7 @@ class StatisticsPreviewSection extends HookWidget {
               ],
             ),
             const SizedBox(height: 24),
-    
+
             // Quick stats preview
             Row(
               children: [
@@ -133,9 +133,9 @@ class StatisticsPreviewSection extends HookWidget {
                 ),
               ],
             ),
-    
+
             const SizedBox(height: 24),
-    
+
             // Action button
             SizedBox(
               width: double.infinity,

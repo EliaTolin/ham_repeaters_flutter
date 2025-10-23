@@ -26,21 +26,15 @@ class _QuizStatisticsCardState extends State<QuizStatisticsCard> with TickerProv
       vsync: this,
     );
 
-    // Create staggered animations for each stat
+    // Create animations for each stat
     _animations = List.generate(4, (index) {
-      final start = index * 0.2;
-      final end = (start + 0.4).clamp(0.0, 1.0);
       return Tween<double>(
         begin: 0,
         end: 1,
       ).animate(
         CurvedAnimation(
           parent: _animationController,
-          curve: Interval(
-            start,
-            end,
-            curve: Curves.easeOutCubic,
-          ),
+          curve: Curves.easeOutCubic,
         ),
       );
     });

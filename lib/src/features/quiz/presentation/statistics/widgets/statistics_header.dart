@@ -27,7 +27,7 @@ class _StatisticsHeaderState extends State<StatisticsHeader> with TickerProvider
     ).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0, 0.6, curve: Curves.easeOut),
+        curve: Curves.easeOut,
       ),
     );
 
@@ -37,7 +37,7 @@ class _StatisticsHeaderState extends State<StatisticsHeader> with TickerProvider
     ).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.2, 0.8, curve: Curves.easeOutCubic),
+        curve: Curves.easeOutCubic,
       ),
     );
 

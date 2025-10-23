@@ -26,18 +26,16 @@ class _OverviewStatsCardState extends State<OverviewStatsCard> with TickerProvid
       vsync: this,
     );
 
-    _animations = List.generate(4, (index) {
+    // Calcola il numero di tipologie d'esame per le animazioni
+    final examTypes = _getExamTypes();
+    _animations = List.generate(examTypes.length, (index) {
       return Tween<double>(
         begin: 0,
         end: 1,
       ).animate(
         CurvedAnimation(
           parent: _animationController,
-          curve: Interval(
-            index * 0.2,
-            (index * 0.2) + 0.6,
-            curve: Curves.easeOutCubic,
-          ),
+          curve: Curves.easeOutCubic,
         ),
       );
     });
@@ -54,14 +52,7 @@ class _OverviewStatsCardState extends State<OverviewStatsCard> with TickerProvid
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    // Calculate statistics
-    final totalQuizzes = widget.scores.length;
-    final totalQuestions = widget.scores.fold(0, (sum, score) => sum + score.total);
-    final averageAccuracy =
-        widget.scores.fold<double>(0, (sum, score) => sum + score.accuracyPct) / totalQuizzes;
-    final bestScore = widget.scores
-        .fold<double>(0, (max, score) => score.accuracyPct > max ? score.accuracyPct : max);
+    final examTypes = _getExamTypes();
 
     return AnimatedBuilder(
       animation: _animationController,
@@ -92,13 +83,13 @@ class _OverviewStatsCardState extends State<OverviewStatsCard> with TickerProvid
               Row(
                 children: [
                   Icon(
-                    Icons.dashboard_rounded,
+                    Icons.analytics_rounded,
                     color: theme.colorScheme.primary,
                     size: 28,
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    'Riepilogo Generale',
+                    'Precisione per Tipologia',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.onPrimaryContainer,
@@ -106,49 +97,26 @@ class _OverviewStatsCardState extends State<OverviewStatsCard> with TickerProvid
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: 1.5,
-                children: [
-                  _buildStatItem(
-                    context,
-                    'Quiz Completati',
-                    totalQuizzes.toString(),
-                    Icons.quiz_rounded,
-                    Colors.blue,
-                    0,
-                  ),
-                  _buildStatItem(
-                    context,
-                    'Domande Totali',
-                    totalQuestions.toString(),
-                    Icons.help_outline_rounded,
-                    Colors.green,
-                    1,
-                  ),
-                  _buildStatItem(
-                    context,
-                    'Precisione Media',
-                    '${averageAccuracy.toStringAsFixed(1)}%',
-                    Icons.trending_up_rounded,
-                    Colors.orange,
-                    2,
-                  ),
-                  _buildStatItem(
-                    context,
-                    'Miglior Risultato',
-                    '${bestScore.toStringAsFixed(1)}%',
-                    Icons.emoji_events_rounded,
-                    Colors.purple,
-                    3,
-                  ),
-                ],
-              ),
+              const SizedBox(height: 20),
+              if (examTypes.isEmpty)
+                _buildEmptyState(theme)
+              else
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: examTypes.length,
+                  separatorBuilder: (context, index) => const SizedBox(height: 12),
+                  itemBuilder: (context, index) {
+                    final examType = examTypes[index];
+                    final accuracy = _getAverageAccuracyForExamType(examType);
+                    final color = _getAccuracyColor(accuracy);
+
+                    return Transform.scale(
+                      scale: _animations[index].value,
+                      child: _buildExamTypeCard(theme, examType, accuracy, color),
+                    );
+                  },
+                ),
             ],
           ),
         );
@@ -156,70 +124,181 @@ class _OverviewStatsCardState extends State<OverviewStatsCard> with TickerProvid
     );
   }
 
-  Widget _buildStatItem(
-    BuildContext context,
-    String label,
-    String value,
-    IconData icon,
-    Color color,
-    int animationIndex,
-  ) {
-    final theme = Theme.of(context);
-
-    return Transform.scale(
-      scale: _animations[animationIndex].value,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: color.withValues(alpha: 0.1),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
+  Widget _buildEmptyState(ThemeData theme) {
+    return Container(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        children: [
+          Icon(
+            Icons.quiz_outlined,
+            size: 48,
+            color: theme.colorScheme.primary.withValues(alpha: 0.3),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Nessun quiz completato',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onPrimaryContainer,
             ),
-          ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Completa alcuni quiz per vedere le statistiche per tipologia',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExamTypeCard(ThemeData theme, String examType, double accuracy, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: color.withValues(alpha: 0.2),
+          width: 1.5,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
+        boxShadow: [
+          BoxShadow(
+            color: color.withValues(alpha: 0.1),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          // Icona della tipologia
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(
+              _getExamTypeIcon(examType),
+              color: color,
+              size: 24,
+            ),
+          ),
+          const SizedBox(width: 16),
+
+          // Informazioni
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    icon,
-                    color: color,
-                    size: 20,
+                Text(
+                  'Quiz $examType',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 4),
                 Text(
-                  value,
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: color,
+                  'Precisione media',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                fontWeight: FontWeight.w500,
+          ),
+
+          // Percentuale con progress ring
+          Column(
+            children: [
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      value: 1,
+                      strokeWidth: 4,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        theme.colorScheme.outline.withValues(alpha: 0.2),
+                      ),
+                    ),
+                    CircularProgressIndicator(
+                      value: accuracy / 100,
+                      strokeWidth: 4,
+                      valueColor: AlwaysStoppedAnimation<Color>(color),
+                    ),
+                    Text(
+                      '${accuracy.toStringAsFixed(0)}%',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: color,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
+  }
+
+  List<String> _getExamTypes() {
+    final examTypes = <String>{};
+    for (final score in widget.scores) {
+      if (score.exam != null) {
+        examTypes.add(score.exam!.value);
+      } else {
+        examTypes.add('Personalizzato');
+      }
+    }
+    return examTypes.toList()..sort();
+  }
+
+  double _getAverageAccuracyForExamType(String examType) {
+    final scoresForType = widget.scores.where((score) {
+      if (examType == 'Personalizzato') {
+        return score.exam == null;
+      }
+      return score.exam?.value == examType;
+    }).toList();
+
+    if (scoresForType.isEmpty) return 0;
+
+    final totalAccuracy = scoresForType.fold<double>(
+      0,
+      (sum, score) => sum + score.accuracyPct,
+    );
+
+    return totalAccuracy / scoresForType.length;
+  }
+
+  Color _getAccuracyColor(double accuracy) {
+    if (accuracy >= 90) return Colors.green;
+    if (accuracy >= 80) return Colors.lightGreen;
+    if (accuracy >= 70) return Colors.orange;
+    if (accuracy >= 60) return Colors.deepOrange;
+    return Colors.red;
+  }
+
+  IconData _getExamTypeIcon(String examType) {
+    switch (examType.toLowerCase()) {
+      case 'completo':
+        return Icons.quiz_rounded;
+      case 'parziale':
+        return Icons.quiz_outlined;
+      case 'personalizzato':
+        return Icons.tune_rounded;
+      default:
+        return Icons.quiz_rounded;
+    }
   }
 }
