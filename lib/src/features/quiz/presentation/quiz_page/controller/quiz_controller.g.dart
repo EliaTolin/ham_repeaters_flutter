@@ -13,7 +13,7 @@ part of 'quiz_controller.dart';
 const quizControllerProvider = QuizControllerFamily._();
 
 final class QuizControllerProvider
-    extends $AsyncNotifierProvider<QuizController, QuizState> {
+    extends $AsyncNotifierProvider<QuizController, QuizState?> {
   const QuizControllerProvider._(
       {required QuizControllerFamily super.from,
       required ExamType super.argument})
@@ -50,12 +50,12 @@ final class QuizControllerProvider
   }
 }
 
-String _$quizControllerHash() => r'7f5fca6fb873bffbb3af2d35f747a863e90d12c4';
+String _$quizControllerHash() => r'27f89fe1097796f3b4ca33bdb2fb0b1a2e3c5cfc';
 
 final class QuizControllerFamily extends $Family
     with
-        $ClassFamilyOverride<QuizController, AsyncValue<QuizState>, QuizState,
-            FutureOr<QuizState>, ExamType> {
+        $ClassFamilyOverride<QuizController, AsyncValue<QuizState?>, QuizState?,
+            FutureOr<QuizState?>, ExamType> {
   const QuizControllerFamily._()
       : super(
           retry: null,
@@ -74,11 +74,11 @@ final class QuizControllerFamily extends $Family
   String toString() => r'quizControllerProvider';
 }
 
-abstract class _$QuizController extends $AsyncNotifier<QuizState> {
+abstract class _$QuizController extends $AsyncNotifier<QuizState?> {
   late final _$args = ref.$arg as ExamType;
   ExamType get examType => _$args;
 
-  FutureOr<QuizState> build(
+  FutureOr<QuizState?> build(
     ExamType examType,
   );
   @$mustCallSuper
@@ -87,10 +87,10 @@ abstract class _$QuizController extends $AsyncNotifier<QuizState> {
     final created = build(
       _$args,
     );
-    final ref = this.ref as $Ref<AsyncValue<QuizState>, QuizState>;
+    final ref = this.ref as $Ref<AsyncValue<QuizState?>, QuizState?>;
     final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<QuizState>, QuizState>,
-        AsyncValue<QuizState>,
+        AnyNotifier<AsyncValue<QuizState?>, QuizState?>,
+        AsyncValue<QuizState?>,
         Object?,
         Object?>;
     element.handleValue(ref, created);

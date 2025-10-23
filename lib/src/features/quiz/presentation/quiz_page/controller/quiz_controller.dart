@@ -1,7 +1,8 @@
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/controller/state/quiz_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state/quiz_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_set_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_controller.g.dart';
@@ -9,20 +10,11 @@ part 'quiz_controller.g.dart';
 @riverpod
 class QuizController extends _$QuizController {
   @override
-  FutureOr<QuizState> build(ExamType examType) async {
-    final userId = await ref.read(getUserIdProvider.future);
-    if (userId == null) {
-      throw Exception('User ID not found');
-    }
-    final result = await ref.read(getQuizSetProvider(examType: examType, userId: userId).future);
-    return QuizState(
-      quizSetId: result.quizSetId,
-      questions: result.questions,
-      totalQuestions: result.totalQuestions,
-    );
+  FutureOr<QuizState?> build(ExamType examType) async {
+    return null;
   }
 
-  Future<void> generateQuizSet(ExamType examType) async {
+  Future<void> initializeQuiz(ExamType examType) async {
     state = const AsyncLoading();
 
     try {
@@ -33,7 +25,7 @@ class QuizController extends _$QuizController {
       }
 
       state = await AsyncValue.guard(() async {
-        final result = await ref.read(
+        final quizSet = await ref.read(
           getQuizSetProvider(
             examType: examType,
             userId: userId,
@@ -41,13 +33,107 @@ class QuizController extends _$QuizController {
         );
 
         return QuizState(
-          quizSetId: result.quizSetId,
-          questions: result.questions,
-          totalQuestions: result.totalQuestions,
+          quizSet: quizSet,
+          currentQuestionIndex: 0,
+          answers: {},
+          questionTimes: {},
+          quizStartTime: DateTime.now(),
         );
       });
     } catch (e) {
       state = AsyncError(e, StackTrace.current);
+    }
+  }
+
+  Future<void> answerQuestion(String chosenLetter) async {
+    final currentState = state.value;
+    if (currentState == null) return;
+
+    final question = currentState.currentQuestion;
+    final now = DateTime.now();
+    final timeMs = now.difference(currentState.quizStartTime).inMilliseconds;
+
+    // Update local state
+    final newAnswers = Map<int, String?>.from(currentState.answers);
+    newAnswers[question.id] = chosenLetter;
+
+    final newQuestionTimes = Map<int, int>.from(currentState.questionTimes);
+    newQuestionTimes[question.id] = timeMs;
+
+    final newState = currentState.copyWith(
+      answers: newAnswers,
+      questionTimes: newQuestionTimes,
+    );
+
+    state = AsyncValue.data(newState);
+
+    // Save to database
+    try {
+      final repository = ref.read(quizAnswersRepositoryProvider);
+      await repository.saveAnswer(
+        setId: currentState.quizSet.quizSetId,
+        questionId: question.id,
+        chosenLetter: chosenLetter,
+        timeMs: timeMs,
+      );
+    } catch (e) {
+      // Handle error - could show a snackbar or update error state
+      print('Error saving answer: $e');
+    }
+  }
+
+  void goToNextQuestion() {
+    final currentState = state.value;
+    if (currentState == null || !currentState.canGoNext) return;
+
+    final newState = currentState.copyWith(
+      currentQuestionIndex: currentState.currentQuestionIndex + 1,
+    );
+
+    state = AsyncValue.data(newState);
+  }
+
+  void goToPreviousQuestion() {
+    final currentState = state.value;
+    if (currentState == null || !currentState.canGoPrevious) return;
+
+    final newState = currentState.copyWith(
+      currentQuestionIndex: currentState.currentQuestionIndex - 1,
+    );
+
+    state = AsyncValue.data(newState);
+  }
+
+  void goToQuestion(int index) {
+    final currentState = state.value;
+    if (currentState == null || index < 0 || index >= currentState.totalQuestions) return;
+
+    final newState = currentState.copyWith(
+      currentQuestionIndex: index,
+    );
+
+    state = AsyncValue.data(newState);
+  }
+
+  Future<void> submitQuiz() async {
+    final currentState = state.value;
+    if (currentState == null || !currentState.canSubmit) return;
+
+    state = AsyncValue.data(currentState.copyWith(isSubmitting: true));
+
+    try {
+      // Here you would typically call an API to finalize the quiz
+      // For now, we'll just simulate success
+      await Future.delayed(const Duration(seconds: 1));
+
+      // Navigate to results page or show success message
+      // This will be implemented later
+    } catch (e) {
+      final newState = currentState.copyWith(
+        isSubmitting: false,
+        errorMessage: 'Failed to submit quiz: $e',
+      );
+      state = AsyncValue.data(newState);
     }
   }
 }
