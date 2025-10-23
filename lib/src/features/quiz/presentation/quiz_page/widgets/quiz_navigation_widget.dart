@@ -91,4 +91,3 @@ class QuizNavigationWidget extends StatelessWidget {
     );
   }
 }
-

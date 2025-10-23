@@ -12,8 +12,8 @@ part of 'quiz_dashboard_controller.dart';
 @ProviderFor(QuizDashboardController)
 const quizDashboardControllerProvider = QuizDashboardControllerProvider._();
 
-final class QuizDashboardControllerProvider
-    extends $NotifierProvider<QuizDashboardController, QuizDashboardState> {
+final class QuizDashboardControllerProvider extends $AsyncNotifierProvider<
+    QuizDashboardController, QuizDashboardState> {
   const QuizDashboardControllerProvider._()
       : super(
           from: null,
@@ -31,29 +31,23 @@ final class QuizDashboardControllerProvider
   @$internal
   @override
   QuizDashboardController create() => QuizDashboardController();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(QuizDashboardState value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<QuizDashboardState>(value),
-    );
-  }
 }
 
 String _$quizDashboardControllerHash() =>
-    r'28db730b1201bc713c1451cde4c6fa6030200557';
+    r'd67e25d61b107544318c3e86157c60834053661d';
 
-abstract class _$QuizDashboardController extends $Notifier<QuizDashboardState> {
-  QuizDashboardState build();
+abstract class _$QuizDashboardController
+    extends $AsyncNotifier<QuizDashboardState> {
+  FutureOr<QuizDashboardState> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<QuizDashboardState, QuizDashboardState>;
+    final ref =
+        this.ref as $Ref<AsyncValue<QuizDashboardState>, QuizDashboardState>;
     final element = ref.element as $ClassProviderElement<
-        AnyNotifier<QuizDashboardState, QuizDashboardState>,
-        QuizDashboardState,
+        AnyNotifier<AsyncValue<QuizDashboardState>, QuizDashboardState>,
+        AsyncValue<QuizDashboardState>,
         Object?,
         Object?>;
     element.handleValue(ref, created);

@@ -61,7 +61,7 @@ class _QuizAccuracyChartState extends State<QuizAccuracyChart> with TickerProvid
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: theme.colorScheme.shadow.withOpacity(0.1),
+            color: theme.colorScheme.shadow.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -101,7 +101,7 @@ class _QuizAccuracyChartState extends State<QuizAccuracyChart> with TickerProvid
                     height: 200,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                      color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
                     ),
                   ),
 
@@ -143,7 +143,7 @@ class _QuizAccuracyChartState extends State<QuizAccuracyChart> with TickerProvid
                         Text(
                           'Precisione',
                           style: theme.textTheme.bodyLarge?.copyWith(
-                            color: theme.colorScheme.onSurface.withOpacity(0.7),
+                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                           ),
                         ),
                       ],
@@ -205,7 +205,7 @@ class _QuizAccuracyChartState extends State<QuizAccuracyChart> with TickerProvid
           width: 12,
           height: 12,
           decoration: BoxDecoration(
-            color: isActive ? color : color.withOpacity(0.3),
+            color: isActive ? color : color.withValues(alpha: 0.3),
             shape: BoxShape.circle,
           ),
         ),
@@ -214,13 +214,13 @@ class _QuizAccuracyChartState extends State<QuizAccuracyChart> with TickerProvid
           range,
           style: theme.textTheme.bodySmall?.copyWith(
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            color: isActive ? color : theme.colorScheme.onSurface.withOpacity(0.5),
+            color: isActive ? color : theme.colorScheme.onSurface.withValues(alpha: 0.5),
           ),
         ),
         Text(
           label,
           style: theme.textTheme.bodySmall?.copyWith(
-            color: isActive ? color : theme.colorScheme.onSurface.withOpacity(0.5),
+            color: isActive ? color : theme.colorScheme.onSurface.withValues(alpha: 0.5),
           ),
         ),
       ],

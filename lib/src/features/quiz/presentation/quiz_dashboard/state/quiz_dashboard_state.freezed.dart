@@ -14,6 +14,7 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$QuizDashboardState {
+  List<QuizSetScore>? get recentScores;
   String? get errorMessage;
 
   /// Create a copy of QuizDashboardState
@@ -29,16 +30,19 @@ mixin _$QuizDashboardState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is QuizDashboardState &&
+            const DeepCollectionEquality()
+                .equals(other.recentScores, recentScores) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, errorMessage);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(recentScores), errorMessage);
 
   @override
   String toString() {
-    return 'QuizDashboardState(errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, errorMessage: $errorMessage)';
   }
 }
 
@@ -48,7 +52,7 @@ abstract mixin class $QuizDashboardStateCopyWith<$Res> {
           QuizDashboardState value, $Res Function(QuizDashboardState) _then) =
       _$QuizDashboardStateCopyWithImpl;
   @useResult
-  $Res call({String? errorMessage});
+  $Res call({List<QuizSetScore>? recentScores, String? errorMessage});
 }
 
 /// @nodoc
@@ -64,9 +68,14 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? recentScores = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_self.copyWith(
+      recentScores: freezed == recentScores
+          ? _self.recentScores
+          : recentScores // ignore: cast_nullable_to_non_nullable
+              as List<QuizSetScore>?,
       errorMessage: freezed == errorMessage
           ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -168,13 +177,14 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String? errorMessage)? $default, {
+    TResult Function(List<QuizSetScore>? recentScores, String? errorMessage)?
+        $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState() when $default != null:
-        return $default(_that.errorMessage);
+        return $default(_that.recentScores, _that.errorMessage);
       case _:
         return orElse();
     }
@@ -195,12 +205,13 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String? errorMessage) $default,
+    TResult Function(List<QuizSetScore>? recentScores, String? errorMessage)
+        $default,
   ) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState():
-        return $default(_that.errorMessage);
+        return $default(_that.recentScores, _that.errorMessage);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -220,12 +231,13 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String? errorMessage)? $default,
+    TResult? Function(List<QuizSetScore>? recentScores, String? errorMessage)?
+        $default,
   ) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState() when $default != null:
-        return $default(_that.errorMessage);
+        return $default(_that.recentScores, _that.errorMessage);
       case _:
         return null;
     }
@@ -235,7 +247,19 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 /// @nodoc
 
 class _QuizDashboardState implements QuizDashboardState {
-  const _QuizDashboardState({this.errorMessage});
+  const _QuizDashboardState(
+      {final List<QuizSetScore>? recentScores, this.errorMessage})
+      : _recentScores = recentScores;
+
+  final List<QuizSetScore>? _recentScores;
+  @override
+  List<QuizSetScore>? get recentScores {
+    final value = _recentScores;
+    if (value == null) return null;
+    if (_recentScores is EqualUnmodifiableListView) return _recentScores;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   final String? errorMessage;
@@ -253,16 +277,19 @@ class _QuizDashboardState implements QuizDashboardState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _QuizDashboardState &&
+            const DeepCollectionEquality()
+                .equals(other._recentScores, _recentScores) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, errorMessage);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_recentScores), errorMessage);
 
   @override
   String toString() {
-    return 'QuizDashboardState(errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, errorMessage: $errorMessage)';
   }
 }
 
@@ -274,7 +301,7 @@ abstract mixin class _$QuizDashboardStateCopyWith<$Res>
       __$QuizDashboardStateCopyWithImpl;
   @override
   @useResult
-  $Res call({String? errorMessage});
+  $Res call({List<QuizSetScore>? recentScores, String? errorMessage});
 }
 
 /// @nodoc
@@ -290,9 +317,14 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
+    Object? recentScores = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_QuizDashboardState(
+      recentScores: freezed == recentScores
+          ? _self._recentScores
+          : recentScores // ignore: cast_nullable_to_non_nullable
+              as List<QuizSetScore>?,
       errorMessage: freezed == errorMessage
           ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable

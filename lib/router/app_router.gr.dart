@@ -201,6 +201,22 @@ class QuizResultsRouteArgs {
 }
 
 /// generated route for
+/// [QuizStatisticsPage]
+class QuizStatisticsRoute extends PageRouteInfo<void> {
+  const QuizStatisticsRoute({List<PageRouteInfo>? children})
+      : super(QuizStatisticsRoute.name, initialChildren: children);
+
+  static const String name = 'QuizStatisticsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const QuizStatisticsPage();
+    },
+  );
+}
+
+/// generated route for
 /// [SimplePage]
 class SimpleRoute extends PageRouteInfo<void> {
   const SimpleRoute({List<PageRouteInfo>? children})

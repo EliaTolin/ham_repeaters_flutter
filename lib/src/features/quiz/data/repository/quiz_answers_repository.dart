@@ -22,6 +22,8 @@ abstract class QuizAnswersRepository {
   });
 
   Future<List<QuizSetQuestionModel>> getAnswers(String setId);
+
+  Future<void> deleteQuizAnswers(String setId);
 }
 
 class QuizAnswersRepositoryImpl implements QuizAnswersRepository {
@@ -73,5 +75,9 @@ class QuizAnswersRepositoryImpl implements QuizAnswersRepository {
   Future<List<QuizSetQuestionModel>> getAnswers(String setId) async {
     return _dataSource.getAnswers(setId);
   }
-}
 
+  @override
+  Future<void> deleteQuizAnswers(String setId) async {
+    return _dataSource.deleteQuizAnswers(setId);
+  }
+}

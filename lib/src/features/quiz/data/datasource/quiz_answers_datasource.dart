@@ -69,5 +69,12 @@ class QuizAnswersDataSource {
       throw Exception('Failed to get answers: $e');
     }
   }
-}
 
+  Future<void> deleteQuizAnswers(String setId) async {
+    try {
+      await _supabase.from('quiz_set_question').delete().eq('set_id', setId);
+    } catch (e) {
+      throw Exception('Failed to delete quiz answers: $e');
+    }
+  }
+}

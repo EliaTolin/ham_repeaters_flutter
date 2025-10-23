@@ -69,6 +69,7 @@ class QuizResultsPage extends ConsumerWidget {
 
                         // Action buttons
                         QuizActionButtons(
+                          score: results,
                           onRetakeQuiz: () {
                             // Navigate back to quiz dashboard or retake
                             context.router.maybePop();

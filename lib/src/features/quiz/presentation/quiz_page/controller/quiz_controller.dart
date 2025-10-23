@@ -78,7 +78,7 @@ class QuizController extends _$QuizController {
       );
     } catch (e) {
       // Handle error - could show a snackbar or update error state
-      print('Error saving answer: $e');
+      // Error is silently handled to avoid disrupting quiz flow
     }
   }
 

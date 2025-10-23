@@ -82,12 +82,12 @@ class _QuizResultsHeaderState extends State<QuizResultsHeader> with TickerProvid
           end: Alignment.bottomRight,
           colors: isGoodScore
               ? [
-                  theme.colorScheme.primary.withOpacity(0.1),
-                  theme.colorScheme.secondary.withOpacity(0.05),
+                  theme.colorScheme.primary.withValues(alpha: 0.1),
+                  theme.colorScheme.secondary.withValues(alpha: 0.05),
                 ]
               : [
-                  theme.colorScheme.error.withOpacity(0.1),
-                  theme.colorScheme.error.withOpacity(0.05),
+                  theme.colorScheme.error.withValues(alpha: 0.1),
+                  theme.colorScheme.error.withValues(alpha: 0.05),
                 ],
         ),
       ),
@@ -132,12 +132,12 @@ class _QuizResultsHeaderState extends State<QuizResultsHeader> with TickerProvid
                 gradient: RadialGradient(
                   colors: isGoodScore
                       ? [
-                          theme.colorScheme.primary.withOpacity(0.2),
-                          theme.colorScheme.primary.withOpacity(0.1),
+                          theme.colorScheme.primary.withValues(alpha: 0.2),
+                          theme.colorScheme.primary.withValues(alpha: 0.1),
                         ]
                       : [
-                          theme.colorScheme.error.withOpacity(0.2),
-                          theme.colorScheme.error.withOpacity(0.1),
+                          theme.colorScheme.error.withValues(alpha: 0.2),
+                          theme.colorScheme.error.withValues(alpha: 0.1),
                         ],
                 ),
               ),
@@ -169,7 +169,7 @@ class _QuizResultsHeaderState extends State<QuizResultsHeader> with TickerProvid
                 Text(
                   _getScoreMessage(widget.score.accuracyPct),
                   style: theme.textTheme.titleMedium?.copyWith(
-                    color: theme.colorScheme.onSurface.withOpacity(0.7),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                   textAlign: TextAlign.center,
                 ),

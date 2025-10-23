@@ -68,7 +68,7 @@ class _QuizStatisticsCardState extends State<QuizStatisticsCard> with TickerProv
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: theme.colorScheme.shadow.withOpacity(0.1),
+            color: theme.colorScheme.shadow.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -159,10 +159,10 @@ class _QuizStatisticsCardState extends State<QuizStatisticsCard> with TickerProv
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: color.withOpacity(0.2),
+                  color: color.withValues(alpha: 0.2),
                 ),
               ),
               child: Column(
@@ -184,7 +184,7 @@ class _QuizStatisticsCardState extends State<QuizStatisticsCard> with TickerProv
                   Text(
                     label,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.7),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
