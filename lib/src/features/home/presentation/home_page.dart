@@ -10,7 +10,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [
-        SimpleRoute(),
         QuizDashboardRoute(),
         ProfileRoute(),
       ],
@@ -20,7 +19,6 @@ class HomePage extends StatelessWidget {
           onDestinationSelected: tabsRouter.setActiveIndex,
           backgroundColor: Colors.white,
           destinations: const [
-            NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
             NavigationDestination(icon: Icon(Icons.quiz), label: 'Quiz'),
             NavigationDestination(icon: Icon(Icons.person), label: 'Profilo'),
           ],

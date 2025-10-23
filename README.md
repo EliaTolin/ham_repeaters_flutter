@@ -1,8 +1,5 @@
-1. Personalizzazione profilo
-2. Inserimento immagini barili
-3. Grafici nelle misurazioni
-
-
-4. Tools
-
-DB SUPABASE PASSWORD: YFe5GsIt0d718z05
+- una volta finito il quiz dare la possibilità o di rifarne un'altro o di tornare alla home
+- il condividi whatsapp deve effettivamente condividere il risultato del quiz tramite messaggio
+- il quiz si deve svolgere fuori dalla home 
+- il torna indietro non funziona
+- riprova quiz deve far fare un'altro quiz da zero

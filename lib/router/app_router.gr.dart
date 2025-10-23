@@ -217,22 +217,6 @@ class QuizStatisticsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SimplePage]
-class SimpleRoute extends PageRouteInfo<void> {
-  const SimpleRoute({List<PageRouteInfo>? children})
-      : super(SimpleRoute.name, initialChildren: children);
-
-  static const String name = 'SimpleRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const SimplePage();
-    },
-  );
-}
-
-/// generated route for
 /// [SplashScreen]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
