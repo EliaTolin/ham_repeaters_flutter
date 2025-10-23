@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/get_profile_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/provider/dashboard_data_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/state/quiz_dashboard_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_dashboard_controller.g.dart';
@@ -19,7 +21,7 @@ class QuizDashboardController extends _$QuizDashboardController {
     try {
       final recentScores = await ref.read(recentQuizScoresProvider.future);
       final allScores = await ref.read(allQuizScoresProvider.future);
-
+      final profile = await ref.read(getProfileProvider.future);
       // Calcola le statistiche reali
       final totalQuizzes = allScores.length;
       final averageAccuracy = allScores.isEmpty
@@ -30,6 +32,7 @@ class QuizDashboardController extends _$QuizDashboardController {
         recentScores: recentScores,
         totalQuizzes: totalQuizzes,
         averageAccuracy: averageAccuracy,
+        profile: profile,
       );
     } catch (e) {
       return QuizDashboardState(

@@ -7,4 +7,5 @@ class ImageAssets {
   static const String battery = 'assets/images/battery.jpg';
   static const String misurations = 'assets/images/misurations.jpg';
   static const String share = 'assets/images/share.jpg';
+  static const String icon = 'assets/icon/icon.png';
 }

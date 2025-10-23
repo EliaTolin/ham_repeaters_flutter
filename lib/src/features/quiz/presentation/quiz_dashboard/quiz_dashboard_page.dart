@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/common/widgets/loading/circular_loading_widget.dart';
+import 'package:quiz_radioamatori/resources/resources.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/controller/quiz_dashboard_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/quick_actions_section.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/recent_quizzes_section.dart';
@@ -44,15 +45,15 @@ class QuizDashboardPage extends HookConsumerWidget {
                         Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: Colors.white.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: Icon(
-                                Icons.quiz_rounded,
-                                size: 32,
-                                color: Theme.of(context).colorScheme.onPrimary,
+                              child: const Image(
+                                image: AssetImage(ImageAssets.icon),
+                                width: 64,
+                                height: 64,
                               ),
                             ),
                             const SizedBox(width: 16),
@@ -61,7 +62,7 @@ class QuizDashboardPage extends HookConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Benvenuto!',
+                                    'Benvenuto,',
                                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                           color: Theme.of(context).colorScheme.onPrimary,
                                           fontWeight: FontWeight.bold,

@@ -17,6 +17,7 @@ mixin _$QuizDashboardState {
   List<QuizSetScore>? get recentScores;
   int get totalQuizzes;
   double get averageAccuracy;
+  Profile? get profile;
   String? get errorMessage;
 
   /// Create a copy of QuizDashboardState
@@ -38,6 +39,7 @@ mixin _$QuizDashboardState {
                 other.totalQuizzes == totalQuizzes) &&
             (identical(other.averageAccuracy, averageAccuracy) ||
                 other.averageAccuracy == averageAccuracy) &&
+            (identical(other.profile, profile) || other.profile == profile) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -48,11 +50,12 @@ mixin _$QuizDashboardState {
       const DeepCollectionEquality().hash(recentScores),
       totalQuizzes,
       averageAccuracy,
+      profile,
       errorMessage);
 
   @override
   String toString() {
-    return 'QuizDashboardState(recentScores: $recentScores, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, errorMessage: $errorMessage)';
   }
 }
 
@@ -66,7 +69,10 @@ abstract mixin class $QuizDashboardStateCopyWith<$Res> {
       {List<QuizSetScore>? recentScores,
       int totalQuizzes,
       double averageAccuracy,
+      Profile? profile,
       String? errorMessage});
+
+  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -85,6 +91,7 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
     Object? recentScores = freezed,
     Object? totalQuizzes = null,
     Object? averageAccuracy = null,
+    Object? profile = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_self.copyWith(
@@ -100,11 +107,29 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
           ? _self.averageAccuracy
           : averageAccuracy // ignore: cast_nullable_to_non_nullable
               as double,
+      profile: freezed == profile
+          ? _self.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile?,
       errorMessage: freezed == errorMessage
           ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
+  }
+
+  /// Create a copy of QuizDashboardState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileCopyWith<$Res>? get profile {
+    if (_self.profile == null) {
+      return null;
+    }
+
+    return $ProfileCopyWith<$Res>(_self.profile!, (value) {
+      return _then(_self.copyWith(profile: value));
+    });
   }
 }
 
@@ -202,7 +227,7 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(List<QuizSetScore>? recentScores, int totalQuizzes,
-            double averageAccuracy, String? errorMessage)?
+            double averageAccuracy, Profile? profile, String? errorMessage)?
         $default, {
     required TResult orElse(),
   }) {
@@ -210,7 +235,7 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
     switch (_that) {
       case _QuizDashboardState() when $default != null:
         return $default(_that.recentScores, _that.totalQuizzes,
-            _that.averageAccuracy, _that.errorMessage);
+            _that.averageAccuracy, _that.profile, _that.errorMessage);
       case _:
         return orElse();
     }
@@ -232,14 +257,14 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(List<QuizSetScore>? recentScores, int totalQuizzes,
-            double averageAccuracy, String? errorMessage)
+            double averageAccuracy, Profile? profile, String? errorMessage)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState():
         return $default(_that.recentScores, _that.totalQuizzes,
-            _that.averageAccuracy, _that.errorMessage);
+            _that.averageAccuracy, _that.profile, _that.errorMessage);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -260,14 +285,14 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(List<QuizSetScore>? recentScores, int totalQuizzes,
-            double averageAccuracy, String? errorMessage)?
+            double averageAccuracy, Profile? profile, String? errorMessage)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState() when $default != null:
         return $default(_that.recentScores, _that.totalQuizzes,
-            _that.averageAccuracy, _that.errorMessage);
+            _that.averageAccuracy, _that.profile, _that.errorMessage);
       case _:
         return null;
     }
@@ -281,6 +306,7 @@ class _QuizDashboardState implements QuizDashboardState {
       {final List<QuizSetScore>? recentScores,
       this.totalQuizzes = 0,
       this.averageAccuracy = 0.0,
+      this.profile,
       this.errorMessage})
       : _recentScores = recentScores;
 
@@ -300,6 +326,8 @@ class _QuizDashboardState implements QuizDashboardState {
   @override
   @JsonKey()
   final double averageAccuracy;
+  @override
+  final Profile? profile;
   @override
   final String? errorMessage;
 
@@ -322,6 +350,7 @@ class _QuizDashboardState implements QuizDashboardState {
                 other.totalQuizzes == totalQuizzes) &&
             (identical(other.averageAccuracy, averageAccuracy) ||
                 other.averageAccuracy == averageAccuracy) &&
+            (identical(other.profile, profile) || other.profile == profile) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -332,11 +361,12 @@ class _QuizDashboardState implements QuizDashboardState {
       const DeepCollectionEquality().hash(_recentScores),
       totalQuizzes,
       averageAccuracy,
+      profile,
       errorMessage);
 
   @override
   String toString() {
-    return 'QuizDashboardState(recentScores: $recentScores, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, errorMessage: $errorMessage)';
   }
 }
 
@@ -352,7 +382,11 @@ abstract mixin class _$QuizDashboardStateCopyWith<$Res>
       {List<QuizSetScore>? recentScores,
       int totalQuizzes,
       double averageAccuracy,
+      Profile? profile,
       String? errorMessage});
+
+  @override
+  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -371,6 +405,7 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
     Object? recentScores = freezed,
     Object? totalQuizzes = null,
     Object? averageAccuracy = null,
+    Object? profile = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_QuizDashboardState(
@@ -386,11 +421,29 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
           ? _self.averageAccuracy
           : averageAccuracy // ignore: cast_nullable_to_non_nullable
               as double,
+      profile: freezed == profile
+          ? _self.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile?,
       errorMessage: freezed == errorMessage
           ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
+  }
+
+  /// Create a copy of QuizDashboardState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileCopyWith<$Res>? get profile {
+    if (_self.profile == null) {
+      return null;
+    }
+
+    return $ProfileCopyWith<$Res>(_self.profile!, (value) {
+      return _then(_self.copyWith(profile: value));
+    });
   }
 }
 
