@@ -13,6 +13,7 @@ abstract class QuizState with _$QuizState {
     required Map<int, int> questionTimes, // questionId -> timeMs
     required DateTime quizStartTime,
     @Default(false) bool isSubmitting,
+    @Default(false) bool isCompleted,
     String? errorMessage,
   }) = _QuizState;
 
@@ -36,4 +37,3 @@ abstract class QuizState with _$QuizState {
 
   bool get canSubmit => answeredQuestions == totalQuestions;
 }
-

@@ -18,6 +18,7 @@ mixin _$QuizSetScoreModel {
   String get setId;
   @JsonKey(name: 'user_id')
   String get userId;
+  @QuizModeConverter()
   QuizMode get mode;
   int get answered;
   int get correct;
@@ -25,6 +26,7 @@ mixin _$QuizSetScoreModel {
   int get total;
   @JsonKey(name: 'accuracy_pct')
   double get accuracyPct;
+  @ExamTypeConverter()
   ExamType? get exam;
   @JsonKey(name: 'custom_topics')
   List<String>? get customTopics;
@@ -90,13 +92,13 @@ abstract mixin class $QuizSetScoreModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'set_id') String setId,
       @JsonKey(name: 'user_id') String userId,
-      QuizMode mode,
+      @QuizModeConverter() QuizMode mode,
       int answered,
       int correct,
       int wrong,
       int total,
       @JsonKey(name: 'accuracy_pct') double accuracyPct,
-      ExamType? exam,
+      @ExamTypeConverter() ExamType? exam,
       @JsonKey(name: 'custom_topics') List<String>? customTopics});
 }
 
@@ -265,13 +267,13 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
     TResult Function(
             @JsonKey(name: 'set_id') String setId,
             @JsonKey(name: 'user_id') String userId,
-            QuizMode mode,
+            @QuizModeConverter() QuizMode mode,
             int answered,
             int correct,
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
-            ExamType? exam,
+            @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)?
         $default, {
     required TResult orElse(),
@@ -313,13 +315,13 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
     TResult Function(
             @JsonKey(name: 'set_id') String setId,
             @JsonKey(name: 'user_id') String userId,
-            QuizMode mode,
+            @QuizModeConverter() QuizMode mode,
             int answered,
             int correct,
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
-            ExamType? exam,
+            @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)
         $default,
   ) {
@@ -359,13 +361,13 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
     TResult? Function(
             @JsonKey(name: 'set_id') String setId,
             @JsonKey(name: 'user_id') String userId,
-            QuizMode mode,
+            @QuizModeConverter() QuizMode mode,
             int answered,
             int correct,
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
-            ExamType? exam,
+            @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)?
         $default,
   ) {
@@ -395,13 +397,13 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
   const _QuizSetScoreModel(
       {@JsonKey(name: 'set_id') required this.setId,
       @JsonKey(name: 'user_id') required this.userId,
-      required this.mode,
+      @QuizModeConverter() required this.mode,
       required this.answered,
       required this.correct,
       required this.wrong,
       required this.total,
       @JsonKey(name: 'accuracy_pct') required this.accuracyPct,
-      this.exam,
+      @ExamTypeConverter() this.exam,
       @JsonKey(name: 'custom_topics') final List<String>? customTopics})
       : _customTopics = customTopics;
   factory _QuizSetScoreModel.fromJson(Map<String, dynamic> json) =>
@@ -414,6 +416,7 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
   @JsonKey(name: 'user_id')
   final String userId;
   @override
+  @QuizModeConverter()
   final QuizMode mode;
   @override
   final int answered;
@@ -427,6 +430,7 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
   @JsonKey(name: 'accuracy_pct')
   final double accuracyPct;
   @override
+  @ExamTypeConverter()
   final ExamType? exam;
   final List<String>? _customTopics;
   @override
@@ -506,13 +510,13 @@ abstract mixin class _$QuizSetScoreModelCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'set_id') String setId,
       @JsonKey(name: 'user_id') String userId,
-      QuizMode mode,
+      @QuizModeConverter() QuizMode mode,
       int answered,
       int correct,
       int wrong,
       int total,
       @JsonKey(name: 'accuracy_pct') double accuracyPct,
-      ExamType? exam,
+      @ExamTypeConverter() ExamType? exam,
       @JsonKey(name: 'custom_topics') List<String>? customTopics});
 }
 

@@ -12,6 +12,7 @@ import 'package:quiz_radioamatori/src/features/profile/presentation/user_setting
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/quiz_dashboard_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/quiz_page.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/quiz_results_page.dart';
 import 'package:quiz_radioamatori/src/features/simple/presentation/simple_page.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/presentation/splashscreen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -43,6 +44,9 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
                 ),
                 AutoRoute(
                   page: QuizRoute.page,
+                ),
+                AutoRoute(
+                  page: QuizResultsRoute.page,
                 ),
               ],
             ),

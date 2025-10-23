@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/controller/quiz_controller.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state/quiz_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_navigation_widget.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_progress_widget.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_question_widget.dart';
@@ -29,6 +31,17 @@ class _QuizPageState extends ConsumerState<QuizPage> {
   @override
   Widget build(BuildContext context) {
     final quizState = ref.watch(quizControllerProvider(widget.examType));
+
+    // Listen for quiz completion and navigate to results
+    ref.listen<AsyncValue<QuizState?>>(quizControllerProvider(widget.examType), (previous, next) {
+      next.whenData((data) {
+        if (data?.isCompleted ?? false) {
+          context.router.push(
+            QuizResultsRoute(setId: data!.quizSet.quizSetId),
+          );
+        }
+      });
+    });
 
     return Scaffold(
       appBar: AppBar(

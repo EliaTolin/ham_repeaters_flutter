@@ -6,7 +6,7 @@ enum QuizMode {
   final String value;
 
   static QuizMode fromString(String value) {
-    switch (value) {
+    switch (value.toUpperCase()) {
       case 'PER_TOPIC':
         return QuizMode.perTopic;
       case 'PER_ESAME':

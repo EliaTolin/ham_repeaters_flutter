@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/converters/quiz_converters.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_mode.dart';
 
@@ -10,13 +11,13 @@ abstract class QuizSetScoreModel with _$QuizSetScoreModel {
   const factory QuizSetScoreModel({
     @JsonKey(name: 'set_id') required String setId,
     @JsonKey(name: 'user_id') required String userId,
-    required QuizMode mode,
+    @QuizModeConverter() required QuizMode mode,
     required int answered,
     required int correct,
     required int wrong,
     required int total,
     @JsonKey(name: 'accuracy_pct') required double accuracyPct,
-    ExamType? exam,
+    @ExamTypeConverter() ExamType? exam,
     @JsonKey(name: 'custom_topics') List<String>? customTopics,
   }) = _QuizSetScoreModel;
 

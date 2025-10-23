@@ -1,5 +1,6 @@
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_response_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_score_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -10,7 +11,7 @@ part 'quiz_supabase_datasource.g.dart';
 class QuizSupabaseDataSource {
   QuizSupabaseDataSource(this._supabase);
   final SupabaseClient _supabase;
-  final QuizSetResponseMapper _mapper = QuizSetResponseMapper();
+  final QuizSetResponseMapper _responseMapper = QuizSetResponseMapper();
 
   Future<QuizSetResponse> getQuizSet({
     required ExamType examType,
@@ -38,9 +39,22 @@ class QuizSupabaseDataSource {
       final result = data['data'] as Map<String, dynamic>;
       final model = QuizSetResponseModel.fromJson(result);
 
-      return _mapper.fromModel(model);
+      return _responseMapper.fromModel(model);
     } catch (e) {
       throw Exception('Failed to get quiz set: $e');
+    }
+  }
+
+  Future<QuizSetScoreModel?> getQuizResults(String setId) async {
+    try {
+      final response =
+          await _supabase.from('quiz_set_score').select().eq('set_id', setId).maybeSingle();
+
+      if (response == null) return null;
+
+      return QuizSetScoreModel.fromJson(response);
+    } catch (e) {
+      throw Exception('Failed to get quiz results: $e');
     }
   }
 }

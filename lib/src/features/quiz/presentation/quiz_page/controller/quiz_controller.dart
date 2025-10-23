@@ -126,8 +126,13 @@ class QuizController extends _$QuizController {
       // For now, we'll just simulate success
       await Future.delayed(const Duration(seconds: 1));
 
-      // Navigate to results page or show success message
-      // This will be implemented later
+      // Set a flag to indicate quiz completion
+      // The UI will handle navigation based on this state
+      final completedState = currentState.copyWith(
+        isSubmitting: false,
+        isCompleted: true,
+      );
+      state = AsyncValue.data(completedState);
     } catch (e) {
       final newState = currentState.copyWith(
         isSubmitting: false,
