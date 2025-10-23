@@ -53,12 +53,14 @@ class QuizPage extends ConsumerWidget {
                   ),
                 );
               },
-              loading: () => const Column(
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Generando quiz...'),
-                ],
+              loading: () => const Center(
+                child: Column(
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
+                    Text('Generando quiz...'),
+                  ],
+                ),
               ),
               error: (error, stack) => Card(
                 color: Colors.red.shade50,
