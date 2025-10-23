@@ -7,6 +7,8 @@ part 'quiz_dashboard_state.freezed.dart';
 abstract class QuizDashboardState with _$QuizDashboardState {
   const factory QuizDashboardState({
     List<QuizSetScore>? recentScores,
+    @Default(0) int totalQuizzes,
+    @Default(0.0) double averageAccuracy,
     String? errorMessage,
   }) = _QuizDashboardState;
 }

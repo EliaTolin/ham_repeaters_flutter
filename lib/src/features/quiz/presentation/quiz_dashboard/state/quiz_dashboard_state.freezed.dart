@@ -15,6 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$QuizDashboardState {
   List<QuizSetScore>? get recentScores;
+  int get totalQuizzes;
+  double get averageAccuracy;
   String? get errorMessage;
 
   /// Create a copy of QuizDashboardState
@@ -32,17 +34,25 @@ mixin _$QuizDashboardState {
             other is QuizDashboardState &&
             const DeepCollectionEquality()
                 .equals(other.recentScores, recentScores) &&
+            (identical(other.totalQuizzes, totalQuizzes) ||
+                other.totalQuizzes == totalQuizzes) &&
+            (identical(other.averageAccuracy, averageAccuracy) ||
+                other.averageAccuracy == averageAccuracy) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(recentScores), errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(recentScores),
+      totalQuizzes,
+      averageAccuracy,
+      errorMessage);
 
   @override
   String toString() {
-    return 'QuizDashboardState(recentScores: $recentScores, errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, errorMessage: $errorMessage)';
   }
 }
 
@@ -52,7 +62,11 @@ abstract mixin class $QuizDashboardStateCopyWith<$Res> {
           QuizDashboardState value, $Res Function(QuizDashboardState) _then) =
       _$QuizDashboardStateCopyWithImpl;
   @useResult
-  $Res call({List<QuizSetScore>? recentScores, String? errorMessage});
+  $Res call(
+      {List<QuizSetScore>? recentScores,
+      int totalQuizzes,
+      double averageAccuracy,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -69,6 +83,8 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? recentScores = freezed,
+    Object? totalQuizzes = null,
+    Object? averageAccuracy = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_self.copyWith(
@@ -76,6 +92,14 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
           ? _self.recentScores
           : recentScores // ignore: cast_nullable_to_non_nullable
               as List<QuizSetScore>?,
+      totalQuizzes: null == totalQuizzes
+          ? _self.totalQuizzes
+          : totalQuizzes // ignore: cast_nullable_to_non_nullable
+              as int,
+      averageAccuracy: null == averageAccuracy
+          ? _self.averageAccuracy
+          : averageAccuracy // ignore: cast_nullable_to_non_nullable
+              as double,
       errorMessage: freezed == errorMessage
           ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -177,14 +201,16 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<QuizSetScore>? recentScores, String? errorMessage)?
+    TResult Function(List<QuizSetScore>? recentScores, int totalQuizzes,
+            double averageAccuracy, String? errorMessage)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState() when $default != null:
-        return $default(_that.recentScores, _that.errorMessage);
+        return $default(_that.recentScores, _that.totalQuizzes,
+            _that.averageAccuracy, _that.errorMessage);
       case _:
         return orElse();
     }
@@ -205,13 +231,15 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<QuizSetScore>? recentScores, String? errorMessage)
+    TResult Function(List<QuizSetScore>? recentScores, int totalQuizzes,
+            double averageAccuracy, String? errorMessage)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState():
-        return $default(_that.recentScores, _that.errorMessage);
+        return $default(_that.recentScores, _that.totalQuizzes,
+            _that.averageAccuracy, _that.errorMessage);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -231,13 +259,15 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<QuizSetScore>? recentScores, String? errorMessage)?
+    TResult? Function(List<QuizSetScore>? recentScores, int totalQuizzes,
+            double averageAccuracy, String? errorMessage)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState() when $default != null:
-        return $default(_that.recentScores, _that.errorMessage);
+        return $default(_that.recentScores, _that.totalQuizzes,
+            _that.averageAccuracy, _that.errorMessage);
       case _:
         return null;
     }
@@ -248,7 +278,10 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
 class _QuizDashboardState implements QuizDashboardState {
   const _QuizDashboardState(
-      {final List<QuizSetScore>? recentScores, this.errorMessage})
+      {final List<QuizSetScore>? recentScores,
+      this.totalQuizzes = 0,
+      this.averageAccuracy = 0.0,
+      this.errorMessage})
       : _recentScores = recentScores;
 
   final List<QuizSetScore>? _recentScores;
@@ -261,6 +294,12 @@ class _QuizDashboardState implements QuizDashboardState {
     return EqualUnmodifiableListView(value);
   }
 
+  @override
+  @JsonKey()
+  final int totalQuizzes;
+  @override
+  @JsonKey()
+  final double averageAccuracy;
   @override
   final String? errorMessage;
 
@@ -279,17 +318,25 @@ class _QuizDashboardState implements QuizDashboardState {
             other is _QuizDashboardState &&
             const DeepCollectionEquality()
                 .equals(other._recentScores, _recentScores) &&
+            (identical(other.totalQuizzes, totalQuizzes) ||
+                other.totalQuizzes == totalQuizzes) &&
+            (identical(other.averageAccuracy, averageAccuracy) ||
+                other.averageAccuracy == averageAccuracy) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_recentScores), errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_recentScores),
+      totalQuizzes,
+      averageAccuracy,
+      errorMessage);
 
   @override
   String toString() {
-    return 'QuizDashboardState(recentScores: $recentScores, errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, errorMessage: $errorMessage)';
   }
 }
 
@@ -301,7 +348,11 @@ abstract mixin class _$QuizDashboardStateCopyWith<$Res>
       __$QuizDashboardStateCopyWithImpl;
   @override
   @useResult
-  $Res call({List<QuizSetScore>? recentScores, String? errorMessage});
+  $Res call(
+      {List<QuizSetScore>? recentScores,
+      int totalQuizzes,
+      double averageAccuracy,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -318,6 +369,8 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? recentScores = freezed,
+    Object? totalQuizzes = null,
+    Object? averageAccuracy = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_QuizDashboardState(
@@ -325,6 +378,14 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
           ? _self._recentScores
           : recentScores // ignore: cast_nullable_to_non_nullable
               as List<QuizSetScore>?,
+      totalQuizzes: null == totalQuizzes
+          ? _self.totalQuizzes
+          : totalQuizzes // ignore: cast_nullable_to_non_nullable
+              as int,
+      averageAccuracy: null == averageAccuracy
+          ? _self.averageAccuracy
+          : averageAccuracy // ignore: cast_nullable_to_non_nullable
+              as double,
       errorMessage: freezed == errorMessage
           ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable

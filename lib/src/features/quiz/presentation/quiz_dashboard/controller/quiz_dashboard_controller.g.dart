@@ -34,7 +34,7 @@ final class QuizDashboardControllerProvider extends $AsyncNotifierProvider<
 }
 
 String _$quizDashboardControllerHash() =>
-    r'd67e25d61b107544318c3e86157c60834053661d';
+    r'a215e1d70b4bf14f31ccf55efa3cf80740dc6399';
 
 abstract class _$QuizDashboardController
     extends $AsyncNotifier<QuizDashboardState> {

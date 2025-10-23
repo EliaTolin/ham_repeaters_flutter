@@ -19,9 +19,18 @@ class QuizDashboardController extends _$QuizDashboardController {
     try {
       final repository = ref.read(quizRepositoryProvider);
       final recentScores = await repository.getRecentQuizScores();
+      final allScores = await repository.getAllQuizScores();
+
+      // Calcola le statistiche reali
+      final totalQuizzes = allScores.length;
+      final averageAccuracy = allScores.isEmpty
+          ? 0.0
+          : allScores.fold<double>(0, (sum, score) => sum + score.accuracyPct) / allScores.length;
 
       return QuizDashboardState(
         recentScores: recentScores,
+        totalQuizzes: totalQuizzes,
+        averageAccuracy: averageAccuracy,
       );
     } catch (e) {
       return QuizDashboardState(
