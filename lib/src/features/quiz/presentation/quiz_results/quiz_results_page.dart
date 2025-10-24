@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/controller/quiz_results_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/widgets/quiz_accuracy_chart.dart';
@@ -21,10 +22,10 @@ class QuizResultsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final resultsState = ref.watch(quizResultsControllerProvider(setId));
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SafeArea(
-        child: resultsState.when(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: resultsState.when(
           data: (results) {
             if (results == null) {
               return const Center(
@@ -45,7 +46,6 @@ class QuizResultsPage extends ConsumerWidget {
                 SliverToBoxAdapter(
                   child: QuizResultsHeader(
                     score: results,
-                    onBackPressed: () => context.router.maybePop(),
                   ),
                 ),
 
@@ -70,9 +70,14 @@ class QuizResultsPage extends ConsumerWidget {
                         // Action buttons
                         QuizActionButtons(
                           score: results,
+                          onBackToHome: () {
+                            context.router
+                                .pushAndPopUntil(const HomeRoute(), predicate: (_) => false);
+                          },
                           onRetakeQuiz: () {
-                            // Navigate back to quiz dashboard or retake
-                            context.router.maybePop();
+                            context.router.popAndPush(
+                              QuizRoute(examType: results.exam!),
+                            );
                           },
                           onViewDetails: () {
                             // Show detailed results

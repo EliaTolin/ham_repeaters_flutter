@@ -6,12 +6,14 @@ class QuizActionButtons extends StatefulWidget {
   const QuizActionButtons({
     required this.onRetakeQuiz,
     required this.onViewDetails,
+    required this.onBackToHome,
     required this.score,
     super.key,
   });
 
   final VoidCallback onRetakeQuiz;
   final VoidCallback onViewDetails;
+  final VoidCallback onBackToHome;
   final QuizSetScore score;
 
   @override
@@ -63,6 +65,7 @@ class _QuizActionButtonsState extends State<QuizActionButtons> with TickerProvid
         return Transform.scale(
           scale: _scaleAnimation.value,
           child: Column(
+            spacing: 16,
             children: [
               // Primary action button
               SizedBox(
@@ -84,22 +87,19 @@ class _QuizActionButtonsState extends State<QuizActionButtons> with TickerProvid
                 ),
               ),
 
-              const SizedBox(height: 16),
-
-              // Secondary action button
+              // Primary action button
               SizedBox(
                 width: double.infinity,
                 height: 56,
-                child: OutlinedButton.icon(
-                  onPressed: widget.onViewDetails,
-                  icon: const Icon(Icons.info_outline),
-                  label: const Text('Dettagli Risultati'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: theme.colorScheme.primary,
-                    side: BorderSide(
-                      color: theme.colorScheme.primary,
-                      width: 2,
-                    ),
+                child: ElevatedButton.icon(
+                  onPressed: widget.onBackToHome,
+                  icon: const Icon(Icons.home),
+                  label: const Text('Torna alla Home'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: theme.colorScheme.secondary,
+                    foregroundColor: theme.colorScheme.onSecondary,
+                    elevation: 8,
+                    shadowColor: theme.colorScheme.secondary.withValues(alpha: 0.6),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
@@ -107,31 +107,56 @@ class _QuizActionButtonsState extends State<QuizActionButtons> with TickerProvid
                 ),
               ),
 
-              const SizedBox(height: 24),
-
-              // WhatsApp share button
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton.icon(
-                  onPressed: () => _shareToWhatsApp(context),
-                  icon: const Icon(Icons.message, color: Colors.white),
-                  label: const Text(
-                    'Condividi su WhatsApp',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              // Secondary action button
+              Row(
+                spacing: 8,
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 72,
+                      child: OutlinedButton.icon(
+                        onPressed: widget.onViewDetails,
+                        icon: const Icon(Icons.info_outline),
+                        label: const Text('Dettagli Risultati'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: theme.colorScheme.primary,
+                          side: BorderSide(
+                            color: theme.colorScheme.primary,
+                            width: 2,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF25D366), // WhatsApp green
-                    elevation: 8,
-                    shadowColor: const Color(0xFF25D366).withValues(alpha: 0.3),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                  // WhatsApp share button
+                  Expanded(
+                    child: SizedBox(
+                      height: 72,
+                      child: ElevatedButton.icon(
+                        onPressed: () => _shareToWhatsApp(context),
+                        icon: const Icon(Icons.message, color: Colors.white),
+                        label: const Text(
+                          'Condividi su WhatsApp',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF25D366), // WhatsApp green
+                          elevation: 8,
+                          shadowColor: const Color(0xFF25D366).withValues(alpha: 0.3),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),

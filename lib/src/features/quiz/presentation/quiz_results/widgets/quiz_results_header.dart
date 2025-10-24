@@ -4,12 +4,12 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
 class QuizResultsHeader extends StatefulWidget {
   const QuizResultsHeader({
     required this.score,
-    required this.onBackPressed,
+    this.onBackPressed,
     super.key,
   });
 
   final QuizSetScore score;
-  final VoidCallback onBackPressed;
+  final VoidCallback? onBackPressed;
 
   @override
   State<QuizResultsHeader> createState() => _QuizResultsHeaderState();
@@ -96,14 +96,15 @@ class _QuizResultsHeaderState extends State<QuizResultsHeader> with TickerProvid
           // Back button and title
           Row(
             children: [
-              IconButton(
-                onPressed: widget.onBackPressed,
-                icon: const Icon(Icons.arrow_back_ios),
-                style: IconButton.styleFrom(
-                  backgroundColor: theme.colorScheme.surface,
-                  foregroundColor: theme.colorScheme.onSurface,
+              if (widget.onBackPressed != null)
+                IconButton(
+                  onPressed: widget.onBackPressed,
+                  icon: const Icon(Icons.arrow_back_ios),
+                  style: IconButton.styleFrom(
+                    backgroundColor: theme.colorScheme.surface,
+                    foregroundColor: theme.colorScheme.onSurface,
+                  ),
                 ),
-              ),
               const SizedBox(width: 16),
               Expanded(
                 child: FadeTransition(
