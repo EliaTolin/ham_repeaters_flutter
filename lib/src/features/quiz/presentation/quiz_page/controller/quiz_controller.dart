@@ -1,6 +1,7 @@
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state/quiz_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/delete_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -140,5 +141,12 @@ class QuizController extends _$QuizController {
       );
       state = AsyncValue.data(newState);
     }
+  }
+
+  Future<void> deleteQuiz() async {
+    final currentState = state.value;
+    if (currentState == null) return;
+
+    await ref.read(deleteQuizSetProvider(currentState.quizSet.quizSetId).future);
   }
 }

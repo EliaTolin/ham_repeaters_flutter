@@ -235,7 +235,7 @@ class QuizPage extends HookConsumerWidget {
         }
       }
 
-      // Navigate back
+      // Navigate back to dashboard
       if (context.mounted) {
         await context.router.maybePop();
       }

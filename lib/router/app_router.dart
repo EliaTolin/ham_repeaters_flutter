@@ -47,14 +47,6 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
                 AutoRoute(
                   page: QuizStatisticsRoute.page,
                 ),
-                AutoRoute(
-                  page: const EmptyShellRoute('QuizRouter'),
-                  children: [
-                    AutoRoute(
-                      page: QuizRoute.page,
-                    ),
-                  ],
-                ),
               ],
             ),
             AutoRoute(
@@ -63,6 +55,9 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
                 AutoRoute(page: ProfileRoute.page),
                 AutoRoute(page: UserSettingsRoute.page),
               ],
+            ),
+            AutoRoute(
+              page: QuizRoute.page,
             ),
           ],
         ),
