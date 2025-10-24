@@ -46,7 +46,7 @@ class QuizDashboardController extends _$QuizDashboardController {
     state = state.whenData((data) => data.copyWith(errorMessage: null));
 
     try {
-      // Naviga alla pagina del quiz passando il tipo di esame
+      // Naviga alla pagina del quiz come schermata separata senza bottom bar
       await context.router.push(QuizRoute(examType: examType));
     } catch (e) {
       state = state.whenData(

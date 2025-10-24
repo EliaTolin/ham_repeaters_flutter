@@ -56,10 +56,12 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
                 AutoRoute(page: UserSettingsRoute.page),
               ],
             ),
-            AutoRoute(
-              page: QuizRoute.page,
-            ),
           ],
+        ),
+        // Quiz route as a separate full-screen route
+        AutoRoute(
+          page: QuizRoute.page,
+          guards: [this],
         ),
       ];
 

@@ -237,7 +237,7 @@ class QuizPage extends HookConsumerWidget {
 
       // Navigate back to dashboard
       if (context.mounted) {
-        await context.router.maybePop();
+        context.router.pop();
       }
     } catch (e) {
       // Show error message but still navigate back
@@ -248,7 +248,7 @@ class QuizPage extends HookConsumerWidget {
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
-        await context.router.maybePop();
+        context.router.pop();
       }
     }
   }
