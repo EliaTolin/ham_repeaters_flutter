@@ -9,7 +9,7 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_navigation_widget.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_progress_widget.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_question_widget.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers_repository_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository_provider.dart';
 
 @RoutePage()
 class QuizPage extends HookConsumerWidget {
@@ -222,7 +222,7 @@ class QuizPage extends HookConsumerWidget {
         final state = quizState.value;
 
         // Delete the quiz from the database
-        await ref.read(quizAnswersRepositoryProvider).deleteQuizAnswers(state!.quizSet.quizSetId);
+        await ref.read(quizRepositoryProvider).deleteQuizAnswers(state!.quizSet.quizSetId);
 
         // Show success message
         if (context.mounted) {

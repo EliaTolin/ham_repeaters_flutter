@@ -60,7 +60,7 @@ final class DeleteQuizSetProvider
   }
 }
 
-String _$deleteQuizSetHash() => r'282632eac136ff61ec5b7372607ba98c962fd4a0';
+String _$deleteQuizSetHash() => r'4210ed10affcf9e73b820d3dc5ae4b18efc30c31';
 
 final class DeleteQuizSetFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<void>, String> {

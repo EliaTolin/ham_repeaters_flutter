@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'quiz_supabase_datasource.dart';
+part of 'quiz_datasource.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -12,10 +12,9 @@ part of 'quiz_supabase_datasource.dart';
 @ProviderFor(quizDataSource)
 const quizDataSourceProvider = QuizDataSourceProvider._();
 
-final class QuizDataSourceProvider extends $FunctionalProvider<
-    QuizSupabaseDataSource,
-    QuizSupabaseDataSource,
-    QuizSupabaseDataSource> with $Provider<QuizSupabaseDataSource> {
+final class QuizDataSourceProvider
+    extends $FunctionalProvider<QuizDataSource, QuizDataSource, QuizDataSource>
+    with $Provider<QuizDataSource> {
   const QuizDataSourceProvider._()
       : super(
           from: null,
@@ -32,22 +31,21 @@ final class QuizDataSourceProvider extends $FunctionalProvider<
 
   @$internal
   @override
-  $ProviderElement<QuizSupabaseDataSource> $createElement(
-          $ProviderPointer pointer) =>
+  $ProviderElement<QuizDataSource> $createElement($ProviderPointer pointer) =>
       $ProviderElement(pointer);
 
   @override
-  QuizSupabaseDataSource create(Ref ref) {
+  QuizDataSource create(Ref ref) {
     return quizDataSource(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(QuizSupabaseDataSource value) {
+  Override overrideWithValue(QuizDataSource value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<QuizSupabaseDataSource>(value),
+      providerOverride: $SyncValueProvider<QuizDataSource>(value),
     );
   }
 }
 
-String _$quizDataSourceHash() => r'0de57af2c44f037ae23eaa3516fe8fbb83326d20';
+String _$quizDataSourceHash() => r'970412b25f4cc9f325a1cf968eceeb7447d8da1b';

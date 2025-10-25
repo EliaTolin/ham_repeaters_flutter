@@ -50,7 +50,7 @@ final class QuizControllerProvider
   }
 }
 
-String _$quizControllerHash() => r'd11cddc4d171cb664dec5722ea2466ae19c9c7d4';
+String _$quizControllerHash() => r'ffb770349160cc91962566edda239c961f5b0d8f';
 
 final class QuizControllerFamily extends $Family
     with

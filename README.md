@@ -1,3 +1,3 @@
-- una volta finito il quiz dare la possibilità o di rifarne un'altro o di tornare alla home
 - il condividi whatsapp deve effettivamente condividere il risultato del quiz tramite messaggio
-- riprova quiz deve far fare un'altro quiz da zero
+- mostrare errori dopo il risultato
+- non elimina quiz_set dopo il torna indietro

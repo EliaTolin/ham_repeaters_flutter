@@ -3,7 +3,7 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state/quiz_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/delete_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_set_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers_repository_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_controller.g.dart';
@@ -70,7 +70,7 @@ class QuizController extends _$QuizController {
 
     // Save to database
     try {
-      final repository = ref.read(quizAnswersRepositoryProvider);
+      final repository = ref.read(quizRepositoryProvider);
       await repository.saveAnswer(
         setId: currentState.quizSet.quizSetId,
         questionId: question.id,
