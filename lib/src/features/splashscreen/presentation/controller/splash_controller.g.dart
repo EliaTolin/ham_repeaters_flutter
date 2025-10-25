@@ -33,7 +33,7 @@ final class SplashControllerProvider
   SplashController create() => SplashController();
 }
 
-String _$splashControllerHash() => r'ec14cbe3ab5c5597de17a7ee9f382a49aaa9a1e0';
+String _$splashControllerHash() => r'267d746460eeeca26dc6b80463ecbf922b8df82e';
 
 abstract class _$SplashController
     extends $AsyncNotifier<PageRouteInfo<Object?>> {

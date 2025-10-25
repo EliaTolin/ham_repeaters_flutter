@@ -7,6 +7,7 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_repository.g.dart';
@@ -23,6 +24,17 @@ class QuizRepository {
   }) async {
     return _dataSource.getQuizSet(
       examType: examType,
+      userId: userId,
+    );
+  }
+
+  // Custom Quiz Set method
+  Future<QuizSetResponse> getCustomQuizSet({
+    required List<TopicRequest> topics,
+    required String userId,
+  }) async {
+    return _dataSource.getCustomQuizSet(
+      topics: topics,
       userId: userId,
     );
   }

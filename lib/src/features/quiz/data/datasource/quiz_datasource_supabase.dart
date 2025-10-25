@@ -6,6 +6,7 @@ import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_score_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -46,6 +47,48 @@ class QuizDataSourceSupabase {
       return _responseMapper.fromModel(model);
     } catch (e) {
       throw Exception('Failed to get quiz set: $e');
+    }
+  }
+
+  // Custom Quiz Set method
+  Future<QuizSetResponse> getCustomQuizSet({
+    required List<TopicRequest> topics,
+    required String userId,
+  }) async {
+    try {
+      final topicsJson = topics
+          .map(
+            (topic) => {
+              'topic': topic.topic,
+              'num_questions': topic.numQuestions,
+            },
+          )
+          .toList();
+
+      final response = await _supabase.functions.invoke(
+        'get_quiz_set',
+        body: {
+          'topics': topicsJson,
+          'user_id': userId,
+        },
+      );
+
+      if (response.data == null) {
+        throw Exception('No data received from edge function');
+      }
+
+      final data = response.data as Map<String, dynamic>;
+
+      if (data['success'] != true) {
+        throw Exception('Edge function returned error: ${data['error'] ?? 'Unknown error'}');
+      }
+
+      final result = data['data'] as Map<String, dynamic>;
+      final model = QuizSetResponseModel.fromJson(result);
+
+      return _responseMapper.fromModel(model);
+    } catch (e) {
+      throw Exception('Failed to get custom quiz set: $e');
     }
   }
 
