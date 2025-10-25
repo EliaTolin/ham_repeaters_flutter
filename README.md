@@ -1,4 +1,3 @@
-- icona app
 - rimuovere riferimenti all'ads
 - onboarding
 - foreign key users quiz_set

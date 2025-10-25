@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/logout_provider.dart';
 import 'package:quiz_radioamatori/src/features/profile/domain/state/user_state.dart';
 import 'package:quiz_radioamatori/src/features/profile/provider/get_email_profile_provider.dart';

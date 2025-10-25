@@ -10,22 +10,17 @@ Future<List<QuizSetQuestionResultModel>> quizAnswers(
   String setId,
 ) async {
   try {
-    print('Loading quiz answers for setId: $setId');
     final repository = ref.read(quizRepositoryProvider);
 
     final result = await repository.getQuizAnswersWithResults(setId).timeout(
       const Duration(seconds: 30),
       onTimeout: () {
-        print('Timeout loading quiz answers');
         throw Exception('Timeout loading quiz answers');
       },
     );
 
-    print('Loaded ${result.length} answers');
     return result;
-  } catch (e, stackTrace) {
-    print('Error loading quiz answers: $e');
-    print('Stack trace: $stackTrace');
+  } catch (e) {
     rethrow;
   }
 }

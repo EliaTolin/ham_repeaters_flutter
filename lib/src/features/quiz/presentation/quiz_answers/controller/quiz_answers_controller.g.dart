@@ -51,7 +51,7 @@ final class QuizAnswersControllerProvider extends $AsyncNotifierProvider<
 }
 
 String _$quizAnswersControllerHash() =>
-    r'2d9e743aaf8c44849b313e1a41d5ac4cfec908c6';
+    r'571ff895b241a44ef78b0d16d143ee51ea78c6dc';
 
 final class QuizAnswersControllerFamily extends $Family
     with

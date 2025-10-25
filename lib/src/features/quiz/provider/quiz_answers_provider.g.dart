@@ -65,7 +65,7 @@ final class QuizAnswersProvider extends $FunctionalProvider<
   }
 }
 
-String _$quizAnswersHash() => r'2f483e1eff767c432068223295cd13b5d8a62bae';
+String _$quizAnswersHash() => r'0197c86c3dcaedfbd1ed5ddbf47629602ffe5b0c';
 
 final class QuizAnswersFamily extends $Family
     with
