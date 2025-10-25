@@ -1,4 +1,4 @@
-import 'package:quiz_radioamatori/src/features/quiz/data/datasource/quiz_datasource.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/datasource/quiz_datasource_supabase.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_question_result_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_score_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
@@ -12,7 +12,7 @@ part 'quiz_repository.g.dart';
 
 class QuizRepository {
   QuizRepository(this._dataSource);
-  final QuizDataSource _dataSource;
+  final QuizDataSourceSupabase _dataSource;
   final QuizSetScoreMapper _scoreMapper = QuizSetScoreMapper();
 
   // Quiz Set methods
@@ -104,4 +104,10 @@ class QuizRepository {
   Future<void> deleteQuizAnswers(String setId) async {
     return _dataSource.deleteQuizAnswers(setId);
   }
+}
+
+@riverpod
+QuizRepository quizRepository(Ref ref) {
+  final dataSource = ref.watch(quizDataSourceSupabaseProvider);
+  return QuizRepository(dataSource);
 }

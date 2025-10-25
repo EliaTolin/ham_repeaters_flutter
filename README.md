@@ -1,3 +1,2 @@
 - il condividi whatsapp deve effettivamente condividere il risultato del quiz tramite messaggio
 - mostrare errori dopo il risultato
-- non elimina quiz_set dopo il torna indietro

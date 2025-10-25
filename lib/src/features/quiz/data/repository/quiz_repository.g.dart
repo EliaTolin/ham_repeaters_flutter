@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'quiz_repository_provider.dart';
+part of 'quiz_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -48,4 +48,4 @@ final class QuizRepositoryProvider
   }
 }
 
-String _$quizRepositoryHash() => r'a0283dc6b01561703d8fcda0ecf48abdc22b7b73';
+String _$quizRepositoryHash() => r'7663c83dfe186fb447926b5b4b891c230e32ce44';

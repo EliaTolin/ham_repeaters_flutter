@@ -8,10 +8,10 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dar
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-part 'quiz_datasource.g.dart';
+part 'quiz_datasource_supabase.g.dart';
 
-class QuizDataSource {
-  QuizDataSource(this._supabase);
+class QuizDataSourceSupabase {
+  QuizDataSourceSupabase(this._supabase);
   final SupabaseClient _supabase;
   final QuizSetResponseMapper _responseMapper = QuizSetResponseMapper();
 
@@ -180,6 +180,7 @@ class QuizDataSource {
   Future<void> deleteQuizAnswers(String setId) async {
     try {
       await _supabase.from('quiz_set_question').delete().eq('set_id', setId);
+      await _supabase.from('quiz_set').delete().eq('id', setId);
     } catch (e) {
       throw Exception('Failed to delete quiz answers: $e');
     }
@@ -187,7 +188,7 @@ class QuizDataSource {
 }
 
 @riverpod
-QuizDataSource quizDataSource(Ref ref) {
+QuizDataSourceSupabase quizDataSourceSupabase(Ref ref) {
   final supabase = Supabase.instance.client;
-  return QuizDataSource(supabase);
+  return QuizDataSourceSupabase(supabase);
 }

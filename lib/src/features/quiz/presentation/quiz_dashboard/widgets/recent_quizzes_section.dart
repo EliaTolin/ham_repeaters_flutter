@@ -308,7 +308,6 @@ class _TitleSubtitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scale = MediaQuery.textScalerOf(context).scale;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
