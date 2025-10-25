@@ -35,8 +35,9 @@ class QuizPage extends HookConsumerWidget {
     ref.listen<AsyncValue<QuizState?>>(quizControllerProvider(examType), (previous, next) {
       next.whenData((data) {
         if (data?.isCompleted ?? false) {
-          context.router.popAndPush(
+          context.router.pushAndPopUntil(
             QuizResultsRoute(setId: data!.quizSet.quizSetId),
+            predicate: (_) => false,
           );
         }
       });

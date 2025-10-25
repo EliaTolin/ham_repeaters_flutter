@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
 
@@ -97,7 +98,7 @@ class _QuizResultsHeaderState extends State<QuizResultsHeader> with TickerProvid
           // Back button and title
           Row(
             children: [
-              if (widget.onBackPressed != null)
+              if (widget.onBackPressed != null && context.router.canPop())
                 IconButton(
                   onPressed: widget.onBackPressed,
                   icon: const Icon(Icons.arrow_back_ios),

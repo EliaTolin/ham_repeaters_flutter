@@ -45,6 +45,9 @@ class QuizResultsPage extends ConsumerWidget {
                 SliverToBoxAdapter(
                   child: QuizResultsHeader(
                     score: results,
+                    onBackPressed: () {
+                      context.router.pop();
+                    },
                   ),
                 ),
 

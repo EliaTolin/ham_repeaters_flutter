@@ -11,5 +11,4 @@ Future<void> uploadPropics(Ref ref, File image) async {
   final repository = ref.read(profileRepositoryProvider);
   final userId = await ref.read(getUserIdProvider.future);
   await repository.uploadPropics(userId!, image);
-  ref.invalidate(profileRepositoryProvider);
 }

@@ -45,7 +45,13 @@ class UserSettingsController extends _$UserSettingsController {
 
   Future<void> updateImageProfile(File image) async {
     state = const AsyncLoading();
-    await ref.read(uploadPropicsProvider(image).future);
+
+    state = await AsyncValue.guard(() async {
+      await ref.read(uploadPropicsProvider(image).future);
+      ref.invalidate(getProfileProvider);
+      final newProfile = await ref.read(getProfileProvider.future);
+      return getProfile(newProfile);
+    });
   }
 
   Future<void> deleteImageProfile() async {
