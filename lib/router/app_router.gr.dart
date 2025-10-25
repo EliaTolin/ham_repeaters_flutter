@@ -91,6 +91,53 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [QuizAnswersPage]
+class QuizAnswersRoute extends PageRouteInfo<QuizAnswersRouteArgs> {
+  QuizAnswersRoute({
+    required String setId,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          QuizAnswersRoute.name,
+          args: QuizAnswersRouteArgs(setId: setId, key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'QuizAnswersRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<QuizAnswersRouteArgs>();
+      return QuizAnswersPage(setId: args.setId, key: args.key);
+    },
+  );
+}
+
+class QuizAnswersRouteArgs {
+  const QuizAnswersRouteArgs({required this.setId, this.key});
+
+  final String setId;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'QuizAnswersRouteArgs{setId: $setId, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! QuizAnswersRouteArgs) return false;
+    return setId == other.setId && key == other.key;
+  }
+
+  @override
+  int get hashCode => setId.hashCode ^ key.hashCode;
+}
+
+/// generated route for
 /// [QuizDashboardPage]
 class QuizDashboardRoute extends PageRouteInfo<void> {
   const QuizDashboardRoute({List<PageRouteInfo>? children})

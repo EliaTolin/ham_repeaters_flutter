@@ -8,8 +8,15 @@ abstract class QuizSetQuestionResult with _$QuizSetQuestionResult {
   const factory QuizSetQuestionResult({
     required String setId,
     required int questionId,
-    required String topicName, required ExamType exam, required String correctLetter, required bool isCorrect, String? chosenLetter,
+    required String topicName,
+    required ExamType exam,
+    required String correctLetter,
+    required bool isCorrect,
+    String? chosenLetter,
     DateTime? answeredAt,
     int? timeMs,
+    String? chosenAnswer,
+    String? correctAnswer,
+    String? questionText,
   }) = _QuizSetQuestionResult;
 }

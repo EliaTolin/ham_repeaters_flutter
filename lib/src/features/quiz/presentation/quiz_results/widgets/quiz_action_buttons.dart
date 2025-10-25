@@ -86,44 +86,42 @@ class _QuizActionButtonsState extends State<QuizActionButtons> with TickerProvid
                   ),
                 ),
               ),
-
-              // Primary action button
               SizedBox(
                 width: double.infinity,
-                height: 56,
+                height: 72,
                 child: ElevatedButton.icon(
-                  onPressed: widget.onBackToHome,
-                  icon: const Icon(Icons.home),
-                  label: const Text('Torna alla Home'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: theme.colorScheme.secondary,
-                    foregroundColor: theme.colorScheme.onSecondary,
+                  onPressed: widget.onViewDetails,
+                  icon: const Icon(Icons.info_outline),
+                  label: const Text('Visualizza risposte'),
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.teal.shade50,
+                    foregroundColor: Colors.teal,
                     elevation: 8,
-                    shadowColor: theme.colorScheme.secondary.withValues(alpha: 0.6),
+                    shadowColor: Colors.teal.withValues(alpha: 0.3),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                 ),
               ),
-
               // Secondary action button
               Row(
                 spacing: 8,
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 72,
-                      child: OutlinedButton.icon(
-                        onPressed: widget.onViewDetails,
-                        icon: const Icon(Icons.info_outline),
-                        label: const Text('Dettagli Risultati'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: theme.colorScheme.primary,
-                          side: BorderSide(
-                            color: theme.colorScheme.primary,
-                            width: 2,
-                          ),
+                    child: // Primary action button
+                        SizedBox(
+                      width: double.infinity,
+                      height: 86,
+                      child: ElevatedButton.icon(
+                        onPressed: widget.onBackToHome,
+                        icon: const Icon(Icons.home),
+                        label: const Text('Torna alla Home'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.colorScheme.secondary,
+                          foregroundColor: theme.colorScheme.onSecondary,
+                          elevation: 8,
+                          shadowColor: theme.colorScheme.secondary.withValues(alpha: 0.6),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -131,10 +129,11 @@ class _QuizActionButtonsState extends State<QuizActionButtons> with TickerProvid
                       ),
                     ),
                   ),
+
                   // WhatsApp share button
                   Expanded(
                     child: SizedBox(
-                      height: 72,
+                      height: 86,
                       child: ElevatedButton.icon(
                         onPressed: () => _shareMessage(context),
                         icon: const Icon(Icons.share, color: Colors.white),

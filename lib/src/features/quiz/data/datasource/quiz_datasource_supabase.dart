@@ -1,6 +1,7 @@
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_response_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_score_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
@@ -183,6 +184,24 @@ class QuizDataSourceSupabase {
       await _supabase.from('quiz_set').delete().eq('id', setId);
     } catch (e) {
       throw Exception('Failed to delete quiz answers: $e');
+    }
+  }
+
+  // Get quiz answers with results from the view
+  Future<List<QuizSetQuestionResultModel>> getQuizAnswersWithResults(String setId) async {
+    try {
+      // Try to query the view first
+      final response = await _supabase
+          .from('quiz_set_question_result')
+          .select()
+          .eq('set_id', setId)
+          .order('question_id', ascending: true);
+
+      final results =
+          (response as List).map((json) => QuizSetQuestionResultModel.fromJson(json)).toList();
+      return results;
+    } catch (e) {
+      throw Exception('Failed to get quiz answers with results: $e');
     }
   }
 }

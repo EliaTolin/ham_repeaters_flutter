@@ -11,13 +11,16 @@ _QuizSetQuestionResultModel _$QuizSetQuestionResultModelFromJson(
     _QuizSetQuestionResultModel(
       setId: json['set_id'] as String,
       questionId: (json['question_id'] as num).toInt(),
+      answeredAt: json['answered_at'] as String,
+      timeMs: (json['time_ms'] as num).toInt(),
       topicName: json['topic_name'] as String,
-      exam: $enumDecode(_$ExamTypeEnumMap, json['exam']),
+      exam: json['exam'] as String,
       correctLetter: json['correct_letter'] as String,
       isCorrect: json['is_correct'] as bool,
       chosenLetter: json['chosen_letter'] as String?,
-      answeredAt: json['answered_at'] as String?,
-      timeMs: (json['time_ms'] as num?)?.toInt(),
+      chosenAnswer: json['chosen_answer'] as String?,
+      correctAnswer: json['correct_answer'] as String?,
+      questionText: json['question_text'] as String?,
     );
 
 Map<String, dynamic> _$QuizSetQuestionResultModelToJson(
@@ -25,16 +28,14 @@ Map<String, dynamic> _$QuizSetQuestionResultModelToJson(
     <String, dynamic>{
       'set_id': instance.setId,
       'question_id': instance.questionId,
+      'answered_at': instance.answeredAt,
+      'time_ms': instance.timeMs,
       'topic_name': instance.topicName,
-      'exam': _$ExamTypeEnumMap[instance.exam]!,
+      'exam': instance.exam,
       'correct_letter': instance.correctLetter,
       'is_correct': instance.isCorrect,
       'chosen_letter': instance.chosenLetter,
-      'answered_at': instance.answeredAt,
-      'time_ms': instance.timeMs,
+      'chosen_answer': instance.chosenAnswer,
+      'correct_answer': instance.correctAnswer,
+      'question_text': instance.questionText,
     };
-
-const _$ExamTypeEnumMap = {
-  ExamType.parziale: 'parziale',
-  ExamType.completo: 'completo',
-};

@@ -1,5 +1,6 @@
 import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question_result.dart';
 
 class QuizSetQuestionResultMapper
@@ -10,12 +11,15 @@ class QuizSetQuestionResultMapper
       setId: entity.setId,
       questionId: entity.questionId,
       topicName: entity.topicName,
-      exam: entity.exam,
+      exam: entity.exam.value,
       correctLetter: entity.correctLetter,
       isCorrect: entity.isCorrect,
       chosenLetter: entity.chosenLetter,
-      answeredAt: entity.answeredAt?.toIso8601String(),
-      timeMs: entity.timeMs,
+      answeredAt: entity.answeredAt?.toIso8601String() ?? '',
+      timeMs: entity.timeMs ?? 0,
+      chosenAnswer: entity.chosenAnswer,
+      correctAnswer: entity.correctAnswer,
+      questionText: entity.questionText,
     );
   }
 
@@ -25,12 +29,15 @@ class QuizSetQuestionResultMapper
       setId: model.setId,
       questionId: model.questionId,
       topicName: model.topicName,
-      exam: model.exam,
+      exam: ExamType.fromString(model.exam),
       correctLetter: model.correctLetter,
       isCorrect: model.isCorrect,
       chosenLetter: model.chosenLetter,
-      answeredAt: model.answeredAt != null ? DateTime.parse(model.answeredAt!) : null,
+      answeredAt: model.answeredAt.isNotEmpty ? DateTime.parse(model.answeredAt) : null,
       timeMs: model.timeMs,
+      chosenAnswer: model.chosenAnswer,
+      correctAnswer: model.correctAnswer,
+      questionText: model.questionText,
     );
   }
 }

@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
 
 class RecentQuizzesSection extends HookWidget {
@@ -108,7 +110,15 @@ class RecentQuizzesSection extends HookWidget {
                         begin: const Offset(0, .08),
                         end: Offset.zero,
                       ).animate(curved),
-                      child: _ClickableQuizCard(theme: theme, score: score),
+                      child: _ClickableQuizCard(
+                        theme: theme,
+                        score: score,
+                        onTap: () => context.router.push(
+                          QuizResultsRoute(
+                            setId: score.setId,
+                          ),
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -156,7 +166,6 @@ class RecentQuizzesSection extends HookWidget {
   }
 }
 
-// === TILE COMPATTO & CLICCABILE, SENZA OVERFLOW ===
 class _ClickableQuizCard extends StatelessWidget {
   const _ClickableQuizCard({required this.theme, required this.score, this.onTap});
   final ThemeData theme;

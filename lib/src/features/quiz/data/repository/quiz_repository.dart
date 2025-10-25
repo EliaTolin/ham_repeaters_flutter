@@ -2,6 +2,7 @@ import 'package:quiz_radioamatori/src/features/quiz/data/datasource/quiz_datasou
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_question_result_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_score_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
@@ -103,6 +104,11 @@ class QuizRepository {
 
   Future<void> deleteQuizAnswers(String setId) async {
     return _dataSource.deleteQuizAnswers(setId);
+  }
+
+  // Get quiz answers with results
+  Future<List<QuizSetQuestionResultModel>> getQuizAnswersWithResults(String setId) async {
+    return _dataSource.getQuizAnswersWithResults(setId);
   }
 }
 

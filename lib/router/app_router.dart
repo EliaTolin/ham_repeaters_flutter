@@ -10,6 +10,7 @@ import 'package:quiz_radioamatori/src/features/onboarding/presentation/onboardin
 import 'package:quiz_radioamatori/src/features/profile/presentation/profile/profile_screen.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/user_settings/user_settings_screen.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_answers/quiz_answers_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/quiz_dashboard_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/quiz_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/quiz_results_page.dart';
@@ -61,6 +62,11 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
         // Quiz route as a separate full-screen route
         AutoRoute(
           page: QuizRoute.page,
+          guards: [this],
+        ),
+        // Quiz answers route as a separate full-screen route
+        AutoRoute(
+          page: QuizAnswersRoute.page,
           guards: [this],
         ),
       ];
