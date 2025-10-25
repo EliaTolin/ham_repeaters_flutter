@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
+import 'package:share_plus/share_plus.dart';
 
 class QuizActionButtons extends StatefulWidget {
   const QuizActionButtons({
@@ -136,10 +136,10 @@ class _QuizActionButtonsState extends State<QuizActionButtons> with TickerProvid
                     child: SizedBox(
                       height: 72,
                       child: ElevatedButton.icon(
-                        onPressed: () => _shareToWhatsApp(context),
-                        icon: const Icon(Icons.message, color: Colors.white),
+                        onPressed: () => _shareMessage(context),
+                        icon: const Icon(Icons.share, color: Colors.white),
                         label: const Text(
-                          'Condividi su WhatsApp',
+                          'Condividi risultato',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -165,35 +165,22 @@ class _QuizActionButtonsState extends State<QuizActionButtons> with TickerProvid
     );
   }
 
-  void _shareToWhatsApp(BuildContext context) {
+  void _shareMessage(BuildContext context) {
     final score = widget.score;
 
-    // Create a beautiful message for WhatsApp
-    final message = _createWhatsAppMessage(score);
+    // Crea il messaggio da condividere
+    final message = _createShareMessage(score);
 
-    // Copy to clipboard
-    Clipboard.setData(ClipboardData(text: message));
-
-    // Show success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Row(
-          children: [
-            Icon(Icons.check_circle, color: Colors.white),
-            SizedBox(width: 8),
-            Text('Messaggio copiato negli appunti! Apri WhatsApp per condividerlo.'),
-          ],
-        ),
-        backgroundColor: const Color(0xFF25D366),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+    // Apre il menu di condivisione del dispositivo
+    SharePlus.instance.share(
+      ShareParams(
+        subject: 'Il mio punteggio!',
+        text: message,
       ),
     );
   }
 
-  String _createWhatsAppMessage(QuizSetScore score) {
+  String _createShareMessage(QuizSetScore score) {
     final examType = score.exam?.value ?? 'Personalizzato';
     final mode = score.mode.value;
     final accuracy = score.accuracyPct.toStringAsFixed(1);
@@ -213,7 +200,7 @@ class _QuizActionButtonsState extends State<QuizActionButtons> with TickerProvid
     }
 
     return '''
-$performanceEmoji *RISULTATO QUIZ RADIOAMATORI* $performanceEmoji
+$performanceEmoji *QUIZ RADIOAMATORI APP* $performanceEmoji
 
 📊 *Esame:* $examType
 🎮 *Modalità:* $mode
@@ -224,7 +211,7 @@ ${_getMotivationalMessage(score.accuracyPct)}
 
 📱 *Allenati anche tu con Quiz Radioamatori!*
 L'app perfetta per preparare l'esame di radioamatore con migliaia di domande e quiz personalizzati.
-
+Scarica l'app su iOS e Android.
 #QuizRadioamatori #Radioamatore #Esame #Preparazione
 ''';
   }
