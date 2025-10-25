@@ -6,9 +6,11 @@ import 'package:quiz_radioamatori/clients/package_info/package_info.dart';
 import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/widgets/profile_avatar.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
+import 'package:quiz_radioamatori/config/app_configs.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/profile/controller/profile_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 @RoutePage()
 class ProfileScreen extends HookConsumerWidget {
@@ -107,6 +109,33 @@ class ProfileScreen extends HookConsumerWidget {
                               showErrorSnackbar(
                                 context,
                                 "Errore durante l'apertura della mail".hardcoded,
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    ),
+
+                    // Telegram
+                    Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      child: ListTile(
+                        leading: const Icon(Icons.telegram, color: Colors.blueAccent),
+                        title: Text(
+                          'Entra nella community Telegram'.hardcoded,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        onTap: () async {
+                          final telegramUrl = AppConfigs.getTelegramLink();
+                          if (await canLaunchUrlString(telegramUrl)) {
+                            await launchUrlString(telegramUrl);
+                          } else {
+                            if (context.mounted) {
+                              showErrorSnackbar(
+                                context,
+                                "Errore durante l'apertura di Telegram".hardcoded,
                               );
                             }
                           }
