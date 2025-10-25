@@ -10,9 +10,9 @@ class HomeLocalDatasource implements HomeDatasource {
   final StorageClient sharedPreferences;
 
   @override
-  Future<bool> hasShowedTelegram() async {
+  Future<bool> isTelegramGroupMember() async {
     try {
-      final value = await sharedPreferences.read('showedTelegram');
+      final value = await sharedPreferences.read('telegramGroupMember');
       if (value == null) {
         return false;
       }
@@ -23,14 +23,27 @@ class HomeLocalDatasource implements HomeDatasource {
   }
 
   @override
-  Future<void> setShowedTelegram() {
-    return sharedPreferences.write('showedTelegram', 'true');
+  Future<void> setTelegramGroupMember() {
+    return sharedPreferences.write('telegramGroupMember', 'true');
+  }
+
+  @override
+  Future<DateTime?> getTelegramInviteLastShownDate() async {
+    final date = await sharedPreferences.read('lastTelegramInviteDate');
+    if (date == null) {
+      return null;
+    }
+    return Future.value(DateTime.parse(date));
+  }
+
+  @override
+  Future<void> setTelegramInviteLastShownDate(DateTime time) {
+    return sharedPreferences.write('lastTelegramInviteDate', time.toIso8601String());
   }
 }
 
 @riverpod
 Future<HomeDatasource> homeLocalDatasource(Ref ref) async {
-  final sharedPreferences = await ref.watch(sharedPrefStorageClientProvider.future);
-
-  return HomeLocalDatasource(sharedPreferences);
+  final storageClient = await ref.watch(sharedPrefStorageClientProvider.future);
+  return HomeLocalDatasource(storageClient);
 }

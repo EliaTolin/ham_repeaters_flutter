@@ -1,84 +1,172 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_radioamatori/common/extension/l10n_extension.dart';
+import 'package:gap/gap.dart';
+import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
 import 'package:quiz_radioamatori/config/app_configs.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-Future<void> showTelegramInviteDialog(BuildContext context) async {
+Future<void> showTelegramInviteDialog(
+  BuildContext context, {
+  VoidCallback? onAlreadyTelegramMember,
+}) async {
   await showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
       return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.telegram, size: 50, color: Colors.blueAccent),
-              const SizedBox(height: 10),
-              Text(
-                context.localization.joinCommunityTitle,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                context.localization.joinCommunityDescription,
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.group, color: Colors.blueAccent),
-                    title: Text(context.localization.benefitSupportMembers),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Icon with rounded background
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.lightbulb_outline, color: Colors.blueAccent),
-                    title: Text(context.localization.benefitSuggestFeatures),
+                  child: const Icon(Icons.telegram, size: 50, color: Colors.blueAccent),
+                ),
+                const SizedBox(height: 20),
+                // Title
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: 'Unisciti alla nostra ',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Community!',
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                      ),
+                    ],
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.developer_mode, color: Colors.blueAccent),
-                    title: Text(context.localization.benefitContactDevelopers),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.chat_bubble, color: Colors.blueAccent),
-                    title: Text(context.localization.benefitActiveCommunity),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () async {
-                      final telegramUrl = AppConfigs.getTelegramLink();
-                      if (await canLaunchUrlString(telegramUrl)) {
-                        await launchUrlString(telegramUrl);
-                      } else {
-                        if (context.mounted) {
-                          showErrorSnackbar(context, context.localization.errorOpenTelegram);
+                ),
+                const SizedBox(height: 10),
+                // Description
+                Text(
+                  'Scopri i vantaggi di entrare nella community Telegram:',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                // Benefits List
+                Column(
+                  children: [
+                    _buildBenefitItem(
+                      context,
+                      Icons.group,
+                      'Supporto dai membri',
+                    ),
+                    _buildBenefitItem(
+                      context,
+                      Icons.lightbulb_outline,
+                      'Proponi nuove funzionalità',
+                    ),
+                    _buildBenefitItem(
+                      context,
+                      Icons.developer_mode,
+                      'Contatto con gli sviluppatori',
+                    ),
+                    _buildBenefitItem(
+                      context,
+                      Icons.star,
+                      'Anteprime e beta esclusive',
+                    ),
+                    _buildBenefitItem(
+                      context,
+                      Icons.chat_bubble,
+                      'Community attiva',
+                    ),
+                    const Gap(8),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: () async {
+                        final telegramUrl = AppConfigs.getTelegramLink();
+                        if (await canLaunchUrlString(telegramUrl)) {
+                          await launchUrlString(telegramUrl);
+                        } else {
+                          if (context.mounted) {
+                            showErrorSnackbar(
+                              context,
+                              "Errore durante l'apertura di Telegram".hardcoded,
+                            );
+                          }
                         }
-                      }
-                    },
-                    child: Text(context.localization.joinNowButton),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(context.localization.laterButton),
-                  ),
-                ],
-              ),
-            ],
+                      },
+                      child: const Text('Unisciti ora!'),
+                    ),
+                  ],
+                ),
+                const Gap(20),
+                // Actions
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    if (onAlreadyTelegramMember != null)
+                      TextButton(
+                        onPressed: () {
+                          onAlreadyTelegramMember.call();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Sono già membro'),
+                      ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        'Più tardi',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );
     },
+  );
+}
+
+Widget _buildBenefitItem(BuildContext context, IconData icon, String text) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 16),
+    child: Row(
+      children: [
+        Icon(
+          icon,
+          color: Colors.blue,
+        ),
+        const Gap(
+          12,
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(),
+          ),
+        ),
+      ],
+    ),
   );
 }

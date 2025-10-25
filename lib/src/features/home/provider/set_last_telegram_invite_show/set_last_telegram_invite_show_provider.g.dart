@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'set_has_showed_telegram.dart';
+part of 'set_last_telegram_invite_show_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,25 +9,25 @@ part of 'set_has_showed_telegram.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(setHasShowedTelegram)
-const setHasShowedTelegramProvider = SetHasShowedTelegramProvider._();
+@ProviderFor(setLastTelegramInviteShow)
+const setLastTelegramInviteShowProvider = SetLastTelegramInviteShowProvider._();
 
-final class SetHasShowedTelegramProvider
+final class SetLastTelegramInviteShowProvider
     extends $FunctionalProvider<AsyncValue<void>, void, FutureOr<void>>
     with $FutureModifier<void>, $FutureProvider<void> {
-  const SetHasShowedTelegramProvider._()
+  const SetLastTelegramInviteShowProvider._()
       : super(
           from: null,
           argument: null,
           retry: null,
-          name: r'setHasShowedTelegramProvider',
+          name: r'setLastTelegramInviteShowProvider',
           isAutoDispose: true,
           dependencies: null,
           $allTransitiveDependencies: null,
         );
 
   @override
-  String debugGetCreateSourceHash() => _$setHasShowedTelegramHash();
+  String debugGetCreateSourceHash() => _$setLastTelegramInviteShowHash();
 
   @$internal
   @override
@@ -36,9 +36,9 @@ final class SetHasShowedTelegramProvider
 
   @override
   FutureOr<void> create(Ref ref) {
-    return setHasShowedTelegram(ref);
+    return setLastTelegramInviteShow(ref);
   }
 }
 
-String _$setHasShowedTelegramHash() =>
-    r'e0cbbc7b08f38985fd6ef7334f09414cea75a80f';
+String _$setLastTelegramInviteShowHash() =>
+    r'100275836b800a53b3722b0901409b25ea265b59';

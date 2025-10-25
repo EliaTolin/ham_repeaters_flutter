@@ -1,10 +1,10 @@
 import 'package:quiz_radioamatori/src/features/home/data/repository/home_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'set_has_showed_telegram.g.dart';
+part 'set_last_telegram_invite_show_provider.g.dart';
 
 @riverpod
-Future<void> setHasShowedTelegram(Ref ref) async {
+Future<void> setLastTelegramInviteShow(Ref ref) async {
   final repository = await ref.watch(homeRepositoryProvider.future);
-  await repository.setShowedTelegram();
+  return repository.setLastTelegramInviteShow();
 }

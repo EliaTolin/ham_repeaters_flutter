@@ -8,12 +8,26 @@ class HomeRepository {
   HomeRepository(this.dataSource);
   final HomeDatasource dataSource;
 
-  Future<bool> hasShowedTelegram() {
-    return dataSource.hasShowedTelegram();
+  Future<bool> needToShowTelegramInvite() async {
+    final lastShownDate = await dataSource.getTelegramInviteLastShownDate();
+    final isTelegramMember = await dataSource.isTelegramGroupMember();
+    if (isTelegramMember) {
+      return false;
+    }
+    if (lastShownDate == null) {
+      return true;
+    }
+    final now = DateTime.now();
+    final difference = now.difference(lastShownDate);
+    return difference.inDays >= 31;
   }
 
-  Future<void> setShowedTelegram() {
-    return dataSource.setShowedTelegram();
+  Future<void> setAlreadyInTelegramCommunity() {
+    return dataSource.setTelegramGroupMember();
+  }
+
+  Future<void> setLastTelegramInviteShow() {
+    return dataSource.setTelegramInviteLastShownDate(DateTime.now());
   }
 }
 
