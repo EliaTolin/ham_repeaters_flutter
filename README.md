@@ -1,1 +1,2 @@
-- onboarding
+- testare su Android
+- preparare build su PlayStore

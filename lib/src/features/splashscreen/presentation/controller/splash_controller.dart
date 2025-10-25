@@ -18,7 +18,7 @@ class SplashController extends _$SplashController {
     log('userID: $userID');
     await Future.delayed(const Duration(seconds: 1));
 
-    if (!onboarding) {
+    if (onboarding) {
       return const HomeRoute();
     } else {
       return const OnboardingRoute();
