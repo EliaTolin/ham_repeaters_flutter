@@ -13,9 +13,16 @@ class SplashScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useMemoized(() async {
-      final route = await ref.read(splashControllerProvider.future);
-      if (context.mounted) {
-        await context.router.replace(route);
+      try {
+        final route = await ref.read(splashControllerProvider.future);
+        if (context.mounted) {
+          await context.router.replace(route);
+        }
+      } catch (e) {
+        // await Sentry.captureException(e);
+        // if (context.mounted) {
+        //   await context.router.replace(const HomeRoute());
+        // }
       }
     });
     return Scaffold(
