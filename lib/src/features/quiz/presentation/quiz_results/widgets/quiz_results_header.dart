@@ -77,6 +77,7 @@ class _QuizResultsHeaderState extends State<QuizResultsHeader> with TickerProvid
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(54),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
