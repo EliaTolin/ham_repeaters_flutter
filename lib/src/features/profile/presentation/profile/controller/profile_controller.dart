@@ -28,6 +28,5 @@ class ProfileController extends _$ProfileController {
   Future<void> logout() async {
     await ref.read(logoutProvider.future);
     log('User logged out');
-    ref.invalidate(getUserIdProvider);
   }
 }

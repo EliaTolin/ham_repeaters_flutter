@@ -384,11 +384,13 @@ class _EmptyState extends StatelessWidget {
               children: [
                 Icon(Icons.lightbulb_outline, size: 18, color: theme.colorScheme.primary),
                 const SizedBox(width: 8),
-                Text(
-                  'Prova un quiz completo o parziale',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.primary,
-                    fontWeight: FontWeight.w600,
+                Flexible(
+                  child: Text(
+                    'Prova un quiz completo o parziale',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ],

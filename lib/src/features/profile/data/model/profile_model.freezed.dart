@@ -15,9 +15,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileModel {
   String get id;
-  @JsonKey(name: 'first_name')
+  @JsonKey(name: 'first_name', defaultValue: '')
   String get firstName;
-  @JsonKey(name: 'last_name')
+  @JsonKey(name: 'last_name', defaultValue: '')
   String get lastName;
   String? get propic;
 
@@ -63,8 +63,8 @@ abstract mixin class $ProfileModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'first_name', defaultValue: '') String firstName,
+      @JsonKey(name: 'last_name', defaultValue: '') String lastName,
       String? propic});
 }
 
@@ -199,8 +199,11 @@ extension ProfileModelPatterns on ProfileModel {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, @JsonKey(name: 'first_name') String firstName,
-            @JsonKey(name: 'last_name') String lastName, String? propic)?
+    TResult Function(
+            String id,
+            @JsonKey(name: 'first_name', defaultValue: '') String firstName,
+            @JsonKey(name: 'last_name', defaultValue: '') String lastName,
+            String? propic)?
         $default, {
     required TResult orElse(),
   }) {
@@ -229,8 +232,11 @@ extension ProfileModelPatterns on ProfileModel {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String id, @JsonKey(name: 'first_name') String firstName,
-            @JsonKey(name: 'last_name') String lastName, String? propic)
+    TResult Function(
+            String id,
+            @JsonKey(name: 'first_name', defaultValue: '') String firstName,
+            @JsonKey(name: 'last_name', defaultValue: '') String lastName,
+            String? propic)
         $default,
   ) {
     final _that = this;
@@ -257,8 +263,11 @@ extension ProfileModelPatterns on ProfileModel {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, @JsonKey(name: 'first_name') String firstName,
-            @JsonKey(name: 'last_name') String lastName, String? propic)?
+    TResult? Function(
+            String id,
+            @JsonKey(name: 'first_name', defaultValue: '') String firstName,
+            @JsonKey(name: 'last_name', defaultValue: '') String lastName,
+            String? propic)?
         $default,
   ) {
     final _that = this;
@@ -277,8 +286,8 @@ extension ProfileModelPatterns on ProfileModel {
 class _ProfileModel implements ProfileModel {
   const _ProfileModel(
       {required this.id,
-      @JsonKey(name: 'first_name') required this.firstName,
-      @JsonKey(name: 'last_name') required this.lastName,
+      @JsonKey(name: 'first_name', defaultValue: '') required this.firstName,
+      @JsonKey(name: 'last_name', defaultValue: '') required this.lastName,
       required this.propic});
   factory _ProfileModel.fromJson(Map<String, dynamic> json) =>
       _$ProfileModelFromJson(json);
@@ -286,10 +295,10 @@ class _ProfileModel implements ProfileModel {
   @override
   final String id;
   @override
-  @JsonKey(name: 'first_name')
+  @JsonKey(name: 'first_name', defaultValue: '')
   final String firstName;
   @override
-  @JsonKey(name: 'last_name')
+  @JsonKey(name: 'last_name', defaultValue: '')
   final String lastName;
   @override
   final String? propic;
@@ -342,8 +351,8 @@ abstract mixin class _$ProfileModelCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName,
+      @JsonKey(name: 'first_name', defaultValue: '') String firstName,
+      @JsonKey(name: 'last_name', defaultValue: '') String lastName,
       String? propic});
 }
 

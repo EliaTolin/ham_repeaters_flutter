@@ -61,8 +61,8 @@ class AuthSupabaseDatasource implements AuthDatasource {
 
   @override
   Future<bool> signInGoogle() async {
-    const webClientId = '472936462959-jrs1i8dasb3s8g8mus3lb4c96mhjmvjr.apps.googleusercontent.com';
-    const iosClientId = '472936462959-irnu8mbsipg1pe1r4v5t0f8iq4i3ev21.apps.googleusercontent.com';
+    const webClientId = '575450791015-9kqi6742sh1cmumnvvemhrbbvr2s2ocg.apps.googleusercontent.com';
+    const iosClientId = '575450791015-c0abr4rmjpbjt9pmvd5l1ufunhmh888k.apps.googleusercontent.com';
 
     final googleSignIn = GoogleSignIn(
       clientId: iosClientId,
@@ -95,6 +95,28 @@ class AuthSupabaseDatasource implements AuthDatasource {
       }
 
       log('User signed in successfully: ${response.user}');
+
+      final user = response.user;
+      if (user == null) {
+        throw Exception('Signin con Google non riuscito.');
+      }
+
+      // Metadati robusti
+      final meta = user.userMetadata ?? {};
+      final fullName =
+          (meta['full_name'] ?? meta['name'] ?? googleUser.displayName ?? '').toString().trim();
+      final parts = fullName.split(RegExp(r'\s+')).where((p) => p.isNotEmpty).toList();
+      final firstName = parts.isNotEmpty ? parts.first : null;
+      final lastName = parts.length > 1 ? parts.sublist(1).join(' ') : null;
+
+      // Wait trigger to update/insert the profile
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      await supabaseClient.from('profiles').update({
+        if (firstName != null) 'first_name': firstName,
+        if (lastName != null) 'last_name': lastName,
+        'updated_at': DateTime.now().toIso8601String(),
+      }).eq('id', user.id);
       return true;
     } catch (e) {
       log('Error during Google Sign-In: $e');
@@ -126,12 +148,16 @@ class AuthSupabaseDatasource implements AuthDatasource {
       nonce: rawNonce,
     );
 
+    final userId = result.user?.id;
+    if (userId == null) {
+      throw Exception('Signin con Apple non riuscito.');
+    }
+
     if (credential.familyName != null && credential.givenName != null) {
-      await supabaseClient.from('profiles').upsert({
-        'id': result.user?.id,
-        'name': credential.givenName,
-        'surname': credential.familyName,
-      });
+      await supabaseClient.from('profiles').update({
+        'first_name': credential.givenName,
+        'last_name': credential.familyName,
+      }).eq('id', userId);
     }
 
     return true;

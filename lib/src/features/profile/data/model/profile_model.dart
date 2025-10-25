@@ -7,8 +7,8 @@ part 'profile_model.g.dart';
 abstract class ProfileModel with _$ProfileModel {
   const factory ProfileModel({
     required String id,
-    @JsonKey(name: 'first_name') required String firstName,
-    @JsonKey(name: 'last_name') required String lastName,
+    @JsonKey(name: 'first_name', defaultValue: '') required String firstName,
+    @JsonKey(name: 'last_name', defaultValue: '') required String lastName,
     required String? propic,
   }) = _ProfileModel;
 

@@ -10,5 +10,4 @@ Future<void> logout(Ref ref) async {
   await imageService.deleteAllCachedImages();
   final authRepository = await ref.read(authRepositoryProvider.future);
   await authRepository.logout();
-  ref.invalidate(authRepositoryProvider);
 }

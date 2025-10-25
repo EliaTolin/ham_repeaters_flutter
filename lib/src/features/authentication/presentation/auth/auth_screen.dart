@@ -8,7 +8,9 @@ import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/utils/deep_link_utils.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_success_snackbar.dart';
+import 'package:quiz_radioamatori/resources/resources.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/widgets/sign_in_buttons.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen_provider.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
@@ -33,16 +35,12 @@ class AuthScreen extends ConsumerWidget {
             child: Column(
               spacing: 8,
               children: [
-                // // Logo e Titolo
-                // SvgPicture.asset(
-                //   SvgImageAssets.barrel,
-                //   width: 100,
-                //   height: 100,
-                //   colorFilter: ColorFilter.mode(
-                //     Theme.of(context).colorScheme.primary,
-                //     BlendMode.srcIn,
-                //   ),
-                // ),
+                // Logo e Titolo
+                Image.asset(
+                  ImageAssets.icon,
+                  width: 100,
+                  height: 100,
+                ),
                 const Gap(8),
                 Text(
                   'Quiz Radioamatori'.hardcoded,
@@ -58,18 +56,18 @@ class AuthScreen extends ConsumerWidget {
                         color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                       ),
                 ),
-                // // Sezione Social Login
-                // SignInButtons(
-                //   onSignInComplete: () {
-                //     ref
-                //       ..invalidate(getUserIdProvider)
-                //       ..read(setOnboardingSeenProvider.future);
-                //     context.router.pushAndPopUntil(
-                //       const HomeRoute(),
-                //       predicate: (_) => false,
-                //     );
-                //   },
-                // ),
+                // Sezione Social Login
+                SignInButtons(
+                  onSignInComplete: () {
+                    ref
+                      ..invalidate(getUserIdProvider)
+                      ..read(setOnboardingSeenProvider.future);
+                    context.router.pushAndPopUntil(
+                      const HomeRoute(),
+                      predicate: (_) => false,
+                    );
+                  },
+                ),
                 // Divider
                 Row(
                   children: [
@@ -154,7 +152,7 @@ class AuthScreen extends ConsumerWidget {
                       metadataFields: [
                         MetaDataField(
                           label: 'Nome'.hardcoded,
-                          key: 'name',
+                          key: 'first_name',
                           validator: (value) {
                             if (value?.isEmpty ?? false) {
                               return 'Il nome è obbligatorio'.hardcoded;
@@ -164,7 +162,7 @@ class AuthScreen extends ConsumerWidget {
                         ),
                         MetaDataField(
                           label: 'Cognome'.hardcoded,
-                          key: 'surname',
+                          key: 'last_name',
                           validator: (value) {
                             if (value?.isEmpty ?? false) {
                               return 'Il cognome è obbligatorio'.hardcoded;

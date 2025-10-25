@@ -7,6 +7,5 @@ part 'sign_in_apple_provider.g.dart';
 Future<bool> signInWithApple(Ref ref) async {
   final repository = await ref.read(authRepositoryProvider.future);
   final result = await repository.signWithApple();
-  ref.invalidate(authRepositoryProvider);
   return result;
 }

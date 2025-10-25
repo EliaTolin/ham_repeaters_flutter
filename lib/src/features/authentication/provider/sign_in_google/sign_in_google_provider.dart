@@ -7,6 +7,5 @@ part 'sign_in_google_provider.g.dart';
 Future<bool> signInWithGoogle(Ref ref) async {
   final repository = await ref.read(authRepositoryProvider.future);
   final result = await repository.signinWithGoogle();
-  ref.invalidate(authRepositoryProvider);
   return result;
 }

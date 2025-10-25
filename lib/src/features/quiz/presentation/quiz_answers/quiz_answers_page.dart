@@ -38,73 +38,73 @@ class QuizAnswersPage extends HookConsumerWidget {
             );
           }
 
-          final correctCount = answers.where((a) => a.isCorrect).length;
-          final totalCount = answers.length;
-          final accuracy = (correctCount / totalCount * 100).round();
+          // final correctCount = answers.where((a) => a.isCorrect).length;
+          // final totalCount = answers.length;
+          // final accuracy = (correctCount / totalCount * 100).round();
 
           return Column(
             children: [
-              // Summary Card
-              Container(
-                margin: const EdgeInsets.all(16),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primaryContainer,
-                      Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.7),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildStatItem(
-                          context,
-                          'Corrette',
-                          correctCount.toString(),
-                          Colors.green,
-                          Icons.check_circle,
-                        ),
-                        _buildStatItem(
-                          context,
-                          'Sbagliate',
-                          (totalCount - correctCount).toString(),
-                          Colors.red,
-                          Icons.cancel,
-                        ),
-                        _buildStatItem(
-                          context,
-                          'Precisione',
-                          '$accuracy%',
-                          Theme.of(context).colorScheme.primary,
-                          Icons.percent,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Risultato del Quiz',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).colorScheme.onPrimaryContainer,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
+              // // Summary Card
+              // Container(
+              //   margin: const EdgeInsets.all(16),
+              //   padding: const EdgeInsets.all(20),
+              //   decoration: BoxDecoration(
+              //     gradient: LinearGradient(
+              //       colors: [
+              //         Theme.of(context).colorScheme.primaryContainer,
+              //         Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.7),
+              //       ],
+              //       begin: Alignment.topLeft,
+              //       end: Alignment.bottomRight,
+              //     ),
+              //     borderRadius: BorderRadius.circular(20),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Colors.black.withValues(alpha: 0.1),
+              //         blurRadius: 10,
+              //         offset: const Offset(0, 4),
+              //       ),
+              //     ],
+              //   ),
+              //   child: Column(
+              //     children: [
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //         children: [
+              //           _buildStatItem(
+              //             context,
+              //             'Corrette',
+              //             correctCount.toString(),
+              //             Colors.green,
+              //             Icons.check_circle,
+              //           ),
+              //           _buildStatItem(
+              //             context,
+              //             'Sbagliate',
+              //             (totalCount - correctCount).toString(),
+              //             Colors.red,
+              //             Icons.cancel,
+              //           ),
+              //           _buildStatItem(
+              //             context,
+              //             'Precisione',
+              //             '$accuracy%',
+              //             Theme.of(context).colorScheme.primary,
+              //             Icons.percent,
+              //           ),
+              //         ],
+              //       ),
+              //       const SizedBox(height: 16),
+              //       Text(
+              //         'Risultato del Quiz',
+              //         style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              //               fontWeight: FontWeight.w600,
+              //               color: Theme.of(context).colorScheme.onPrimaryContainer,
+              //             ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               // Answers List
               Expanded(

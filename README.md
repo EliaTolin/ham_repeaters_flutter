@@ -1,2 +1,4 @@
-- il condividi whatsapp deve effettivamente condividere il risultato del quiz tramite messaggio
-- mostrare errori dopo il risultato
+- icona app
+- rimuovere riferimenti all'ads
+- onboarding
+- foreign key users quiz_set

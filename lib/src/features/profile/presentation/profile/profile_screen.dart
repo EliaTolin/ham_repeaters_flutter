@@ -18,9 +18,7 @@ class ProfileScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: Text('Profilo'.hardcoded)),
-      body: ref
-          .watch(profileControllerProvider)
-          .when(
+      body: ref.watch(profileControllerProvider).when(
             data: (state) {
               final profile = state.profile;
               return SingleChildScrollView(
@@ -76,7 +74,10 @@ class ProfileScreen extends HookConsumerWidget {
                         onTap: () async {
                           await ref.read(profileControllerProvider.notifier).logout();
                           if (context.mounted) {
-                            await context.router.replace(const AuthRoute());
+                            await context.router.pushAndPopUntil(
+                              const AuthRoute(),
+                              predicate: (_) => false,
+                            );
                           }
                         },
                       ),
@@ -116,9 +117,7 @@ class ProfileScreen extends HookConsumerWidget {
                     const Gap(30),
 
                     // Versione dell'app
-                    ref
-                        .watch(packageInfoProvider)
-                        .when(
+                    ref.watch(packageInfoProvider).when(
                           data: (packageInfo) => Text(
                             'Versione: ${packageInfo.version}+${packageInfo.buildNumber}',
                             style: Theme.of(
