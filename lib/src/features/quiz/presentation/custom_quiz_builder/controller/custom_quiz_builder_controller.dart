@@ -34,7 +34,7 @@ class CustomQuizBuilderController extends _$CustomQuizBuilderController {
     if (currentState == null) return;
 
     final newSelectedTopics = Map<String, int>.from(currentState.selectedTopics);
-    
+
     if (count <= 0) {
       newSelectedTopics.remove(topicName);
     } else {
@@ -47,21 +47,22 @@ class CustomQuizBuilderController extends _$CustomQuizBuilderController {
   void clearSelection() {
     final currentState = state.value;
     if (currentState == null) return;
-    
+
     state = AsyncValue.data(currentState.copyWith(selectedTopics: {}));
   }
 
   Future<void> loadTopics() async {
     state = const AsyncValue.loading();
-    
+
     try {
       final topics = await ref.read(getTopicsWithStatsProvider.future);
-      state = AsyncValue.data(CustomQuizBuilderState(
-        availableTopics: topics,
-      ),);
+      state = AsyncValue.data(
+        CustomQuizBuilderState(
+          availableTopics: topics,
+        ),
+      );
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
   }
 }
-

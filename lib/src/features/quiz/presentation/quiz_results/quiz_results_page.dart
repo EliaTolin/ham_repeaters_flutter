@@ -78,7 +78,7 @@ class QuizResultsPage extends ConsumerWidget {
                           },
                           onRetakeQuiz: () {
                             context.router.popAndPush(
-                              QuizRoute(examType: results.exam!),
+                              QuizRoute(examType: results.exam),
                             );
                           },
                           onViewDetails: () {
