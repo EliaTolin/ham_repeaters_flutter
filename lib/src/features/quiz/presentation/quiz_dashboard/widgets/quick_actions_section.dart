@@ -15,7 +15,7 @@ class QuickActionsSection extends HookWidget {
 
     final animations = useMemoized(
       () {
-        return List.generate(4, (index) {
+        return List.generate(5, (index) {
           return Tween<double>(
             begin: 0,
             end: 1,
@@ -114,18 +114,34 @@ class QuickActionsSection extends HookWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: _buildActionCard(
-                  context,
-                  'Quiz Personalizzato',
-                  'Crea un quiz con argomenti specifici',
-                  Icons.tune_rounded,
-                  Colors.orange,
-                  2,
-                  animations,
-                  () => _startCustomQuiz(context),
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildActionCard(
+                      context,
+                      'Maratona',
+                      'Completa un topic intero',
+                      Icons.emoji_events_rounded,
+                      Colors.purple,
+                      2,
+                      animations,
+                      () => _startMarathon(context),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildActionCard(
+                      context,
+                      'Personalizzato',
+                      'Crea il tuo quiz',
+                      Icons.tune_rounded,
+                      Colors.orange,
+                      3,
+                      animations,
+                      () => _startCustomQuiz(context),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -216,5 +232,9 @@ class QuickActionsSection extends HookWidget {
 
   void _startCustomQuiz(BuildContext context) {
     context.router.push(const CustomQuizBuilderRoute());
+  }
+
+  void _startMarathon(BuildContext context) {
+    context.router.push(const MarathonQuizRoute());
   }
 }

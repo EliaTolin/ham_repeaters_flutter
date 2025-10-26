@@ -75,6 +75,22 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [MarathonQuizPage]
+class MarathonQuizRoute extends PageRouteInfo<void> {
+  const MarathonQuizRoute({List<PageRouteInfo>? children})
+      : super(MarathonQuizRoute.name, initialChildren: children);
+
+  static const String name = 'MarathonQuizRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MarathonQuizPage();
+    },
+  );
+}
+
+/// generated route for
 /// [OnboardingPage]
 class OnboardingRoute extends PageRouteInfo<void> {
   const OnboardingRoute({List<PageRouteInfo>? children})

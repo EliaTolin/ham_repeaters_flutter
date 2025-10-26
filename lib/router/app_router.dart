@@ -13,6 +13,7 @@ import 'package:quiz_radioamatori/src/features/profile/presentation/user_setting
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/custom_quiz_builder/custom_quiz_builder_page.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/marathon_quiz/marathon_quiz_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_answers/quiz_answers_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/quiz_dashboard_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/quiz_page.dart';
@@ -70,6 +71,11 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
         // Custom quiz builder route
         AutoRoute(
           page: CustomQuizBuilderRoute.page,
+          guards: [this],
+        ),
+        // Marathon quiz route
+        AutoRoute(
+          page: MarathonQuizRoute.page,
           guards: [this],
         ),
         // Quiz answers route as a separate full-screen route
