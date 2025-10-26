@@ -16,7 +16,11 @@ final class QuizControllerProvider
     extends $AsyncNotifierProvider<QuizController, QuizState?> {
   const QuizControllerProvider._(
       {required QuizControllerFamily super.from,
-      required ExamType super.argument})
+      required ({
+        ExamType? examType,
+        List<TopicRequest>? topics,
+      })
+          super.argument})
       : super(
           retry: null,
           name: r'quizControllerProvider',
@@ -32,7 +36,7 @@ final class QuizControllerProvider
   String toString() {
     return r'quizControllerProvider'
         ''
-        '($argument)';
+        '$argument';
   }
 
   @$internal
@@ -50,12 +54,19 @@ final class QuizControllerProvider
   }
 }
 
-String _$quizControllerHash() => r'ffb770349160cc91962566edda239c961f5b0d8f';
+String _$quizControllerHash() => r'13f310bb3d3bd13f8e6b77c8013be9f7946e50a4';
 
 final class QuizControllerFamily extends $Family
     with
-        $ClassFamilyOverride<QuizController, AsyncValue<QuizState?>, QuizState?,
-            FutureOr<QuizState?>, ExamType> {
+        $ClassFamilyOverride<
+            QuizController,
+            AsyncValue<QuizState?>,
+            QuizState?,
+            FutureOr<QuizState?>,
+            ({
+              ExamType? examType,
+              List<TopicRequest>? topics,
+            })> {
   const QuizControllerFamily._()
       : super(
           retry: null,
@@ -65,27 +76,37 @@ final class QuizControllerFamily extends $Family
           isAutoDispose: true,
         );
 
-  QuizControllerProvider call(
-    ExamType examType,
-  ) =>
-      QuizControllerProvider._(argument: examType, from: this);
+  QuizControllerProvider call({
+    ExamType? examType,
+    List<TopicRequest>? topics,
+  }) =>
+      QuizControllerProvider._(argument: (
+        examType: examType,
+        topics: topics,
+      ), from: this);
 
   @override
   String toString() => r'quizControllerProvider';
 }
 
 abstract class _$QuizController extends $AsyncNotifier<QuizState?> {
-  late final _$args = ref.$arg as ExamType;
-  ExamType get examType => _$args;
+  late final _$args = ref.$arg as ({
+    ExamType? examType,
+    List<TopicRequest>? topics,
+  });
+  ExamType? get examType => _$args.examType;
+  List<TopicRequest>? get topics => _$args.topics;
 
-  FutureOr<QuizState?> build(
-    ExamType examType,
-  );
+  FutureOr<QuizState?> build({
+    ExamType? examType,
+    List<TopicRequest>? topics,
+  });
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build(
-      _$args,
+      examType: _$args.examType,
+      topics: _$args.topics,
     );
     final ref = this.ref as $Ref<AsyncValue<QuizState?>, QuizState?>;
     final element = ref.element as $ClassProviderElement<

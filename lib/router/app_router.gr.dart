@@ -43,6 +43,22 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CustomQuizBuilderPage]
+class CustomQuizBuilderRoute extends PageRouteInfo<void> {
+  const CustomQuizBuilderRoute({List<PageRouteInfo>? children})
+      : super(CustomQuizBuilderRoute.name, initialChildren: children);
+
+  static const String name = 'CustomQuizBuilderRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CustomQuizBuilderPage();
+    },
+  );
+}
+
+/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -157,12 +173,13 @@ class QuizDashboardRoute extends PageRouteInfo<void> {
 /// [QuizPage]
 class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
   QuizRoute({
-    required ExamType examType,
+    ExamType? examType,
+    List<TopicRequest>? topics,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           QuizRoute.name,
-          args: QuizRouteArgs(examType: examType, key: key),
+          args: QuizRouteArgs(examType: examType, topics: topics, key: key),
           initialChildren: children,
         );
 
@@ -171,33 +188,46 @@ class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<QuizRouteArgs>();
-      return QuizPage(examType: args.examType, key: args.key);
+      final args = data.argsAs<QuizRouteArgs>(
+        orElse: () => const QuizRouteArgs(),
+      );
+      return QuizPage(
+        examType: args.examType,
+        topics: args.topics,
+        key: args.key,
+      );
     },
   );
 }
 
 class QuizRouteArgs {
-  const QuizRouteArgs({required this.examType, this.key});
+  const QuizRouteArgs({this.examType, this.topics, this.key});
 
-  final ExamType examType;
+  final ExamType? examType;
+
+  final List<TopicRequest>? topics;
 
   final Key? key;
 
   @override
   String toString() {
-    return 'QuizRouteArgs{examType: $examType, key: $key}';
+    return 'QuizRouteArgs{examType: $examType, topics: $topics, key: $key}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! QuizRouteArgs) return false;
-    return examType == other.examType && key == other.key;
+    return examType == other.examType &&
+        const ListEquality<TopicRequest>().equals(topics, other.topics) &&
+        key == other.key;
   }
 
   @override
-  int get hashCode => examType.hashCode ^ key.hashCode;
+  int get hashCode =>
+      examType.hashCode ^
+      const ListEquality<TopicRequest>().hash(topics) ^
+      key.hashCode;
 }
 
 /// generated route for

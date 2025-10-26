@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/controller/quiz_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state/quiz_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_navigation_widget.dart';
@@ -13,26 +13,17 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widge
 
 @RoutePage()
 class QuizPage extends HookConsumerWidget {
-  const QuizPage({required this.examType, super.key});
-  final ExamType examType;
+  const QuizPage({this.examType, this.topics, super.key});
+  final ExamType? examType;
+  final List<TopicRequest>? topics;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Initialize quiz when page loads
-    useEffect(
-      () {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ref.read(quizControllerProvider(examType).notifier).initializeQuiz(examType);
-        });
-        return null;
-      },
-      [],
-    );
-
-    final quizState = ref.watch(quizControllerProvider(examType));
+    final quizState = ref.watch(quizControllerProvider(examType: examType, topics: topics));
 
     // Listen for quiz completion and navigate to results
-    ref.listen<AsyncValue<QuizState?>>(quizControllerProvider(examType), (previous, next) {
+    ref.listen<AsyncValue<QuizState?>>(quizControllerProvider(examType: examType, topics: topics),
+        (previous, next) {
       next.whenData((data) {
         if (data?.isCompleted ?? false) {
           context.router.pushAndPopUntil(
@@ -69,7 +60,7 @@ class QuizPage extends HookConsumerWidget {
             },
           ),
           title: Text(
-            'Quiz ${examType.value.toUpperCase()}',
+            'Quiz',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -99,7 +90,9 @@ class QuizPage extends HookConsumerWidget {
                     question: state.currentQuestion,
                     currentAnswer: state.currentAnswer,
                     onAnswerSelected: (answer) {
-                      ref.read(quizControllerProvider(examType).notifier).answerQuestion(answer);
+                      ref
+                          .read(quizControllerProvider(examType: examType, topics: topics).notifier)
+                          .answerQuestion(answer);
                     },
                   ),
                 ),
@@ -111,13 +104,19 @@ class QuizPage extends HookConsumerWidget {
                   canSubmit: state.canSubmit,
                   isSubmitting: state.isSubmitting,
                   onPrevious: () {
-                    ref.read(quizControllerProvider(examType).notifier).goToPreviousQuestion();
+                    ref
+                        .read(quizControllerProvider(examType: examType, topics: topics).notifier)
+                        .goToPreviousQuestion();
                   },
                   onNext: () {
-                    ref.read(quizControllerProvider(examType).notifier).goToNextQuestion();
+                    ref
+                        .read(quizControllerProvider(examType: examType, topics: topics).notifier)
+                        .goToNextQuestion();
                   },
                   onSubmit: () {
-                    ref.read(quizControllerProvider(examType).notifier).submitQuiz();
+                    ref
+                        .read(quizControllerProvider(examType: examType, topics: topics).notifier)
+                        .submitQuiz();
                   },
                 ),
               ],
@@ -151,7 +150,7 @@ class QuizPage extends HookConsumerWidget {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(quizControllerProvider(examType).notifier).initializeQuiz(examType);
+                    ref.invalidate(quizControllerProvider(examType: examType, topics: topics));
                   },
                   child: const Text('Riprova'),
                 ),
@@ -217,7 +216,7 @@ class QuizPage extends HookConsumerWidget {
   Future<void> _deleteQuizAndExit(BuildContext context, WidgetRef ref) async {
     try {
       // Get the current quiz state
-      final quizState = ref.read(quizControllerProvider(examType));
+      final quizState = ref.read(quizControllerProvider(examType: examType, topics: topics));
 
       if (quizState.hasValue && quizState.value != null) {
         final state = quizState.value;

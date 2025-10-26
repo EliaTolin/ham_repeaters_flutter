@@ -15,7 +15,7 @@ class QuickActionsSection extends HookWidget {
 
     final animations = useMemoized(
       () {
-        return List.generate(3, (index) {
+        return List.generate(4, (index) {
           return Tween<double>(
             begin: 0,
             end: 1,
@@ -113,20 +113,20 @@ class QuickActionsSection extends HookWidget {
                   ),
                 ],
               ),
-              // const SizedBox(height: 16),
-              // SizedBox(
-              //   width: double.infinity,
-              //   child: _buildActionCard(
-              //     context,
-              //     'Quiz Personalizzato',
-              //     'Crea un quiz con argomenti specifici',
-              //     Icons.tune_rounded,
-              //     Colors.orange,
-              //     2,
-              //     animations,
-              //     () => _startCustomQuiz(context),
-              //   ),
-              // ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: _buildActionCard(
+                  context,
+                  'Quiz Personalizzato',
+                  'Crea un quiz con argomenti specifici',
+                  Icons.tune_rounded,
+                  Colors.orange,
+                  2,
+                  animations,
+                  () => _startCustomQuiz(context),
+                ),
+              ),
             ],
           ),
         );
@@ -212,5 +212,9 @@ class QuickActionsSection extends HookWidget {
 
   void _startQuiz(BuildContext context, ExamType examType) {
     context.router.push(QuizRoute(examType: examType));
+  }
+
+  void _startCustomQuiz(BuildContext context) {
+    context.router.push(const CustomQuizBuilderRoute());
   }
 }

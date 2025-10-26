@@ -1,8 +1,10 @@
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state/quiz_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/delete_quiz_set_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_custom_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_set_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,24 +13,45 @@ part 'quiz_controller.g.dart';
 @riverpod
 class QuizController extends _$QuizController {
   @override
-  FutureOr<QuizState?> build(ExamType examType) async {
-    return null;
-  }
+  FutureOr<QuizState?> build({ExamType? examType, List<TopicRequest>? topics}) async {
+    final userId = await ref.read(getUserIdProvider.future);
 
-  Future<void> initializeQuiz(ExamType examType) async {
-    state = const AsyncLoading();
+    if (userId == null) {
+      throw Exception('User ID not found');
+    }
 
-    try {
-      final userId = await ref.read(getUserIdProvider.future);
+    if (examType != null && topics != null) {
+      throw Exception('Either examType or topics must be provided');
+    }
 
-      if (userId == null) {
-        throw Exception('User ID not found');
+    if (examType != null) {
+      state = const AsyncLoading();
+      try {
+        state = await AsyncValue.guard(() async {
+          final quizSet = await ref.read(
+            getQuizSetProvider(
+              examType: examType,
+              userId: userId,
+            ).future,
+          );
+
+          return QuizState(
+            quizSet: quizSet,
+            currentQuestionIndex: 0,
+            answers: {},
+            questionTimes: {},
+            quizStartTime: DateTime.now(),
+          );
+        });
+        return state.value;
+      } catch (e) {
+        state = AsyncError(e, StackTrace.current);
       }
-
+    } else if (topics != null) {
       state = await AsyncValue.guard(() async {
         final quizSet = await ref.read(
-          getQuizSetProvider(
-            examType: examType,
+          getCustomQuizSetProvider(
+            topics: topics,
             userId: userId,
           ).future,
         );
@@ -41,9 +64,9 @@ class QuizController extends _$QuizController {
           quizStartTime: DateTime.now(),
         );
       });
-    } catch (e) {
-      state = AsyncError(e, StackTrace.current);
+      return state.value;
     }
+    return null;
   }
 
   Future<void> answerQuestion(String chosenLetter) async {

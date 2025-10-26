@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_response_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
@@ -90,6 +92,7 @@ class QuizDataSourceSupabase {
 
       return _responseMapper.fromModel(model);
     } catch (e) {
+      log('Failed to get custom quiz set: $e');
       throw Exception('Failed to get custom quiz set: $e');
     }
   }

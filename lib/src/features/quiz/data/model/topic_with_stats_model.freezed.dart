@@ -16,8 +16,8 @@ T _$identity<T>(T value) => value;
 mixin _$TopicWithStatsModel {
   String get name;
   String get label;
-  String? get description;
   int get totalQuestions;
+  String? get description;
 
   /// Create a copy of TopicWithStatsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -34,19 +34,19 @@ mixin _$TopicWithStatsModel {
             other is TopicWithStatsModel &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.label, label) || other.label == label) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
             (identical(other.totalQuestions, totalQuestions) ||
-                other.totalQuestions == totalQuestions));
+                other.totalQuestions == totalQuestions) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, name, label, description, totalQuestions);
+      Object.hash(runtimeType, name, label, totalQuestions, description);
 
   @override
   String toString() {
-    return 'TopicWithStatsModel(name: $name, label: $label, description: $description, totalQuestions: $totalQuestions)';
+    return 'TopicWithStatsModel(name: $name, label: $label, totalQuestions: $totalQuestions, description: $description)';
   }
 }
 
@@ -57,7 +57,7 @@ abstract mixin class $TopicWithStatsModelCopyWith<$Res> {
       _$TopicWithStatsModelCopyWithImpl;
   @useResult
   $Res call(
-      {String name, String label, String? description, int totalQuestions});
+      {String name, String label, int totalQuestions, String? description});
 }
 
 /// @nodoc
@@ -75,8 +75,8 @@ class _$TopicWithStatsModelCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? label = null,
-    Object? description = freezed,
     Object? totalQuestions = null,
+    Object? description = freezed,
   }) {
     return _then(_self.copyWith(
       name: null == name
@@ -87,14 +87,14 @@ class _$TopicWithStatsModelCopyWithImpl<$Res>
           ? _self.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      description: freezed == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
       totalQuestions: null == totalQuestions
           ? _self.totalQuestions
           : totalQuestions // ignore: cast_nullable_to_non_nullable
               as int,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -193,7 +193,7 @@ extension TopicWithStatsModelPatterns on TopicWithStatsModel {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            String name, String label, String? description, int totalQuestions)?
+            String name, String label, int totalQuestions, String? description)?
         $default, {
     required TResult orElse(),
   }) {
@@ -201,7 +201,7 @@ extension TopicWithStatsModelPatterns on TopicWithStatsModel {
     switch (_that) {
       case _TopicWithStatsModel() when $default != null:
         return $default(
-            _that.name, _that.label, _that.description, _that.totalQuestions);
+            _that.name, _that.label, _that.totalQuestions, _that.description);
       case _:
         return orElse();
     }
@@ -223,14 +223,14 @@ extension TopicWithStatsModelPatterns on TopicWithStatsModel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            String name, String label, String? description, int totalQuestions)
+            String name, String label, int totalQuestions, String? description)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _TopicWithStatsModel():
         return $default(
-            _that.name, _that.label, _that.description, _that.totalQuestions);
+            _that.name, _that.label, _that.totalQuestions, _that.description);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -251,14 +251,14 @@ extension TopicWithStatsModelPatterns on TopicWithStatsModel {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            String name, String label, String? description, int totalQuestions)?
+            String name, String label, int totalQuestions, String? description)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _TopicWithStatsModel() when $default != null:
         return $default(
-            _that.name, _that.label, _that.description, _that.totalQuestions);
+            _that.name, _that.label, _that.totalQuestions, _that.description);
       case _:
         return null;
     }
@@ -271,17 +271,17 @@ class _TopicWithStatsModel implements TopicWithStatsModel {
   const _TopicWithStatsModel(
       {required this.name,
       required this.label,
-      this.description,
-      required this.totalQuestions});
+      required this.totalQuestions,
+      this.description});
 
   @override
   final String name;
   @override
   final String label;
   @override
-  final String? description;
-  @override
   final int totalQuestions;
+  @override
+  final String? description;
 
   /// Create a copy of TopicWithStatsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -299,19 +299,19 @@ class _TopicWithStatsModel implements TopicWithStatsModel {
             other is _TopicWithStatsModel &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.label, label) || other.label == label) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
             (identical(other.totalQuestions, totalQuestions) ||
-                other.totalQuestions == totalQuestions));
+                other.totalQuestions == totalQuestions) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, name, label, description, totalQuestions);
+      Object.hash(runtimeType, name, label, totalQuestions, description);
 
   @override
   String toString() {
-    return 'TopicWithStatsModel(name: $name, label: $label, description: $description, totalQuestions: $totalQuestions)';
+    return 'TopicWithStatsModel(name: $name, label: $label, totalQuestions: $totalQuestions, description: $description)';
   }
 }
 
@@ -324,7 +324,7 @@ abstract mixin class _$TopicWithStatsModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name, String label, String? description, int totalQuestions});
+      {String name, String label, int totalQuestions, String? description});
 }
 
 /// @nodoc
@@ -342,8 +342,8 @@ class __$TopicWithStatsModelCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? label = null,
-    Object? description = freezed,
     Object? totalQuestions = null,
+    Object? description = freezed,
   }) {
     return _then(_TopicWithStatsModel(
       name: null == name
@@ -354,14 +354,14 @@ class __$TopicWithStatsModelCopyWithImpl<$Res>
           ? _self.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      description: freezed == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
       totalQuestions: null == totalQuestions
           ? _self.totalQuestions
           : totalQuestions // ignore: cast_nullable_to_non_nullable
               as int,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
