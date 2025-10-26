@@ -1,8 +1,10 @@
 import 'package:quiz_radioamatori/src/features/quiz/data/datasource/quiz_datasource_supabase.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_question_result_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_score_mappers.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_accuracy_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_with_stats_mappers.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/mappers/total_accuracy_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
@@ -10,8 +12,10 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result.
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_with_stats.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_repository.g.dart';
@@ -22,6 +26,8 @@ class QuizRepository {
   final QuizSetScoreMapper _scoreMapper = QuizSetScoreMapper();
   final TopicMapper _topicMapper = TopicMapper();
   final TopicWithStatsMapper _topicWithStatsMapper = TopicWithStatsMapper();
+  final TopicAccuracyMapper _topicAccuracyMapper = TopicAccuracyMapper();
+  final TotalAccuracyMapper _totalAccuracyMapper = TotalAccuracyMapper();
 
   // Quiz Set methods
   Future<QuizSetResponse> getQuizSet({
@@ -139,6 +145,19 @@ class QuizRepository {
   Future<List<TopicWithStats>> getTopicsWithStats() async {
     final models = await _dataSource.getTopicsWithStats();
     return models.map(_topicWithStatsMapper.fromModel).toList();
+  }
+
+  // Get User Topic Accuracy
+  Future<List<TopicAccuracy>> getUserTopicAccuracy(String userId) async {
+    final models = await _dataSource.getUserTopicAccuracy(userId);
+    return models.map(_topicAccuracyMapper.fromModel).toList();
+  }
+
+  // Get User Total Accuracy
+  Future<TotalAccuracy?> getUserTotalAccuracy(String userId) async {
+    final model = await _dataSource.getUserTotalAccuracy(userId);
+    if (model == null) return null;
+    return _totalAccuracyMapper.fromModel(model);
   }
 }
 

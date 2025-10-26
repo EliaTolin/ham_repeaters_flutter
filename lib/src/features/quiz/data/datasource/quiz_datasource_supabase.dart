@@ -6,8 +6,10 @@ import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_score_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_accuracy_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_with_stats_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/total_accuracy_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
@@ -272,6 +274,30 @@ class QuizDataSourceSupabase {
       return (response as List).map((json) => TopicWithStatsModel.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Failed to get topics with stats: $e');
+    }
+  }
+
+  // Get user topic accuracy
+  Future<List<TopicAccuracyModel>> getUserTopicAccuracy(String userId) async {
+    try {
+      final response = await _supabase.rpc('user_topic_accuracy', params: {'p_user_id': userId});
+
+      return (response as List).map((json) => TopicAccuracyModel.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Failed to get user topic accuracy: $e');
+    }
+  }
+
+  // Get user total accuracy
+  Future<TotalAccuracyModel?> getUserTotalAccuracy(String userId) async {
+    try {
+      final response =
+          await _supabase.rpc('user_total_accuracy', params: {'p_user_id': userId}).maybeSingle();
+
+      if (response == null) return null;
+      return TotalAccuracyModel.fromJson(response);
+    } catch (e) {
+      throw Exception('Failed to get user total accuracy: $e');
     }
   }
 }
