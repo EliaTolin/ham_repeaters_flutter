@@ -6,3 +6,4 @@ export 'quiz_set_question_result_model.dart';
 export 'quiz_set_response_model.dart';
 export 'quiz_set_score_model.dart';
 export 'topic_model.dart';
+export 'topic_with_stats_model.dart';

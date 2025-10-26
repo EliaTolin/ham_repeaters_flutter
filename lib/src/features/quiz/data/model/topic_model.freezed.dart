@@ -15,8 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TopicModel {
   String get name;
-  String? get description;
   String get label;
+  String? get description;
 
   /// Create a copy of TopicModel
   /// with the given fields replaced by the non-null parameter values.
@@ -34,18 +34,18 @@ mixin _$TopicModel {
         (other.runtimeType == runtimeType &&
             other is TopicModel &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.label, label) || other.label == label) &&
             (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.label, label) || other.label == label));
+                other.description == description));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, description, label);
+  int get hashCode => Object.hash(runtimeType, name, label, description);
 
   @override
   String toString() {
-    return 'TopicModel(name: $name, description: $description, label: $label)';
+    return 'TopicModel(name: $name, label: $label, description: $description)';
   }
 }
 
@@ -55,7 +55,7 @@ abstract mixin class $TopicModelCopyWith<$Res> {
           TopicModel value, $Res Function(TopicModel) _then) =
       _$TopicModelCopyWithImpl;
   @useResult
-  $Res call({String name, String? description, String label});
+  $Res call({String name, String label, String? description});
 }
 
 /// @nodoc
@@ -71,22 +71,22 @@ class _$TopicModelCopyWithImpl<$Res> implements $TopicModelCopyWith<$Res> {
   @override
   $Res call({
     Object? name = null,
-    Object? description = freezed,
     Object? label = null,
+    Object? description = freezed,
   }) {
     return _then(_self.copyWith(
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: freezed == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
       label: null == label
           ? _self.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -184,14 +184,14 @@ extension TopicModelPatterns on TopicModel {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, String label)?
+    TResult Function(String name, String label, String? description)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _TopicModel() when $default != null:
-        return $default(_that.name, _that.description, _that.label);
+        return $default(_that.name, _that.label, _that.description);
       case _:
         return orElse();
     }
@@ -212,12 +212,12 @@ extension TopicModelPatterns on TopicModel {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, String label) $default,
+    TResult Function(String name, String label, String? description) $default,
   ) {
     final _that = this;
     switch (_that) {
       case _TopicModel():
-        return $default(_that.name, _that.description, _that.label);
+        return $default(_that.name, _that.label, _that.description);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -237,12 +237,12 @@ extension TopicModelPatterns on TopicModel {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String name, String? description, String label)? $default,
+    TResult? Function(String name, String label, String? description)? $default,
   ) {
     final _that = this;
     switch (_that) {
       case _TopicModel() when $default != null:
-        return $default(_that.name, _that.description, _that.label);
+        return $default(_that.name, _that.label, _that.description);
       case _:
         return null;
     }
@@ -253,16 +253,16 @@ extension TopicModelPatterns on TopicModel {
 @JsonSerializable()
 class _TopicModel implements TopicModel {
   const _TopicModel(
-      {required this.name, this.description, required this.label});
+      {required this.name, required this.label, this.description});
   factory _TopicModel.fromJson(Map<String, dynamic> json) =>
       _$TopicModelFromJson(json);
 
   @override
   final String name;
   @override
-  final String? description;
-  @override
   final String label;
+  @override
+  final String? description;
 
   /// Create a copy of TopicModel
   /// with the given fields replaced by the non-null parameter values.
@@ -285,18 +285,18 @@ class _TopicModel implements TopicModel {
         (other.runtimeType == runtimeType &&
             other is _TopicModel &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.label, label) || other.label == label) &&
             (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.label, label) || other.label == label));
+                other.description == description));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, description, label);
+  int get hashCode => Object.hash(runtimeType, name, label, description);
 
   @override
   String toString() {
-    return 'TopicModel(name: $name, description: $description, label: $label)';
+    return 'TopicModel(name: $name, label: $label, description: $description)';
   }
 }
 
@@ -308,7 +308,7 @@ abstract mixin class _$TopicModelCopyWith<$Res>
       __$TopicModelCopyWithImpl;
   @override
   @useResult
-  $Res call({String name, String? description, String label});
+  $Res call({String name, String label, String? description});
 }
 
 /// @nodoc
@@ -324,22 +324,22 @@ class __$TopicModelCopyWithImpl<$Res> implements _$TopicModelCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? name = null,
-    Object? description = freezed,
     Object? label = null,
+    Object? description = freezed,
   }) {
     return _then(_TopicModel(
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: freezed == description
-          ? _self.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
       label: null == label
           ? _self.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }

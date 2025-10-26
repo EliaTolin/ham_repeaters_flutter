@@ -2,6 +2,7 @@ import 'package:quiz_radioamatori/src/features/quiz/data/datasource/quiz_datasou
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_question_result_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_score_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_mappers.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_with_stats_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
@@ -10,6 +11,7 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dar
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_with_stats.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_repository.g.dart';
@@ -19,6 +21,7 @@ class QuizRepository {
   final QuizDataSourceSupabase _dataSource;
   final QuizSetScoreMapper _scoreMapper = QuizSetScoreMapper();
   final TopicMapper _topicMapper = TopicMapper();
+  final TopicWithStatsMapper _topicWithStatsMapper = TopicWithStatsMapper();
 
   // Quiz Set methods
   Future<QuizSetResponse> getQuizSet({
@@ -130,6 +133,12 @@ class QuizRepository {
   Future<List<Topic>> getTopics() async {
     final models = await _dataSource.getTopics();
     return models.map(_topicMapper.fromModel).toList();
+  }
+
+  // Get Topics with Stats
+  Future<List<TopicWithStats>> getTopicsWithStats() async {
+    final models = await _dataSource.getTopicsWithStats();
+    return models.map(_topicWithStatsMapper.fromModel).toList();
   }
 }
 

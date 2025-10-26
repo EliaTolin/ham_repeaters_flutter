@@ -8,3 +8,4 @@ export 'quiz_set_question_result.dart';
 export 'quiz_set_response.dart';
 export 'quiz_set_score.dart';
 export 'topic.dart';
+export 'topic_with_stats.dart';

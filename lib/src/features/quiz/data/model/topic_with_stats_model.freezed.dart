@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'topic.dart';
+part of 'topic_with_stats_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,54 +13,62 @@ part of 'topic.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$Topic {
+mixin _$TopicWithStatsModel {
   String get name;
   String get label;
   String? get description;
+  int get totalQuestions;
 
-  /// Create a copy of Topic
+  /// Create a copy of TopicWithStatsModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $TopicCopyWith<Topic> get copyWith =>
-      _$TopicCopyWithImpl<Topic>(this as Topic, _$identity);
+  $TopicWithStatsModelCopyWith<TopicWithStatsModel> get copyWith =>
+      _$TopicWithStatsModelCopyWithImpl<TopicWithStatsModel>(
+          this as TopicWithStatsModel, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Topic &&
+            other is TopicWithStatsModel &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.totalQuestions, totalQuestions) ||
+                other.totalQuestions == totalQuestions));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, label, description);
+  int get hashCode =>
+      Object.hash(runtimeType, name, label, description, totalQuestions);
 
   @override
   String toString() {
-    return 'Topic(name: $name, label: $label, description: $description)';
+    return 'TopicWithStatsModel(name: $name, label: $label, description: $description, totalQuestions: $totalQuestions)';
   }
 }
 
 /// @nodoc
-abstract mixin class $TopicCopyWith<$Res> {
-  factory $TopicCopyWith(Topic value, $Res Function(Topic) _then) =
-      _$TopicCopyWithImpl;
+abstract mixin class $TopicWithStatsModelCopyWith<$Res> {
+  factory $TopicWithStatsModelCopyWith(
+          TopicWithStatsModel value, $Res Function(TopicWithStatsModel) _then) =
+      _$TopicWithStatsModelCopyWithImpl;
   @useResult
-  $Res call({String name, String label, String? description});
+  $Res call(
+      {String name, String label, String? description, int totalQuestions});
 }
 
 /// @nodoc
-class _$TopicCopyWithImpl<$Res> implements $TopicCopyWith<$Res> {
-  _$TopicCopyWithImpl(this._self, this._then);
+class _$TopicWithStatsModelCopyWithImpl<$Res>
+    implements $TopicWithStatsModelCopyWith<$Res> {
+  _$TopicWithStatsModelCopyWithImpl(this._self, this._then);
 
-  final Topic _self;
-  final $Res Function(Topic) _then;
+  final TopicWithStatsModel _self;
+  final $Res Function(TopicWithStatsModel) _then;
 
-  /// Create a copy of Topic
+  /// Create a copy of TopicWithStatsModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -68,6 +76,7 @@ class _$TopicCopyWithImpl<$Res> implements $TopicCopyWith<$Res> {
     Object? name = null,
     Object? label = null,
     Object? description = freezed,
+    Object? totalQuestions = null,
   }) {
     return _then(_self.copyWith(
       name: null == name
@@ -82,12 +91,16 @@ class _$TopicCopyWithImpl<$Res> implements $TopicCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      totalQuestions: null == totalQuestions
+          ? _self.totalQuestions
+          : totalQuestions // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
-/// Adds pattern-matching-related methods to [Topic].
-extension TopicPatterns on Topic {
+/// Adds pattern-matching-related methods to [TopicWithStatsModel].
+extension TopicWithStatsModelPatterns on TopicWithStatsModel {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -102,12 +115,12 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Topic value)? $default, {
+    TResult Function(_TopicWithStatsModel value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _Topic() when $default != null:
+      case _TopicWithStatsModel() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -129,11 +142,11 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_Topic value) $default,
+    TResult Function(_TopicWithStatsModel value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _Topic():
+      case _TopicWithStatsModel():
         return $default(_that);
       case _:
         throw StateError('Unexpected subclass');
@@ -154,11 +167,11 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_Topic value)? $default,
+    TResult? Function(_TopicWithStatsModel value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _Topic() when $default != null:
+      case _TopicWithStatsModel() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -179,14 +192,16 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String label, String? description)?
+    TResult Function(
+            String name, String label, String? description, int totalQuestions)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _Topic() when $default != null:
-        return $default(_that.name, _that.label, _that.description);
+      case _TopicWithStatsModel() when $default != null:
+        return $default(
+            _that.name, _that.label, _that.description, _that.totalQuestions);
       case _:
         return orElse();
     }
@@ -207,12 +222,15 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String label, String? description) $default,
+    TResult Function(
+            String name, String label, String? description, int totalQuestions)
+        $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _Topic():
-        return $default(_that.name, _that.label, _that.description);
+      case _TopicWithStatsModel():
+        return $default(
+            _that.name, _that.label, _that.description, _that.totalQuestions);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -232,12 +250,15 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String name, String label, String? description)? $default,
+    TResult? Function(
+            String name, String label, String? description, int totalQuestions)?
+        $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _Topic() when $default != null:
-        return $default(_that.name, _that.label, _that.description);
+      case _TopicWithStatsModel() when $default != null:
+        return $default(
+            _that.name, _that.label, _that.description, _that.totalQuestions);
       case _:
         return null;
     }
@@ -246,8 +267,12 @@ extension TopicPatterns on Topic {
 
 /// @nodoc
 
-class _Topic implements Topic {
-  const _Topic({required this.name, required this.label, this.description});
+class _TopicWithStatsModel implements TopicWithStatsModel {
+  const _TopicWithStatsModel(
+      {required this.name,
+      required this.label,
+      this.description,
+      required this.totalQuestions});
 
   @override
   final String name;
@@ -255,52 +280,62 @@ class _Topic implements Topic {
   final String label;
   @override
   final String? description;
+  @override
+  final int totalQuestions;
 
-  /// Create a copy of Topic
+  /// Create a copy of TopicWithStatsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$TopicCopyWith<_Topic> get copyWith =>
-      __$TopicCopyWithImpl<_Topic>(this, _$identity);
+  _$TopicWithStatsModelCopyWith<_TopicWithStatsModel> get copyWith =>
+      __$TopicWithStatsModelCopyWithImpl<_TopicWithStatsModel>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Topic &&
+            other is _TopicWithStatsModel &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.totalQuestions, totalQuestions) ||
+                other.totalQuestions == totalQuestions));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, label, description);
+  int get hashCode =>
+      Object.hash(runtimeType, name, label, description, totalQuestions);
 
   @override
   String toString() {
-    return 'Topic(name: $name, label: $label, description: $description)';
+    return 'TopicWithStatsModel(name: $name, label: $label, description: $description, totalQuestions: $totalQuestions)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$TopicCopyWith<$Res> implements $TopicCopyWith<$Res> {
-  factory _$TopicCopyWith(_Topic value, $Res Function(_Topic) _then) =
-      __$TopicCopyWithImpl;
+abstract mixin class _$TopicWithStatsModelCopyWith<$Res>
+    implements $TopicWithStatsModelCopyWith<$Res> {
+  factory _$TopicWithStatsModelCopyWith(_TopicWithStatsModel value,
+          $Res Function(_TopicWithStatsModel) _then) =
+      __$TopicWithStatsModelCopyWithImpl;
   @override
   @useResult
-  $Res call({String name, String label, String? description});
+  $Res call(
+      {String name, String label, String? description, int totalQuestions});
 }
 
 /// @nodoc
-class __$TopicCopyWithImpl<$Res> implements _$TopicCopyWith<$Res> {
-  __$TopicCopyWithImpl(this._self, this._then);
+class __$TopicWithStatsModelCopyWithImpl<$Res>
+    implements _$TopicWithStatsModelCopyWith<$Res> {
+  __$TopicWithStatsModelCopyWithImpl(this._self, this._then);
 
-  final _Topic _self;
-  final $Res Function(_Topic) _then;
+  final _TopicWithStatsModel _self;
+  final $Res Function(_TopicWithStatsModel) _then;
 
-  /// Create a copy of Topic
+  /// Create a copy of TopicWithStatsModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -308,8 +343,9 @@ class __$TopicCopyWithImpl<$Res> implements _$TopicCopyWith<$Res> {
     Object? name = null,
     Object? label = null,
     Object? description = freezed,
+    Object? totalQuestions = null,
   }) {
-    return _then(_Topic(
+    return _then(_TopicWithStatsModel(
       name: null == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -322,6 +358,10 @@ class __$TopicCopyWithImpl<$Res> implements _$TopicCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      totalQuestions: null == totalQuestions
+          ? _self.totalQuestions
+          : totalQuestions // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
