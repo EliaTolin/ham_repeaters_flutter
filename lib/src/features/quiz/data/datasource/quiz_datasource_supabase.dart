@@ -4,6 +4,7 @@ import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_score_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
@@ -245,6 +246,17 @@ class QuizDataSourceSupabase {
       return results;
     } catch (e) {
       throw Exception('Failed to get quiz answers with results: $e');
+    }
+  }
+
+  // Get Topics
+  Future<List<TopicModel>> getTopics() async {
+    try {
+      final response = await _supabase.from('topic').select();
+
+      return (response as List).map((json) => TopicModel.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Failed to get topics: $e');
     }
   }
 }

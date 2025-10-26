@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$Topic {
   String get name;
   String? get description;
+  String get label;
 
   /// Create a copy of Topic
   /// with the given fields replaced by the non-null parameter values.
@@ -31,15 +32,16 @@ mixin _$Topic {
             other is Topic &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.label, label) || other.label == label));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, description);
+  int get hashCode => Object.hash(runtimeType, name, description, label);
 
   @override
   String toString() {
-    return 'Topic(name: $name, description: $description)';
+    return 'Topic(name: $name, description: $description, label: $label)';
   }
 }
 
@@ -48,7 +50,7 @@ abstract mixin class $TopicCopyWith<$Res> {
   factory $TopicCopyWith(Topic value, $Res Function(Topic) _then) =
       _$TopicCopyWithImpl;
   @useResult
-  $Res call({String name, String? description});
+  $Res call({String name, String? description, String label});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$TopicCopyWithImpl<$Res> implements $TopicCopyWith<$Res> {
   $Res call({
     Object? name = null,
     Object? description = freezed,
+    Object? label = null,
   }) {
     return _then(_self.copyWith(
       name: null == name
@@ -75,6 +78,10 @@ class _$TopicCopyWithImpl<$Res> implements $TopicCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      label: null == label
+          ? _self.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -172,13 +179,14 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description)? $default, {
+    TResult Function(String name, String? description, String label)?
+        $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _Topic() when $default != null:
-        return $default(_that.name, _that.description);
+        return $default(_that.name, _that.description, _that.label);
       case _:
         return orElse();
     }
@@ -199,12 +207,12 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description) $default,
+    TResult Function(String name, String? description, String label) $default,
   ) {
     final _that = this;
     switch (_that) {
       case _Topic():
-        return $default(_that.name, _that.description);
+        return $default(_that.name, _that.description, _that.label);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -224,12 +232,12 @@ extension TopicPatterns on Topic {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String name, String? description)? $default,
+    TResult? Function(String name, String? description, String label)? $default,
   ) {
     final _that = this;
     switch (_that) {
       case _Topic() when $default != null:
-        return $default(_that.name, _that.description);
+        return $default(_that.name, _that.description, _that.label);
       case _:
         return null;
     }
@@ -239,12 +247,14 @@ extension TopicPatterns on Topic {
 /// @nodoc
 
 class _Topic implements Topic {
-  const _Topic({required this.name, this.description});
+  const _Topic({required this.name, this.description, required this.label});
 
   @override
   final String name;
   @override
   final String? description;
+  @override
+  final String label;
 
   /// Create a copy of Topic
   /// with the given fields replaced by the non-null parameter values.
@@ -261,15 +271,16 @@ class _Topic implements Topic {
             other is _Topic &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.label, label) || other.label == label));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, description);
+  int get hashCode => Object.hash(runtimeType, name, description, label);
 
   @override
   String toString() {
-    return 'Topic(name: $name, description: $description)';
+    return 'Topic(name: $name, description: $description, label: $label)';
   }
 }
 
@@ -279,7 +290,7 @@ abstract mixin class _$TopicCopyWith<$Res> implements $TopicCopyWith<$Res> {
       __$TopicCopyWithImpl;
   @override
   @useResult
-  $Res call({String name, String? description});
+  $Res call({String name, String? description, String label});
 }
 
 /// @nodoc
@@ -296,6 +307,7 @@ class __$TopicCopyWithImpl<$Res> implements _$TopicCopyWith<$Res> {
   $Res call({
     Object? name = null,
     Object? description = freezed,
+    Object? label = null,
   }) {
     return _then(_Topic(
       name: null == name
@@ -306,6 +318,10 @@ class __$TopicCopyWithImpl<$Res> implements _$TopicCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      label: null == label
+          ? _self.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }

@@ -7,6 +7,7 @@ part 'topic_model.g.dart';
 abstract class TopicModel with _$TopicModel {
   const factory TopicModel({
     required String name,
+    required String label,
     String? description,
   }) = _TopicModel;
 

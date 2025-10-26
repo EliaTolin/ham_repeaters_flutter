@@ -6,6 +6,7 @@ part 'topic.freezed.dart';
 abstract class Topic with _$Topic {
   const factory Topic({
     required String name,
+    required String label,
     String? description,
   }) = _Topic;
 }

@@ -8,6 +8,7 @@ class TopicMapper implements Mapper<Topic, TopicModel> {
     return TopicModel(
       name: entity.name,
       description: entity.description,
+      label: entity.label,
     );
   }
 
@@ -16,6 +17,7 @@ class TopicMapper implements Mapper<Topic, TopicModel> {
     return Topic(
       name: model.name,
       description: model.description,
+      label: model.label,
     );
   }
 }
