@@ -28,8 +28,6 @@ mixin _$QuestionModel {
   String get answerC;
   @JsonKey(name: 'correct_letter')
   String get correctLetter;
-  @JsonKey(name: 'correct_answer')
-  String get correctAnswer;
   @JsonKey(name: 'created_at')
   String get createdAt;
   @JsonKey(name: 'updated_at')
@@ -65,8 +63,6 @@ mixin _$QuestionModel {
             (identical(other.answerC, answerC) || other.answerC == answerC) &&
             (identical(other.correctLetter, correctLetter) ||
                 other.correctLetter == correctLetter) &&
-            (identical(other.correctAnswer, correctAnswer) ||
-                other.correctAnswer == correctAnswer) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -89,7 +85,6 @@ mixin _$QuestionModel {
       answerB,
       answerC,
       correctLetter,
-      correctAnswer,
       createdAt,
       updatedAt,
       explanation,
@@ -97,7 +92,7 @@ mixin _$QuestionModel {
 
   @override
   String toString() {
-    return 'QuestionModel(id: $id, questionText: $questionText, topicName: $topicName, exam: $exam, answerA: $answerA, answerB: $answerB, answerC: $answerC, correctLetter: $correctLetter, correctAnswer: $correctAnswer, createdAt: $createdAt, updatedAt: $updatedAt, explanation: $explanation, sourceRef: $sourceRef)';
+    return 'QuestionModel(id: $id, questionText: $questionText, topicName: $topicName, exam: $exam, answerA: $answerA, answerB: $answerB, answerC: $answerC, correctLetter: $correctLetter, createdAt: $createdAt, updatedAt: $updatedAt, explanation: $explanation, sourceRef: $sourceRef)';
   }
 }
 
@@ -116,7 +111,6 @@ abstract mixin class $QuestionModelCopyWith<$Res> {
       @JsonKey(name: 'answer_b') String answerB,
       @JsonKey(name: 'answer_c') String answerC,
       @JsonKey(name: 'correct_letter') String correctLetter,
-      @JsonKey(name: 'correct_answer') String correctAnswer,
       @JsonKey(name: 'created_at') String createdAt,
       @JsonKey(name: 'updated_at') String updatedAt,
       String? explanation,
@@ -144,7 +138,6 @@ class _$QuestionModelCopyWithImpl<$Res>
     Object? answerB = null,
     Object? answerC = null,
     Object? correctLetter = null,
-    Object? correctAnswer = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? explanation = freezed,
@@ -182,10 +175,6 @@ class _$QuestionModelCopyWithImpl<$Res>
       correctLetter: null == correctLetter
           ? _self.correctLetter
           : correctLetter // ignore: cast_nullable_to_non_nullable
-              as String,
-      correctAnswer: null == correctAnswer
-          ? _self.correctAnswer
-          : correctAnswer // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _self.createdAt
@@ -309,7 +298,6 @@ extension QuestionModelPatterns on QuestionModel {
             @JsonKey(name: 'answer_b') String answerB,
             @JsonKey(name: 'answer_c') String answerC,
             @JsonKey(name: 'correct_letter') String correctLetter,
-            @JsonKey(name: 'correct_answer') String correctAnswer,
             @JsonKey(name: 'created_at') String createdAt,
             @JsonKey(name: 'updated_at') String updatedAt,
             String? explanation,
@@ -329,7 +317,6 @@ extension QuestionModelPatterns on QuestionModel {
             _that.answerB,
             _that.answerC,
             _that.correctLetter,
-            _that.correctAnswer,
             _that.createdAt,
             _that.updatedAt,
             _that.explanation,
@@ -363,7 +350,6 @@ extension QuestionModelPatterns on QuestionModel {
             @JsonKey(name: 'answer_b') String answerB,
             @JsonKey(name: 'answer_c') String answerC,
             @JsonKey(name: 'correct_letter') String correctLetter,
-            @JsonKey(name: 'correct_answer') String correctAnswer,
             @JsonKey(name: 'created_at') String createdAt,
             @JsonKey(name: 'updated_at') String updatedAt,
             String? explanation,
@@ -382,7 +368,6 @@ extension QuestionModelPatterns on QuestionModel {
             _that.answerB,
             _that.answerC,
             _that.correctLetter,
-            _that.correctAnswer,
             _that.createdAt,
             _that.updatedAt,
             _that.explanation,
@@ -415,7 +400,6 @@ extension QuestionModelPatterns on QuestionModel {
             @JsonKey(name: 'answer_b') String answerB,
             @JsonKey(name: 'answer_c') String answerC,
             @JsonKey(name: 'correct_letter') String correctLetter,
-            @JsonKey(name: 'correct_answer') String correctAnswer,
             @JsonKey(name: 'created_at') String createdAt,
             @JsonKey(name: 'updated_at') String updatedAt,
             String? explanation,
@@ -434,7 +418,6 @@ extension QuestionModelPatterns on QuestionModel {
             _that.answerB,
             _that.answerC,
             _that.correctLetter,
-            _that.correctAnswer,
             _that.createdAt,
             _that.updatedAt,
             _that.explanation,
@@ -457,7 +440,6 @@ class _QuestionModel implements QuestionModel {
       @JsonKey(name: 'answer_b') required this.answerB,
       @JsonKey(name: 'answer_c') required this.answerC,
       @JsonKey(name: 'correct_letter') required this.correctLetter,
-      @JsonKey(name: 'correct_answer') required this.correctAnswer,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt,
       this.explanation,
@@ -487,9 +469,6 @@ class _QuestionModel implements QuestionModel {
   @override
   @JsonKey(name: 'correct_letter')
   final String correctLetter;
-  @override
-  @JsonKey(name: 'correct_answer')
-  final String correctAnswer;
   @override
   @JsonKey(name: 'created_at')
   final String createdAt;
@@ -533,8 +512,6 @@ class _QuestionModel implements QuestionModel {
             (identical(other.answerC, answerC) || other.answerC == answerC) &&
             (identical(other.correctLetter, correctLetter) ||
                 other.correctLetter == correctLetter) &&
-            (identical(other.correctAnswer, correctAnswer) ||
-                other.correctAnswer == correctAnswer) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -557,7 +534,6 @@ class _QuestionModel implements QuestionModel {
       answerB,
       answerC,
       correctLetter,
-      correctAnswer,
       createdAt,
       updatedAt,
       explanation,
@@ -565,7 +541,7 @@ class _QuestionModel implements QuestionModel {
 
   @override
   String toString() {
-    return 'QuestionModel(id: $id, questionText: $questionText, topicName: $topicName, exam: $exam, answerA: $answerA, answerB: $answerB, answerC: $answerC, correctLetter: $correctLetter, correctAnswer: $correctAnswer, createdAt: $createdAt, updatedAt: $updatedAt, explanation: $explanation, sourceRef: $sourceRef)';
+    return 'QuestionModel(id: $id, questionText: $questionText, topicName: $topicName, exam: $exam, answerA: $answerA, answerB: $answerB, answerC: $answerC, correctLetter: $correctLetter, createdAt: $createdAt, updatedAt: $updatedAt, explanation: $explanation, sourceRef: $sourceRef)';
   }
 }
 
@@ -586,7 +562,6 @@ abstract mixin class _$QuestionModelCopyWith<$Res>
       @JsonKey(name: 'answer_b') String answerB,
       @JsonKey(name: 'answer_c') String answerC,
       @JsonKey(name: 'correct_letter') String correctLetter,
-      @JsonKey(name: 'correct_answer') String correctAnswer,
       @JsonKey(name: 'created_at') String createdAt,
       @JsonKey(name: 'updated_at') String updatedAt,
       String? explanation,
@@ -614,7 +589,6 @@ class __$QuestionModelCopyWithImpl<$Res>
     Object? answerB = null,
     Object? answerC = null,
     Object? correctLetter = null,
-    Object? correctAnswer = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? explanation = freezed,
@@ -652,10 +626,6 @@ class __$QuestionModelCopyWithImpl<$Res>
       correctLetter: null == correctLetter
           ? _self.correctLetter
           : correctLetter // ignore: cast_nullable_to_non_nullable
-              as String,
-      correctAnswer: null == correctAnswer
-          ? _self.correctAnswer
-          : correctAnswer // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _self.createdAt

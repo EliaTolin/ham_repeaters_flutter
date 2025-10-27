@@ -14,7 +14,6 @@ abstract class Question with _$Question {
     required String answerB,
     required String answerC,
     required String correctLetter,
-    required String correctAnswer,
     required DateTime createdAt,
     required DateTime updatedAt,
     String? explanation,

@@ -6,6 +6,7 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state
 import 'package:quiz_radioamatori/src/features/quiz/provider/delete_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_custom_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_set_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/set_quiz_finished_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_controller.g.dart';
@@ -146,12 +147,8 @@ class QuizController extends _$QuizController {
     state = AsyncValue.data(currentState.copyWith(isSubmitting: true));
 
     try {
-      // Here you would typically call an API to finalize the quiz
-      // For now, we'll just simulate success
-      await Future.delayed(const Duration(seconds: 1));
+      await ref.read(setQuizFinishedProvider(currentState.quizSet.quizSetId).future);
 
-      // Set a flag to indicate quiz completion
-      // The UI will handle navigation based on this state
       final completedState = currentState.copyWith(
         isSubmitting: false,
         isCompleted: true,

@@ -22,7 +22,6 @@ mixin _$Question {
   String get answerB;
   String get answerC;
   String get correctLetter;
-  String get correctAnswer;
   DateTime get createdAt;
   DateTime get updatedAt;
   String? get explanation;
@@ -51,8 +50,6 @@ mixin _$Question {
             (identical(other.answerC, answerC) || other.answerC == answerC) &&
             (identical(other.correctLetter, correctLetter) ||
                 other.correctLetter == correctLetter) &&
-            (identical(other.correctAnswer, correctAnswer) ||
-                other.correctAnswer == correctAnswer) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -74,7 +71,6 @@ mixin _$Question {
       answerB,
       answerC,
       correctLetter,
-      correctAnswer,
       createdAt,
       updatedAt,
       explanation,
@@ -82,7 +78,7 @@ mixin _$Question {
 
   @override
   String toString() {
-    return 'Question(id: $id, questionText: $questionText, topicName: $topicName, exam: $exam, answerA: $answerA, answerB: $answerB, answerC: $answerC, correctLetter: $correctLetter, correctAnswer: $correctAnswer, createdAt: $createdAt, updatedAt: $updatedAt, explanation: $explanation, sourceRef: $sourceRef)';
+    return 'Question(id: $id, questionText: $questionText, topicName: $topicName, exam: $exam, answerA: $answerA, answerB: $answerB, answerC: $answerC, correctLetter: $correctLetter, createdAt: $createdAt, updatedAt: $updatedAt, explanation: $explanation, sourceRef: $sourceRef)';
   }
 }
 
@@ -100,7 +96,6 @@ abstract mixin class $QuestionCopyWith<$Res> {
       String answerB,
       String answerC,
       String correctLetter,
-      String correctAnswer,
       DateTime createdAt,
       DateTime updatedAt,
       String? explanation,
@@ -127,7 +122,6 @@ class _$QuestionCopyWithImpl<$Res> implements $QuestionCopyWith<$Res> {
     Object? answerB = null,
     Object? answerC = null,
     Object? correctLetter = null,
-    Object? correctAnswer = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? explanation = freezed,
@@ -165,10 +159,6 @@ class _$QuestionCopyWithImpl<$Res> implements $QuestionCopyWith<$Res> {
       correctLetter: null == correctLetter
           ? _self.correctLetter
           : correctLetter // ignore: cast_nullable_to_non_nullable
-              as String,
-      correctAnswer: null == correctAnswer
-          ? _self.correctAnswer
-          : correctAnswer // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _self.createdAt
@@ -292,7 +282,6 @@ extension QuestionPatterns on Question {
             String answerB,
             String answerC,
             String correctLetter,
-            String correctAnswer,
             DateTime createdAt,
             DateTime updatedAt,
             String? explanation,
@@ -312,7 +301,6 @@ extension QuestionPatterns on Question {
             _that.answerB,
             _that.answerC,
             _that.correctLetter,
-            _that.correctAnswer,
             _that.createdAt,
             _that.updatedAt,
             _that.explanation,
@@ -346,7 +334,6 @@ extension QuestionPatterns on Question {
             String answerB,
             String answerC,
             String correctLetter,
-            String correctAnswer,
             DateTime createdAt,
             DateTime updatedAt,
             String? explanation,
@@ -365,7 +352,6 @@ extension QuestionPatterns on Question {
             _that.answerB,
             _that.answerC,
             _that.correctLetter,
-            _that.correctAnswer,
             _that.createdAt,
             _that.updatedAt,
             _that.explanation,
@@ -398,7 +384,6 @@ extension QuestionPatterns on Question {
             String answerB,
             String answerC,
             String correctLetter,
-            String correctAnswer,
             DateTime createdAt,
             DateTime updatedAt,
             String? explanation,
@@ -417,7 +402,6 @@ extension QuestionPatterns on Question {
             _that.answerB,
             _that.answerC,
             _that.correctLetter,
-            _that.correctAnswer,
             _that.createdAt,
             _that.updatedAt,
             _that.explanation,
@@ -440,7 +424,6 @@ class _Question implements Question {
       required this.answerB,
       required this.answerC,
       required this.correctLetter,
-      required this.correctAnswer,
       required this.createdAt,
       required this.updatedAt,
       this.explanation,
@@ -462,8 +445,6 @@ class _Question implements Question {
   final String answerC;
   @override
   final String correctLetter;
-  @override
-  final String correctAnswer;
   @override
   final DateTime createdAt;
   @override
@@ -497,8 +478,6 @@ class _Question implements Question {
             (identical(other.answerC, answerC) || other.answerC == answerC) &&
             (identical(other.correctLetter, correctLetter) ||
                 other.correctLetter == correctLetter) &&
-            (identical(other.correctAnswer, correctAnswer) ||
-                other.correctAnswer == correctAnswer) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -520,7 +499,6 @@ class _Question implements Question {
       answerB,
       answerC,
       correctLetter,
-      correctAnswer,
       createdAt,
       updatedAt,
       explanation,
@@ -528,7 +506,7 @@ class _Question implements Question {
 
   @override
   String toString() {
-    return 'Question(id: $id, questionText: $questionText, topicName: $topicName, exam: $exam, answerA: $answerA, answerB: $answerB, answerC: $answerC, correctLetter: $correctLetter, correctAnswer: $correctAnswer, createdAt: $createdAt, updatedAt: $updatedAt, explanation: $explanation, sourceRef: $sourceRef)';
+    return 'Question(id: $id, questionText: $questionText, topicName: $topicName, exam: $exam, answerA: $answerA, answerB: $answerB, answerC: $answerC, correctLetter: $correctLetter, createdAt: $createdAt, updatedAt: $updatedAt, explanation: $explanation, sourceRef: $sourceRef)';
   }
 }
 
@@ -548,7 +526,6 @@ abstract mixin class _$QuestionCopyWith<$Res>
       String answerB,
       String answerC,
       String correctLetter,
-      String correctAnswer,
       DateTime createdAt,
       DateTime updatedAt,
       String? explanation,
@@ -575,7 +552,6 @@ class __$QuestionCopyWithImpl<$Res> implements _$QuestionCopyWith<$Res> {
     Object? answerB = null,
     Object? answerC = null,
     Object? correctLetter = null,
-    Object? correctAnswer = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? explanation = freezed,
@@ -613,10 +589,6 @@ class __$QuestionCopyWithImpl<$Res> implements _$QuestionCopyWith<$Res> {
       correctLetter: null == correctLetter
           ? _self.correctLetter
           : correctLetter // ignore: cast_nullable_to_non_nullable
-              as String,
-      correctAnswer: null == correctAnswer
-          ? _self.correctAnswer
-          : correctAnswer // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: null == createdAt
           ? _self.createdAt

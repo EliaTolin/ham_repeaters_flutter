@@ -300,6 +300,16 @@ class QuizDataSourceSupabase {
       throw Exception('Failed to get user total accuracy: $e');
     }
   }
+
+  Future<void> setQuizFinished(String setId) async {
+    try {
+      await _supabase.from('quiz_set').update({
+        'finished_at': DateTime.now().toIso8601String(),
+      }).eq('id', setId);
+    } catch (e) {
+      throw Exception('Failed to set finished quiz: $e');
+    }
+  }
 }
 
 @riverpod

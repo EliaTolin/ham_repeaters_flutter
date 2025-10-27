@@ -2,7 +2,7 @@ name: quiz_radioamatori
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+4
+version: 1.0.2+6
 
 environment:
   sdk: '>=3.2.2 <4.0.0'
@@ -75,6 +75,7 @@ flutter:
     - assets/images/
     - assets/svg/
     - assets/icon/
+    - shorebird.yaml
 
 sentry:
   upload_debug_symbols: true

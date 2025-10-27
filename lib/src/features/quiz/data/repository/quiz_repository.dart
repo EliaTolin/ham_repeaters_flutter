@@ -159,6 +159,10 @@ class QuizRepository {
     if (model == null) return null;
     return _totalAccuracyMapper.fromModel(model);
   }
+
+  Future<void> setQuizFinished(String setId) async {
+    return _dataSource.setQuizFinished(setId);
+  }
 }
 
 @riverpod

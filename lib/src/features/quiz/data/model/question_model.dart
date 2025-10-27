@@ -14,7 +14,6 @@ abstract class QuestionModel with _$QuestionModel {
     @JsonKey(name: 'answer_b') required String answerB,
     @JsonKey(name: 'answer_c') required String answerC,
     @JsonKey(name: 'correct_letter') required String correctLetter,
-    @JsonKey(name: 'correct_answer') required String correctAnswer,
     @JsonKey(name: 'created_at') required String createdAt,
     @JsonKey(name: 'updated_at') required String updatedAt,
     String? explanation,
