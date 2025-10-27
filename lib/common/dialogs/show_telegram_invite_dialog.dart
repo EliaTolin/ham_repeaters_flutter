@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
 import 'package:quiz_radioamatori/config/app_configs.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<void> showTelegramInviteDialog(
   BuildContext context, {
@@ -97,10 +97,20 @@ Future<void> showTelegramInviteDialog(
                         ),
                       ),
                       onPressed: () async {
-                        final telegramUrl = AppConfigs.getTelegramLink();
-                        if (await canLaunchUrlString(telegramUrl)) {
-                          await launchUrlString(telegramUrl);
-                        } else {
+                        try {
+                          final telegramUrl = AppConfigs.getTelegramLink();
+                          final uri = Uri.parse(telegramUrl);
+                          if (await canLaunchUrl(uri)) {
+                            await launchUrl(uri);
+                          } else {
+                            if (context.mounted) {
+                              showErrorSnackbar(
+                                context,
+                                "Errore durante l'apertura di Telegram".hardcoded,
+                              );
+                            }
+                          }
+                        } catch (e) {
                           if (context.mounted) {
                             showErrorSnackbar(
                               context,

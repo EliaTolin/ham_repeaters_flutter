@@ -12,7 +12,7 @@ class HomeLocalDatasource implements HomeDatasource {
   @override
   Future<bool> isTelegramGroupMember() async {
     try {
-      final value = await sharedPreferences.read('telegramGroupMember');
+      final value = await sharedPreferences.read('isTelegramGroupMember');
       if (value == null) {
         return false;
       }
@@ -24,7 +24,7 @@ class HomeLocalDatasource implements HomeDatasource {
 
   @override
   Future<void> setTelegramGroupMember() {
-    return sharedPreferences.write('telegramGroupMember', 'true');
+    return sharedPreferences.write('isTelegramGroupMember', 'true');
   }
 
   @override

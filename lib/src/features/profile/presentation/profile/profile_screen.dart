@@ -10,7 +10,6 @@ import 'package:quiz_radioamatori/config/app_configs.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/profile/controller/profile_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 @RoutePage()
 class ProfileScreen extends HookConsumerWidget {
@@ -128,10 +127,20 @@ class ProfileScreen extends HookConsumerWidget {
                         ),
                         trailing: const Icon(Icons.arrow_forward_ios),
                         onTap: () async {
-                          final telegramUrl = AppConfigs.getTelegramLink();
-                          if (await canLaunchUrlString(telegramUrl)) {
-                            await launchUrlString(telegramUrl);
-                          } else {
+                          try {
+                            final telegramUrl = AppConfigs.getTelegramLink();
+                            final uri = Uri.parse(telegramUrl);
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(uri);
+                            } else {
+                              if (context.mounted) {
+                                showErrorSnackbar(
+                                  context,
+                                  "Errore durante l'apertura di Telegram".hardcoded,
+                                );
+                              }
+                            }
+                          } catch (e) {
                             if (context.mounted) {
                               showErrorSnackbar(
                                 context,
