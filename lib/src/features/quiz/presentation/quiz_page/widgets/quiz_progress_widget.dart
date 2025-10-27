@@ -14,7 +14,7 @@ class QuizProgressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final progress = (currentIndex + 1) / totalQuestions;
+    final progress = answeredQuestions / totalQuestions;
 
     return Container(
       padding: const EdgeInsets.all(16),
