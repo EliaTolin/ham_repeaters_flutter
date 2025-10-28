@@ -6,11 +6,13 @@ class QuizQuestionWidget extends StatelessWidget {
     required this.question,
     required this.currentAnswer,
     required this.onAnswerSelected,
+    required this.topicLabel,
     super.key,
   });
 
   final Question question;
   final String? currentAnswer;
+  final String topicLabel;
   final ValueChanged<String> onAnswerSelected;
 
   @override
@@ -45,7 +47,7 @@ class QuizQuestionWidget extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  question.topicName,
+                  topicLabel,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),

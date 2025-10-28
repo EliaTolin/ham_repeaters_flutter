@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/controller/quiz_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state/quiz_state.dart';
@@ -89,6 +90,7 @@ class QuizPage extends HookConsumerWidget {
                   child: QuizQuestionWidget(
                     question: state.currentQuestion,
                     currentAnswer: state.currentAnswer,
+                    topicLabel: _getTopicLabel(state.topics, state.currentQuestion.topicName),
                     onAnswerSelected: (answer) {
                       ref
                           .read(quizControllerProvider(examType: examType, topics: topics).notifier)
@@ -250,6 +252,14 @@ class QuizPage extends HookConsumerWidget {
         );
         context.router.pop();
       }
+    }
+  }
+
+  String _getTopicLabel(List<Topic> topics, String topicName) {
+    try {
+      return topics.firstWhere((topic) => topic.name == topicName).label;
+    } catch (e) {
+      return '';
     }
   }
 }

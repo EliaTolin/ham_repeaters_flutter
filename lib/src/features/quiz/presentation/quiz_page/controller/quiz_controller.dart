@@ -6,6 +6,7 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state
 import 'package:quiz_radioamatori/src/features/quiz/provider/delete_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_custom_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_set_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_topics_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/set_quiz_finished_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -35,6 +36,7 @@ class QuizController extends _$QuizController {
               userId: userId,
             ).future,
           );
+          final allTopics = await ref.read(getTopicsProvider.future);
 
           return QuizState(
             quizSet: quizSet,
@@ -42,6 +44,7 @@ class QuizController extends _$QuizController {
             answers: {},
             questionTimes: {},
             quizStartTime: DateTime.now(),
+            topics: allTopics,
           );
         });
         return state.value;
@@ -56,6 +59,7 @@ class QuizController extends _$QuizController {
             userId: userId,
           ).future,
         );
+        final allTopics = await ref.read(getTopicsProvider.future);
 
         return QuizState(
           quizSet: quizSet,
@@ -63,6 +67,7 @@ class QuizController extends _$QuizController {
           answers: {},
           questionTimes: {},
           quizStartTime: DateTime.now(),
+          topics: allTopics,
         );
       });
       return state.value;

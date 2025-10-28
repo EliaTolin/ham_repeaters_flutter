@@ -19,6 +19,7 @@ mixin _$QuizState {
   Map<int, String?> get answers; // questionId -> chosenLetter
   Map<int, int> get questionTimes; // questionId -> timeMs
   DateTime get quizStartTime;
+  List<Topic> get topics;
   bool get isSubmitting;
   bool get isCompleted;
   String? get errorMessage;
@@ -43,6 +44,7 @@ mixin _$QuizState {
                 .equals(other.questionTimes, questionTimes) &&
             (identical(other.quizStartTime, quizStartTime) ||
                 other.quizStartTime == quizStartTime) &&
+            const DeepCollectionEquality().equals(other.topics, topics) &&
             (identical(other.isSubmitting, isSubmitting) ||
                 other.isSubmitting == isSubmitting) &&
             (identical(other.isCompleted, isCompleted) ||
@@ -59,13 +61,14 @@ mixin _$QuizState {
       const DeepCollectionEquality().hash(answers),
       const DeepCollectionEquality().hash(questionTimes),
       quizStartTime,
+      const DeepCollectionEquality().hash(topics),
       isSubmitting,
       isCompleted,
       errorMessage);
 
   @override
   String toString() {
-    return 'QuizState(quizSet: $quizSet, currentQuestionIndex: $currentQuestionIndex, answers: $answers, questionTimes: $questionTimes, quizStartTime: $quizStartTime, isSubmitting: $isSubmitting, isCompleted: $isCompleted, errorMessage: $errorMessage)';
+    return 'QuizState(quizSet: $quizSet, currentQuestionIndex: $currentQuestionIndex, answers: $answers, questionTimes: $questionTimes, quizStartTime: $quizStartTime, topics: $topics, isSubmitting: $isSubmitting, isCompleted: $isCompleted, errorMessage: $errorMessage)';
   }
 }
 
@@ -80,6 +83,7 @@ abstract mixin class $QuizStateCopyWith<$Res> {
       Map<int, String?> answers,
       Map<int, int> questionTimes,
       DateTime quizStartTime,
+      List<Topic> topics,
       bool isSubmitting,
       bool isCompleted,
       String? errorMessage});
@@ -104,6 +108,7 @@ class _$QuizStateCopyWithImpl<$Res> implements $QuizStateCopyWith<$Res> {
     Object? answers = null,
     Object? questionTimes = null,
     Object? quizStartTime = null,
+    Object? topics = null,
     Object? isSubmitting = null,
     Object? isCompleted = null,
     Object? errorMessage = freezed,
@@ -129,6 +134,10 @@ class _$QuizStateCopyWithImpl<$Res> implements $QuizStateCopyWith<$Res> {
           ? _self.quizStartTime
           : quizStartTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      topics: null == topics
+          ? _self.topics
+          : topics // ignore: cast_nullable_to_non_nullable
+              as List<Topic>,
       isSubmitting: null == isSubmitting
           ? _self.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
@@ -254,6 +263,7 @@ extension QuizStatePatterns on QuizState {
             Map<int, String?> answers,
             Map<int, int> questionTimes,
             DateTime quizStartTime,
+            List<Topic> topics,
             bool isSubmitting,
             bool isCompleted,
             String? errorMessage)?
@@ -269,6 +279,7 @@ extension QuizStatePatterns on QuizState {
             _that.answers,
             _that.questionTimes,
             _that.quizStartTime,
+            _that.topics,
             _that.isSubmitting,
             _that.isCompleted,
             _that.errorMessage);
@@ -298,6 +309,7 @@ extension QuizStatePatterns on QuizState {
             Map<int, String?> answers,
             Map<int, int> questionTimes,
             DateTime quizStartTime,
+            List<Topic> topics,
             bool isSubmitting,
             bool isCompleted,
             String? errorMessage)
@@ -312,6 +324,7 @@ extension QuizStatePatterns on QuizState {
             _that.answers,
             _that.questionTimes,
             _that.quizStartTime,
+            _that.topics,
             _that.isSubmitting,
             _that.isCompleted,
             _that.errorMessage);
@@ -340,6 +353,7 @@ extension QuizStatePatterns on QuizState {
             Map<int, String?> answers,
             Map<int, int> questionTimes,
             DateTime quizStartTime,
+            List<Topic> topics,
             bool isSubmitting,
             bool isCompleted,
             String? errorMessage)?
@@ -354,6 +368,7 @@ extension QuizStatePatterns on QuizState {
             _that.answers,
             _that.questionTimes,
             _that.quizStartTime,
+            _that.topics,
             _that.isSubmitting,
             _that.isCompleted,
             _that.errorMessage);
@@ -372,11 +387,13 @@ class _QuizState extends QuizState {
       required final Map<int, String?> answers,
       required final Map<int, int> questionTimes,
       required this.quizStartTime,
+      required final List<Topic> topics,
       this.isSubmitting = false,
       this.isCompleted = false,
       this.errorMessage})
       : _answers = answers,
         _questionTimes = questionTimes,
+        _topics = topics,
         super._();
 
   @override
@@ -404,6 +421,14 @@ class _QuizState extends QuizState {
 // questionId -> timeMs
   @override
   final DateTime quizStartTime;
+  final List<Topic> _topics;
+  @override
+  List<Topic> get topics {
+    if (_topics is EqualUnmodifiableListView) return _topics;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_topics);
+  }
+
   @override
   @JsonKey()
   final bool isSubmitting;
@@ -434,6 +459,7 @@ class _QuizState extends QuizState {
                 .equals(other._questionTimes, _questionTimes) &&
             (identical(other.quizStartTime, quizStartTime) ||
                 other.quizStartTime == quizStartTime) &&
+            const DeepCollectionEquality().equals(other._topics, _topics) &&
             (identical(other.isSubmitting, isSubmitting) ||
                 other.isSubmitting == isSubmitting) &&
             (identical(other.isCompleted, isCompleted) ||
@@ -450,13 +476,14 @@ class _QuizState extends QuizState {
       const DeepCollectionEquality().hash(_answers),
       const DeepCollectionEquality().hash(_questionTimes),
       quizStartTime,
+      const DeepCollectionEquality().hash(_topics),
       isSubmitting,
       isCompleted,
       errorMessage);
 
   @override
   String toString() {
-    return 'QuizState(quizSet: $quizSet, currentQuestionIndex: $currentQuestionIndex, answers: $answers, questionTimes: $questionTimes, quizStartTime: $quizStartTime, isSubmitting: $isSubmitting, isCompleted: $isCompleted, errorMessage: $errorMessage)';
+    return 'QuizState(quizSet: $quizSet, currentQuestionIndex: $currentQuestionIndex, answers: $answers, questionTimes: $questionTimes, quizStartTime: $quizStartTime, topics: $topics, isSubmitting: $isSubmitting, isCompleted: $isCompleted, errorMessage: $errorMessage)';
   }
 }
 
@@ -474,6 +501,7 @@ abstract mixin class _$QuizStateCopyWith<$Res>
       Map<int, String?> answers,
       Map<int, int> questionTimes,
       DateTime quizStartTime,
+      List<Topic> topics,
       bool isSubmitting,
       bool isCompleted,
       String? errorMessage});
@@ -499,6 +527,7 @@ class __$QuizStateCopyWithImpl<$Res> implements _$QuizStateCopyWith<$Res> {
     Object? answers = null,
     Object? questionTimes = null,
     Object? quizStartTime = null,
+    Object? topics = null,
     Object? isSubmitting = null,
     Object? isCompleted = null,
     Object? errorMessage = freezed,
@@ -524,6 +553,10 @@ class __$QuizStateCopyWithImpl<$Res> implements _$QuizStateCopyWith<$Res> {
           ? _self.quizStartTime
           : quizStartTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      topics: null == topics
+          ? _self._topics
+          : topics // ignore: cast_nullable_to_non_nullable
+              as List<Topic>,
       isSubmitting: null == isSubmitting
           ? _self.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
