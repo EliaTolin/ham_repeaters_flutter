@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic.dart';
 
 class QuizProgressWidget extends StatelessWidget {
   const QuizProgressWidget({
