@@ -43,14 +43,6 @@ class QuizProgressWidget extends StatelessWidget {
                   minHeight: 8,
                 ),
               ),
-              const SizedBox(width: 16),
-              Text(
-                '${currentIndex + 1}/$totalQuestions',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
             ],
           ),
 

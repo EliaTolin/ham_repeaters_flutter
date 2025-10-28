@@ -7,6 +7,10 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/recent_quizzes_section.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/controller/statistics_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/state/statistics_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_topic_accuracy_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_total_accuracy_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores_provider.dart';
 
 @RoutePage()
 class QuizStatisticsPage extends HookConsumerWidget {
@@ -48,6 +52,13 @@ class QuizStatisticsPage extends HookConsumerWidget {
               );
               if (isOk && context.mounted) {
                 await ref.read(statisticsControllerProvider.notifier).deleteAllQuizSet();
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  ref
+                    ..invalidate(recentQuizScoresProvider)
+                    ..invalidate(allQuizScoresProvider)
+                    ..invalidate(getUserTopicAccuracyProvider)
+                    ..invalidate(getUserTotalAccuracyProvider);
+                });
               }
             },
           ),
@@ -68,51 +79,47 @@ class QuizStatisticsPage extends HookConsumerWidget {
     WidgetRef ref,
     StatisticsState state,
   ) {
-    return RefreshIndicator(
-      onRefresh: () => ref.read(statisticsControllerProvider.notifier).refresh(),
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Total Accuracy Card
-              if (state.totalAccuracy != null)
-                _buildTotalAccuracyCard(context, state.totalAccuracy!),
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Total Accuracy Card
+            if (state.totalAccuracy != null) _buildTotalAccuracyCard(context, state.totalAccuracy!),
 
-              const SizedBox(height: 24),
+            const SizedBox(height: 24),
 
-              // Top 5 Strongest Topics
-              if (state.top5StrongTopics.isNotEmpty) ...[
-                _buildSectionHeader(context, '⭐ Top 5 Migliori', Colors.green),
-                const SizedBox(height: 12),
-                ...state.top5StrongTopics
-                    .map((topic) => _buildTopicAccuracyCard(context, topic, true)),
-              ],
-
-              const SizedBox(height: 24),
-
-              // Top 5 Weakest Topics
-              if (state.top5WeakTopics.isNotEmpty) ...[
-                _buildSectionHeader(context, '📈 Top 5 da Migliorare', Colors.orange),
-                const SizedBox(height: 12),
-                ...state.top5WeakTopics
-                    .map((topic) => _buildTopicAccuracyCard(context, topic, false)),
-              ],
-
-              const SizedBox(height: 24),
-
-              // Recent Quizzes
-              _buildSectionHeader(
-                context,
-                '📋 Quiz Recenti',
-                Theme.of(context).colorScheme.primary,
-              ),
+            // Top 5 Strongest Topics
+            if (state.top5StrongTopics.isNotEmpty) ...[
+              _buildSectionHeader(context, '⭐ Top 5 Migliori', Colors.green),
               const SizedBox(height: 12),
-              RecentQuizzesSection(scores: state.recentScores),
+              ...state.top5StrongTopics
+                  .map((topic) => _buildTopicAccuracyCard(context, topic, true)),
             ],
-          ),
+
+            const SizedBox(height: 24),
+
+            // Top 5 Weakest Topics
+            if (state.top5WeakTopics.isNotEmpty) ...[
+              _buildSectionHeader(context, '📈 Top 5 da Migliorare', Colors.orange),
+              const SizedBox(height: 12),
+              ...state.top5WeakTopics
+                  .map((topic) => _buildTopicAccuracyCard(context, topic, false)),
+            ],
+
+            const SizedBox(height: 24),
+
+            // Recent Quizzes
+            _buildSectionHeader(
+              context,
+              '📋 Quiz Recenti',
+              Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(height: 12),
+            RecentQuizzesSection(scores: state.recentScores),
+          ],
         ),
       ),
     );
