@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_radioamatori/common/dialogs/are_you_sure_to_delete_dialog.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/recent_quizzes_section.dart';
@@ -37,14 +38,24 @@ class QuizStatisticsPage extends HookConsumerWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              ref.read(statisticsControllerProvider.notifier).refresh();
+            icon: const Icon(Icons.cleaning_services_rounded),
+            onPressed: () async {
+              final isOk = await showAreYouSureToDeleteDialog(
+                context,
+                title: 'Sei sicuro di voler cancellare tutti i tuoi quiz?',
+                content: 'Perderai tutti i tuoi progressi e ripartirai da zero.',
+                barrierDismissible: true,
+              );
+              if (isOk && context.mounted) {
+                await ref.read(statisticsControllerProvider.notifier).deleteAllQuizSet();
+              }
             },
           ),
         ],
       ),
       body: state.when(
+        skipLoadingOnRefresh: true,
+        skipLoadingOnReload: true,
         data: (data) => _buildContent(context, ref, data),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => _buildError(context, ref, error),

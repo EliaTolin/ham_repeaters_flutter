@@ -1,6 +1,7 @@
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/state/statistics_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/delete_all_quiz_set_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'statistics_controller.g.dart';
@@ -51,5 +52,14 @@ class StatisticsController extends _$StatisticsController {
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
+  }
+
+  Future<void> deleteAllQuizSet() async {
+    final userId = await ref.read(getUserIdProvider.future);
+    if (userId == null) {
+      throw Exception('User ID not found');
+    }
+    await ref.read(deleteAllQuizSetProvider(userId).future);
+    await refresh();
   }
 }

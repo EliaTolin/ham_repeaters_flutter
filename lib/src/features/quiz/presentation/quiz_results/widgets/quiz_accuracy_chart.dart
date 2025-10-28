@@ -129,7 +129,7 @@ class _QuizAccuracyChartState extends State<QuizAccuracyChart> with TickerProvid
                           animation: _progressAnimation,
                           builder: (context, child) {
                             return Text(
-                              '${(accuracy * _progressAnimation.value).toStringAsFixed(1)}%',
+                              '${accuracy.toStringAsFixed(1)}%',
                               style: theme.textTheme.displayMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: isGoodScore

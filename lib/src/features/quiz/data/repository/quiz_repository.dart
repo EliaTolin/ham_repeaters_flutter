@@ -163,6 +163,10 @@ class QuizRepository {
   Future<void> setQuizFinished(String setId) async {
     return _dataSource.setQuizFinished(setId);
   }
+
+  Future<void> deleteAllQuizSet(String userId) async {
+    return _dataSource.deleteAllQuizSet(userId);
+  }
 }
 
 @riverpod

@@ -1,4 +1,4 @@
-- verificare le statistiche se sono corrette non contare quiz vuoti.
+- aggiungere buttone clean statistics
 
 testtesttest@yopmail.com
 Tester

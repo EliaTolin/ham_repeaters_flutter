@@ -14,6 +14,7 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'quiz_datasource_supabase.g.dart';
@@ -51,7 +52,8 @@ class QuizDataSourceSupabase {
       final model = QuizSetResponseModel.fromJson(result);
 
       return _responseMapper.fromModel(model);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get quiz set: $e');
     }
   }
@@ -93,7 +95,8 @@ class QuizDataSourceSupabase {
       final model = QuizSetResponseModel.fromJson(result);
 
       return _responseMapper.fromModel(model);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       log('Failed to get custom quiz set: $e');
       throw Exception('Failed to get custom quiz set: $e');
     }
@@ -107,7 +110,8 @@ class QuizDataSourceSupabase {
       if (response == null) return null;
 
       return QuizSetScoreModel.fromJson(response);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get quiz results: $e');
     }
   }
@@ -119,7 +123,8 @@ class QuizDataSourceSupabase {
     try {
       // Insert all results at once
       await _supabase.from('quiz_set_question_result').insert(results);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to save quiz results: $e');
     }
   }
@@ -130,7 +135,8 @@ class QuizDataSourceSupabase {
           await _supabase.from('quiz_set_score').select().order('set_id', ascending: false);
 
       return (response as List).map((json) => QuizSetScoreModel.fromJson(json)).toList();
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get all quiz scores: $e');
     }
   }
@@ -144,7 +150,8 @@ class QuizDataSourceSupabase {
           .limit(limit);
 
       return (response as List).map((json) => QuizSetScoreModel.fromJson(json)).toList();
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get recent quiz scores: $e');
     }
   }
@@ -157,7 +164,8 @@ class QuizDataSourceSupabase {
           .order('answered_at', ascending: false);
 
       return (response as List).map((json) => QuizQuestionResultModel.fromJson(json)).toList();
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get question statistics: $e');
     }
   }
@@ -177,7 +185,8 @@ class QuizDataSourceSupabase {
         'answered_at': DateTime.now().toIso8601String(),
         'time_ms': timeMs,
       });
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to save answer: $e');
     }
   }
@@ -198,7 +207,8 @@ class QuizDataSourceSupabase {
           })
           .eq('set_id', setId)
           .eq('question_id', questionId);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to update answer: $e');
     }
   }
@@ -213,7 +223,8 @@ class QuizDataSourceSupabase {
           .delete()
           .eq('set_id', setId)
           .eq('question_id', questionId);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to delete answer: $e');
     }
   }
@@ -223,7 +234,8 @@ class QuizDataSourceSupabase {
       final response = await _supabase.from('quiz_set_question').select().eq('set_id', setId);
 
       return (response as List).map((json) => QuizSetQuestionModel.fromJson(json)).toList();
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get answers: $e');
     }
   }
@@ -232,7 +244,8 @@ class QuizDataSourceSupabase {
     try {
       await _supabase.from('quiz_set_question').delete().eq('set_id', setId);
       await _supabase.from('quiz_set').delete().eq('id', setId);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to delete quiz answers: $e');
     }
   }
@@ -250,7 +263,8 @@ class QuizDataSourceSupabase {
       final results =
           (response as List).map((json) => QuizSetQuestionResultModel.fromJson(json)).toList();
       return results;
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get quiz answers with results: $e');
     }
   }
@@ -261,7 +275,8 @@ class QuizDataSourceSupabase {
       final response = await _supabase.from('topic').select();
 
       return (response as List).map((json) => TopicModel.fromJson(json)).toList();
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get topics: $e');
     }
   }
@@ -272,7 +287,8 @@ class QuizDataSourceSupabase {
       final response = await _supabase.from('topic_question_stats').select();
 
       return (response as List).map((json) => TopicWithStatsModel.fromJson(json)).toList();
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get topics with stats: $e');
     }
   }
@@ -281,9 +297,9 @@ class QuizDataSourceSupabase {
   Future<List<TopicAccuracyModel>> getUserTopicAccuracy(String userId) async {
     try {
       final response = await _supabase.rpc('user_topic_accuracy', params: {'p_user_id': userId});
-
       return (response as List).map((json) => TopicAccuracyModel.fromJson(json)).toList();
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get user topic accuracy: $e');
     }
   }
@@ -296,7 +312,8 @@ class QuizDataSourceSupabase {
 
       if (response == null) return null;
       return TotalAccuracyModel.fromJson(response);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get user total accuracy: $e');
     }
   }
@@ -306,8 +323,18 @@ class QuizDataSourceSupabase {
       await _supabase.from('quiz_set').update({
         'finished_at': DateTime.now().toIso8601String(),
       }).eq('id', setId);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to set finished quiz: $e');
+    }
+  }
+
+  Future<void> deleteAllQuizSet(String userId) async {
+    try {
+      await _supabase.from('quiz_set').delete().eq('user_id', userId);
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+      throw Exception('Failed to delete all quiz sets: $e');
     }
   }
 }

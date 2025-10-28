@@ -6,7 +6,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  SentryWidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
     url: AppConfigs.getSupabaseUrl(),
@@ -22,9 +22,13 @@ void main() async {
         ..enableLogs = true
         ..tracesSampleRate = 1.0
         ..profilesSampleRate = 1.0;
-      options.replay.sessionSampleRate = 0.1;
-      options.replay.onErrorSampleRate = 1.0;
     },
-    appRunner: () => runApp(SentryWidget(child: const ProviderScope(child: QuizRadioamatori()))),
+    appRunner: () => runApp(
+      SentryWidget(
+        child: const ProviderScope(
+          child: QuizRadioamatori(),
+        ),
+      ),
+    ),
   );
 }
