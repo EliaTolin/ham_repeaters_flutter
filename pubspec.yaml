@@ -82,3 +82,7 @@ sentry:
   upload_source_maps: true
   project: quiz_radioamatori
   org: auroradigital
+  
+analyzer:
+  plugins:
+    - custom_lint

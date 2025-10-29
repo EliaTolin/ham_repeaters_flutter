@@ -11,6 +11,7 @@ linter:
     # type_annotate_public_apis: false
 
 analyzer:
+
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
@@ -24,3 +25,5 @@ analyzer:
     cancel_subscriptions: ignore
     avoid_positional_boolean_parameters: ignore
     constant_identifier_names: ignore
+  plugins:
+    - custom_lint

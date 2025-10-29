@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quiz_radioamatori/config/app_configs.dart';
@@ -5,8 +8,19 @@ import 'package:quiz_radioamatori/src/app.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
-void main() async {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SentryWidgetsFlutterBinding.ensureInitialized();
+
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    Sentry.captureException(details.exception, stackTrace: details.stack);
+  };
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    Sentry.captureException(error, stackTrace: stack);
+    return true;
+  };
 
   await Supabase.initialize(
     url: AppConfigs.getSupabaseUrl(),
@@ -23,12 +37,14 @@ void main() async {
         ..tracesSampleRate = 1.0
         ..profilesSampleRate = 1.0;
     },
-    appRunner: () => runApp(
-      SentryWidget(
-        child: const ProviderScope(
-          child: QuizRadioamatori(),
+    appRunner: () {
+      runApp(
+        ProviderScope(
+          child: SentryWidget(
+            child: const QuizRadioamatori(),
+          ),
         ),
-      ),
-    ),
+      );
+    },
   );
 }
