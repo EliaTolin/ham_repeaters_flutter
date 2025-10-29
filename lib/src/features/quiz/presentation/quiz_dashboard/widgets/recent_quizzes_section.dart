@@ -1,18 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
 
-class RecentQuizzesSection extends HookWidget {
+class RecentQuizzesSection extends HookConsumerWidget {
   const RecentQuizzesSection({required this.scores, super.key});
 
   final List<QuizSetScore> scores;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-
     // Animazioni in ingresso con vero "stagger"
     final controller = useAnimationController(
       duration: Duration(milliseconds: 250 + (scores.length * 80).clamp(0, 700)),
@@ -113,11 +115,23 @@ class RecentQuizzesSection extends HookWidget {
                       child: _ClickableQuizCard(
                         theme: theme,
                         score: score,
-                        onTap: () => context.router.push(
-                          QuizResultsRoute(
-                            setId: score.setId,
-                          ),
-                        ),
+                        onTap: () async {
+                          if (await ref.read(isAnonymousProvider.future)) {
+                            // Quando serve registrazione
+                            if (context.mounted) {
+                              await showSignUpDialog(context);
+                              return;
+                            }
+                          } else {
+                            if (context.mounted) {
+                              await context.router.push(
+                                QuizResultsRoute(
+                                  setId: score.setId,
+                                ),
+                              );
+                            }
+                          }
+                        },
                       ),
                     ),
                   );

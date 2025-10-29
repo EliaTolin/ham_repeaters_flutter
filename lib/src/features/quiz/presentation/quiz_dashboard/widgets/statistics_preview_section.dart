@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 
-class StatisticsPreviewSection extends HookWidget {
+class StatisticsPreviewSection extends HookConsumerWidget {
   const StatisticsPreviewSection({
     required this.totalQuizzes,
     required this.averageAccuracy,
@@ -14,7 +17,7 @@ class StatisticsPreviewSection extends HookWidget {
   final double averageAccuracy;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 1000),
     );
@@ -140,7 +143,7 @@ class StatisticsPreviewSection extends HookWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: () => _navigateToStatistics(context),
+                onPressed: () async => _navigateToStatistics(context, ref),
                 icon: const Icon(Icons.arrow_forward_rounded),
                 label: const Text('Vedi tutte le Statistiche'),
                 style: ElevatedButton.styleFrom(
@@ -207,7 +210,17 @@ class StatisticsPreviewSection extends HookWidget {
     );
   }
 
-  void _navigateToStatistics(BuildContext context) {
-    context.router.push(const QuizStatisticsRoute());
+  Future<void> _navigateToStatistics(BuildContext context, WidgetRef ref) async {
+    if (await ref.read(isAnonymousProvider.future)) {
+      // Quando serve registrazione
+      if (context.mounted) {
+        await showSignUpDialog(context);
+        return;
+      }
+    } else {
+      if (context.mounted) {
+        await context.router.push(const QuizStatisticsRoute());
+      }
+    }
   }
 }

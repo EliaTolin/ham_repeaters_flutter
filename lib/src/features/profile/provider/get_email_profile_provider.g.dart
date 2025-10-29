@@ -13,8 +13,8 @@ part of 'get_email_profile_provider.dart';
 const getEmailProfileProvider = GetEmailProfileProvider._();
 
 final class GetEmailProfileProvider
-    extends $FunctionalProvider<AsyncValue<String>, String, FutureOr<String>>
-    with $FutureModifier<String>, $FutureProvider<String> {
+    extends $FunctionalProvider<AsyncValue<String?>, String?, FutureOr<String?>>
+    with $FutureModifier<String?>, $FutureProvider<String?> {
   const GetEmailProfileProvider._()
       : super(
           from: null,
@@ -31,13 +31,13 @@ final class GetEmailProfileProvider
 
   @$internal
   @override
-  $FutureProviderElement<String> $createElement($ProviderPointer pointer) =>
+  $FutureProviderElement<String?> $createElement($ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<String> create(Ref ref) {
+  FutureOr<String?> create(Ref ref) {
     return getEmailProfile(ref);
   }
 }
 
-String _$getEmailProfileHash() => r'9d5bb75c19bcc638e20b4f00263cde182b8047c1';
+String _$getEmailProfileHash() => r'ac4b1ca2d5916f6cf9e56a025cb51092a6bc1ffa';

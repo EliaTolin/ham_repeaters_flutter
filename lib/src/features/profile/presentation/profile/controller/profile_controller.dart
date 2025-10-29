@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/logout_provider.dart';
 import 'package:quiz_radioamatori/src/features/profile/domain/state/user_state.dart';
 import 'package:quiz_radioamatori/src/features/profile/provider/get_email_profile_provider.dart';
@@ -19,9 +20,9 @@ class ProfileController extends _$ProfileController {
     if (profile.propic != null) {
       imageUrl = await ref.read(getImageProfileProvider(profile.propic!).future);
     }
-
+    final isAnonymous = await ref.read(isAnonymousProvider.future);
     final email = await ref.read(getEmailProfileProvider.future);
-    return UserState(profile: profile, imageProfileUrl: imageUrl, email: email);
+    return UserState(profile: profile, imageProfileUrl: imageUrl, email: email, isAnonymous: isAnonymous);
   }
 
   Future<void> logout() async {

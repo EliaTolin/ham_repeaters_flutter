@@ -2,19 +2,26 @@ import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/extension/l10n_extension.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/widgets/sign_in_buttons.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/anonymous_signin/anonymous_signin_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen_provider.dart';
 
 @RoutePage()
-class OnboardingPage extends ConsumerWidget {
+class OnboardingPage extends HookConsumerWidget {
   const OnboardingPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final showFinalLayout = useState(false);
     // // — Consenso ADS (come tuo) —
     // WidgetsBinding.instance.addPostFrameCallback((_) async {
     //   final params = ConsentRequestParameters();
@@ -66,41 +73,54 @@ class OnboardingPage extends ConsumerWidget {
                         color: color.primary.withValues(alpha: .12),
                       ),
                     ),
-                    child: IntroductionScreen(
-                      globalBackgroundColor: Colors.transparent,
-                      pages: _pages(context),
-                      // — Controlli —
-                      showSkipButton: true,
-                      skip: Text(
-                        context.localization.skip,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: color.secondary,
-                          letterSpacing: .2,
-                        ),
-                      ),
-                      next: _roundIcon(context, Icons.arrow_forward),
-                      done: Text(
-                        context.localization.done,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: color.primary,
-                          letterSpacing: .2,
-                        ),
-                      ),
-                      onDone: () => _onDone(context, ref),
-                      dotsDecorator: DotsDecorator(
-                        size: const Size.square(8),
-                        activeSize: const Size(16, 8),
-                        spacing: const EdgeInsets.symmetric(horizontal: 4),
-                        color: theme.colorScheme.onSurface.withValues(alpha: .20),
-                        activeColor: color.primary,
-                        activeShape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      curve: Curves.easeOutCubic,
-                    ),
+                    child: showFinalLayout.value
+                        ? _buildFinalLayout(context, ref)
+                        : IntroductionScreen(
+                            globalBackgroundColor: Colors.transparent,
+                            pages: _pages(context, ref),
+                            // — Controlli —
+                            showSkipButton: true,
+                            skip: Text(
+                              context.localization.skip,
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: color.secondary,
+                                letterSpacing: .2,
+                              ),
+                            ),
+                            next: _roundIcon(context, Icons.arrow_forward),
+                            done: Text(
+                              context.localization.done,
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: color.primary,
+                                letterSpacing: .2,
+                              ),
+                            ),
+                            onDone: () {
+                              showFinalLayout.value = true;
+                            },
+                            onSkip: () {
+                              showFinalLayout.value = true;
+                            },
+                            dotsDecorator: DotsDecorator(
+                              size: const Size.square(8),
+                              activeSize: const Size(16, 8),
+                              spacing: const EdgeInsets.symmetric(horizontal: 4),
+                              color: theme.colorScheme.onSurface.withValues(alpha: .20),
+                              activeColor: color.primary,
+                              activeShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            curve: Curves.easeOutCubic,
+                            onChange: (index) {
+                              final pages = _pages(context, ref);
+                              if (index == pages.length) {
+                                showFinalLayout.value = true;
+                              }
+                            },
+                          ),
                   ),
                 ),
               ),
@@ -113,7 +133,7 @@ class OnboardingPage extends ConsumerWidget {
 
   // — Pagine ——————————————————————————————————————————————
 
-  List<PageViewModel> _pages(BuildContext context) {
+  List<PageViewModel> _pages(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final color = theme.colorScheme;
 
@@ -192,13 +212,6 @@ class OnboardingPage extends ConsumerWidget {
         decoration: deco(),
         footer: _miniStats(context),
       ),
-      PageViewModel(
-        title: 'Pronti a iniziare?'.hardcoded,
-        body: 'Crea un profilo o accedi e comincia subito il percorso verso la patente.'.hardcoded,
-        image: _iconBadgeColored(context, Icons.check_circle),
-        decoration: deco(),
-        footer: _primaryCta(context),
-      ),
     ];
   }
 
@@ -236,28 +249,6 @@ class OnboardingPage extends ConsumerWidget {
       ),
       child: Center(
         child: Icon(icon, size: 72, color: color.primary),
-      ),
-    );
-  }
-
-  Widget _iconBadgeColored(BuildContext context, IconData icon) {
-    final color = Theme.of(context).colorScheme;
-    return Container(
-      width: 150,
-      height: 150,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            color.primary.withValues(alpha: .18),
-            color.secondary.withValues(alpha: .14),
-          ],
-        ),
-      ),
-      child: Center(
-        child: Icon(icon, size: 84, color: color.onPrimaryContainer),
       ),
     );
   }
@@ -381,32 +372,262 @@ class OnboardingPage extends ConsumerWidget {
     );
   }
 
-  Widget _primaryCta(BuildContext context) {
+  Widget _buildFinalLayout(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final color = theme.colorScheme;
     final w = MediaQuery.sizeOf(context).width;
-    return Padding(
-      padding: const EdgeInsets.only(top: 6),
-      child: SizedBox(
-        width: w * .65,
-        child: FilledButton.tonal(
-          onPressed: () => _onDone(context, null),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Text('Vai all’app'.hardcoded),
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Titolo
+            Text(
+              'Pronti a iniziare?'.hardcoded,
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: color.primary,
+                letterSpacing: .2,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const Gap(12),
+            Text(
+              'Registrati per salvare i tuoi progressi e accedere a tutte le funzionalità.'
+                  .hardcoded,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                height: 1.35,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const Gap(24),
+            // Sezione benefici
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: w * 0.05),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: color.primary.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: color.primary.withValues(alpha: 0.2),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.rocket_launch,
+                        color: color.primary,
+                        size: 24,
+                      ),
+                      const Gap(10),
+                      Text(
+                        'Cosa otterrai:',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: color.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Gap(16),
+                  _buildOnboardingBenefitItem(
+                    context,
+                    Icons.track_changes,
+                    'Statistiche dettagliate',
+                    'Monitora i tuoi progressi e migliora',
+                  ),
+                  const Gap(12),
+                  _buildOnboardingBenefitItem(
+                    context,
+                    Icons.settings_backup_restore,
+                    'Sincronizzazione',
+                    'Accedi da qualsiasi dispositivo',
+                  ),
+                  const Gap(12),
+                  _buildOnboardingBenefitItem(
+                    context,
+                    Icons.share,
+                    'Condividi i risultati',
+                    'Condividi i tuoi successi',
+                  ),
+                ],
+              ),
+            ),
+            const Gap(20),
+            // Sign In Buttons
+            SignInButtons(
+              onSignInComplete: () => _onSignInComplete(context, ref),
+            ),
+            const Gap(20),
+            // Divider
+            Row(
+              children: [
+                Expanded(
+                  child: Divider(
+                    color: color.onSurface.withValues(alpha: 0.2),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    'Oppure'.hardcoded,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: color.onSurface.withValues(alpha: 0.6),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Divider(
+                    color: color.onSurface.withValues(alpha: 0.2),
+                  ),
+                ),
+              ],
+            ),
+            const Gap(12),
+            // Bottone per aprire dialog email
+            SizedBox(
+              width: w * 0.75,
+              child: OutlinedButton.icon(
+                onPressed: () => _openEmailSignUpDialog(context, ref),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  side: BorderSide(
+                    color: color.primary.withValues(alpha: 0.6),
+                  ),
+                ),
+                icon: Icon(Icons.email, color: color.primary),
+                label: Text(
+                  'Registrati con Email'.hardcoded,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: color.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            const Gap(16),
+            // Continua come ospite - piccolo in basso
+            TextButton(
+              onPressed: () => _onContinueAsGuest(context, ref),
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              child: Text(
+                'Continua come ospite'.hardcoded,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: color.onSurface.withValues(alpha: 0.6),
+                  decoration: TextDecoration.underline,
+                  decorationColor: color.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  // — Done handler ——————————————————————————————————————————
+  // — Helpers per benefici —————————————————————————————————————————
 
-  Future<void> _onDone(BuildContext context, WidgetRef? ref) async {
-    if (ref != null) {
-      await ref.read(setOnboardingSeenProvider.future);
-    }
+  Widget _buildOnboardingBenefitItem(
+    BuildContext context,
+    IconData icon,
+    String title,
+    String description,
+  ) {
+    final theme = Theme.of(context);
+    final color = theme.colorScheme;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: color.primary.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(
+            icon,
+            color: color.primary,
+            size: 20,
+          ),
+        ),
+        const Gap(12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: color.onSurface,
+                ),
+              ),
+              const Gap(2),
+              Text(
+                description,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: color.onSurface.withValues(alpha: 0.7),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // — Handlers ——————————————————————————————————————————————
+
+  Future<void> _onSignInComplete(BuildContext context, WidgetRef ref) async {
+    await ref.read(setOnboardingSeenProvider.future);
+    ref.invalidate(getUserIdProvider);
     if (context.mounted) {
-      await context.router.replace(const AuthRoute());
+      await context.router.replace(const HomeRoute());
     }
+  }
+
+  Future<void> _openEmailSignUpDialog(BuildContext context, WidgetRef ref) async {
+    if (context.mounted) {
+      await showSignUpDialog(
+        context,
+        onContinueAsGuest: () => _continueAsGuest(context, ref),
+      );
+    }
+  }
+
+  Future<void> _continueAsGuest(BuildContext context, WidgetRef? ref) async {
+    try {
+      // Segna onboarding come visto
+      if (ref != null) {
+        await ref.read(setOnboardingSeenProvider.future);
+      }
+      // Fai sign in anonimo
+      if (ref != null) {
+        await ref.read(anonymousSignInProvider.future);
+        ref.invalidate(getUserIdProvider);
+      }
+      // Vai alla home
+      if (context.mounted) {
+        await context.router.replace(const HomeRoute());
+      }
+    } catch (e) {
+      // Se fallisce, vai comunque alla home
+      if (context.mounted) {
+        await context.router.replace(const HomeRoute());
+      }
+    }
+  }
+
+  Future<void> _onContinueAsGuest(BuildContext context, WidgetRef? ref) async {
+    await _continueAsGuest(context, ref);
   }
 
   // — Dialog tracking opzionale (invariato) —

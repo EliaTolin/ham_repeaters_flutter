@@ -35,27 +35,37 @@ class AuthScreen extends ConsumerWidget {
             child: Column(
               spacing: 8,
               children: [
-                // Logo e Titolo
-                Image.asset(
-                  ImageAssets.icon,
-                  width: 100,
-                  height: 100,
+                // Logo e Titolo - migliorato
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.asset(
+                    ImageAssets.icon,
+                    width: 100,
+                    height: 100,
+                  ),
                 ),
-                const Gap(8),
+                const Gap(16),
                 Text(
                   'Quiz Radioamatori'.hardcoded,
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
+                        fontSize: 32,
                       ),
                 ),
-                const Gap(4),
+                const Gap(8),
                 Text(
                   'Allenati e preparati! 73!'.hardcoded,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
+                        fontSize: 18,
                       ),
                 ),
+                const Gap(32),
                 // Sezione Social Login
                 SignInButtons(
                   onSignInComplete: () {
@@ -68,27 +78,41 @@ class AuthScreen extends ConsumerWidget {
                     );
                   },
                 ),
+                const Gap(24),
                 // Divider
                 Row(
                   children: [
-                    const Expanded(child: Divider()),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text('Oppure'.hardcoded),
+                    Expanded(
+                      child: Divider(
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.2),
+                      ),
                     ),
-                    const Expanded(child: Divider()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(
+                        'Oppure'.hardcoded,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                            ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.2),
+                      ),
+                    ),
                   ],
                 ),
-                const Gap(8),
+                const Gap(24),
                 // Form di autenticazione email/password
                 Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  elevation: 4,
+                  elevation: 6,
                   shadowColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(20),
                     child: SupaEmailAuth(
                       localization: SupaEmailAuthLocalization(
                         enterEmail: "Inserisci l'email".hardcoded,
@@ -124,10 +148,6 @@ class AuthScreen extends ConsumerWidget {
                             context,
                             'Verifica la tua email per completare la registrazione, controlla la tua casella.'
                                 .hardcoded,
-                          );
-                          await context.router.pushAndPopUntil(
-                            const HomeRoute(),
-                            predicate: (_) => false,
                           );
                         }
                       },
@@ -174,7 +194,7 @@ class AuthScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const Gap(20),
+                const Gap(32),
               ],
             ),
           ),

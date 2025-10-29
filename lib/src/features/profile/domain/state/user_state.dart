@@ -7,7 +7,8 @@ part 'user_state.freezed.dart';
 abstract class UserState with _$UserState {
   factory UserState({
     required Profile profile,
-    required String email,
+    required String? email,
     required String? imageProfileUrl,
+    required bool isAnonymous,
   }) = _UserState;
 }
