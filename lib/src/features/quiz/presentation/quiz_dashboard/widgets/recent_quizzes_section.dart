@@ -15,7 +15,6 @@ class RecentQuizzesSection extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-
     // Animazioni in ingresso con vero "stagger"
     final controller = useAnimationController(
       duration: Duration(milliseconds: 250 + (scores.length * 80).clamp(0, 700)),

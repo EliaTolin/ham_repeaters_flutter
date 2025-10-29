@@ -260,10 +260,6 @@ Future<void> showSignUpDialog(
                                       'Verifica la tua email per completare la registrazione, controlla la tua casella.'
                                           .hardcoded,
                                     );
-                                    await context.router.pushAndPopUntil(
-                                      const HomeRoute(),
-                                      predicate: (_) => false,
-                                    );
                                   }
                                 }
                               },
