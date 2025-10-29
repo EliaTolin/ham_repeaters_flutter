@@ -16,7 +16,10 @@ import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonym
 import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen_provider.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
-Future<void> showSignUpDialog(BuildContext context) async {
+Future<void> showSignUpDialog(
+  BuildContext context, {
+  VoidCallback? onContinueAsGuest,
+}) async {
   await showDialog(
     barrierDismissible: false,
     context: context,
@@ -316,6 +319,28 @@ Future<void> showSignUpDialog(BuildContext context) async {
                           ),
                         ),
                         const Gap(32),
+                        // Bottone "Continua come ospite"
+                        if (onContinueAsGuest != null) ...[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(dialogContext).pop();
+                              onContinueAsGuest();
+                            },
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                            ),
+                            child: Text(
+                              'Continua come ospite'.hardcoded,
+                              style: Theme.of(dialogBuildContext).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(dialogBuildContext)
+                                        .colorScheme
+                                        .onSurface
+                                        .withValues(alpha: 0.7),
+                                  ),
+                            ),
+                          ),
+                        ],
+                        const Gap(16),
                       ],
                     ),
                   ),

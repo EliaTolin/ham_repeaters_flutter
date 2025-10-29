@@ -18,7 +18,7 @@ class SplashController extends _$SplashController {
     var userID = await ref.read(getUserIdProvider.future);
     userID ??= await ref.read(anonymousSignInProvider.future);
     log('userId: $userID');
-
+    return const OnboardingRoute();
     if (onboarding) {
       return const HomeRoute();
     } else {
