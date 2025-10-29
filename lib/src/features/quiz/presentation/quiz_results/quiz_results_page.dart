@@ -76,11 +76,13 @@ class QuizResultsPage extends ConsumerWidget {
                             context.router
                                 .pushAndPopUntil(const HomeRoute(), predicate: (_) => false);
                           },
-                          onRetakeQuiz: () {
-                            context.router.popAndPush(
-                              QuizRoute(examType: results.exam),
-                            );
-                          },
+                          onRetakeQuiz: results.exam != null
+                              ? () => {
+                                    context.router.popAndPush(
+                                      QuizRoute(examType: results.exam),
+                                    ),
+                                  }
+                              : null,
                           onViewDetails: () {
                             // Navigate to detailed answers page
                             context.router.push(QuizAnswersRoute(setId: results.setId));

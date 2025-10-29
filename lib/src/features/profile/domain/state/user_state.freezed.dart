@@ -15,8 +15,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserState {
   Profile get profile;
-  String get email;
+  String? get email;
   String? get imageProfileUrl;
+  bool get isAnonymous;
 
   /// Create a copy of UserState
   /// with the given fields replaced by the non-null parameter values.
@@ -33,15 +34,18 @@ mixin _$UserState {
             (identical(other.profile, profile) || other.profile == profile) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.imageProfileUrl, imageProfileUrl) ||
-                other.imageProfileUrl == imageProfileUrl));
+                other.imageProfileUrl == imageProfileUrl) &&
+            (identical(other.isAnonymous, isAnonymous) ||
+                other.isAnonymous == isAnonymous));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, profile, email, imageProfileUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, profile, email, imageProfileUrl, isAnonymous);
 
   @override
   String toString() {
-    return 'UserState(profile: $profile, email: $email, imageProfileUrl: $imageProfileUrl)';
+    return 'UserState(profile: $profile, email: $email, imageProfileUrl: $imageProfileUrl, isAnonymous: $isAnonymous)';
   }
 }
 
@@ -50,7 +54,11 @@ abstract mixin class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) _then) =
       _$UserStateCopyWithImpl;
   @useResult
-  $Res call({Profile profile, String email, String? imageProfileUrl});
+  $Res call(
+      {Profile profile,
+      String? email,
+      String? imageProfileUrl,
+      bool isAnonymous});
 
   $ProfileCopyWith<$Res> get profile;
 }
@@ -68,22 +76,27 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
   @override
   $Res call({
     Object? profile = null,
-    Object? email = null,
+    Object? email = freezed,
     Object? imageProfileUrl = freezed,
+    Object? isAnonymous = null,
   }) {
     return _then(_self.copyWith(
       profile: null == profile
           ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile,
-      email: null == email
+      email: freezed == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageProfileUrl: freezed == imageProfileUrl
           ? _self.imageProfileUrl
           : imageProfileUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      isAnonymous: null == isAnonymous
+          ? _self.isAnonymous
+          : isAnonymous // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -191,14 +204,16 @@ extension UserStatePatterns on UserState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(Profile profile, String email, String? imageProfileUrl)?
+    TResult Function(Profile profile, String? email, String? imageProfileUrl,
+            bool isAnonymous)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _UserState() when $default != null:
-        return $default(_that.profile, _that.email, _that.imageProfileUrl);
+        return $default(_that.profile, _that.email, _that.imageProfileUrl,
+            _that.isAnonymous);
       case _:
         return orElse();
     }
@@ -219,13 +234,15 @@ extension UserStatePatterns on UserState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(Profile profile, String email, String? imageProfileUrl)
+    TResult Function(Profile profile, String? email, String? imageProfileUrl,
+            bool isAnonymous)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _UserState():
-        return $default(_that.profile, _that.email, _that.imageProfileUrl);
+        return $default(_that.profile, _that.email, _that.imageProfileUrl,
+            _that.isAnonymous);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -245,13 +262,15 @@ extension UserStatePatterns on UserState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(Profile profile, String email, String? imageProfileUrl)?
+    TResult? Function(Profile profile, String? email, String? imageProfileUrl,
+            bool isAnonymous)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _UserState() when $default != null:
-        return $default(_that.profile, _that.email, _that.imageProfileUrl);
+        return $default(_that.profile, _that.email, _that.imageProfileUrl,
+            _that.isAnonymous);
       case _:
         return null;
     }
@@ -264,14 +283,17 @@ class _UserState implements UserState {
   _UserState(
       {required this.profile,
       required this.email,
-      required this.imageProfileUrl});
+      required this.imageProfileUrl,
+      required this.isAnonymous});
 
   @override
   final Profile profile;
   @override
-  final String email;
+  final String? email;
   @override
   final String? imageProfileUrl;
+  @override
+  final bool isAnonymous;
 
   /// Create a copy of UserState
   /// with the given fields replaced by the non-null parameter values.
@@ -289,15 +311,18 @@ class _UserState implements UserState {
             (identical(other.profile, profile) || other.profile == profile) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.imageProfileUrl, imageProfileUrl) ||
-                other.imageProfileUrl == imageProfileUrl));
+                other.imageProfileUrl == imageProfileUrl) &&
+            (identical(other.isAnonymous, isAnonymous) ||
+                other.isAnonymous == isAnonymous));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, profile, email, imageProfileUrl);
+  int get hashCode =>
+      Object.hash(runtimeType, profile, email, imageProfileUrl, isAnonymous);
 
   @override
   String toString() {
-    return 'UserState(profile: $profile, email: $email, imageProfileUrl: $imageProfileUrl)';
+    return 'UserState(profile: $profile, email: $email, imageProfileUrl: $imageProfileUrl, isAnonymous: $isAnonymous)';
   }
 }
 
@@ -309,7 +334,11 @@ abstract mixin class _$UserStateCopyWith<$Res>
       __$UserStateCopyWithImpl;
   @override
   @useResult
-  $Res call({Profile profile, String email, String? imageProfileUrl});
+  $Res call(
+      {Profile profile,
+      String? email,
+      String? imageProfileUrl,
+      bool isAnonymous});
 
   @override
   $ProfileCopyWith<$Res> get profile;
@@ -328,22 +357,27 @@ class __$UserStateCopyWithImpl<$Res> implements _$UserStateCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? profile = null,
-    Object? email = null,
+    Object? email = freezed,
     Object? imageProfileUrl = freezed,
+    Object? isAnonymous = null,
   }) {
     return _then(_UserState(
       profile: null == profile
           ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile,
-      email: null == email
+      email: freezed == email
           ? _self.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       imageProfileUrl: freezed == imageProfileUrl
           ? _self.imageProfileUrl
           : imageProfileUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      isAnonymous: null == isAnonymous
+          ? _self.isAnonymous
+          : isAnonymous // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 

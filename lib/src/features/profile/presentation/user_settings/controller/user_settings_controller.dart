@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:quiz_radioamatori/src/features/authentication/provider/delete_account_provider.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 import 'package:quiz_radioamatori/src/features/profile/domain/profile.dart';
 import 'package:quiz_radioamatori/src/features/profile/domain/state/user_state.dart';
 import 'package:quiz_radioamatori/src/features/profile/provider/delete_image_profile_provider.dart';
@@ -30,7 +31,13 @@ class UserSettingsController extends _$UserSettingsController {
       imageUrl = await ref.read(getImageProfileProvider(profile.propic!).future);
     }
     final email = await ref.read(getEmailProfileProvider.future);
-    return UserState(profile: profile, imageProfileUrl: imageUrl, email: email);
+    final isAnonymous = await ref.read(isAnonymousProvider.future);
+    return UserState(
+      profile: profile,
+      imageProfileUrl: imageUrl,
+      email: email,
+      isAnonymous: isAnonymous,
+    );
   }
 
   Future<void> updateProfile(Profile profile) async {

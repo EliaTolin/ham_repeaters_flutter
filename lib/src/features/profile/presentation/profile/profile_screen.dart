@@ -8,6 +8,7 @@ import 'package:quiz_radioamatori/common/widgets/profile_avatar.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
 import 'package:quiz_radioamatori/config/app_configs.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/profile/controller/profile_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -28,62 +29,135 @@ class ProfileScreen extends HookConsumerWidget {
                   children: [
                     ProfileAvatar(imageProfileUrl: state.imageProfileUrl, size: 200),
                     const Gap(20),
-                    Text(
-                      '${profile.name} ${profile.surname}',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    const Gap(10),
-                    Text(
-                      state.email,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      textAlign: TextAlign.center,
-                    ),
-                    const Gap(30),
-
-                    // Impostazioni
-                    Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      child: ListTile(
-                        leading: const Icon(Icons.settings, color: Colors.blueAccent),
-                        title: Text(
-                          'Impostazioni'.hardcoded,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        onTap: () {
-                          context.router.push(const UserSettingsRoute());
-                        },
+                    if (!state.isAnonymous) ...[
+                      Text(
+                        '${profile.name} ${profile.surname}',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    const Gap(10),
-
-                    // Logout
-                    Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      child: ListTile(
-                        leading: const Icon(Icons.logout, color: Colors.redAccent),
-                        title: Text(
-                          'Logout'.hardcoded,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        onTap: () async {
-                          await ref.read(profileControllerProvider.notifier).logout();
-                          if (context.mounted) {
-                            await context.router.pushAndPopUntil(
-                              const AuthRoute(),
-                              predicate: (_) => false,
-                            );
-                          }
-                        },
+                      const Gap(10),
+                    ],
+                    if (state.email != null) ...[
+                      Text(
+                        state.email!,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                    const Gap(10),
+                      const Gap(20),
+                    ],
+                    if (state.isAnonymous) ...[
+                      Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.lock_outline,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 20,
+                                  ),
+                                  const Gap(8),
+                                  Expanded(
+                                    child: Text(
+                                      'Sblocca tutte le funzionalità'.hardcoded,
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Gap(8),
+                              Text(
+                                'Registrati per salvare i tuoi progressi e accedere a statistiche dettagliate.'
+                                    .hardcoded,
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer
+                                          .withValues(alpha: 0.8),
+                                    ),
+                                textAlign: TextAlign.start,
+                              ),
+                              const Gap(12),
+                              SizedBox(
+                                width: double.infinity,
+                                child: FilledButton(
+                                  onPressed: () async {
+                                    await showSignUpDialog(context);
+                                  },
+                                  style: FilledButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                  ),
+                                  child: Text(
+                                    'Registrati o Accedi'.hardcoded,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                    if (!state.isAnonymous) ...[
+                      // Impostazioni
+                      Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        child: ListTile(
+                          leading: const Icon(Icons.settings, color: Colors.blueAccent),
+                          title: Text(
+                            'Impostazioni'.hardcoded,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          trailing: const Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            context.router.push(const UserSettingsRoute());
+                          },
+                        ),
+                      ),
+                      const Gap(10),
+                    ],
+                    if (!state.isAnonymous) ...[
+                      // Logout
+                      Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        child: ListTile(
+                          leading: const Icon(Icons.logout, color: Colors.redAccent),
+                          title: Text(
+                            'Logout'.hardcoded,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          trailing: const Icon(Icons.arrow_forward_ios),
+                          onTap: () async {
+                            await ref.read(profileControllerProvider.notifier).logout();
+                            if (context.mounted) {
+                              await context.router.pushAndPopUntil(
+                                const AuthRoute(),
+                                predicate: (_) => false,
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      const Gap(10),
+                    ],
                     // Contattaci
                     Card(
                       elevation: 2,

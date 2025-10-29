@@ -11,7 +11,7 @@ class QuizActionButtons extends StatelessWidget {
     super.key,
   });
 
-  final VoidCallback onRetakeQuiz;
+  final VoidCallback? onRetakeQuiz;
   final VoidCallback onViewDetails;
   final VoidCallback onBackToHome;
   final QuizSetScore score;
@@ -24,20 +24,23 @@ class QuizActionButtons extends StatelessWidget {
       spacing: 16,
       children: [
         // Primary action button
-        SizedBox(
-          width: double.infinity,
-          height: 56,
-          child: ElevatedButton.icon(
-            onPressed: onRetakeQuiz,
-            icon: const Icon(Icons.refresh),
-            label: const Text('Riprova Quiz'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: theme.colorScheme.primary,
-              foregroundColor: theme.colorScheme.onPrimary,
-              elevation: 8,
-              shadowColor: theme.colorScheme.primary.withValues(alpha: 0.3),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+        Visibility(
+          visible: onRetakeQuiz != null,
+          child: SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: ElevatedButton.icon(
+              onPressed: onRetakeQuiz,
+              icon: const Icon(Icons.refresh),
+              label: const Text('Riprova Quiz'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: theme.colorScheme.onPrimary,
+                elevation: 8,
+                shadowColor: theme.colorScheme.primary.withValues(alpha: 0.3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
             ),
           ),

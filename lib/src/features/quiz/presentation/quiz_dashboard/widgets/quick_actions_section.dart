@@ -211,7 +211,7 @@ class QuickActionsSection extends HookConsumerWidget {
               const SizedBox(height: 16),
               Text(
                 title,
-                style: theme.textTheme.titleMedium?.copyWith(
+                style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),

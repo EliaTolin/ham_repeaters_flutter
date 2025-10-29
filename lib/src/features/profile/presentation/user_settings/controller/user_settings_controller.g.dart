@@ -34,7 +34,7 @@ final class UserSettingsControllerProvider
 }
 
 String _$userSettingsControllerHash() =>
-    r'd3e41659f14c14aafebb4bd4b3c394d16b547e26';
+    r'b8e52859cbc556f8e0c766945766ef1c7c03e8b5';
 
 abstract class _$UserSettingsController extends $AsyncNotifier<UserState> {
   FutureOr<UserState> build();
