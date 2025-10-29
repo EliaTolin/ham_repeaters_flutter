@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/auth_screen.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/change_password/change_password_screen.dart';
-import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 import 'package:quiz_radioamatori/src/features/home/presentation/home_page.dart';
 import 'package:quiz_radioamatori/src/features/onboarding/presentation/onboarding_page.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/profile/profile_screen.dart';
@@ -88,32 +88,32 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
   @override
   Future<void> onNavigation(NavigationResolver resolver, StackRouter router) async {
     // Check if the route is splash or login page
-    final isRequiredAuth = switch (resolver.route.name) {
+    final isRequiredIsNotAnonymous = switch (resolver.route.name) {
       SplashRoute.name => false,
       AuthRoute.name => false,
       ChangePasswordRoute.name => false,
+      QuizDashboardRoute.name => false,
       _ => true,
     };
 
     // If the route is not required auth, go to next route
-    if (!isRequiredAuth) {
+    if (!isRequiredIsNotAnonymous) {
       return resolver.next();
     }
 
     // Check permission
-    var isAuthenticated = false;
+    var isAnynoumous = true;
     try {
-      final value = await ref.read(getUserIdProvider.future);
-      isAuthenticated = value != null;
-      log('isAuthenticated: $isAuthenticated, go to next route: ${resolver.route.name}');
+      isAnynoumous = await ref.read(isAnonymousProvider.future);
+      log('isAnonymous: $isAnynoumous, go to next route: ${resolver.route.name}');
     } catch (e) {
       log(e.toString());
-      isAuthenticated = false;
+      isAnynoumous = true;
     }
-    if (isAuthenticated) {
-      resolver.next();
-    } else {
+    if (isRequiredIsNotAnonymous && !isAnynoumous) {
       await resolver.redirectUntil(const AuthRoute(), replace: true);
+    } else {
+      resolver.next();
     }
   }
 }

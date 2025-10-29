@@ -17,7 +17,8 @@ class AuthRepository {
   }
 
   String? getUserId() {
-    return authDatasource.getUserId();
+    final userId = authDatasource.getUserId();
+    return userId;
   }
 
   Future<String?> getUserIdFromEmail(String email) {
@@ -28,12 +29,20 @@ class AuthRepository {
     return authDatasource.logout();
   }
 
-    Future<bool> signinWithGoogle() {
+  Future<bool> signinWithGoogle() {
     return authDatasource.signInGoogle();
   }
 
   Future<bool> signWithApple() {
     return authDatasource.signWithApple();
+  }
+
+  Future<String> anonymousSignIn() {
+    return authDatasource.anonymousSignIn();
+  }
+
+  Future<bool> isAnonymous() {
+    return authDatasource.isAnonymous();
   }
 }
 

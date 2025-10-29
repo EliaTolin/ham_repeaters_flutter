@@ -162,6 +162,27 @@ class AuthSupabaseDatasource implements AuthDatasource {
 
     return true;
   }
+
+  @override
+  Future<String> anonymousSignIn() async {
+    try {
+      final response = await supabaseClient.auth.signInAnonymously();
+      if (response.user == null) {
+        throw Exception('Anonymous Sign-In failed.');
+      }
+      final userId = response.user!.id;
+      return userId;
+    } catch (e) {
+      log('Error during Anonymous Sign-In: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> isAnonymous() async {
+    final user = supabaseClient.auth.currentUser;
+    return user?.isAnonymous ?? false;
+  }
 }
 
 @riverpod
