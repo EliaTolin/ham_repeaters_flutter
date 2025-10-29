@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 
 class StatisticsPreviewSection extends HookConsumerWidget {
@@ -215,6 +215,7 @@ class StatisticsPreviewSection extends HookConsumerWidget {
       // Quando serve registrazione
       if (context.mounted) {
         await showSignUpDialog(context);
+        return;
       }
     } else {
       if (context.mounted) {

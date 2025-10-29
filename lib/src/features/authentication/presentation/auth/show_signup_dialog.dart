@@ -218,6 +218,7 @@ Future<void> showSignUpDialog(
                           child: Padding(
                             padding: const EdgeInsets.all(20),
                             child: SupaEmailAuth(
+                              autofocus: false,
                               localization: SupaEmailAuthLocalization(
                                 enterEmail: "Inserisci l'email".hardcoded,
                                 enterPassword: 'Inserisci la password'.hardcoded,

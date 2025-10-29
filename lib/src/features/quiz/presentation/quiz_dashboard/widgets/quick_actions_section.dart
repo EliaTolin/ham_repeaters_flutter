@@ -1,14 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 
-class QuickActionsSection extends HookWidget {
+class QuickActionsSection extends HookConsumerWidget {
   const QuickActionsSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 1000),
     );
@@ -125,7 +128,7 @@ class QuickActionsSection extends HookWidget {
                       Colors.purple,
                       2,
                       animations,
-                      () => _startMarathon(context),
+                      () => _startMarathon(context, ref),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -138,7 +141,7 @@ class QuickActionsSection extends HookWidget {
                       Colors.orange,
                       3,
                       animations,
-                      () => _startCustomQuiz(context),
+                      () => _startCustomQuiz(context, ref),
                     ),
                   ),
                 ],
@@ -230,11 +233,31 @@ class QuickActionsSection extends HookWidget {
     context.router.push(QuizRoute(examType: examType));
   }
 
-  void _startCustomQuiz(BuildContext context) {
-    context.router.push(const CustomQuizBuilderRoute());
+  Future<void> _startCustomQuiz(BuildContext context, WidgetRef ref) async {
+    if (await ref.read(isAnonymousProvider.future)) {
+      // Quando serve registrazione
+      if (context.mounted) {
+        await showSignUpDialog(context);
+        return;
+      }
+    } else {
+      if (context.mounted) {
+        await context.router.push(const CustomQuizBuilderRoute());
+      }
+    }
   }
 
-  void _startMarathon(BuildContext context) {
-    context.router.push(const MarathonQuizRoute());
+  Future<void> _startMarathon(BuildContext context, WidgetRef ref) async {
+    if (await ref.read(isAnonymousProvider.future)) {
+      // Quando serve registrazione
+      if (context.mounted) {
+        await showSignUpDialog(context);
+        return;
+      }
+    } else {
+      if (context.mounted) {
+        await context.router.push(const MarathonQuizRoute());
+      }
+    }
   }
 }
