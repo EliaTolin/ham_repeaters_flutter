@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:quiz_radioamatori/clients/supabase/supabase_client.dart';
+import 'package:quiz_radioamatori/clients/supabase/supabase_client/supabase_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

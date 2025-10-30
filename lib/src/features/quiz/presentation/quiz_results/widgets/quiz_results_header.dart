@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
 
 class QuizResultsHeader extends StatefulWidget {
   const QuizResultsHeader({

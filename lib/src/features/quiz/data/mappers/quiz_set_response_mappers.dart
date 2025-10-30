@@ -1,7 +1,7 @@
 import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/question_mappers.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model/quiz_set_response_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response/quiz_set_response.dart';
 
 class QuizSetResponseMapper implements Mapper<QuizSetResponse, QuizSetResponseModel> {
   final QuestionMapper _questionMapper = QuestionMapper();

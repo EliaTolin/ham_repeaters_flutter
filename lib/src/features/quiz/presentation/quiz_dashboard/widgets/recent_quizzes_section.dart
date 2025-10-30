@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
 
 class RecentQuizzesSection extends HookConsumerWidget {
   const RecentQuizzesSection({required this.scores, super.key});

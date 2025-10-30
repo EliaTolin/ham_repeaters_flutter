@@ -1,10 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:quiz_radioamatori/clients/supabase/supabase_client.dart';
+import 'package:quiz_radioamatori/clients/supabase/supabase_client/supabase_client.dart';
 import 'package:quiz_radioamatori/constant/supabase/supabase_table_name.dart';
 import 'package:quiz_radioamatori/src/features/profile/data/datasource/profile_datasource.dart';
-import 'package:quiz_radioamatori/src/features/profile/data/model/profile_model.dart';
+import 'package:quiz_radioamatori/src/features/profile/data/model/profile_model/profile_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

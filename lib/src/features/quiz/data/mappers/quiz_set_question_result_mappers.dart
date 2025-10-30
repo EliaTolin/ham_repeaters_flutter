@@ -1,7 +1,7 @@
 import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question_result.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question_result/quiz_set_question_result.dart';
 
 class QuizSetQuestionResultMapper
     implements Mapper<QuizSetQuestionResult, QuizSetQuestionResultModel> {

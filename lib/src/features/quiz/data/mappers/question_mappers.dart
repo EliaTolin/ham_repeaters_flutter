@@ -1,7 +1,7 @@
 import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/question_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/question_model/question_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/question.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/question/question.dart';
 
 class QuestionMapper implements Mapper<Question, QuestionModel> {
   @override

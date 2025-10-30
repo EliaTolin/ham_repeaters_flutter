@@ -1,12 +1,12 @@
-import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/state/statistics_state.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/delete_all_quiz_set_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_topic_accuracy_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_total_accuracy_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy/topic_accuracy.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy/total_accuracy.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/state/statistics_state/statistics_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/delete_all_quiz_set/delete_all_quiz_set_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_topic_accuracy/get_user_topic_accuracy_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_total_accuracy/get_user_total_accuracy_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'statistics_controller.g.dart';

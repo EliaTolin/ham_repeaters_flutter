@@ -2,15 +2,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/common/dialogs/are_you_sure_to_delete_dialog.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy/topic_accuracy.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy/total_accuracy.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/recent_quizzes_section.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/controller/statistics_controller.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/state/statistics_state.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_topic_accuracy_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_total_accuracy_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/state/statistics_state/statistics_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores/all_quiz_scores_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_topic_accuracy/get_user_topic_accuracy_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_total_accuracy/get_user_total_accuracy_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart';
 
 @RoutePage()
 class QuizStatisticsPage extends HookConsumerWidget {

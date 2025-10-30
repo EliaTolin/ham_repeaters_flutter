@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers/quiz_answers_provider.dart';
 
 @RoutePage()
 class QuizAnswersPage extends HookConsumerWidget {

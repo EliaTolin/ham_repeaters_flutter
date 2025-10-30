@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:crypto/crypto.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:quiz_radioamatori/clients/supabase/supabase_client.dart';
+import 'package:quiz_radioamatori/clients/supabase/supabase_client/supabase_client.dart';
 import 'package:quiz_radioamatori/src/features/authentication/data/datasource/auth_datasource.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';

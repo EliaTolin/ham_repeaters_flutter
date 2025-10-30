@@ -2,11 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
-import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_with_stats.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request/topic_request.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_with_stats/topic_with_stats.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/marathon_quiz/controller/marathon_controller.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/marathon_quiz/state/marathon_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/marathon_quiz/state/marathon_state/marathon_state.dart';
 
 @RoutePage()
 class MarathonQuizPage extends HookConsumerWidget {

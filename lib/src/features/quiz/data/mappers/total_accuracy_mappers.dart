@@ -1,6 +1,6 @@
 import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/total_accuracy_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/total_accuracy_model/total_accuracy_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy/total_accuracy.dart';
 
 class TotalAccuracyMapper implements Mapper<TotalAccuracy, TotalAccuracyModel> {
   @override

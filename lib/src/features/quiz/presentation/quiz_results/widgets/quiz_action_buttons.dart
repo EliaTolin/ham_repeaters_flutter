@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
 import 'package:share_plus/share_plus.dart';
 
 class QuizActionButtons extends StatelessWidget {

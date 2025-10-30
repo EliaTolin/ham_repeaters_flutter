@@ -1,18 +1,18 @@
 import 'dart:developer';
 
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_response_mappers.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_score_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_accuracy_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_with_stats_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/total_accuracy_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model/quiz_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model/quiz_set_question_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model/quiz_set_response_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_score_model/quiz_set_score_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_accuracy_model/topic_accuracy_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_model/topic_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_with_stats_model/topic_with_stats_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/total_accuracy_model/total_accuracy_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response/quiz_set_response.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request/topic_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -74,7 +74,7 @@ class QuizDataSourceSupabase {
           .toList();
 
       final response = await _supabase.functions.invoke(
-        'get_quiz_set',
+        'get_custom_quiz_set',
         body: {
           'topics': topicsJson,
           'user_id': userId,

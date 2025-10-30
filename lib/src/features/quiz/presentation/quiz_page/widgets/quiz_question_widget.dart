@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/question.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/question/question.dart';
 
 class QuizQuestionWidget extends StatelessWidget {
   const QuizQuestionWidget({

@@ -5,17 +5,17 @@ import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_accuracy_
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_with_stats_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/total_accuracy_mappers.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model/quiz_set_question_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_with_stats.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result/quiz_question_result.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response/quiz_set_response.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic/topic.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy/topic_accuracy.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request/topic_request.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_with_stats/topic_with_stats.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy/total_accuracy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_repository.g.dart';

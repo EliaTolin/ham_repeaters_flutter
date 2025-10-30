@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:quiz_radioamatori/src/features/profile/data/datasource/profile_datasource.dart';
 import 'package:quiz_radioamatori/src/features/profile/data/datasource/profile_supabase_datasource.dart';
 import 'package:quiz_radioamatori/src/features/profile/data/mappers/profile_mappers.dart';
-import 'package:quiz_radioamatori/src/features/profile/domain/profile.dart';
+import 'package:quiz_radioamatori/src/features/profile/domain/profile/profile.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'profile_repository.g.dart';

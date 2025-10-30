@@ -1,6 +1,6 @@
 import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model/quiz_set_question_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question/quiz_set_question.dart';
 
 class QuizSetQuestionMapper implements Mapper<QuizSetQuestion, QuizSetQuestionModel> {
   @override

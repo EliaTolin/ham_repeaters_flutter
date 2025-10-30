@@ -1,6 +1,6 @@
 import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_accuracy_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_accuracy_model/topic_accuracy_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_accuracy/topic_accuracy.dart';
 
 class TopicAccuracyMapper implements Mapper<TopicAccuracy, TopicAccuracyModel> {
   @override

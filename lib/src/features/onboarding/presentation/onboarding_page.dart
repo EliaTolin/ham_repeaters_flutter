@@ -12,8 +12,8 @@ import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/widgets/sign_in_buttons.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/anonymous_signin/anonymous_signin_provider.dart';
-import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen/set_onboarding_seen_provider.dart';
 
 @RoutePage()
 class OnboardingPage extends HookConsumerWidget {

@@ -1,6 +1,6 @@
 import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/topic_model/topic_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic/topic.dart';
 
 class TopicMapper implements Mapper<Topic, TopicModel> {
   @override

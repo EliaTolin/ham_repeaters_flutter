@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
-import 'package:quiz_radioamatori/src/features/authentication/provider/logout_provider.dart';
-import 'package:quiz_radioamatori/src/features/profile/domain/state/user_state.dart';
-import 'package:quiz_radioamatori/src/features/profile/provider/get_email_profile_provider.dart';
-import 'package:quiz_radioamatori/src/features/profile/provider/get_image_profile_provider.dart';
-import 'package:quiz_radioamatori/src/features/profile/provider/get_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/logout/logout_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/domain/state/user_state/user_state.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/get_email_profile/get_email_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/get_image_profile/get_image_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/get_profile/get_profile_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'profile_controller.g.dart';

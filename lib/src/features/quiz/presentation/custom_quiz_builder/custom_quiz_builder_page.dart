@@ -4,10 +4,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
-import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request/topic_request.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/custom_quiz_builder/controller/custom_quiz_builder_controller.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/custom_quiz_builder/state/custom_quiz_builder_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/custom_quiz_builder/state/custom_quiz_builder_state/custom_quiz_builder_state.dart';
 
 @RoutePage()
 class CustomQuizBuilderPage extends HookConsumerWidget {

@@ -1,4 +1,4 @@
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

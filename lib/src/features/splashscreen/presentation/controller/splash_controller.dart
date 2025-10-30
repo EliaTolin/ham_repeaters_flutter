@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/anonymous_signin/anonymous_signin_provider.dart';
-import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
-import 'package:quiz_radioamatori/src/features/splashscreen/provider/get_has_seen_onboarding_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/provider/get_has_seen_onboarding/get_has_seen_onboarding_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'splash_controller.g.dart';

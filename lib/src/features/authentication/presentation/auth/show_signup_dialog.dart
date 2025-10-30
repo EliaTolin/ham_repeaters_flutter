@@ -11,9 +11,9 @@ import 'package:quiz_radioamatori/common/widgets/snackbars/show_success_snackbar
 import 'package:quiz_radioamatori/resources/resources.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/widgets/sign_in_buttons.dart';
-import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
-import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen_provider.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/provider/set_onboarding_seen/set_onboarding_seen_provider.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
 Future<void> showSignUpDialog(

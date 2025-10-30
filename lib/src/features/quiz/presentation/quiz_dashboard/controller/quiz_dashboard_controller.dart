@@ -1,13 +1,9 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
-import 'package:quiz_radioamatori/router/app_router.dart';
-import 'package:quiz_radioamatori/src/features/profile/domain/profile.dart';
-import 'package:quiz_radioamatori/src/features/profile/provider/get_profile_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/state/quiz_dashboard_state.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores_provider.dart';
+import 'package:quiz_radioamatori/src/features/profile/domain/profile/profile.dart';
+import 'package:quiz_radioamatori/src/features/profile/provider/get_profile/get_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/state/quiz_dashboard_state/quiz_dashboard_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores/all_quiz_scores_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'quiz_dashboard_controller.g.dart';
@@ -48,21 +44,6 @@ class QuizDashboardController extends _$QuizDashboardController {
       return QuizDashboardState(
         recentScores: [],
         errorMessage: 'Errore nel caricamento dei dati: $e',
-      );
-    }
-  }
-
-  Future<void> startQuiz(ExamType examType, BuildContext context) async {
-    state = state.whenData((data) => data.copyWith(errorMessage: null));
-
-    try {
-      // Naviga alla pagina del quiz come schermata separata senza bottom bar
-      await context.router.push(QuizRoute(examType: examType));
-    } catch (e) {
-      state = state.whenData(
-        (data) => data.copyWith(
-          errorMessage: "Errore durante l'avvio del quiz: $e",
-        ),
       );
     }
   }

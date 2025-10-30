@@ -1,5 +1,5 @@
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model/quiz_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result/quiz_question_result.dart';
 
 class QuizQuestionResultMapper {
   QuizQuestionResult fromModel(QuizQuestionResultModel model) {
