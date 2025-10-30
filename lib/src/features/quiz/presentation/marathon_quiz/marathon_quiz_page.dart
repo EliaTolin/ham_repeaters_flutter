@@ -85,6 +85,7 @@ class MarathonQuizPage extends HookConsumerWidget {
                 child: _buildTopicCard(context, ref, topic, isSelected),
               );
             }),
+            const SizedBox(height: 100),
           ],
         ),
       ),
@@ -96,73 +97,74 @@ class MarathonQuizPage extends HookConsumerWidget {
     WidgetRef ref,
     MarathonState state,
   ) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(50),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.play_circle_filled_rounded,
-            color: Colors.white,
-            size: 32,
-          ),
-          const SizedBox(width: 12),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Inizia Maratona',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              if (state.selectedTopicDetails != null)
-                Text(
-                  '${state.selectedTopicDetails!.totalQuestions} domande',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.9),
-                      ),
-                ),
+    return GestureDetector(
+      onTap: () => state.isStarting ? null : _startMarathon(context, ref, state),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
             ],
           ),
-          const SizedBox(width: 8),
-          IconButton(
-            onPressed: state.isStarting ? null : () => _startMarathon(context, ref, state),
-            icon: state.isStarting
-                ? const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  )
-                : const Icon(
-                    Icons.rocket_launch,
-                    color: Colors.white,
-                    size: 28,
+          borderRadius: BorderRadius.circular(50),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.play_circle_filled_rounded,
+              color: Colors.white,
+              size: 32,
+            ),
+            const SizedBox(width: 12),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Inizia Maratona',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                if (state.selectedTopicDetails != null)
+                  Text(
+                    '${state.selectedTopicDetails!.totalQuestions} domande',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.9),
+                        ),
                   ),
-          ),
-        ],
+              ],
+            ),
+            const SizedBox(width: 8),
+            if (state.isStarting)
+              const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              )
+            else
+              const Icon(
+                Icons.rocket_launch,
+                color: Colors.white,
+                size: 28,
+              ),
+          ],
+        ),
       ),
     );
   }
