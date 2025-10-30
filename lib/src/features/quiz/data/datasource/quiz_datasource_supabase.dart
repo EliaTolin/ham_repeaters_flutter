@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_response_mappers.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/curated_set_preview_model/curated_set_preview_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model/quiz_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model/quiz_set_question_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
@@ -315,6 +316,25 @@ class QuizDataSourceSupabase {
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get user total accuracy: $e');
+    }
+  }
+
+  Future<List<CuratedSetPreviewModel>> getCuratedSetsNonAttemptedByUser(String userId) async {
+    try {
+      final response = await _supabase
+          .rpc('curated_set_non_attempted_by_user', params: {'p_user_id': userId});
+
+      if (response == null) {
+        return const <CuratedSetPreviewModel>[];
+      }
+
+      final data = response as List<dynamic>;
+      return data
+          .map((json) => CuratedSetPreviewModel.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+      throw Exception('Failed to get curated sets: $e');
     }
   }
 

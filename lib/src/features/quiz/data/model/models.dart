@@ -1,4 +1,5 @@
 // Quiz Data Models
+export 'curated_set_preview_model/curated_set_preview_model.dart';
 export 'question_model/question_model.dart';
 export 'quiz_set_model/quiz_set_model.dart';
 export 'quiz_set_question_model/quiz_set_question_model.dart';

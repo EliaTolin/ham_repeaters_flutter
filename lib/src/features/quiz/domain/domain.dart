@@ -1,4 +1,5 @@
 // Quiz Domain Models
+export 'curated_set_preview/curated_set_preview.dart';
 export 'exam_type.dart';
 export 'question/question.dart';
 export 'quiz_mode.dart';
