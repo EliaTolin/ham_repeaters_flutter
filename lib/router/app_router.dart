@@ -16,6 +16,7 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/quiz_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/quiz_results_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/quiz_statistics_page.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/curated_sets_archive/curated_sets_archive_page.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/presentation/splashscreen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -78,6 +79,11 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
         // Quiz answers route as a separate full-screen route
         AutoRoute(
           page: QuizAnswersRoute.page,
+          guards: [this],
+        ),
+        // Curated sets archive
+        AutoRoute(
+          page: CuratedSetsArchiveRoute.page,
           guards: [this],
         ),
       ];

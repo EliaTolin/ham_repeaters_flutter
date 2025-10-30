@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:quiz_radioamatori/src/features/profile/domain/profile/profile.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/domain.dart';
 
 part 'quiz_dashboard_state.freezed.dart';
 
@@ -8,6 +8,7 @@ part 'quiz_dashboard_state.freezed.dart';
 abstract class QuizDashboardState with _$QuizDashboardState {
   const factory QuizDashboardState({
     List<QuizSetScore>? recentScores,
+    List<CuratedSetPreview>? curatedSetsPreviews,
     @Default(0) int totalQuizzes,
     @Default(0.0) double averageAccuracy,
     Profile? profile,

@@ -1,8 +1,11 @@
+import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/profile/domain/profile/profile.dart';
 import 'package:quiz_radioamatori/src/features/profile/provider/get_profile/get_profile_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/curated_set_preview/curated_set_preview.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/state/quiz_dashboard_state/quiz_dashboard_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/controller/quiz_dashboard_state/quiz_dashboard_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores/all_quiz_scores_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/curated_set_non_attempted/curated_set_non_attempted_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,11 +17,17 @@ class QuizDashboardController extends _$QuizDashboardController {
   Future<QuizDashboardState> build() async {
     final recentScores = await ref.watch(recentQuizScoresProvider().future);
     final allScores = await ref.watch(allQuizScoresProvider.future);
+    final userId = await ref.watch(getUserIdProvider.future);
+
+    final curatedSetsPreviews = userId != null
+        ? await ref.watch(curatedSetNonAttemptedProvider(userId).future)
+        : <CuratedSetPreview>[];
     final profile = await ref.watch(getProfileProvider.future);
     return _loadDashboardData(
       recentScores: recentScores,
       allScores: allScores,
       profile: profile,
+      curatedSetsPreviews: curatedSetsPreviews,
     );
   }
 
@@ -26,6 +35,7 @@ class QuizDashboardController extends _$QuizDashboardController {
     required List<QuizSetScore> recentScores,
     required List<QuizSetScore> allScores,
     required Profile profile,
+    required List<CuratedSetPreview> curatedSetsPreviews,
   }) async {
     try {
       // Calcola le statistiche reali
@@ -39,10 +49,12 @@ class QuizDashboardController extends _$QuizDashboardController {
         totalQuizzes: totalQuizzes,
         averageAccuracy: averageAccuracy,
         profile: profile,
+        curatedSetsPreviews: curatedSetsPreviews,
       );
     } catch (e) {
       return QuizDashboardState(
         recentScores: [],
+        curatedSetsPreviews: [],
         errorMessage: 'Errore nel caricamento dei dati: $e',
       );
     }
@@ -54,10 +66,15 @@ class QuizDashboardController extends _$QuizDashboardController {
       final recentScores = await ref.read(recentQuizScoresProvider().future);
       final allScores = await ref.read(allQuizScoresProvider.future);
       final profile = await ref.read(getProfileProvider.future);
+      final userId = await ref.read(getUserIdProvider.future);
+      final curatedSetsPreviews = userId != null
+          ? await ref.read(curatedSetNonAttemptedProvider(userId).future)
+          : <CuratedSetPreview>[];
       return _loadDashboardData(
         recentScores: recentScores,
         allScores: allScores,
         profile: profile,
+        curatedSetsPreviews: curatedSetsPreviews,
       );
     });
   }

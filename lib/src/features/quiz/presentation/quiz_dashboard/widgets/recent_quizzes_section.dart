@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_radioamatori/common/widgets/soft_icon.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
@@ -49,8 +50,7 @@ class RecentQuizzesSection extends HookConsumerWidget {
             padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
             child: Row(
               children: [
-                _softIcon(
-                  theme,
+                SoftIcon(
                   icon: Icons.trending_up_rounded,
                   bg: theme.colorScheme.primary.withValues(alpha: .1),
                   fg: theme.colorScheme.primary,
@@ -160,22 +160,6 @@ class RecentQuizzesSection extends HookConsumerWidget {
           color: color,
         ),
       ),
-    );
-  }
-
-  static Widget _softIcon(
-    ThemeData theme, {
-    required IconData icon,
-    required Color bg,
-    required Color fg,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Icon(icon, color: fg, size: 20),
     );
   }
 }

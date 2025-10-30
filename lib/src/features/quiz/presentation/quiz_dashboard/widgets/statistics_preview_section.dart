@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_radioamatori/common/widgets/soft_icon.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
@@ -74,17 +75,10 @@ class StatisticsPreviewSection extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    Icons.analytics_rounded,
-                    color: theme.colorScheme.primary,
-                    size: 28,
-                  ),
+                SoftIcon(
+                  icon: Icons.analytics_rounded,
+                  bg: theme.colorScheme.primary.withValues(alpha: 0.1),
+                  fg: theme.colorScheme.primary,
                 ),
                 const SizedBox(width: 16),
                 Expanded(

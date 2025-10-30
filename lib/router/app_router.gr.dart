@@ -43,6 +43,22 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CuratedSetsArchivePage]
+class CuratedSetsArchiveRoute extends PageRouteInfo<void> {
+  const CuratedSetsArchiveRoute({List<PageRouteInfo>? children})
+      : super(CuratedSetsArchiveRoute.name, initialChildren: children);
+
+  static const String name = 'CuratedSetsArchiveRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CuratedSetsArchivePage();
+    },
+  );
+}
+
+/// generated route for
 /// [CustomQuizBuilderPage]
 class CustomQuizBuilderRoute extends PageRouteInfo<void> {
   const CustomQuizBuilderRoute({List<PageRouteInfo>? children})

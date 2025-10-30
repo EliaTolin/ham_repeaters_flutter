@@ -162,19 +162,13 @@ class _QuizAccuracyChartState extends State<QuizAccuracyChart> with TickerProvid
             children: [
               _buildPerformanceIndicator(
                 'Eccellente',
-                '90-100%',
+                '80-100%',
                 Colors.green,
                 accuracy >= 90,
               ),
               _buildPerformanceIndicator(
-                'Buono',
-                '70-89%',
-                Colors.blue,
-                accuracy >= 70 && accuracy < 90,
-              ),
-              _buildPerformanceIndicator(
-                'Sufficiente',
-                '60-69%',
+                'Buono!',
+                '60-80%',
                 Colors.orange,
                 accuracy >= 60 && accuracy < 70,
               ),

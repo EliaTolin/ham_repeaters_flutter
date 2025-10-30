@@ -15,6 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$QuizDashboardState {
   List<QuizSetScore>? get recentScores;
+  List<CuratedSetPreview>? get curatedSetsPreviews;
   int get totalQuizzes;
   double get averageAccuracy;
   Profile? get profile;
@@ -35,6 +36,8 @@ mixin _$QuizDashboardState {
             other is QuizDashboardState &&
             const DeepCollectionEquality()
                 .equals(other.recentScores, recentScores) &&
+            const DeepCollectionEquality()
+                .equals(other.curatedSetsPreviews, curatedSetsPreviews) &&
             (identical(other.totalQuizzes, totalQuizzes) ||
                 other.totalQuizzes == totalQuizzes) &&
             (identical(other.averageAccuracy, averageAccuracy) ||
@@ -48,6 +51,7 @@ mixin _$QuizDashboardState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(recentScores),
+      const DeepCollectionEquality().hash(curatedSetsPreviews),
       totalQuizzes,
       averageAccuracy,
       profile,
@@ -55,7 +59,7 @@ mixin _$QuizDashboardState {
 
   @override
   String toString() {
-    return 'QuizDashboardState(recentScores: $recentScores, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, curatedSetsPreviews: $curatedSetsPreviews, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, errorMessage: $errorMessage)';
   }
 }
 
@@ -67,6 +71,7 @@ abstract mixin class $QuizDashboardStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<QuizSetScore>? recentScores,
+      List<CuratedSetPreview>? curatedSetsPreviews,
       int totalQuizzes,
       double averageAccuracy,
       Profile? profile,
@@ -89,6 +94,7 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? recentScores = freezed,
+    Object? curatedSetsPreviews = freezed,
     Object? totalQuizzes = null,
     Object? averageAccuracy = null,
     Object? profile = freezed,
@@ -99,6 +105,10 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
           ? _self.recentScores
           : recentScores // ignore: cast_nullable_to_non_nullable
               as List<QuizSetScore>?,
+      curatedSetsPreviews: freezed == curatedSetsPreviews
+          ? _self.curatedSetsPreviews
+          : curatedSetsPreviews // ignore: cast_nullable_to_non_nullable
+              as List<CuratedSetPreview>?,
       totalQuizzes: null == totalQuizzes
           ? _self.totalQuizzes
           : totalQuizzes // ignore: cast_nullable_to_non_nullable
@@ -226,16 +236,26 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<QuizSetScore>? recentScores, int totalQuizzes,
-            double averageAccuracy, Profile? profile, String? errorMessage)?
+    TResult Function(
+            List<QuizSetScore>? recentScores,
+            List<CuratedSetPreview>? curatedSetsPreviews,
+            int totalQuizzes,
+            double averageAccuracy,
+            Profile? profile,
+            String? errorMessage)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState() when $default != null:
-        return $default(_that.recentScores, _that.totalQuizzes,
-            _that.averageAccuracy, _that.profile, _that.errorMessage);
+        return $default(
+            _that.recentScores,
+            _that.curatedSetsPreviews,
+            _that.totalQuizzes,
+            _that.averageAccuracy,
+            _that.profile,
+            _that.errorMessage);
       case _:
         return orElse();
     }
@@ -256,15 +276,25 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<QuizSetScore>? recentScores, int totalQuizzes,
-            double averageAccuracy, Profile? profile, String? errorMessage)
+    TResult Function(
+            List<QuizSetScore>? recentScores,
+            List<CuratedSetPreview>? curatedSetsPreviews,
+            int totalQuizzes,
+            double averageAccuracy,
+            Profile? profile,
+            String? errorMessage)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState():
-        return $default(_that.recentScores, _that.totalQuizzes,
-            _that.averageAccuracy, _that.profile, _that.errorMessage);
+        return $default(
+            _that.recentScores,
+            _that.curatedSetsPreviews,
+            _that.totalQuizzes,
+            _that.averageAccuracy,
+            _that.profile,
+            _that.errorMessage);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -284,15 +314,25 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<QuizSetScore>? recentScores, int totalQuizzes,
-            double averageAccuracy, Profile? profile, String? errorMessage)?
+    TResult? Function(
+            List<QuizSetScore>? recentScores,
+            List<CuratedSetPreview>? curatedSetsPreviews,
+            int totalQuizzes,
+            double averageAccuracy,
+            Profile? profile,
+            String? errorMessage)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _QuizDashboardState() when $default != null:
-        return $default(_that.recentScores, _that.totalQuizzes,
-            _that.averageAccuracy, _that.profile, _that.errorMessage);
+        return $default(
+            _that.recentScores,
+            _that.curatedSetsPreviews,
+            _that.totalQuizzes,
+            _that.averageAccuracy,
+            _that.profile,
+            _that.errorMessage);
       case _:
         return null;
     }
@@ -304,11 +344,13 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
 class _QuizDashboardState implements QuizDashboardState {
   const _QuizDashboardState(
       {final List<QuizSetScore>? recentScores,
+      final List<CuratedSetPreview>? curatedSetsPreviews,
       this.totalQuizzes = 0,
       this.averageAccuracy = 0.0,
       this.profile,
       this.errorMessage})
-      : _recentScores = recentScores;
+      : _recentScores = recentScores,
+        _curatedSetsPreviews = curatedSetsPreviews;
 
   final List<QuizSetScore>? _recentScores;
   @override
@@ -316,6 +358,17 @@ class _QuizDashboardState implements QuizDashboardState {
     final value = _recentScores;
     if (value == null) return null;
     if (_recentScores is EqualUnmodifiableListView) return _recentScores;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<CuratedSetPreview>? _curatedSetsPreviews;
+  @override
+  List<CuratedSetPreview>? get curatedSetsPreviews {
+    final value = _curatedSetsPreviews;
+    if (value == null) return null;
+    if (_curatedSetsPreviews is EqualUnmodifiableListView)
+      return _curatedSetsPreviews;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -346,6 +399,8 @@ class _QuizDashboardState implements QuizDashboardState {
             other is _QuizDashboardState &&
             const DeepCollectionEquality()
                 .equals(other._recentScores, _recentScores) &&
+            const DeepCollectionEquality()
+                .equals(other._curatedSetsPreviews, _curatedSetsPreviews) &&
             (identical(other.totalQuizzes, totalQuizzes) ||
                 other.totalQuizzes == totalQuizzes) &&
             (identical(other.averageAccuracy, averageAccuracy) ||
@@ -359,6 +414,7 @@ class _QuizDashboardState implements QuizDashboardState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_recentScores),
+      const DeepCollectionEquality().hash(_curatedSetsPreviews),
       totalQuizzes,
       averageAccuracy,
       profile,
@@ -366,7 +422,7 @@ class _QuizDashboardState implements QuizDashboardState {
 
   @override
   String toString() {
-    return 'QuizDashboardState(recentScores: $recentScores, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, curatedSetsPreviews: $curatedSetsPreviews, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, errorMessage: $errorMessage)';
   }
 }
 
@@ -380,6 +436,7 @@ abstract mixin class _$QuizDashboardStateCopyWith<$Res>
   @useResult
   $Res call(
       {List<QuizSetScore>? recentScores,
+      List<CuratedSetPreview>? curatedSetsPreviews,
       int totalQuizzes,
       double averageAccuracy,
       Profile? profile,
@@ -403,6 +460,7 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? recentScores = freezed,
+    Object? curatedSetsPreviews = freezed,
     Object? totalQuizzes = null,
     Object? averageAccuracy = null,
     Object? profile = freezed,
@@ -413,6 +471,10 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
           ? _self._recentScores
           : recentScores // ignore: cast_nullable_to_non_nullable
               as List<QuizSetScore>?,
+      curatedSetsPreviews: freezed == curatedSetsPreviews
+          ? _self._curatedSetsPreviews
+          : curatedSetsPreviews // ignore: cast_nullable_to_non_nullable
+              as List<CuratedSetPreview>?,
       totalQuizzes: null == totalQuizzes
           ? _self.totalQuizzes
           : totalQuizzes // ignore: cast_nullable_to_non_nullable
