@@ -77,13 +77,13 @@ class QuizProgressWidget extends StatelessWidget {
                   Icon(
                     Icons.help_outline,
                     size: 16,
-                    color: Theme.of(context).colorScheme.outline,
+                    color: Theme.of(context).colorScheme.error,
                   ),
                   const SizedBox(width: 4),
                   Text(
                     'Rimaste: ${totalQuestions - answeredQuestions}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.outline,
+                          color: Theme.of(context).colorScheme.error,
                           fontWeight: FontWeight.w500,
                         ),
                   ),

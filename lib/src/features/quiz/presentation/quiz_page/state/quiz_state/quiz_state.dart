@@ -33,7 +33,7 @@ abstract class QuizState with _$QuizState {
 
   String? get currentAnswer => answers[currentQuestion.id];
 
-  bool get canGoNext => !isLastQuestion;
+  bool get canGoNext => !isLastQuestion && currentAnswer != null;
 
   bool get canGoPrevious => !isFirstQuestion;
 
