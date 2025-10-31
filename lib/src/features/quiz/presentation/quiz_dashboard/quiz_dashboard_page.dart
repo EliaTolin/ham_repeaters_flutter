@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/common/widgets/loading/circular_loading_widget.dart';
-import 'package:quiz_radioamatori/resources/resources.dart';
+import 'package:quiz_radioamatori/common/widgets/logo_icon.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/controller/quiz_dashboard_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/curated_sets_section.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/quick_actions_section.dart';
@@ -45,18 +45,7 @@ class QuizDashboardPage extends HookConsumerWidget {
                       children: [
                         Row(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: const Image(
-                                image: AssetImage(ImageAssets.icon),
-                                width: 64,
-                                height: 64,
-                              ),
-                            ),
+                            const LogoIcon(),
                             const SizedBox(width: 16),
                             Expanded(
                               child: Column(
@@ -184,49 +173,6 @@ class QuizDashboardPage extends HookConsumerWidget {
             },
             icon: const Icon(Icons.refresh),
             label: const Text('Riprova'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  static Widget _buildNoCuratedSetsInfo(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.colorScheme.outlineVariant.withValues(alpha: .4)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.secondary.withValues(alpha: .10),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(Icons.inbox_outlined, color: theme.colorScheme.secondary),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Nessun nuovo esercizio dalla redazione',
-                  style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  'Ti avviseremo quando saranno disponibili nuovi set curati.',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
-            ),
           ),
         ],
       ),

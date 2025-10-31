@@ -6,9 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/utils/deep_link_utils.dart';
+import 'package:quiz_radioamatori/common/widgets/logo_icon.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_success_snackbar.dart';
-import 'package:quiz_radioamatori/resources/resources.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/widgets/sign_in_buttons.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
@@ -52,13 +52,9 @@ Future<void> showSignUpDialog(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const SizedBox(width: 40),
-                            Expanded(
+                            const Expanded(
                               child: Center(
-                                child: Image.asset(
-                                  ImageAssets.icon,
-                                  width: 80,
-                                  height: 80,
-                                ),
+                                child: LogoIcon(size: 80),
                               ),
                             ),
                             IconButton(

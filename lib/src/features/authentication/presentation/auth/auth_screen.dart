@@ -6,9 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:quiz_radioamatori/common/extension/hard_coded_string.dart';
 import 'package:quiz_radioamatori/common/utils/deep_link_utils.dart';
+import 'package:quiz_radioamatori/common/widgets/logo_icon.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_error_snackbar.dart';
 import 'package:quiz_radioamatori/common/widgets/snackbars/show_success_snackbar.dart';
-import 'package:quiz_radioamatori/resources/resources.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/widgets/sign_in_buttons.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
@@ -36,18 +36,7 @@ class AuthScreen extends ConsumerWidget {
               spacing: 8,
               children: [
                 // Logo e Titolo - migliorato
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                    ImageAssets.icon,
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
+                const LogoIcon(size: 100),
                 const Gap(16),
                 Text(
                   'Quiz Radioamatori'.hardcoded,

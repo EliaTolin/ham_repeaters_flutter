@@ -3,9 +3,7 @@ part of 'resources.dart';
 class ImageAssets {
   ImageAssets._();
 
-  static const String quiz_radioamatori = 'assets/images/quiz_radioamatori.jpg';
-  static const String battery = 'assets/images/battery.jpg';
-  static const String misurations = 'assets/images/misurations.jpg';
-  static const String share = 'assets/images/share.jpg';
   static const String icon = 'assets/icon/icon.png';
+  static const String whiteBgIcon = 'assets/icon/icon_white_bg.png';
+  static const String noBgIcon = 'assets/icon/icon_no_bg.png';
 }
