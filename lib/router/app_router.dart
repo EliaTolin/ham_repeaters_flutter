@@ -9,6 +9,7 @@ import 'package:quiz_radioamatori/src/features/profile/presentation/profile/prof
 import 'package:quiz_radioamatori/src/features/profile/presentation/user_settings/user_settings_screen.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request/topic_request.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/curated_sets_archive/curated_sets_archive_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/custom_quiz_builder/custom_quiz_builder_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/marathon_quiz/marathon_quiz_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_answers/quiz_answers_page.dart';
@@ -16,7 +17,6 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/quiz_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/quiz_results_page.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/statistics/quiz_statistics_page.dart';
-import 'package:quiz_radioamatori/src/features/quiz/presentation/curated_sets_archive/curated_sets_archive_page.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/presentation/splashscreen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

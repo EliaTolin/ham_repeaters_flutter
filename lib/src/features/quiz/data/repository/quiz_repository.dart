@@ -1,4 +1,5 @@
 import 'package:quiz_radioamatori/src/features/quiz/data/datasource/quiz_datasource_supabase.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/mappers/curated_set_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/curated_set_preview_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_question_result_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_score_mappers.dart';
@@ -8,6 +9,7 @@ import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_with_stat
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/total_accuracy_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model/quiz_set_question_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/curated_set/curated_set.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/curated_set_preview/curated_set_preview.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result/quiz_question_result.dart';
@@ -27,6 +29,7 @@ class QuizRepository {
   final QuizDataSourceSupabase _dataSource;
   final QuizSetScoreMapper _scoreMapper = QuizSetScoreMapper();
   final CuratedSetPreviewMapper _curatedSetPreviewMapper = CuratedSetPreviewMapper();
+  final CuratedSetMapper _curatedSetMapper = CuratedSetMapper();
   final TopicMapper _topicMapper = TopicMapper();
   final TopicWithStatsMapper _topicWithStatsMapper = TopicWithStatsMapper();
   final TopicAccuracyMapper _topicAccuracyMapper = TopicAccuracyMapper();
@@ -57,6 +60,11 @@ class QuizRepository {
   Future<List<CuratedSetPreview>> getCuratedSetsNonAttemptedByUser(String userId) async {
     final models = await _dataSource.getCuratedSetsNonAttemptedByUser(userId);
     return models.map(_curatedSetPreviewMapper.fromModel).toList();
+  }
+
+  Future<List<CuratedSet>> getPublishedCuratedSets() async {
+    final models = await _dataSource.getPublishedCuratedSets();
+    return models.map(_curatedSetMapper.fromModel).toList();
   }
 
   Future<QuizSetScore?> getQuizResults(String setId) async {

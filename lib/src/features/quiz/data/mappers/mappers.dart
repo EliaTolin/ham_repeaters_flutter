@@ -1,4 +1,5 @@
 // Quiz Mappers
+export 'curated_set_mappers.dart';
 export 'curated_set_preview_mappers.dart';
 export 'question_mappers.dart';
 export 'quiz_set_mappers.dart';

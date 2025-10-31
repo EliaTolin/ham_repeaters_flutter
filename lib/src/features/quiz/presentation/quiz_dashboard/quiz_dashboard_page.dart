@@ -102,6 +102,20 @@ class QuizDashboardPage extends HookConsumerWidget {
                 // Quick actions section
                 const QuickActionsSection(),
                 const SizedBox(height: 24),
+                // Curated sets section (or empty info)
+                dashboardAsync.when(
+                  data: (state) {
+                    final items = state.curatedSetsPreviews ?? const [];
+                    if (items.isEmpty) {
+                      return _buildNoCuratedSetsInfo(context);
+                    }
+                    return CuratedSetsSection(curatedSets: items);
+                  },
+                  loading: () => const SizedBox.shrink(),
+                  error: (error, stack) => _buildErrorSection(context, error, ref),
+                ),
+
+                const SizedBox(height: 32),
                 // Statistics preview section
                 dashboardAsync.when(
                   data: (state) => StatisticsPreviewSection(
@@ -117,21 +131,6 @@ class QuizDashboardPage extends HookConsumerWidget {
                 dashboardAsync.when(
                   data: (state) => RecentQuizzesSection(scores: state.recentScores ?? []),
                   loading: _buildLoadingSection,
-                  error: (error, stack) => _buildErrorSection(context, error, ref),
-                ),
-
-                const SizedBox(height: 32),
-
-                // Curated sets section (or empty info)
-                dashboardAsync.when(
-                  data: (state) {
-                    final items = state.curatedSetsPreviews ?? const [];
-                    if (items.isEmpty) {
-                      return _buildNoCuratedSetsInfo(context);
-                    }
-                    return CuratedSetsSection(curatedSets: items);
-                  },
-                  loading: () => const SizedBox.shrink(),
                   error: (error, stack) => _buildErrorSection(context, error, ref),
                 ),
 

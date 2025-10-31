@@ -38,11 +38,16 @@ class QuizNavigationWidget extends StatelessWidget {
         child: Row(
           children: [
             // Previous button
-            Expanded(
+            SizedBox(
+              width: 120,
               child: OutlinedButton.icon(
                 onPressed: canGoPrevious ? onPrevious : null,
                 icon: const Icon(Icons.arrow_back_ios),
-                label: const Text('Precedente'),
+                label: const Text(
+                  'Precedente',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
@@ -67,7 +72,11 @@ class QuizNavigationWidget extends StatelessWidget {
                               ),
                             )
                           : const Icon(Icons.check),
-                      label: Text(isSubmitting ? 'Consegna...' : 'Consegna Quiz'),
+                      label: Text(
+                        isSubmitting ? 'Consegna...' : 'Consegna Quiz',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         backgroundColor: Theme.of(context).colorScheme.primary,

@@ -4,9 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/common/widgets/loading/circular_loading_widget.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/curated_set_preview/curated_set_preview.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/curated_sets_archive/controller/curated_sets_archive_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/curated_sets_archive/controller/curated_sets_archive_state/curated_sets_archive_state.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/curated_sets_archive/widgets/curated_set_card.dart';
 
 @RoutePage()
 class CuratedSetsArchivePage extends ConsumerWidget {
@@ -44,7 +44,7 @@ class _Content extends ConsumerWidget {
         if ((state.errorMessage ?? '').isNotEmpty) {
           return Center(child: Text(state.errorMessage!));
         }
-        return _List(items: state.items);
+        return _List(items: state.items, ref: ref);
       },
       loading: () => const Center(child: CircularLoadingWidget()),
       error: (e, st) => Center(child: Text('Errore: $e')),
@@ -52,12 +52,13 @@ class _Content extends ConsumerWidget {
   }
 }
 
-class _List extends StatelessWidget {
-  const _List({required this.items});
-  final List<CuratedSetPreview> items;
+class _List extends ConsumerWidget {
+  const _List({required this.items, required this.ref});
+  final List<CuratedSetArchiveItem> items;
+  final WidgetRef ref;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     if (items.isEmpty) {
       return Center(
@@ -87,74 +88,29 @@ class _List extends StatelessWidget {
       itemCount: items.length,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
-        final it = items[index];
-        return Container(
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: theme.colorScheme.outlineVariant.withValues(alpha: .4)),
-            boxShadow: [
-              BoxShadow(
-                color: theme.colorScheme.shadow.withValues(alpha: .04),
-                blurRadius: 14,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: ListTile(
-            leading: Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    theme.colorScheme.secondaryContainer,
-                    theme.colorScheme.primaryContainer,
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(Icons.auto_awesome, color: theme.colorScheme.secondary),
-            ),
-            title: Text(it.title, maxLines: 1, overflow: TextOverflow.ellipsis),
-            subtitle: Text(
-              it.description?.trim().isNotEmpty ?? false
-                  ? it.description!.trim()
-                  : 'Domande: ${it.questionsCount}',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.secondary.withValues(alpha: .10),
-                    borderRadius: BorderRadius.circular(999),
-                    border: Border.all(color: theme.colorScheme.secondary.withValues(alpha: .25)),
-                  ),
-                  child: Text(
-                    '${it.questionsCount} Q',
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: theme.colorScheme.secondary,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 18,
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ],
-            ),
-            onTap: () {},
-          ),
+        final item = items[index];
+        return CuratedSetCard(
+          item: item,
+          onTap: () => _startCuratedSetQuiz(context, ref, item),
         );
       },
     );
+  }
+
+  Future<void> _startCuratedSetQuiz(
+    BuildContext context,
+    WidgetRef ref,
+    CuratedSetArchiveItem item,
+  ) async {
+    final curatedSet = item.curatedSet;
+
+    // Verifica se l'utente è anonimo
+    if (await ref.read(isAnonymousProvider.future)) {
+      if (context.mounted) {
+        await showSignUpDialog(context);
+      }
+      return;
+    }
   }
 }
 

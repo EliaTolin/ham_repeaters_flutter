@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_response_mappers.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/model/curated_set_model/curated_set_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/curated_set_preview_model/curated_set_preview_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model/quiz_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model/quiz_set_question_model.dart';
@@ -335,6 +336,24 @@ class QuizDataSourceSupabase {
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get curated sets: $e');
+    }
+  }
+
+  Future<List<CuratedSetModel>> getPublishedCuratedSets() async {
+    try {
+      final response = await _supabase
+          .from('curated_set')
+          .select()
+          .eq('is_published', true)
+          .order('created_at', ascending: false);
+
+      final data = response as List<dynamic>;
+      return data
+          .map((json) => CuratedSetModel.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+      throw Exception('Failed to get published curated sets: $e');
     }
   }
 

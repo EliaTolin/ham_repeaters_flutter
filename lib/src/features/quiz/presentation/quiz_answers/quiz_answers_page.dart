@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/topic/topic.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_topics/get_topics_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers/quiz_answers_provider.dart';
 
 @RoutePage()
@@ -12,6 +14,7 @@ class QuizAnswersPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final answersAsync = ref.watch(quizAnswersProvider(setId));
+    final topicsAsync = ref.watch(getTopicsProvider);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -33,108 +36,40 @@ class QuizAnswersPage extends HookConsumerWidget {
       body: answersAsync.when(
         data: (answers) {
           if (answers.isEmpty) {
-            return const Center(
-              child: Text('Nessuna risposta trovata'),
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.inbox_outlined,
+                    size: 64,
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Nessuna risposta trovata',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                  ),
+                ],
+              ),
             );
           }
 
-          // final correctCount = answers.where((a) => a.isCorrect).length;
-          // final totalCount = answers.length;
-          // final accuracy = (correctCount / totalCount * 100).round();
-
-          return Column(
-            children: [
-              // // Summary Card
-              // Container(
-              //   margin: const EdgeInsets.all(16),
-              //   padding: const EdgeInsets.all(20),
-              //   decoration: BoxDecoration(
-              //     gradient: LinearGradient(
-              //       colors: [
-              //         Theme.of(context).colorScheme.primaryContainer,
-              //         Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.7),
-              //       ],
-              //       begin: Alignment.topLeft,
-              //       end: Alignment.bottomRight,
-              //     ),
-              //     borderRadius: BorderRadius.circular(20),
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: Colors.black.withValues(alpha: 0.1),
-              //         blurRadius: 10,
-              //         offset: const Offset(0, 4),
-              //       ),
-              //     ],
-              //   ),
-              //   child: Column(
-              //     children: [
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //         children: [
-              //           _buildStatItem(
-              //             context,
-              //             'Corrette',
-              //             correctCount.toString(),
-              //             Colors.green,
-              //             Icons.check_circle,
-              //           ),
-              //           _buildStatItem(
-              //             context,
-              //             'Sbagliate',
-              //             (totalCount - correctCount).toString(),
-              //             Colors.red,
-              //             Icons.cancel,
-              //           ),
-              //           _buildStatItem(
-              //             context,
-              //             'Precisione',
-              //             '$accuracy%',
-              //             Theme.of(context).colorScheme.primary,
-              //             Icons.percent,
-              //           ),
-              //         ],
-              //       ),
-              //       const SizedBox(height: 16),
-              //       Text(
-              //         'Risultato del Quiz',
-              //         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              //               fontWeight: FontWeight.w600,
-              //               color: Theme.of(context).colorScheme.onPrimaryContainer,
-              //             ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-
-              // Answers List
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: answers.length,
-                  itemBuilder: (context, index) {
-                    final answer = answers[index];
-                    return _buildAnswerItem(context, answer, index + 1);
-                  },
-                ),
-              ),
-            ],
+          return topicsAsync.when(
+            data: (topics) => _AnswersList(
+              answers: answers,
+              topics: topics,
+            ),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (_, __) => _AnswersList(
+              answers: answers,
+              topics: const [],
+            ),
           );
         },
-        loading: () => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 16),
-              Text(
-                'Caricamento risposte...',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-                    ),
-              ),
-            ],
-          ),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -146,7 +81,7 @@ class QuizAnswersPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Errore nel caricamento delle risposte',
+                'Errore nel caricamento',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 8),
@@ -163,200 +98,304 @@ class QuizAnswersPage extends HookConsumerWidget {
       ),
     );
   }
+}
 
-  Widget _buildAnswerItem(
-    BuildContext context,
-    QuizSetQuestionResultModel answer,
-    int questionNumber,
-  ) {
+class _AnswersList extends StatefulWidget {
+  const _AnswersList({
+    required this.answers,
+    required this.topics,
+  });
+
+  final List<QuizSetQuestionResultModel> answers;
+  final List<Topic> topics;
+
+  @override
+  State<_AnswersList> createState() => _AnswersListState();
+}
+
+class _AnswersListState extends State<_AnswersList> {
+  bool _showIncorrectFirst = true;
+
+  List<QuizSetQuestionResultModel> get _sortedAnswers {
+    final sorted = List<QuizSetQuestionResultModel>.from(widget.answers)
+      ..sort((a, b) {
+        if (_showIncorrectFirst) {
+          // Prima sbagliate, poi corrette
+          if (a.isCorrect && !b.isCorrect) return 1;
+          if (!a.isCorrect && b.isCorrect) return -1;
+        } else {
+          // Prima corrette, poi sbagliate
+          if (a.isCorrect && !b.isCorrect) return -1;
+          if (!a.isCorrect && b.isCorrect) return 1;
+        }
+        return 0;
+      });
+    return sorted;
+  }
+
+  String _getTopicLabel(String topicName) {
+    try {
+      final topic = widget.topics.firstWhere((t) => t.name == topicName);
+      return topic.label;
+    } catch (e) {
+      return topicName;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final sortedAnswers = _sortedAnswers;
+
+    return Column(
+      children: [
+        // Filter and stats bar
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+            border: Border(
+              bottom: BorderSide(
+                color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
+              ),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Ordina per:',
+                style: theme.textTheme.bodyMedium,
+              ),
+              SegmentedButton<bool>(
+                segments: const [
+                  ButtonSegment<bool>(
+                    value: true,
+                    label: Text('Sbagliate'),
+                    icon: Icon(Icons.priority_high, size: 16),
+                  ),
+                  ButtonSegment<bool>(
+                    value: false,
+                    label: Text('Corrette'),
+                    icon: Icon(Icons.check_circle_outline, size: 16),
+                  ),
+                ],
+                selected: {_showIncorrectFirst},
+                onSelectionChanged: (Set<bool> selected) {
+                  setState(() {
+                    _showIncorrectFirst = selected.first;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+
+        // Answers List
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: sortedAnswers.length,
+            itemBuilder: (context, index) {
+              final answer = sortedAnswers[index];
+              return _AnswerCard(
+                answer: answer,
+                questionNumber: index + 1,
+                topicLabel: _getTopicLabel(answer.topicName),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AnswerCard extends StatelessWidget {
+  const _AnswerCard({
+    required this.answer,
+    required this.questionNumber,
+    required this.topicLabel,
+  });
+
+  final QuizSetQuestionResultModel answer;
+  final int questionNumber;
+  final String topicLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isCorrect = answer.isCorrect;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: answer.isCorrect ? Colors.green.shade50 : Colors.red.shade50,
-        borderRadius: BorderRadius.circular(16),
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: answer.isCorrect ? Colors.green.shade200 : Colors.red.shade200,
+          color: isCorrect
+              ? theme.colorScheme.primary.withValues(alpha: 0.2)
+              : theme.colorScheme.error.withValues(alpha: 0.2),
+          width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: (answer.isCorrect ? Colors.green : Colors.red).withValues(alpha: 0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            color: (isCorrect ? theme.colorScheme.primary : theme.colorScheme.error)
+                .withValues(alpha: 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Question Header
+          // Header
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: answer.isCorrect ? Colors.green.shade100 : Colors.red.shade100,
+              gradient: LinearGradient(
+                colors: isCorrect
+                    ? [
+                        theme.colorScheme.primaryContainer.withValues(alpha: 0.6),
+                        theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+                      ]
+                    : [
+                        theme.colorScheme.errorContainer.withValues(alpha: 0.6),
+                        theme.colorScheme.errorContainer.withValues(alpha: 0.3),
+                      ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
               ),
             ),
             child: Row(
               children: [
+                // Status badge
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: answer.isCorrect ? Colors.green : Colors.red,
-                    borderRadius: BorderRadius.circular(20),
+                    color: isCorrect ? theme.colorScheme.primary : theme.colorScheme.error,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: (isCorrect ? theme.colorScheme.primary : theme.colorScheme.error)
+                            .withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
-                  child: Text(
-                    'Domanda $questionNumber',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        isCorrect ? Icons.check_circle : Icons.cancel,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Domanda $questionNumber',
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const Spacer(),
-                Icon(
-                  answer.isCorrect ? Icons.check_circle : Icons.cancel,
-                  color: answer.isCorrect ? Colors.green : Colors.red,
-                  size: 24,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  answer.isCorrect ? 'Corretta' : 'Sbagliata',
-                  style: TextStyle(
-                    color: answer.isCorrect ? Colors.green : Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                // Status text
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: isCorrect
+                        ? theme.colorScheme.primary.withValues(alpha: 0.15)
+                        : theme.colorScheme.error.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    isCorrect ? 'Corretta' : 'Sbagliata',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: isCorrect ? theme.colorScheme.primary : theme.colorScheme.error,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
 
-          // Answer Content
+          // Content
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Topic and Exam Info
-                Row(
-                  children: [
-                    Icon(
-                      Icons.topic,
-                      size: 16,
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                // Topic badge
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: theme.colorScheme.primary.withValues(alpha: 0.3),
                     ),
-                    const SizedBox(width: 4),
-                    Text(
-                      answer.topicName,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
+                  ),
+                  child: Text(
+                    topicLabel,
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w600,
                     ),
-                    const SizedBox(width: 16),
-                    Icon(
-                      Icons.quiz,
-                      size: 16,
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      answer.exam,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ],
+                  ),
                 ),
                 const SizedBox(height: 16),
 
-                // Question Text (if available)
+                // Question text
                 if (answer.questionText != null && answer.questionText!.isNotEmpty) ...[
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .surfaceContainerHighest
-                          .withValues(alpha: 0.5),
+                      color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+                        color: theme.colorScheme.outline.withValues(alpha: 0.15),
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Domanda:',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color:
-                                    Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
-                              ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          answer.questionText!,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ],
+                    child: Text(
+                      answer.questionText!,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        height: 1.5,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
                 ],
 
-                // Your Answer
-                _buildAnswerTile(
-                  context,
-                  'La tua risposta',
-                  answer.chosenAnswer ?? 'Non risposta',
-                  answer.isCorrect ? Colors.green : Colors.red,
-                  answer.isCorrect ? Icons.check : Icons.close,
+                // Your answer
+                _AnswerTile(
+                  label: 'La tua risposta',
+                  value: answer.chosenAnswer ?? 'Non risposta',
+                  isCorrect: isCorrect,
                 ),
 
-                // Correct Answer (only if wrong)
-                if (!answer.isCorrect) ...[
+                // Correct answer (only if wrong)
+                if (!isCorrect) ...[
                   const SizedBox(height: 12),
-                  _buildAnswerTile(
-                    context,
-                    'Risposta corretta',
-                    answer.correctAnswer ?? 'N/A',
-                    Colors.blue,
-                    Icons.lightbulb,
+                  _AnswerTile(
+                    label: 'Risposta corretta',
+                    value: answer.correctAnswer ?? 'N/A',
+                    isCorrect: true,
+                    isCorrectAnswer: true,
                   ),
                 ],
-
-                const SizedBox(height: 16),
-
-                // Time and Date
-                Row(
-                  children: [
-                    Icon(
-                      Icons.timer,
-                      size: 16,
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Tempo: ${(answer.timeMs / 1000).toStringAsFixed(1)}s',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-                          ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      _formatDate(answer.answeredAt),
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-                          ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
@@ -364,26 +403,56 @@ class QuizAnswersPage extends HookConsumerWidget {
       ),
     );
   }
+}
 
-  Widget _buildAnswerTile(
-    BuildContext context,
-    String label,
-    String value,
-    Color color,
-    IconData icon,
-  ) {
+class _AnswerTile extends StatelessWidget {
+  const _AnswerTile({
+    required this.label,
+    required this.value,
+    required this.isCorrect,
+    this.isCorrectAnswer = false,
+  });
+
+  final String label;
+  final String value;
+  final bool isCorrect;
+  final bool isCorrectAnswer;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = isCorrectAnswer
+        ? theme.colorScheme.primary
+        : isCorrect
+            ? theme.colorScheme.primary
+            : theme.colorScheme.error;
+
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withValues(alpha: 0.3),
+          color: color.withValues(alpha: 0.2),
+          width: 1.5,
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 20),
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              isCorrectAnswer || isCorrect ? Icons.check_circle : Icons.cancel,
+              color: color,
+              size: 20,
+            ),
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -391,18 +460,18 @@ class QuizAnswersPage extends HookConsumerWidget {
               children: [
                 Text(
                   label,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: color,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   value,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: color,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ],
             ),
@@ -410,14 +479,5 @@ class QuizAnswersPage extends HookConsumerWidget {
         ],
       ),
     );
-  }
-
-  String _formatDate(String dateString) {
-    try {
-      final date = DateTime.parse(dateString);
-      return '${date.day}/${date.month}/${date.year} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
-    } catch (e) {
-      return dateString;
-    }
   }
 }
