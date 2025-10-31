@@ -185,8 +185,9 @@ class CuratedSetsSection extends HookConsumerWidget {
       if (context.mounted) await showSignUpDialog(context);
       return;
     }
-    // For now we can direct users to start a quiz using this curated set ID when available.
-    // If a dedicated page exists later, wire it here.
+    if (context.mounted) {
+      await context.router.push(QuizRoute(curatedSetId: item.id));
+    }
   }
 }
 
@@ -243,7 +244,7 @@ class _CuratedCard extends StatelessWidget {
                   children: [
                     Text(
                       item.title,
-                      maxLines: 1,
+                      maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
@@ -254,7 +255,7 @@ class _CuratedCard extends StatelessWidget {
                       item.description?.trim().isNotEmpty ?? false
                           ? item.description!.trim()
                           : 'Domande: ${item.questionsCount}',
-                      maxLines: 2,
+                      maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
@@ -268,7 +269,7 @@ class _CuratedCard extends StatelessWidget {
               _Chip(
                 theme: theme,
                 text: '${item.questionsCount} Q',
-                color: theme.colorScheme.secondary,
+                color: theme.colorScheme.primary,
               ),
               Icon(
                 Icons.arrow_forward_ios_rounded,
@@ -320,27 +321,18 @@ class _EmptyState extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 28, 16, 28),
       child: Column(
         children: [
-          Container(
-            width: 54,
-            height: 54,
-            decoration: BoxDecoration(
-              color: theme.colorScheme.secondary.withValues(alpha: .10),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Icon(
-              Icons.inbox_outlined,
-              color: theme.colorScheme.secondary.withValues(alpha: .60),
-              size: 28,
-            ),
+          SoftIcon(
+            icon: Icons.inbox_outlined,
+            bg: theme.colorScheme.primary.withValues(alpha: .10),
+            fg: theme.colorScheme.primary,
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 12),
           Text(
-            'Nessun nuovo esercizio',
+            'Nessun nuovo esercizio!',
             style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 6),
           Text(
-            'La redazione non ha pubblicato nuovi set curati.',
+            "La redazione non ha pubblicato nuovi set d'esercizi selezionati.",
             textAlign: TextAlign.center,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,

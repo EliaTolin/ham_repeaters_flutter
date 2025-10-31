@@ -17,5 +17,6 @@ abstract class QuizSetScore with _$QuizSetScore {
     required double accuracyPct,
     ExamType? exam,
     List<String>? customTopics,
+    DateTime? startedAt,
   }) = _QuizSetScore;
 }

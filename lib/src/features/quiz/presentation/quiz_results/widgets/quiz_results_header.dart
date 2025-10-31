@@ -6,12 +6,13 @@ class QuizResultsHeader extends StatefulWidget {
   const QuizResultsHeader({
     required this.score,
     this.onBackPressed,
+    this.onDeletePressed,
     super.key,
   });
 
   final QuizSetScore score;
   final VoidCallback? onBackPressed;
-
+  final VoidCallback? onDeletePressed;
   @override
   State<QuizResultsHeader> createState() => _QuizResultsHeaderState();
 }
@@ -119,6 +120,15 @@ class _QuizResultsHeaderState extends State<QuizResultsHeader> with TickerProvid
                   ),
                 ),
               ),
+              if (widget.onDeletePressed != null)
+                IconButton(
+                  onPressed: widget.onDeletePressed,
+                  icon: const Icon(Icons.delete),
+                  style: IconButton.styleFrom(
+                    backgroundColor: theme.colorScheme.error,
+                    foregroundColor: theme.colorScheme.onError,
+                  ),
+                ),
             ],
           ),
 

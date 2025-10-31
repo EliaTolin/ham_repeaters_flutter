@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:quiz_radioamatori/common/widgets/soft_icon.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
@@ -211,6 +212,7 @@ class _ClickableQuizCard extends StatelessWidget {
                         theme: theme,
                         title: 'Quiz ${examType.toUpperCase()}',
                         subtitle: 'Corrette ${score.correct}/${score.total}',
+                        startedAt: score.startedAt,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -308,10 +310,16 @@ class _ClickableQuizCard extends StatelessWidget {
 
 // Titolo/sottotitolo con gestione sicura degli spazi
 class _TitleSubtitle extends StatelessWidget {
-  const _TitleSubtitle({required this.theme, required this.title, required this.subtitle});
+  const _TitleSubtitle({
+    required this.theme,
+    required this.title,
+    required this.subtitle,
+    required this.startedAt,
+  });
   final ThemeData theme;
   final String title;
   final String subtitle;
+  final DateTime? startedAt;
 
   @override
   Widget build(BuildContext context) {
@@ -337,6 +345,13 @@ class _TitleSubtitle extends StatelessWidget {
             height: 1.1,
           ),
         ),
+        if (startedAt != null)
+          Text(
+            DateFormat('dd/MM/yyyy HH:mm').format(startedAt!),
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
       ],
     );
   }

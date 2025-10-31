@@ -57,8 +57,6 @@ class CuratedSetCard extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                               color: theme.colorScheme.onSurface,
                             ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -121,8 +119,6 @@ class CuratedSetCard extends StatelessWidget {
                       color: theme.colorScheme.onSurfaceVariant,
                       height: 1.4,
                     ),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
                 // Argomenti se disponibili

@@ -142,8 +142,8 @@ class QuizRepository {
     return _dataSource.getAnswers(setId);
   }
 
-  Future<void> deleteQuizAnswers(String setId) async {
-    return _dataSource.deleteQuizAnswers(setId);
+  Future<void> deleteQuizSet(String setId) async {
+    return _dataSource.deleteQuizSet(setId);
   }
 
   // Get quiz answers with results
@@ -182,6 +182,10 @@ class QuizRepository {
 
   Future<void> deleteAllQuizSet(String userId) async {
     return _dataSource.deleteAllQuizSet(userId);
+  }
+
+  Future<QuizSetResponse> getQuizFromCuratedSet(String userId, String curatedSetId) async {
+    return _dataSource.getQuizFromCuratedSet(userId, curatedSetId);
   }
 }
 

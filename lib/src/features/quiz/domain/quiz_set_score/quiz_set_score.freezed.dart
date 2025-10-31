@@ -24,6 +24,7 @@ mixin _$QuizSetScore {
   double get accuracyPct;
   ExamType? get exam;
   List<String>? get customTopics;
+  DateTime? get startedAt;
 
   /// Create a copy of QuizSetScore
   /// with the given fields replaced by the non-null parameter values.
@@ -50,7 +51,9 @@ mixin _$QuizSetScore {
                 other.accuracyPct == accuracyPct) &&
             (identical(other.exam, exam) || other.exam == exam) &&
             const DeepCollectionEquality()
-                .equals(other.customTopics, customTopics));
+                .equals(other.customTopics, customTopics) &&
+            (identical(other.startedAt, startedAt) ||
+                other.startedAt == startedAt));
   }
 
   @override
@@ -65,11 +68,12 @@ mixin _$QuizSetScore {
       total,
       accuracyPct,
       exam,
-      const DeepCollectionEquality().hash(customTopics));
+      const DeepCollectionEquality().hash(customTopics),
+      startedAt);
 
   @override
   String toString() {
-    return 'QuizSetScore(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, exam: $exam, customTopics: $customTopics)';
+    return 'QuizSetScore(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, exam: $exam, customTopics: $customTopics, startedAt: $startedAt)';
   }
 }
 
@@ -89,7 +93,8 @@ abstract mixin class $QuizSetScoreCopyWith<$Res> {
       int total,
       double accuracyPct,
       ExamType? exam,
-      List<String>? customTopics});
+      List<String>? customTopics,
+      DateTime? startedAt});
 }
 
 /// @nodoc
@@ -114,6 +119,7 @@ class _$QuizSetScoreCopyWithImpl<$Res> implements $QuizSetScoreCopyWith<$Res> {
     Object? accuracyPct = null,
     Object? exam = freezed,
     Object? customTopics = freezed,
+    Object? startedAt = freezed,
   }) {
     return _then(_self.copyWith(
       setId: null == setId
@@ -156,6 +162,10 @@ class _$QuizSetScoreCopyWithImpl<$Res> implements $QuizSetScoreCopyWith<$Res> {
           ? _self.customTopics
           : customTopics // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      startedAt: freezed == startedAt
+          ? _self.startedAt
+          : startedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -263,7 +273,8 @@ extension QuizSetScorePatterns on QuizSetScore {
             int total,
             double accuracyPct,
             ExamType? exam,
-            List<String>? customTopics)?
+            List<String>? customTopics,
+            DateTime? startedAt)?
         $default, {
     required TResult orElse(),
   }) {
@@ -280,7 +291,8 @@ extension QuizSetScorePatterns on QuizSetScore {
             _that.total,
             _that.accuracyPct,
             _that.exam,
-            _that.customTopics);
+            _that.customTopics,
+            _that.startedAt);
       case _:
         return orElse();
     }
@@ -311,7 +323,8 @@ extension QuizSetScorePatterns on QuizSetScore {
             int total,
             double accuracyPct,
             ExamType? exam,
-            List<String>? customTopics)
+            List<String>? customTopics,
+            DateTime? startedAt)
         $default,
   ) {
     final _that = this;
@@ -327,7 +340,8 @@ extension QuizSetScorePatterns on QuizSetScore {
             _that.total,
             _that.accuracyPct,
             _that.exam,
-            _that.customTopics);
+            _that.customTopics,
+            _that.startedAt);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -357,7 +371,8 @@ extension QuizSetScorePatterns on QuizSetScore {
             int total,
             double accuracyPct,
             ExamType? exam,
-            List<String>? customTopics)?
+            List<String>? customTopics,
+            DateTime? startedAt)?
         $default,
   ) {
     final _that = this;
@@ -373,7 +388,8 @@ extension QuizSetScorePatterns on QuizSetScore {
             _that.total,
             _that.accuracyPct,
             _that.exam,
-            _that.customTopics);
+            _that.customTopics,
+            _that.startedAt);
       case _:
         return null;
     }
@@ -393,7 +409,8 @@ class _QuizSetScore implements QuizSetScore {
       required this.total,
       required this.accuracyPct,
       this.exam,
-      final List<String>? customTopics})
+      final List<String>? customTopics,
+      this.startedAt})
       : _customTopics = customTopics;
 
   @override
@@ -424,6 +441,9 @@ class _QuizSetScore implements QuizSetScore {
     return EqualUnmodifiableListView(value);
   }
 
+  @override
+  final DateTime? startedAt;
+
   /// Create a copy of QuizSetScore
   /// with the given fields replaced by the non-null parameter values.
   @override
@@ -449,7 +469,9 @@ class _QuizSetScore implements QuizSetScore {
                 other.accuracyPct == accuracyPct) &&
             (identical(other.exam, exam) || other.exam == exam) &&
             const DeepCollectionEquality()
-                .equals(other._customTopics, _customTopics));
+                .equals(other._customTopics, _customTopics) &&
+            (identical(other.startedAt, startedAt) ||
+                other.startedAt == startedAt));
   }
 
   @override
@@ -464,11 +486,12 @@ class _QuizSetScore implements QuizSetScore {
       total,
       accuracyPct,
       exam,
-      const DeepCollectionEquality().hash(_customTopics));
+      const DeepCollectionEquality().hash(_customTopics),
+      startedAt);
 
   @override
   String toString() {
-    return 'QuizSetScore(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, exam: $exam, customTopics: $customTopics)';
+    return 'QuizSetScore(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, exam: $exam, customTopics: $customTopics, startedAt: $startedAt)';
   }
 }
 
@@ -490,7 +513,8 @@ abstract mixin class _$QuizSetScoreCopyWith<$Res>
       int total,
       double accuracyPct,
       ExamType? exam,
-      List<String>? customTopics});
+      List<String>? customTopics,
+      DateTime? startedAt});
 }
 
 /// @nodoc
@@ -516,6 +540,7 @@ class __$QuizSetScoreCopyWithImpl<$Res>
     Object? accuracyPct = null,
     Object? exam = freezed,
     Object? customTopics = freezed,
+    Object? startedAt = freezed,
   }) {
     return _then(_QuizSetScore(
       setId: null == setId
@@ -558,6 +583,10 @@ class __$QuizSetScoreCopyWithImpl<$Res>
           ? _self._customTopics
           : customTopics // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      startedAt: freezed == startedAt
+          ? _self.startedAt
+          : startedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }

@@ -16,6 +16,7 @@ _QuizSetScoreModel _$QuizSetScoreModelFromJson(Map<String, dynamic> json) =>
       wrong: (json['wrong'] as num).toInt(),
       total: (json['total'] as num).toInt(),
       accuracyPct: (json['accuracy_pct'] as num).toDouble(),
+      startedAt: json['started_at'] as String,
       exam: const ExamTypeConverter().fromJson(json['exam'] as String?),
       customTopics: (json['custom_topics'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -32,6 +33,7 @@ Map<String, dynamic> _$QuizSetScoreModelToJson(_QuizSetScoreModel instance) =>
       'wrong': instance.wrong,
       'total': instance.total,
       'accuracy_pct': instance.accuracyPct,
+      'started_at': instance.startedAt,
       'exam': const ExamTypeConverter().toJson(instance.exam),
       'custom_topics': instance.customTopics,
     };

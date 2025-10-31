@@ -106,9 +106,7 @@ class QuizDashboardPage extends HookConsumerWidget {
                 dashboardAsync.when(
                   data: (state) {
                     final items = state.curatedSetsPreviews ?? const [];
-                    if (items.isEmpty) {
-                      return _buildNoCuratedSetsInfo(context);
-                    }
+
                     return CuratedSetsSection(curatedSets: items);
                   },
                   loading: () => const SizedBox.shrink(),

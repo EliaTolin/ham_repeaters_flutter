@@ -14,16 +14,20 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widge
 
 @RoutePage()
 class QuizPage extends HookConsumerWidget {
-  const QuizPage({this.examType, this.topics, super.key});
+  const QuizPage({this.examType, this.topics, this.curatedSetId, super.key});
   final ExamType? examType;
   final List<TopicRequest>? topics;
+  final String? curatedSetId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizState = ref.watch(quizControllerProvider(examType: examType, topics: topics));
+    final quizState = ref.watch(
+      quizControllerProvider(examType: examType, topics: topics, curatedSetId: curatedSetId),
+    );
 
     // Listen for quiz completion and navigate to results
-    ref.listen<AsyncValue<QuizState?>>(quizControllerProvider(examType: examType, topics: topics),
+    ref.listen<AsyncValue<QuizState?>>(
+        quizControllerProvider(examType: examType, topics: topics, curatedSetId: curatedSetId),
         (previous, next) {
       next.whenData((data) {
         if (data?.isCompleted ?? false) {
@@ -93,7 +97,13 @@ class QuizPage extends HookConsumerWidget {
                     topicLabel: _getTopicLabel(state.topics, state.currentQuestion.topicName),
                     onAnswerSelected: (answer) {
                       ref
-                          .read(quizControllerProvider(examType: examType, topics: topics).notifier)
+                          .read(
+                            quizControllerProvider(
+                              examType: examType,
+                              topics: topics,
+                              curatedSetId: curatedSetId,
+                            ).notifier,
+                          )
                           .answerQuestion(answer);
                     },
                   ),
@@ -107,17 +117,35 @@ class QuizPage extends HookConsumerWidget {
                   isSubmitting: state.isSubmitting,
                   onPrevious: () {
                     ref
-                        .read(quizControllerProvider(examType: examType, topics: topics).notifier)
+                        .read(
+                          quizControllerProvider(
+                            examType: examType,
+                            topics: topics,
+                            curatedSetId: curatedSetId,
+                          ).notifier,
+                        )
                         .goToPreviousQuestion();
                   },
                   onNext: () {
                     ref
-                        .read(quizControllerProvider(examType: examType, topics: topics).notifier)
+                        .read(
+                          quizControllerProvider(
+                            examType: examType,
+                            topics: topics,
+                            curatedSetId: curatedSetId,
+                          ).notifier,
+                        )
                         .goToNextQuestion();
                   },
                   onSubmit: () {
                     ref
-                        .read(quizControllerProvider(examType: examType, topics: topics).notifier)
+                        .read(
+                          quizControllerProvider(
+                            examType: examType,
+                            topics: topics,
+                            curatedSetId: curatedSetId,
+                          ).notifier,
+                        )
                         .submitQuiz();
                   },
                 ),
@@ -152,7 +180,13 @@ class QuizPage extends HookConsumerWidget {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    ref.invalidate(quizControllerProvider(examType: examType, topics: topics));
+                    ref.invalidate(
+                      quizControllerProvider(
+                        examType: examType,
+                        topics: topics,
+                        curatedSetId: curatedSetId,
+                      ),
+                    );
                   },
                   child: const Text('Riprova'),
                 ),
@@ -218,13 +252,15 @@ class QuizPage extends HookConsumerWidget {
   Future<void> _deleteQuizAndExit(BuildContext context, WidgetRef ref) async {
     try {
       // Get the current quiz state
-      final quizState = ref.read(quizControllerProvider(examType: examType, topics: topics));
+      final quizState = ref.read(
+        quizControllerProvider(examType: examType, topics: topics, curatedSetId: curatedSetId),
+      );
 
       if (quizState.hasValue && quizState.value != null) {
         final state = quizState.value;
 
         // Delete the quiz from the database
-        await ref.read(quizRepositoryProvider).deleteQuizAnswers(state!.quizSet.quizSetId);
+        await ref.read(quizRepositoryProvider).deleteQuizSet(state!.quizSet.quizSetId);
 
         // Show success message
         if (context.mounted) {

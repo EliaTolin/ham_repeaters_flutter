@@ -26,6 +26,8 @@ mixin _$QuizSetScoreModel {
   int get total;
   @JsonKey(name: 'accuracy_pct')
   double get accuracyPct;
+  @JsonKey(name: 'started_at')
+  String get startedAt;
   @ExamTypeConverter()
   ExamType? get exam;
   @JsonKey(name: 'custom_topics')
@@ -57,6 +59,8 @@ mixin _$QuizSetScoreModel {
             (identical(other.total, total) || other.total == total) &&
             (identical(other.accuracyPct, accuracyPct) ||
                 other.accuracyPct == accuracyPct) &&
+            (identical(other.startedAt, startedAt) ||
+                other.startedAt == startedAt) &&
             (identical(other.exam, exam) || other.exam == exam) &&
             const DeepCollectionEquality()
                 .equals(other.customTopics, customTopics));
@@ -74,12 +78,13 @@ mixin _$QuizSetScoreModel {
       wrong,
       total,
       accuracyPct,
+      startedAt,
       exam,
       const DeepCollectionEquality().hash(customTopics));
 
   @override
   String toString() {
-    return 'QuizSetScoreModel(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, exam: $exam, customTopics: $customTopics)';
+    return 'QuizSetScoreModel(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, startedAt: $startedAt, exam: $exam, customTopics: $customTopics)';
   }
 }
 
@@ -98,6 +103,7 @@ abstract mixin class $QuizSetScoreModelCopyWith<$Res> {
       int wrong,
       int total,
       @JsonKey(name: 'accuracy_pct') double accuracyPct,
+      @JsonKey(name: 'started_at') String startedAt,
       @ExamTypeConverter() ExamType? exam,
       @JsonKey(name: 'custom_topics') List<String>? customTopics});
 }
@@ -123,6 +129,7 @@ class _$QuizSetScoreModelCopyWithImpl<$Res>
     Object? wrong = null,
     Object? total = null,
     Object? accuracyPct = null,
+    Object? startedAt = null,
     Object? exam = freezed,
     Object? customTopics = freezed,
   }) {
@@ -159,6 +166,10 @@ class _$QuizSetScoreModelCopyWithImpl<$Res>
           ? _self.accuracyPct
           : accuracyPct // ignore: cast_nullable_to_non_nullable
               as double,
+      startedAt: null == startedAt
+          ? _self.startedAt
+          : startedAt // ignore: cast_nullable_to_non_nullable
+              as String,
       exam: freezed == exam
           ? _self.exam
           : exam // ignore: cast_nullable_to_non_nullable
@@ -273,6 +284,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
+            @JsonKey(name: 'started_at') String startedAt,
             @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)?
         $default, {
@@ -290,6 +302,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             _that.wrong,
             _that.total,
             _that.accuracyPct,
+            _that.startedAt,
             _that.exam,
             _that.customTopics);
       case _:
@@ -321,6 +334,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
+            @JsonKey(name: 'started_at') String startedAt,
             @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)
         $default,
@@ -337,6 +351,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             _that.wrong,
             _that.total,
             _that.accuracyPct,
+            _that.startedAt,
             _that.exam,
             _that.customTopics);
       case _:
@@ -367,6 +382,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
+            @JsonKey(name: 'started_at') String startedAt,
             @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)?
         $default,
@@ -383,6 +399,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             _that.wrong,
             _that.total,
             _that.accuracyPct,
+            _that.startedAt,
             _that.exam,
             _that.customTopics);
       case _:
@@ -403,6 +420,7 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
       required this.wrong,
       required this.total,
       @JsonKey(name: 'accuracy_pct') required this.accuracyPct,
+      @JsonKey(name: 'started_at') required this.startedAt,
       @ExamTypeConverter() this.exam,
       @JsonKey(name: 'custom_topics') final List<String>? customTopics})
       : _customTopics = customTopics;
@@ -429,6 +447,9 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
   @override
   @JsonKey(name: 'accuracy_pct')
   final double accuracyPct;
+  @override
+  @JsonKey(name: 'started_at')
+  final String startedAt;
   @override
   @ExamTypeConverter()
   final ExamType? exam;
@@ -473,6 +494,8 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
             (identical(other.total, total) || other.total == total) &&
             (identical(other.accuracyPct, accuracyPct) ||
                 other.accuracyPct == accuracyPct) &&
+            (identical(other.startedAt, startedAt) ||
+                other.startedAt == startedAt) &&
             (identical(other.exam, exam) || other.exam == exam) &&
             const DeepCollectionEquality()
                 .equals(other._customTopics, _customTopics));
@@ -490,12 +513,13 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
       wrong,
       total,
       accuracyPct,
+      startedAt,
       exam,
       const DeepCollectionEquality().hash(_customTopics));
 
   @override
   String toString() {
-    return 'QuizSetScoreModel(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, exam: $exam, customTopics: $customTopics)';
+    return 'QuizSetScoreModel(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, startedAt: $startedAt, exam: $exam, customTopics: $customTopics)';
   }
 }
 
@@ -516,6 +540,7 @@ abstract mixin class _$QuizSetScoreModelCopyWith<$Res>
       int wrong,
       int total,
       @JsonKey(name: 'accuracy_pct') double accuracyPct,
+      @JsonKey(name: 'started_at') String startedAt,
       @ExamTypeConverter() ExamType? exam,
       @JsonKey(name: 'custom_topics') List<String>? customTopics});
 }
@@ -541,6 +566,7 @@ class __$QuizSetScoreModelCopyWithImpl<$Res>
     Object? wrong = null,
     Object? total = null,
     Object? accuracyPct = null,
+    Object? startedAt = null,
     Object? exam = freezed,
     Object? customTopics = freezed,
   }) {
@@ -577,6 +603,10 @@ class __$QuizSetScoreModelCopyWithImpl<$Res>
           ? _self.accuracyPct
           : accuracyPct // ignore: cast_nullable_to_non_nullable
               as double,
+      startedAt: null == startedAt
+          ? _self.startedAt
+          : startedAt // ignore: cast_nullable_to_non_nullable
+              as String,
       exam: freezed == exam
           ? _self.exam
           : exam // ignore: cast_nullable_to_non_nullable

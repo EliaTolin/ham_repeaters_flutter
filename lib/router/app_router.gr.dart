@@ -207,11 +207,17 @@ class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
   QuizRoute({
     ExamType? examType,
     List<TopicRequest>? topics,
+    String? curatedSetId,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           QuizRoute.name,
-          args: QuizRouteArgs(examType: examType, topics: topics, key: key),
+          args: QuizRouteArgs(
+            examType: examType,
+            topics: topics,
+            curatedSetId: curatedSetId,
+            key: key,
+          ),
           initialChildren: children,
         );
 
@@ -226,6 +232,7 @@ class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
       return QuizPage(
         examType: args.examType,
         topics: args.topics,
+        curatedSetId: args.curatedSetId,
         key: args.key,
       );
     },
@@ -233,17 +240,24 @@ class QuizRoute extends PageRouteInfo<QuizRouteArgs> {
 }
 
 class QuizRouteArgs {
-  const QuizRouteArgs({this.examType, this.topics, this.key});
+  const QuizRouteArgs({
+    this.examType,
+    this.topics,
+    this.curatedSetId,
+    this.key,
+  });
 
   final ExamType? examType;
 
   final List<TopicRequest>? topics;
 
+  final String? curatedSetId;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'QuizRouteArgs{examType: $examType, topics: $topics, key: $key}';
+    return 'QuizRouteArgs{examType: $examType, topics: $topics, curatedSetId: $curatedSetId, key: $key}';
   }
 
   @override
@@ -252,6 +266,7 @@ class QuizRouteArgs {
     if (other is! QuizRouteArgs) return false;
     return examType == other.examType &&
         const ListEquality<TopicRequest>().equals(topics, other.topics) &&
+        curatedSetId == other.curatedSetId &&
         key == other.key;
   }
 
@@ -259,6 +274,7 @@ class QuizRouteArgs {
   int get hashCode =>
       examType.hashCode ^
       const ListEquality<TopicRequest>().hash(topics) ^
+      curatedSetId.hashCode ^
       key.hashCode;
 }
 

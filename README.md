@@ -3,7 +3,7 @@
 - sistemar e il messaggio da condividere
 - inserire i curated set
 - SVG logo nella dashboard
-- Se manca una domanda fare in modo di farlo capire
+- indica se il quiz recente è frutto di un curated set
 
 testtesttest@yopmail.com
 Tester

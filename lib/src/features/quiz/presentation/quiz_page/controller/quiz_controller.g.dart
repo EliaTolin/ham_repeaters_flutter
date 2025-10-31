@@ -19,6 +19,7 @@ final class QuizControllerProvider
       required ({
         ExamType? examType,
         List<TopicRequest>? topics,
+        String? curatedSetId,
       })
           super.argument})
       : super(
@@ -54,7 +55,7 @@ final class QuizControllerProvider
   }
 }
 
-String _$quizControllerHash() => r'9e965e9984ec4af18d761904ac174e039065d59a';
+String _$quizControllerHash() => r'd235f04a2f66c6e6d49f697d439cf9b8d9f3fdc3';
 
 final class QuizControllerFamily extends $Family
     with
@@ -66,6 +67,7 @@ final class QuizControllerFamily extends $Family
             ({
               ExamType? examType,
               List<TopicRequest>? topics,
+              String? curatedSetId,
             })> {
   const QuizControllerFamily._()
       : super(
@@ -79,10 +81,12 @@ final class QuizControllerFamily extends $Family
   QuizControllerProvider call({
     ExamType? examType,
     List<TopicRequest>? topics,
+    String? curatedSetId,
   }) =>
       QuizControllerProvider._(argument: (
         examType: examType,
         topics: topics,
+        curatedSetId: curatedSetId,
       ), from: this);
 
   @override
@@ -93,13 +97,16 @@ abstract class _$QuizController extends $AsyncNotifier<QuizState?> {
   late final _$args = ref.$arg as ({
     ExamType? examType,
     List<TopicRequest>? topics,
+    String? curatedSetId,
   });
   ExamType? get examType => _$args.examType;
   List<TopicRequest>? get topics => _$args.topics;
+  String? get curatedSetId => _$args.curatedSetId;
 
   FutureOr<QuizState?> build({
     ExamType? examType,
     List<TopicRequest>? topics,
+    String? curatedSetId,
   });
   @$mustCallSuper
   @override
@@ -107,6 +114,7 @@ abstract class _$QuizController extends $AsyncNotifier<QuizState?> {
     final created = build(
       examType: _$args.examType,
       topics: _$args.topics,
+      curatedSetId: _$args.curatedSetId,
     );
     final ref = this.ref as $Ref<AsyncValue<QuizState?>, QuizState?>;
     final element = ref.element as $ClassProviderElement<

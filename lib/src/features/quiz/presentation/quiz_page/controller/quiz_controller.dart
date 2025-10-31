@@ -5,6 +5,7 @@ import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request/topic_r
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state/quiz_state/quiz_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/delete_quiz_set/delete_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_custom_quiz_set/get_custom_quiz_set_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_from_curated_set/get_quiz_from_curated_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_set/get_quiz_set_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_topics/get_topics_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/set_quiz_finished/set_quiz_finished_provider.dart';
@@ -15,14 +16,18 @@ part 'quiz_controller.g.dart';
 @riverpod
 class QuizController extends _$QuizController {
   @override
-  FutureOr<QuizState?> build({ExamType? examType, List<TopicRequest>? topics}) async {
+  FutureOr<QuizState?> build({
+    ExamType? examType,
+    List<TopicRequest>? topics,
+    String? curatedSetId,
+  }) async {
     final userId = await ref.read(getUserIdProvider.future);
 
     if (userId == null) {
       throw Exception('User ID not found');
     }
 
-    if (examType != null && topics != null) {
+    if ((examType != null && topics != null) && curatedSetId != null) {
       throw Exception('Either examType or topics must be provided');
     }
 
@@ -61,6 +66,20 @@ class QuizController extends _$QuizController {
         );
         final allTopics = await ref.read(getTopicsProvider.future);
 
+        return QuizState(
+          quizSet: quizSet,
+          currentQuestionIndex: 0,
+          answers: {},
+          questionTimes: {},
+          quizStartTime: DateTime.now(),
+          topics: allTopics,
+        );
+      });
+      return state.value;
+    } else if (curatedSetId != null) {
+      state = await AsyncValue.guard(() async {
+        final quizSet = await ref.read(getQuizFromCuratedSetProvider(curatedSetId).future);
+        final allTopics = await ref.read(getTopicsProvider.future);
         return QuizState(
           quizSet: quizSet,
           currentQuestionIndex: 0,

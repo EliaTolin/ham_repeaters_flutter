@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:quiz_radioamatori/common/dialogs/are_you_sure_to_delete_dialog.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/controller/quiz_results_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/widgets/quiz_accuracy_chart.dart';
@@ -47,6 +48,23 @@ class QuizResultsPage extends ConsumerWidget {
                     score: results,
                     onBackPressed: () {
                       context.router.pop();
+                    },
+                    onDeletePressed: () async {
+                      final isOk = await showAreYouSureToDeleteDialog(
+                        context,
+                        title: 'Sei sicuro di voler cancellare questo quiz?',
+                        content: 'Perderai tutti i tuoi progressi e ripartirai da zero.',
+                        barrierDismissible: true,
+                      );
+                      if (isOk && context.mounted) {
+                        await ref
+                            .read(quizResultsControllerProvider(setId).notifier)
+                            .deleteQuizSet();
+                        if (context.mounted) {
+                          await context.router
+                              .pushAndPopUntil(const HomeRoute(), predicate: (_) => false);
+                        }
+                      }
                     },
                   ),
                 ),

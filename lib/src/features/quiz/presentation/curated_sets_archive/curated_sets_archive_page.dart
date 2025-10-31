@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quiz_radioamatori/common/widgets/loading/circular_loading_widget.dart';
+import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/curated_sets_archive/controller/curated_sets_archive_controller.dart';
@@ -110,6 +111,10 @@ class _List extends ConsumerWidget {
         await showSignUpDialog(context);
       }
       return;
+    }
+
+    if (context.mounted) {
+      await context.router.push(QuizRoute(curatedSetId: curatedSet.id));
     }
   }
 }

@@ -106,8 +106,14 @@ class QuizDataSourceSupabase {
 
   Future<QuizSetScoreModel?> getQuizResults(String setId) async {
     try {
-      final response =
-          await _supabase.from('quiz_set_score').select().eq('set_id', setId).maybeSingle();
+      final response = await _supabase
+          .from('quiz_set_score')
+          .select()
+          .eq(
+            'set_id',
+            setId,
+          )
+          .maybeSingle();
 
       if (response == null) return null;
 
@@ -134,7 +140,7 @@ class QuizDataSourceSupabase {
   Future<List<QuizSetScoreModel>> getAllQuizScores() async {
     try {
       final response =
-          await _supabase.from('quiz_set_score').select().order('set_id', ascending: false);
+          await _supabase.from('quiz_set_score').select().order('started_at', ascending: false);
 
       return (response as List).map((json) => QuizSetScoreModel.fromJson(json)).toList();
     } catch (e, st) {
@@ -148,7 +154,7 @@ class QuizDataSourceSupabase {
       final response = await _supabase
           .from('quiz_set_score')
           .select()
-          .order('set_id', ascending: false)
+          .order('started_at', ascending: false)
           .limit(limit);
 
       return (response as List).map((json) => QuizSetScoreModel.fromJson(json)).toList();
@@ -242,7 +248,7 @@ class QuizDataSourceSupabase {
     }
   }
 
-  Future<void> deleteQuizAnswers(String setId) async {
+  Future<void> deleteQuizSet(String setId) async {
     try {
       await _supabase.from('quiz_set_question').delete().eq('set_id', setId);
       await _supabase.from('quiz_set').delete().eq('id', setId);
@@ -322,8 +328,8 @@ class QuizDataSourceSupabase {
 
   Future<List<CuratedSetPreviewModel>> getCuratedSetsNonAttemptedByUser(String userId) async {
     try {
-      final response = await _supabase
-          .rpc('curated_set_non_attempted_by_user', params: {'p_user_id': userId});
+      final response =
+          await _supabase.rpc('curated_set_non_attempted_by_user', params: {'p_user_id': userId});
 
       if (response == null) {
         return const <CuratedSetPreviewModel>[];
@@ -348,9 +354,7 @@ class QuizDataSourceSupabase {
           .order('created_at', ascending: false);
 
       final data = response as List<dynamic>;
-      return data
-          .map((json) => CuratedSetModel.fromJson(json as Map<String, dynamic>))
-          .toList();
+      return data.map((json) => CuratedSetModel.fromJson(json as Map<String, dynamic>)).toList();
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get published curated sets: $e');
@@ -374,6 +378,36 @@ class QuizDataSourceSupabase {
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to delete all quiz sets: $e');
+    }
+  }
+
+  Future<QuizSetResponse> getQuizFromCuratedSet(String userId, String curatedSetId) async {
+    try {
+      final response = await _supabase.functions.invoke(
+        'get_quiz_from_curated_set',
+        body: {
+          'user_id': userId,
+          'curated_set_id': curatedSetId,
+        },
+      );
+
+      if (response.data == null) {
+        throw Exception('No data received from edge function');
+      }
+
+      final data = response.data as Map<String, dynamic>;
+
+      if (data['success'] != true) {
+        throw Exception('Edge function returned error: ${data['error'] ?? 'Unknown error'}');
+      }
+
+      final result = data['data'] as Map<String, dynamic>;
+      final model = QuizSetResponseModel.fromJson(result);
+
+      return _responseMapper.fromModel(model);
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+      throw Exception('Failed to get quiz set: $e');
     }
   }
 }
