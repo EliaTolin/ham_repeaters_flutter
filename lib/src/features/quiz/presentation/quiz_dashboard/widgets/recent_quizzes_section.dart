@@ -255,34 +255,34 @@ class _ClickableQuizCard extends StatelessWidget {
     );
   }
 
-  // —— UI helpers
-  static Widget _chip(ThemeData theme, String text, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .10),
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: color.withValues(alpha: .25)),
-      ),
-      child: Text(
-        text,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: theme.textTheme.labelMedium?.copyWith(
-          fontWeight: FontWeight.w700,
-          color: color,
-        ),
-      ),
-    );
-  }
+  // // —— UI helpers
+  // static Widget _chip(ThemeData theme, String text, Color color) {
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+  //     decoration: BoxDecoration(
+  //       color: color.withValues(alpha: .10),
+  //       borderRadius: BorderRadius.circular(999),
+  //       border: Border.all(color: color.withValues(alpha: .25)),
+  //     ),
+  //     child: Text(
+  //       text,
+  //       maxLines: 1,
+  //       overflow: TextOverflow.ellipsis,
+  //       style: theme.textTheme.labelMedium?.copyWith(
+  //         fontWeight: FontWeight.w700,
+  //         color: color,
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  static String _performanceLabel(double a) {
-    if (a >= 90) return 'Eccellente';
-    if (a >= 80) return 'Ottimo';
-    if (a >= 70) return 'Buono';
-    if (a >= 60) return 'Sufficiente';
-    return 'Insufficiente';
-  }
+  // static String _performanceLabel(double a) {
+  //   if (a >= 90) return 'Eccellente';
+  //   if (a >= 80) return 'Ottimo';
+  //   if (a >= 70) return 'Buono';
+  //   if (a >= 60) return 'Sufficiente';
+  //   return 'Insufficiente';
+  // }
 
   static Color _performanceColor(double a) {
     if (a >= 90) return Colors.green;
