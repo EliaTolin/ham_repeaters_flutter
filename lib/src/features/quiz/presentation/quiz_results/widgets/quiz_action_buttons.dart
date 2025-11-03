@@ -137,7 +137,6 @@ class QuizActionButtons extends StatelessWidget {
 
   String _createShareMessage(QuizSetScore score) {
     final examType = score.exam?.value ?? 'Personalizzato';
-    final mode = score.mode.value;
     final accuracy = score.accuracyPct.toStringAsFixed(1);
     final correct = score.correct;
     final total = score.total;
@@ -158,7 +157,6 @@ class QuizActionButtons extends StatelessWidget {
 $performanceEmoji *QUIZ RADIOAMATORI APP* $performanceEmoji
 
 📊 *Esame:* $examType
-🎮 *Modalità:* $mode
 ✅ *Risposte corrette:* $correct/$total
 📈 *Precisione:* $accuracy%
 
