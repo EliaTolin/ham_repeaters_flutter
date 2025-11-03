@@ -64,7 +64,6 @@ Future<void> showSignUpDialog(
                             ),
                           ],
                         ),
-
                         // Titolo persuasivo
                         Text(
                           'Unisciti a Quiz Radioamatori',
