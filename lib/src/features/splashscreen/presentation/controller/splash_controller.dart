@@ -6,6 +6,7 @@ import 'package:quiz_radioamatori/src/features/authentication/provider/anonymous
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/provider/get_has_seen_onboarding/get_has_seen_onboarding_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'splash_controller.g.dart';
 
@@ -18,6 +19,11 @@ class SplashController extends _$SplashController {
     var userID = await ref.read(getUserIdProvider.future);
     userID ??= await ref.read(anonymousSignInProvider.future);
     log('userId: $userID');
+    if (userID != null) {
+      Sentry.configureScope(
+        (scope) => scope.setUser(SentryUser(id: userID)),
+      );
+    }
     if (onboarding) {
       return const HomeRoute();
     } else {

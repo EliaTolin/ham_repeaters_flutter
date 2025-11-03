@@ -175,7 +175,6 @@ class _ClickableQuizCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final examType = score.exam?.value ?? 'Personalizzato';
     final accuracy = score.accuracyPct.clamp(0, 100);
-    final perfLabel = _performanceLabel(accuracy.toDouble());
     final perfColor = _performanceColor(accuracy.toDouble());
 
     return Material(
@@ -224,7 +223,6 @@ class _ClickableQuizCard extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          _chip(theme, perfLabel, perfColor),
                           const SizedBox(height: 6),
                           Text(
                             '${accuracy.toStringAsFixed(1)}%',
