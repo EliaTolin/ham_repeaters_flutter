@@ -25,9 +25,9 @@ class AuthSupabaseDatasource implements AuthDatasource {
     if (userId == null) {
       throw Exception();
     }
-    await supabaseClient
-        .from('profiles')
-        .update({'deleted_at': DateTime.now().toIso8601String()}).eq('id', userId);
+    await supabaseClient.from('profiles').update(
+      {'deleted_at': DateTime.now().toIso8601String()},
+    ).eq('id', userId);
     return;
   }
 
@@ -139,7 +139,9 @@ class AuthSupabaseDatasource implements AuthDatasource {
 
     final idToken = credential.identityToken;
     if (idToken == null) {
-      throw const AuthException('Could not find ID Token from generated credential.');
+      throw const AuthException(
+        'Could not find ID Token from generated credential.',
+      );
     }
 
     final result = await supabaseClient.auth.signInWithIdToken(

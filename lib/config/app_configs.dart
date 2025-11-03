@@ -51,4 +51,8 @@ class AppConfigs {
   static String getTelegramLink() {
     return 'https://t.me/quiz_radioamatori';
   }
+
+  static String getAppStoreId() {
+    return '6754508610';
+  }
 }

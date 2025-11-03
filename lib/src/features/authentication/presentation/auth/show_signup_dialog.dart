@@ -43,7 +43,10 @@ Future<void> showSignUpDialog(
               child: SafeArea(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 20,
+                    ),
                     child: Column(
                       spacing: 8,
                       children: [
@@ -230,8 +233,9 @@ Future<void> showSignUpDialog(
                                 passwordResetSent: 'Reset password inviato'.hardcoded,
                               ),
                               redirectTo: DeepLinkUtils.buildDeepLink('login-callback'),
-                              resetPasswordRedirectTo:
-                                  DeepLinkUtils.buildDeepLink('change-password'),
+                              resetPasswordRedirectTo: DeepLinkUtils.buildDeepLink(
+                                'change-password',
+                              ),
                               onSignInComplete: (response) async {
                                 await ref.read(setOnboardingSeenProvider.future);
                                 ref.invalidate(getUserIdProvider);

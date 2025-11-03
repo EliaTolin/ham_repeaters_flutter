@@ -145,18 +145,27 @@ class AuthScreen extends ConsumerWidget {
                         if (error is AuthException && error.statusCode == '400') {
                           switch (error.code) {
                             case 'invalid_credentials':
-                              showErrorSnackbar(context, 'Email o password errati'.hardcoded);
+                              showErrorSnackbar(
+                                context,
+                                'Email o password errati'.hardcoded,
+                              );
                             case 'email_not_confirmed':
                               showErrorSnackbar(
                                 context,
                                 'Verifica la tua email per accedere'.hardcoded,
                               );
                             default:
-                              showErrorSnackbar(context, 'Errore inaspettato'.hardcoded);
+                              showErrorSnackbar(
+                                context,
+                                'Errore inaspettato'.hardcoded,
+                              );
                           }
                           return;
                         }
-                        showErrorSnackbar(context, 'Errore inaspettato'.hardcoded);
+                        showErrorSnackbar(
+                          context,
+                          'Errore inaspettato'.hardcoded,
+                        );
                       },
                       metadataFields: [
                         MetaDataField(

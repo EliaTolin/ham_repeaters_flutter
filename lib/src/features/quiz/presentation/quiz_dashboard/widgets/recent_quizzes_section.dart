@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:quiz_radioamatori/common/widgets/soft_icon.dart';
@@ -17,18 +16,6 @@ class RecentQuizzesSection extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    // Animazioni in ingresso con vero "stagger"
-    final controller = useAnimationController(
-      duration: Duration(milliseconds: 250 + (scores.length * 80).clamp(0, 700)),
-    );
-
-    useEffect(
-      () {
-        controller.forward();
-        return null;
-      },
-      [],
-    );
 
     return Container(
       decoration: BoxDecoration(
@@ -98,43 +85,27 @@ class RecentQuizzesSection extends HookConsumerWidget {
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) {
                   final score = scores[index];
-                  final curved = CurvedAnimation(
-                    parent: controller,
-                    curve: Interval(
-                      index / (scores.length.clamp(1, 999)),
-                      (index + 1) / (scores.length.clamp(1, 999)),
-                      curve: Curves.easeOutCubic,
-                    ),
-                  );
-                  return FadeTransition(
-                    opacity: curved,
-                    child: SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, .08),
-                        end: Offset.zero,
-                      ).animate(curved),
-                      child: _ClickableQuizCard(
-                        theme: theme,
-                        score: score,
-                        onTap: () async {
-                          if (await ref.read(isAnonymousProvider.future)) {
-                            // Quando serve registrazione
-                            if (context.mounted) {
-                              await showSignUpDialog(context);
-                              return;
-                            }
-                          } else {
-                            if (context.mounted) {
-                              await context.router.push(
-                                QuizResultsRoute(
-                                  setId: score.setId,
-                                ),
-                              );
-                            }
-                          }
-                        },
-                      ),
-                    ),
+
+                  return _ClickableQuizCard(
+                    theme: theme,
+                    score: score,
+                    onTap: () async {
+                      if (await ref.read(isAnonymousProvider.future)) {
+                        // Quando serve registrazione
+                        if (context.mounted) {
+                          await showSignUpDialog(context);
+                          return;
+                        }
+                      } else {
+                        if (context.mounted) {
+                          await context.router.push(
+                            QuizResultsRoute(
+                              setId: score.setId,
+                            ),
+                          );
+                        }
+                      }
+                    },
                   );
                 },
               ),

@@ -73,7 +73,10 @@ class ChangePasswordScreen extends HookConsumerWidget {
                 onSave: () async {
                   if (!formKey.currentState!.validate()) return;
                   if (newPasswordController.text != confirmPasswordController.text) {
-                    showErrorSnackbar(context, 'Le password non corrispondono'.hardcoded);
+                    showErrorSnackbar(
+                      context,
+                      'Le password non corrispondono'.hardcoded,
+                    );
                     return;
                   }
                   try {
@@ -81,7 +84,10 @@ class ChangePasswordScreen extends HookConsumerWidget {
                         .read(changePasswordControllerProvider.notifier)
                         .resetPassword(newPasswordController.text);
                     if (context.mounted) {
-                      showSuccessSnackbar(context, 'Password cambiata con successo'.hardcoded);
+                      showSuccessSnackbar(
+                        context,
+                        'Password cambiata con successo'.hardcoded,
+                      );
                       await context.replaceRoute(const HomeRoute());
                     }
                   } catch (e) {

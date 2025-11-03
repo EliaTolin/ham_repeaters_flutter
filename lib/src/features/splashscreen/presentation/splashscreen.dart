@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_radioamatori/clients/package_info/package_info.dart';
+import 'package:quiz_radioamatori/common/dialogs/show_update_required_dialog.dart';
+import 'package:quiz_radioamatori/config/app_configs.dart';
 import 'package:quiz_radioamatori/resources/resources.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
+import 'package:quiz_radioamatori/src/features/splashscreen/errors/update_required_exception.dart';
 import 'package:quiz_radioamatori/src/features/splashscreen/presentation/controller/splash_controller.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -28,8 +32,22 @@ class SplashScreen extends HookConsumerWidget {
                 if (context.mounted) context.router.replace(route);
               });
             }
+          } on UpdateRequiredException {
+            if (!cancelled && context.mounted && !navigated) {
+              navigated = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
+                final navigatorContext = context;
+                final packageInfo = await ref.read(packageInfoProvider.future);
+                if (navigatorContext.mounted) {
+                  await showUpdateRequiredDialog(
+                    navigatorContext,
+                    appStoreId: AppConfigs.getAppStoreId(),
+                    playStorePackageName: packageInfo.packageName,
+                  );
+                }
+              });
+            }
           } catch (e, stackTrace) {
-            // Non bloccare la UI sulla cattura
             // ignore: unawaited_futures
             Sentry.captureException(e, stackTrace: stackTrace);
 

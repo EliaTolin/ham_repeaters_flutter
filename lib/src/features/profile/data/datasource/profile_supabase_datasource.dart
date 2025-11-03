@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:quiz_radioamatori/clients/supabase/supabase_client/supabase_client.dart';
-import 'package:quiz_radioamatori/constant/supabase/supabase_table_name.dart';
 import 'package:quiz_radioamatori/src/features/profile/data/datasource/profile_datasource.dart';
 import 'package:quiz_radioamatori/src/features/profile/data/model/profile_model/profile_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,8 +16,7 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
   @override
   Future<ProfileModel> getProfile(String userId) async {
     try {
-      final data =
-          await _client.from(SupabaseTable.profiles.name).select().eq('id', userId).single();
+      final data = await _client.from('profiles').select().eq('id', userId).single();
       return ProfileModel.fromJson(data);
     } catch (e) {
       log('Error to fetch profile: $e');
@@ -29,7 +27,7 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
   @override
   Future<void> updateProfile(ProfileModel user) async {
     try {
-      await _client.from(SupabaseTable.profiles.name).update(user.toJson()).eq('id', user.id);
+      await _client.from('profiles').update(user.toJson()).eq('id', user.id);
     } catch (e) {
       rethrow;
     }
@@ -47,7 +45,7 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
           .from('propics')
           .upload(fileName, image, fileOptions: const FileOptions(upsert: true));
       await _client
-          .from(SupabaseTable.profiles.name)
+          .from('profiles')
           .update({'propic': fileName})
           .eq('id', userId)
           .onError((error, stackTrace) {
@@ -78,7 +76,7 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
       final profile = await getProfile(userId);
       if (profile.propic != null) {
         await _client.storage.from('propics').remove([profile.propic!]);
-        await _client.from(SupabaseTable.profiles.name).update({'propic': null}).eq('id', userId);
+        await _client.from('profiles').update({'propic': null}).eq('id', userId);
       }
     } catch (e) {
       rethrow;
