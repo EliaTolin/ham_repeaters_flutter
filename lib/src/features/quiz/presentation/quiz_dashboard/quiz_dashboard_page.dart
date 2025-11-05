@@ -5,6 +5,7 @@ import 'package:quiz_radioamatori/common/widgets/loading/circular_loading_widget
 import 'package:quiz_radioamatori/common/widgets/logo_icon.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/controller/quiz_dashboard_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/curated_sets_section.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/leaderboard_position_section.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/quick_actions_section.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/recent_quizzes_section.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/widgets/statistics_preview_section.dart';
@@ -90,6 +91,9 @@ class QuizDashboardPage extends HookConsumerWidget {
               delegate: SliverChildListDelegate([
                 // Quick actions section
                 const QuickActionsSection(),
+                const SizedBox(height: 24),
+                // Leaderboard position section (only for registered users)
+                const LeaderboardPositionSection(),
                 const SizedBox(height: 24),
                 // Curated sets section (or empty info)
                 dashboardAsync.when(

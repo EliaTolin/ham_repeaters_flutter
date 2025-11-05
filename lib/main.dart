@@ -40,6 +40,7 @@ Future<void> main() async {
     appRunner: () {
       runApp(
         ProviderScope(
+          retry: (retryCount, error) => null,
           child: SentryWidget(
             child: const QuizRadioamatori(),
           ),

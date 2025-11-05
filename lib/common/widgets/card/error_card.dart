@@ -7,6 +7,14 @@ class ErrorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.errorContainer,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.error.withValues(alpha: 0.6),
+          width: 2,
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -15,7 +23,7 @@ class ErrorCard extends StatelessWidget {
           children: [
             Text(
               'Errore!',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: Colors.red,
                   ),
             ),

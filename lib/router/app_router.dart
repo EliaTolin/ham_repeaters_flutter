@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/auth_screen.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/change_password/change_password_screen.dart';
 import 'package:quiz_radioamatori/src/features/home/presentation/home_page.dart';
+import 'package:quiz_radioamatori/src/features/leaderboard/presentation/leaderboard_page.dart';
 import 'package:quiz_radioamatori/src/features/onboarding/presentation/onboarding_page.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/profile/profile_screen.dart';
 import 'package:quiz_radioamatori/src/features/profile/presentation/user_settings/user_settings_screen.dart';
@@ -84,6 +85,11 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
         // Curated sets archive
         AutoRoute(
           page: CuratedSetsArchiveRoute.page,
+          guards: [this],
+        ),
+        // Leaderboard
+        AutoRoute(
+          page: LeaderboardRoute.page,
           guards: [this],
         ),
       ];
