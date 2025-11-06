@@ -34,7 +34,7 @@ final class MarathonControllerProvider
 }
 
 String _$marathonControllerHash() =>
-    r'1a70702a85ac2421176d7407a86ef4dd10978979';
+    r'f8224138cf7b9cd1ddadbbde0746496d2240a1d5';
 
 abstract class _$MarathonController extends $AsyncNotifier<MarathonState> {
   FutureOr<MarathonState> build();

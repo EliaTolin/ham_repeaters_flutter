@@ -63,7 +63,7 @@ final class GetQuizFromCuratedSetProvider extends $FunctionalProvider<
 }
 
 String _$getQuizFromCuratedSetHash() =>
-    r'008c05a8ed4ad730098fc2f3214f8643e1c4d5ed';
+    r'49fff67e3893b4a8c6935b938a9f9f8ae1c4751a';
 
 final class GetQuizFromCuratedSetFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<QuizSetResponse>, String> {

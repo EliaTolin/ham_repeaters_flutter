@@ -35,7 +35,7 @@ final class CuratedSetsArchiveControllerProvider extends $AsyncNotifierProvider<
 }
 
 String _$curatedSetsArchiveControllerHash() =>
-    r'fa69bdd0b8e99957e67d556e4d27ff19c2f524fd';
+    r'7b47af75a7b61cd0de40914baa537bed0862fd8a';
 
 abstract class _$CuratedSetsArchiveController
     extends $AsyncNotifier<CuratedSetsArchiveState> {

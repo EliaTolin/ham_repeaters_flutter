@@ -35,7 +35,7 @@ final class CustomQuizBuilderControllerProvider extends $AsyncNotifierProvider<
 }
 
 String _$customQuizBuilderControllerHash() =>
-    r'28aa3ec8a8e10a52288be574527b6dd853f0f096';
+    r'4603d183742fa3942b5f4b92b1aab74540f593c0';
 
 abstract class _$CustomQuizBuilderController
     extends $AsyncNotifier<CustomQuizBuilderState> {
