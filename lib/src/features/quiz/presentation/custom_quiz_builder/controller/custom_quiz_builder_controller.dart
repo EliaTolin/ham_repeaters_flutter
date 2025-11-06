@@ -1,6 +1,7 @@
 import 'package:quiz_radioamatori/src/features/quiz/presentation/custom_quiz_builder/state/custom_quiz_builder_state/custom_quiz_builder_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_topics_with_stats/get_topics_with_stats_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'custom_quiz_builder_controller.g.dart';
 
@@ -61,7 +62,8 @@ class CustomQuizBuilderController extends _$CustomQuizBuilderController {
           availableTopics: topics,
         ),
       );
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       state = AsyncValue.error(e, StackTrace.current);
     }
   }

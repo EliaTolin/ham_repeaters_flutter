@@ -9,6 +9,9 @@ part 'get_profile_provider.g.dart';
 Future<Profile> getProfile(Ref ref) async {
   final repository = ref.watch(profileRepositoryProvider);
   final userId = await ref.read(getUserIdProvider.future);
-  final response = await repository.getProfile(userId!);
+  if (userId == null) {
+    throw Exception('User ID is null. Cannot fetch profile.');
+  }
+  final response = await repository.getProfile(userId);
   return response;
 }

@@ -11,6 +11,7 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/state
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_navigation_widget.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_progress_widget.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_page/widgets/quiz_question_widget.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 @RoutePage()
 class QuizPage extends HookConsumerWidget {
@@ -277,7 +278,8 @@ class QuizPage extends HookConsumerWidget {
       if (context.mounted) {
         context.router.pop();
       }
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       // Show error message but still navigate back
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

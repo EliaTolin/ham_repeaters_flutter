@@ -8,6 +8,7 @@ import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_topic_accu
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_total_accuracy/get_user_total_accuracy_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'statistics_controller.g.dart';
 
@@ -18,7 +19,7 @@ class StatisticsController extends _$StatisticsController {
     final userId = await ref.read(getUserIdProvider.future);
 
     if (userId == null) {
-      throw Exception('User ID not found');
+      throw Exception('User ID not found for statistics');
     }
     final totalAccuracy = await ref.read(getUserTotalAccuracyProvider(userId).future);
     final topicAccuracies = await ref.read(getUserTopicAccuracyProvider(userId).future);
@@ -46,7 +47,8 @@ class StatisticsController extends _$StatisticsController {
 
       state = AsyncValue.data(newState);
       return newState;
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       state = AsyncValue.error(e, StackTrace.current);
       rethrow;
     }
@@ -58,7 +60,7 @@ class StatisticsController extends _$StatisticsController {
       final userId = await ref.read(getUserIdProvider.future);
 
       if (userId == null) {
-        throw Exception('User ID not found');
+        throw Exception('User ID not found for statistics refresh');
       }
       final totalAccuracy = await ref.read(getUserTotalAccuracyProvider(userId).future);
       final topicAccuracies = await ref.read(getUserTopicAccuracyProvider(userId).future);
@@ -69,7 +71,8 @@ class StatisticsController extends _$StatisticsController {
         recentScores: recentScores,
       );
       state = AsyncValue.data(newState);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       state = AsyncValue.error(e, StackTrace.current);
     }
   }
@@ -77,9 +80,17 @@ class StatisticsController extends _$StatisticsController {
   Future<void> deleteAllQuizSet() async {
     final userId = await ref.read(getUserIdProvider.future);
     if (userId == null) {
-      throw Exception('User ID not found');
+      throw Exception('User ID not found for statistics delete all quiz set');
     }
-    await ref.read(deleteAllQuizSetProvider(userId).future);
-    await refresh();
+    try {
+      await ref.read(deleteAllQuizSetProvider(userId).future);
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+    }
+    try {
+      await refresh();
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+    }
   }
 }

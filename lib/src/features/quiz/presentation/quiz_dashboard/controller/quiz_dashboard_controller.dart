@@ -8,6 +8,7 @@ import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores/all
 import 'package:quiz_radioamatori/src/features/quiz/provider/curated_set_non_attempted/curated_set_non_attempted_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'quiz_dashboard_controller.g.dart';
 
@@ -15,20 +16,30 @@ part 'quiz_dashboard_controller.g.dart';
 class QuizDashboardController extends _$QuizDashboardController {
   @override
   Future<QuizDashboardState> build() async {
-    final recentScores = await ref.watch(recentQuizScoresProvider().future);
-    final allScores = await ref.watch(allQuizScoresProvider.future);
-    final userId = await ref.watch(getUserIdProvider.future);
+    try {
+      final recentScores = await ref.watch(recentQuizScoresProvider().future);
+      final allScores = await ref.watch(allQuizScoresProvider.future);
+      final userId = await ref.watch(getUserIdProvider.future);
 
-    final curatedSetsPreviews = userId != null
-        ? await ref.watch(curatedSetNonAttemptedProvider(userId).future)
-        : <CuratedSetPreview>[];
-    final profile = await ref.watch(getProfileProvider.future);
-    return _loadDashboardData(
-      recentScores: recentScores,
-      allScores: allScores,
-      profile: profile,
-      curatedSetsPreviews: curatedSetsPreviews,
-    );
+      final curatedSetsPreviews = userId != null
+          ? await ref.watch(curatedSetNonAttemptedProvider(userId).future)
+          : <CuratedSetPreview>[];
+
+      final profile = await ref.watch(getProfileProvider.future);
+      return _loadDashboardData(
+        recentScores: recentScores,
+        allScores: allScores,
+        profile: profile,
+        curatedSetsPreviews: curatedSetsPreviews,
+      );
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+      return QuizDashboardState(
+        recentScores: [],
+        curatedSetsPreviews: [],
+        errorMessage: 'Errore nel caricamento dei dati: $e',
+      );
+    }
   }
 
   Future<QuizDashboardState> _loadDashboardData({
@@ -51,7 +62,8 @@ class QuizDashboardController extends _$QuizDashboardController {
         profile: profile,
         curatedSetsPreviews: curatedSetsPreviews,
       );
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       return QuizDashboardState(
         recentScores: [],
         curatedSetsPreviews: [],

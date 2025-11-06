@@ -14,7 +14,7 @@ class QuizSetScoreMapper {
       accuracyPct: model.accuracyPct,
       exam: model.exam,
       customTopics: model.customTopics,
-      startedAt: DateTime.parse(model.startedAt),
+      startedAt: model.startedAt.isNotEmpty ? DateTime.tryParse(model.startedAt) : null,
     );
   }
 }

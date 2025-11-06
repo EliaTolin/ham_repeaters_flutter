@@ -3,6 +3,7 @@ import 'package:quiz_radioamatori/src/features/quiz/presentation/curated_sets_ar
 import 'package:quiz_radioamatori/src/features/quiz/provider/curated_set_non_attempted/curated_set_non_attempted_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_all_published_curated_sets/get_all_published_curated_sets_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'curated_sets_archive_controller.g.dart';
 
@@ -43,7 +44,8 @@ class CuratedSetsArchiveController extends _$CuratedSetsArchiveController {
           .toList();
 
       return CuratedSetsArchiveState(items: items);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       return CuratedSetsArchiveState(errorMessage: 'Errore: $e');
     }
   }

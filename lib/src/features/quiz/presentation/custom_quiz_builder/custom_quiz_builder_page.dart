@@ -325,7 +325,7 @@ class CustomQuizBuilderPage extends HookConsumerWidget {
       final userId = await ref.read(getUserIdProvider.future);
 
       if (userId == null) {
-        throw Exception('User ID not found');
+        throw Exception('User ID not found for custom quiz builder');
       }
 
       // Convert selected topics to TopicRequest

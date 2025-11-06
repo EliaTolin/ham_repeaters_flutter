@@ -12,7 +12,7 @@ Future<QuizSetResponse> getQuizFromCuratedSet(
 ) async {
   final userId = await ref.read(getUserIdProvider.future);
   if (userId == null) {
-    throw Exception('User ID not found');
+    throw Exception('User ID not found for get quiz from curated set');
   }
   final repository = ref.read(quizRepositoryProvider);
   return repository.getQuizFromCuratedSet(userId, curatedSetId);

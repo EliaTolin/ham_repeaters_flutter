@@ -179,7 +179,7 @@ class MarathonQuizPage extends HookConsumerWidget {
     try {
       final userId = await ref.read(getUserIdProvider.future);
       if (userId == null) {
-        throw Exception('User ID not found');
+        throw Exception('User ID not found for marathon quiz');
       }
 
       if (state.selectedTopicDetails == null) return;

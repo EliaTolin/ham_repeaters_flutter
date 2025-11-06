@@ -8,6 +8,7 @@ import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_total_accu
 import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart'
     show recentQuizScoresProvider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'quiz_results_controller.g.dart';
 
@@ -15,14 +16,20 @@ part 'quiz_results_controller.g.dart';
 class QuizResultsController extends _$QuizResultsController {
   @override
   Future<QuizSetScore?> build(String setId) async {
-    return _loadQuizResults(setId);
+    try {
+      return await _loadQuizResults(setId);
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+      rethrow;
+    }
   }
 
   Future<QuizSetScore?> _loadQuizResults(String setId) async {
     try {
       final repository = ref.read(quizRepositoryProvider);
       return await repository.getQuizResults(setId);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       // Re-throw the error to be handled by the UI
       rethrow;
     }
@@ -30,11 +37,19 @@ class QuizResultsController extends _$QuizResultsController {
 
   Future<void> refresh() async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() => _loadQuizResults(setId));
+    try {
+      state = await AsyncValue.guard(() => _loadQuizResults(setId));
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+    }
   }
 
   Future<void> deleteQuizSet() async {
-    await ref.read(deleteQuizSetProvider(setId).future);
+    try {
+      await ref.read(deleteQuizSetProvider(setId).future);
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
         ..invalidate(recentQuizScoresProvider)

@@ -1,6 +1,7 @@
 import 'package:quiz_radioamatori/src/features/quiz/presentation/marathon_quiz/state/marathon_state/marathon_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_topics_with_stats/get_topics_with_stats_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'marathon_controller.g.dart';
 
@@ -40,7 +41,8 @@ class MarathonController extends _$MarathonController {
           availableTopics: topics,
         ),
       );
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       state = AsyncValue.error(e, StackTrace.current);
     }
   }

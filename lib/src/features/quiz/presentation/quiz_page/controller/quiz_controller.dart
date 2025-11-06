@@ -10,6 +10,7 @@ import 'package:quiz_radioamatori/src/features/quiz/provider/get_quiz_set/get_qu
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_topics/get_topics_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/set_quiz_finished/set_quiz_finished_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'quiz_controller.g.dart';
 
@@ -24,7 +25,7 @@ class QuizController extends _$QuizController {
     final userId = await ref.read(getUserIdProvider.future);
 
     if (userId == null) {
-      throw Exception('User ID not found');
+      throw Exception('User ID not found for quiz');
     }
 
     if ((examType != null && topics != null) && curatedSetId != null) {
@@ -53,7 +54,8 @@ class QuizController extends _$QuizController {
           );
         });
         return state.value;
-      } catch (e) {
+      } catch (e, st) {
+        await Sentry.captureException(e, stackTrace: st);
         state = AsyncError(e, StackTrace.current);
       }
     } else if (topics != null) {
@@ -125,7 +127,8 @@ class QuizController extends _$QuizController {
         chosenLetter: chosenLetter,
         timeMs: timeMs,
       );
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       // Handle error - could show a snackbar or update error state
       // Error is silently handled to avoid disrupting quiz flow
     }
@@ -178,7 +181,8 @@ class QuizController extends _$QuizController {
         isCompleted: true,
       );
       state = AsyncValue.data(completedState);
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       final newState = currentState.copyWith(
         isSubmitting: false,
         errorMessage: 'Failed to submit quiz: $e',
@@ -191,6 +195,10 @@ class QuizController extends _$QuizController {
     final currentState = state.value;
     if (currentState == null) return;
 
-    await ref.read(deleteQuizSetProvider(currentState.quizSet.quizSetId).future);
+    try {
+      await ref.read(deleteQuizSetProvider(currentState.quizSet.quizSetId).future);
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+    }
   }
 }

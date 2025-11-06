@@ -253,7 +253,7 @@ class _CuratedCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       item.description?.trim().isNotEmpty ?? false
-                          ? item.description!.trim()
+                          ? (item.description ?? '').trim()
                           : 'Domande: ${item.questionsCount}',
                       maxLines: 5,
                       overflow: TextOverflow.ellipsis,

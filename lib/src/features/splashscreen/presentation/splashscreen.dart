@@ -37,7 +37,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   Future<void> _initializeNavigation() async {
     try {
-      late PageRouteInfo route;
+      final onboarding = await ref.read(getHasSeenOnboardingProvider.future);
+      var userID = await ref.read(getUserIdProvider.future);
+      userID ??= await ref.read(anonymousSignInProvider.future);
+      final PageRouteInfo route = onboarding ? const HomeRoute() : const OnboardingRoute();
       try {
         final packageInfo = await ref.read(packageInfoProvider.future);
         final installedVersion = packageInfo.version;
@@ -68,19 +71,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         await Sentry.captureException(e, stackTrace: stackTrace);
       }
 
-      final onboarding = await ref.read(getHasSeenOnboardingProvider.future);
-      var userID = await ref.read(getUserIdProvider.future);
-      userID ??= await ref.read(anonymousSignInProvider.future);
+      
       log('userId: $userID');
       if (userID != null) {
         Sentry.configureScope(
           (scope) => scope.setUser(SentryUser(id: userID)),
         );
-      }
-      if (onboarding) {
-        route = const HomeRoute();
-      } else {
-        route = const OnboardingRoute();
       }
       if (mounted && !_navigated) {
         _navigated = true;

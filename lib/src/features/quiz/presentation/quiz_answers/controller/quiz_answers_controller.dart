@@ -1,6 +1,7 @@
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'quiz_answers_controller.g.dart';
 
@@ -19,7 +20,8 @@ class QuizAnswersController extends _$QuizAnswersController {
       );
 
       return result;
-    } catch (e) {
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       rethrow;
     }
   }

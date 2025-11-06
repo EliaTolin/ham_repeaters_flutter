@@ -603,17 +603,13 @@ class OnboardingPage extends HookConsumerWidget {
     }
   }
 
-  Future<void> _continueAsGuest(BuildContext context, WidgetRef? ref) async {
+  Future<void> _continueAsGuest(BuildContext context, WidgetRef ref) async {
     try {
       // Segna onboarding come visto
-      if (ref != null) {
-        await ref.read(setOnboardingSeenProvider.future);
-      }
+      await ref.read(setOnboardingSeenProvider.future);
       // Fai sign in anonimo
-      if (ref != null) {
-        await ref.read(anonymousSignInProvider.future);
-        ref.invalidate(getUserIdProvider);
-      }
+      await ref.read(anonymousSignInProvider.future);
+      ref.invalidate(getUserIdProvider);  
       // Vai alla home
       if (context.mounted) {
         await context.router.replace(const HomeRoute());
@@ -626,7 +622,7 @@ class OnboardingPage extends HookConsumerWidget {
     }
   }
 
-  Future<void> _onContinueAsGuest(BuildContext context, WidgetRef? ref) async {
+  Future<void> _onContinueAsGuest(BuildContext context, WidgetRef ref) async {
     await _continueAsGuest(context, ref);
   }
 
