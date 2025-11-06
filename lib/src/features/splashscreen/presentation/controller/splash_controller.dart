@@ -27,7 +27,6 @@ class SplashController extends _$SplashController {
       userId ??= await ref.read(anonymousSignInProvider.future);
       final targetRoute = hasSeenOnboarding ? const HomeRoute() : const OnboardingRoute();
       final packageInfo = await ref.read(packageInfoProvider.future);
-      await Future.delayed(const Duration(seconds: 30));
       try {
         await _ensureMinimumVersion(packageInfo);
       } on UpdateRequiredException catch (error) {
