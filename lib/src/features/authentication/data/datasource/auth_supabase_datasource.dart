@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quiz_radioamatori/clients/supabase/supabase_client/supabase_client.dart';
 import 'package:quiz_radioamatori/src/features/authentication/data/datasource/auth_datasource.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
@@ -170,12 +171,12 @@ class AuthSupabaseDatasource implements AuthDatasource {
     try {
       final response = await supabaseClient.auth.signInAnonymously();
       if (response.user == null) {
-        throw Exception('Anonymous Sign-In failed.');
+        throw Exception('Anonymous Sign-In failed');
       }
       final userId = response.user!.id;
       return userId;
-    } catch (e) {
-      log('Error during Anonymous Sign-In: $e');
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
       rethrow;
     }
   }
