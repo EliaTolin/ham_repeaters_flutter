@@ -42,7 +42,10 @@ class SplashScreen extends ConsumerWidget {
                       playStorePackageName: dialogData.playStorePackageName,
                     );
                   } catch (error, stackTrace) {
-                    await Sentry.captureException(error, stackTrace: stackTrace);
+                    await Sentry.captureException(
+                      error,
+                      stackTrace: stackTrace,
+                    );
                   }
                   if (!context.mounted) return;
                   await context.router.replace(dialogData.fallbackRoute);
@@ -64,13 +67,169 @@ class _SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      body: Center(
-        child: SvgPicture.asset(
-          SvgImageAssets.aurora,
-          width: 200,
-          height: 200,
+      extendBody: true,
+      backgroundColor: Colors.transparent,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              colorScheme.primary.withValues(alpha: 0.85),
+              colorScheme.secondary.withValues(alpha: 0.65),
+              colorScheme.surface,
+            ],
+          ),
         ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned(
+              top: -120,
+              left: -80,
+              child: _BlurCircle(
+                diameter: 260,
+                color: colorScheme.onPrimary.withValues(alpha: 0.08),
+              ),
+            ),
+            Positioned(
+              right: -100,
+              bottom: -140,
+              child: _BlurCircle(
+                diameter: 320,
+                color: colorScheme.primaryContainer.withValues(alpha: 0.12),
+              ),
+            ),
+            Center(
+              child: TweenAnimationBuilder<double>(
+                duration: const Duration(milliseconds: 900),
+                tween: Tween(begin: 0.8, end: 1),
+                curve: Curves.easeOutBack,
+                builder: (context, scale, child) {
+                  return Transform.scale(
+                    scale: scale,
+                    child: child,
+                  );
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: colorScheme.surface.withValues(alpha: 0.85),
+                        borderRadius: BorderRadius.circular(28),
+                        boxShadow: [
+                          BoxShadow(
+                            color: colorScheme.shadow.withValues(alpha: 0.12),
+                            offset: const Offset(0, 18),
+                            blurRadius: 36,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 36,
+                        ),
+                        child: TweenAnimationBuilder<double>(
+                          tween: Tween(begin: 0, end: 1),
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeOutCubic,
+                          builder: (context, opacity, child) {
+                            return Opacity(
+                              opacity: opacity,
+                              child: child,
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            SvgImageAssets.aurora,
+                            width: 180,
+                            height: 180,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    TweenAnimationBuilder<double>(
+                      duration: const Duration(milliseconds: 1000),
+                      tween: Tween(begin: 0, end: 1),
+                      curve: Curves.easeOut,
+                      builder: (context, value, child) {
+                        return Opacity(
+                          opacity: value,
+                          child: Transform.translate(
+                            offset: Offset(0, (1 - value) * 16),
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Text(
+                            'Quiz Radioamatori',
+                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: colorScheme.onSecondaryContainer,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'Caricamento...',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: colorScheme.onSecondaryContainer,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                          ),
+                          SizedBox(
+                            width: 48,
+                            height: 48,
+                            child: CircularProgressIndicator.adaptive(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                colorScheme.onSecondaryContainer,
+                              ),
+                              strokeWidth: 3,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BlurCircle extends StatelessWidget {
+  const _BlurCircle({
+    required this.diameter,
+    required this.color,
+  });
+
+  final double diameter;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: diameter,
+      height: diameter,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color,
+        boxShadow: [
+          BoxShadow(
+            color: color,
+            blurRadius: diameter * 0.35,
+            spreadRadius: diameter * 0.25,
+          ),
+        ],
       ),
     );
   }
