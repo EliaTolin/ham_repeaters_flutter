@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question_result/quiz_set_question_result.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic/topic.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/get_topics/get_topics_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers/quiz_answers_provider.dart';
@@ -106,7 +106,7 @@ class _AnswersList extends StatefulWidget {
     required this.topics,
   });
 
-  final List<QuizSetQuestionResultModel> answers;
+  final List<QuizSetQuestionResult> answers;
   final List<Topic> topics;
 
   @override
@@ -116,8 +116,8 @@ class _AnswersList extends StatefulWidget {
 class _AnswersListState extends State<_AnswersList> {
   bool _showIncorrectFirst = true;
 
-  List<QuizSetQuestionResultModel> get _sortedAnswers {
-    final sorted = List<QuizSetQuestionResultModel>.from(widget.answers)
+  List<QuizSetQuestionResult> get _sortedAnswers {
+    final sorted = List<QuizSetQuestionResult>.from(widget.answers)
       ..sort((a, b) {
         if (_showIncorrectFirst) {
           // Prima sbagliate, poi corrette
@@ -218,7 +218,7 @@ class _AnswerCard extends StatelessWidget {
     required this.topicLabel,
   });
 
-  final QuizSetQuestionResultModel answer;
+  final QuizSetQuestionResult answer;
   final int questionNumber;
   final String topicLabel;
 
@@ -357,7 +357,7 @@ class _AnswerCard extends StatelessWidget {
                 const SizedBox(height: 16),
 
                 // Question text
-                if (answer.questionText != null && answer.questionText!.isNotEmpty) ...[
+                if (answer.questionText.isNotEmpty) ...[
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
@@ -369,7 +369,7 @@ class _AnswerCard extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      answer.questionText!,
+                      answer.questionText,
                       style: theme.textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w500,
                         height: 1.5,
@@ -391,7 +391,7 @@ class _AnswerCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   _AnswerTile(
                     label: 'Risposta corretta',
-                    value: answer.correctAnswer ?? 'N/A',
+                    value: answer.correctAnswer,
                     isCorrect: true,
                     isCorrectAnswer: true,
                   ),

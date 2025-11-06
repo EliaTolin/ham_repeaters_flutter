@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_response_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/curated_set_model/curated_set_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/curated_set_preview_model/curated_set_preview_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_question_result_model/quiz_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model/quiz_set_question_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_response_model/quiz_set_response_model.dart';
@@ -124,19 +123,6 @@ class QuizDataSourceSupabase {
     }
   }
 
-  Future<void> saveQuizResults({
-    required String setId,
-    required List<Map<String, dynamic>> results,
-  }) async {
-    try {
-      // Insert all results at once
-      await _supabase.from('quiz_set_question_result').insert(results);
-    } catch (e, st) {
-      await Sentry.captureException(e, stackTrace: st);
-      throw Exception('Failed to save quiz results: $e');
-    }
-  }
-
   Future<List<QuizSetScoreModel>> getAllQuizScores() async {
     try {
       final response =
@@ -164,14 +150,14 @@ class QuizDataSourceSupabase {
     }
   }
 
-  Future<List<QuizQuestionResultModel>> getQuestionStatistics() async {
+  Future<List<QuizSetQuestionResultModel>> getQuestionStatistics() async {
     try {
       final response = await _supabase
           .from('quiz_set_question_result')
           .select()
           .order('answered_at', ascending: false);
 
-      return (response as List).map((json) => QuizQuestionResultModel.fromJson(json)).toList();
+      return (response as List).map((json) => QuizSetQuestionResultModel.fromJson(json)).toList();
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
       throw Exception('Failed to get question statistics: $e');

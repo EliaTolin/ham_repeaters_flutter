@@ -20,12 +20,12 @@ mixin _$QuizSetQuestionResult {
   ExamType get exam;
   String get correctLetter;
   bool get isCorrect;
+  String get correctAnswer;
+  String get questionText;
   String? get chosenLetter;
   DateTime? get answeredAt;
   int? get timeMs;
   String? get chosenAnswer;
-  String? get correctAnswer;
-  String? get questionText;
 
   /// Create a copy of QuizSetQuestionResult
   /// with the given fields replaced by the non-null parameter values.
@@ -50,17 +50,17 @@ mixin _$QuizSetQuestionResult {
                 other.correctLetter == correctLetter) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect) &&
+            (identical(other.correctAnswer, correctAnswer) ||
+                other.correctAnswer == correctAnswer) &&
+            (identical(other.questionText, questionText) ||
+                other.questionText == questionText) &&
             (identical(other.chosenLetter, chosenLetter) ||
                 other.chosenLetter == chosenLetter) &&
             (identical(other.answeredAt, answeredAt) ||
                 other.answeredAt == answeredAt) &&
             (identical(other.timeMs, timeMs) || other.timeMs == timeMs) &&
             (identical(other.chosenAnswer, chosenAnswer) ||
-                other.chosenAnswer == chosenAnswer) &&
-            (identical(other.correctAnswer, correctAnswer) ||
-                other.correctAnswer == correctAnswer) &&
-            (identical(other.questionText, questionText) ||
-                other.questionText == questionText));
+                other.chosenAnswer == chosenAnswer));
   }
 
   @override
@@ -72,16 +72,16 @@ mixin _$QuizSetQuestionResult {
       exam,
       correctLetter,
       isCorrect,
+      correctAnswer,
+      questionText,
       chosenLetter,
       answeredAt,
       timeMs,
-      chosenAnswer,
-      correctAnswer,
-      questionText);
+      chosenAnswer);
 
   @override
   String toString() {
-    return 'QuizSetQuestionResult(setId: $setId, questionId: $questionId, topicName: $topicName, exam: $exam, correctLetter: $correctLetter, isCorrect: $isCorrect, chosenLetter: $chosenLetter, answeredAt: $answeredAt, timeMs: $timeMs, chosenAnswer: $chosenAnswer, correctAnswer: $correctAnswer, questionText: $questionText)';
+    return 'QuizSetQuestionResult(setId: $setId, questionId: $questionId, topicName: $topicName, exam: $exam, correctLetter: $correctLetter, isCorrect: $isCorrect, correctAnswer: $correctAnswer, questionText: $questionText, chosenLetter: $chosenLetter, answeredAt: $answeredAt, timeMs: $timeMs, chosenAnswer: $chosenAnswer)';
   }
 }
 
@@ -98,12 +98,12 @@ abstract mixin class $QuizSetQuestionResultCopyWith<$Res> {
       ExamType exam,
       String correctLetter,
       bool isCorrect,
+      String correctAnswer,
+      String questionText,
       String? chosenLetter,
       DateTime? answeredAt,
       int? timeMs,
-      String? chosenAnswer,
-      String? correctAnswer,
-      String? questionText});
+      String? chosenAnswer});
 }
 
 /// @nodoc
@@ -125,12 +125,12 @@ class _$QuizSetQuestionResultCopyWithImpl<$Res>
     Object? exam = null,
     Object? correctLetter = null,
     Object? isCorrect = null,
+    Object? correctAnswer = null,
+    Object? questionText = null,
     Object? chosenLetter = freezed,
     Object? answeredAt = freezed,
     Object? timeMs = freezed,
     Object? chosenAnswer = freezed,
-    Object? correctAnswer = freezed,
-    Object? questionText = freezed,
   }) {
     return _then(_self.copyWith(
       setId: null == setId
@@ -157,6 +157,14 @@ class _$QuizSetQuestionResultCopyWithImpl<$Res>
           ? _self.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
+      correctAnswer: null == correctAnswer
+          ? _self.correctAnswer
+          : correctAnswer // ignore: cast_nullable_to_non_nullable
+              as String,
+      questionText: null == questionText
+          ? _self.questionText
+          : questionText // ignore: cast_nullable_to_non_nullable
+              as String,
       chosenLetter: freezed == chosenLetter
           ? _self.chosenLetter
           : chosenLetter // ignore: cast_nullable_to_non_nullable
@@ -172,14 +180,6 @@ class _$QuizSetQuestionResultCopyWithImpl<$Res>
       chosenAnswer: freezed == chosenAnswer
           ? _self.chosenAnswer
           : chosenAnswer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      correctAnswer: freezed == correctAnswer
-          ? _self.correctAnswer
-          : correctAnswer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      questionText: freezed == questionText
-          ? _self.questionText
-          : questionText // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -285,12 +285,12 @@ extension QuizSetQuestionResultPatterns on QuizSetQuestionResult {
             ExamType exam,
             String correctLetter,
             bool isCorrect,
+            String correctAnswer,
+            String questionText,
             String? chosenLetter,
             DateTime? answeredAt,
             int? timeMs,
-            String? chosenAnswer,
-            String? correctAnswer,
-            String? questionText)?
+            String? chosenAnswer)?
         $default, {
     required TResult orElse(),
   }) {
@@ -304,12 +304,12 @@ extension QuizSetQuestionResultPatterns on QuizSetQuestionResult {
             _that.exam,
             _that.correctLetter,
             _that.isCorrect,
+            _that.correctAnswer,
+            _that.questionText,
             _that.chosenLetter,
             _that.answeredAt,
             _that.timeMs,
-            _that.chosenAnswer,
-            _that.correctAnswer,
-            _that.questionText);
+            _that.chosenAnswer);
       case _:
         return orElse();
     }
@@ -337,12 +337,12 @@ extension QuizSetQuestionResultPatterns on QuizSetQuestionResult {
             ExamType exam,
             String correctLetter,
             bool isCorrect,
+            String correctAnswer,
+            String questionText,
             String? chosenLetter,
             DateTime? answeredAt,
             int? timeMs,
-            String? chosenAnswer,
-            String? correctAnswer,
-            String? questionText)
+            String? chosenAnswer)
         $default,
   ) {
     final _that = this;
@@ -355,12 +355,12 @@ extension QuizSetQuestionResultPatterns on QuizSetQuestionResult {
             _that.exam,
             _that.correctLetter,
             _that.isCorrect,
+            _that.correctAnswer,
+            _that.questionText,
             _that.chosenLetter,
             _that.answeredAt,
             _that.timeMs,
-            _that.chosenAnswer,
-            _that.correctAnswer,
-            _that.questionText);
+            _that.chosenAnswer);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -387,12 +387,12 @@ extension QuizSetQuestionResultPatterns on QuizSetQuestionResult {
             ExamType exam,
             String correctLetter,
             bool isCorrect,
+            String correctAnswer,
+            String questionText,
             String? chosenLetter,
             DateTime? answeredAt,
             int? timeMs,
-            String? chosenAnswer,
-            String? correctAnswer,
-            String? questionText)?
+            String? chosenAnswer)?
         $default,
   ) {
     final _that = this;
@@ -405,12 +405,12 @@ extension QuizSetQuestionResultPatterns on QuizSetQuestionResult {
             _that.exam,
             _that.correctLetter,
             _that.isCorrect,
+            _that.correctAnswer,
+            _that.questionText,
             _that.chosenLetter,
             _that.answeredAt,
             _that.timeMs,
-            _that.chosenAnswer,
-            _that.correctAnswer,
-            _that.questionText);
+            _that.chosenAnswer);
       case _:
         return null;
     }
@@ -427,12 +427,12 @@ class _QuizSetQuestionResult implements QuizSetQuestionResult {
       required this.exam,
       required this.correctLetter,
       required this.isCorrect,
+      required this.correctAnswer,
+      required this.questionText,
       this.chosenLetter,
       this.answeredAt,
       this.timeMs,
-      this.chosenAnswer,
-      this.correctAnswer,
-      this.questionText});
+      this.chosenAnswer});
 
   @override
   final String setId;
@@ -447,6 +447,10 @@ class _QuizSetQuestionResult implements QuizSetQuestionResult {
   @override
   final bool isCorrect;
   @override
+  final String correctAnswer;
+  @override
+  final String questionText;
+  @override
   final String? chosenLetter;
   @override
   final DateTime? answeredAt;
@@ -454,10 +458,6 @@ class _QuizSetQuestionResult implements QuizSetQuestionResult {
   final int? timeMs;
   @override
   final String? chosenAnswer;
-  @override
-  final String? correctAnswer;
-  @override
-  final String? questionText;
 
   /// Create a copy of QuizSetQuestionResult
   /// with the given fields replaced by the non-null parameter values.
@@ -483,17 +483,17 @@ class _QuizSetQuestionResult implements QuizSetQuestionResult {
                 other.correctLetter == correctLetter) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect) &&
+            (identical(other.correctAnswer, correctAnswer) ||
+                other.correctAnswer == correctAnswer) &&
+            (identical(other.questionText, questionText) ||
+                other.questionText == questionText) &&
             (identical(other.chosenLetter, chosenLetter) ||
                 other.chosenLetter == chosenLetter) &&
             (identical(other.answeredAt, answeredAt) ||
                 other.answeredAt == answeredAt) &&
             (identical(other.timeMs, timeMs) || other.timeMs == timeMs) &&
             (identical(other.chosenAnswer, chosenAnswer) ||
-                other.chosenAnswer == chosenAnswer) &&
-            (identical(other.correctAnswer, correctAnswer) ||
-                other.correctAnswer == correctAnswer) &&
-            (identical(other.questionText, questionText) ||
-                other.questionText == questionText));
+                other.chosenAnswer == chosenAnswer));
   }
 
   @override
@@ -505,16 +505,16 @@ class _QuizSetQuestionResult implements QuizSetQuestionResult {
       exam,
       correctLetter,
       isCorrect,
+      correctAnswer,
+      questionText,
       chosenLetter,
       answeredAt,
       timeMs,
-      chosenAnswer,
-      correctAnswer,
-      questionText);
+      chosenAnswer);
 
   @override
   String toString() {
-    return 'QuizSetQuestionResult(setId: $setId, questionId: $questionId, topicName: $topicName, exam: $exam, correctLetter: $correctLetter, isCorrect: $isCorrect, chosenLetter: $chosenLetter, answeredAt: $answeredAt, timeMs: $timeMs, chosenAnswer: $chosenAnswer, correctAnswer: $correctAnswer, questionText: $questionText)';
+    return 'QuizSetQuestionResult(setId: $setId, questionId: $questionId, topicName: $topicName, exam: $exam, correctLetter: $correctLetter, isCorrect: $isCorrect, correctAnswer: $correctAnswer, questionText: $questionText, chosenLetter: $chosenLetter, answeredAt: $answeredAt, timeMs: $timeMs, chosenAnswer: $chosenAnswer)';
   }
 }
 
@@ -533,12 +533,12 @@ abstract mixin class _$QuizSetQuestionResultCopyWith<$Res>
       ExamType exam,
       String correctLetter,
       bool isCorrect,
+      String correctAnswer,
+      String questionText,
       String? chosenLetter,
       DateTime? answeredAt,
       int? timeMs,
-      String? chosenAnswer,
-      String? correctAnswer,
-      String? questionText});
+      String? chosenAnswer});
 }
 
 /// @nodoc
@@ -560,12 +560,12 @@ class __$QuizSetQuestionResultCopyWithImpl<$Res>
     Object? exam = null,
     Object? correctLetter = null,
     Object? isCorrect = null,
+    Object? correctAnswer = null,
+    Object? questionText = null,
     Object? chosenLetter = freezed,
     Object? answeredAt = freezed,
     Object? timeMs = freezed,
     Object? chosenAnswer = freezed,
-    Object? correctAnswer = freezed,
-    Object? questionText = freezed,
   }) {
     return _then(_QuizSetQuestionResult(
       setId: null == setId
@@ -592,6 +592,14 @@ class __$QuizSetQuestionResultCopyWithImpl<$Res>
           ? _self.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
+      correctAnswer: null == correctAnswer
+          ? _self.correctAnswer
+          : correctAnswer // ignore: cast_nullable_to_non_nullable
+              as String,
+      questionText: null == questionText
+          ? _self.questionText
+          : questionText // ignore: cast_nullable_to_non_nullable
+              as String,
       chosenLetter: freezed == chosenLetter
           ? _self.chosenLetter
           : chosenLetter // ignore: cast_nullable_to_non_nullable
@@ -607,14 +615,6 @@ class __$QuizSetQuestionResultCopyWithImpl<$Res>
       chosenAnswer: freezed == chosenAnswer
           ? _self.chosenAnswer
           : chosenAnswer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      correctAnswer: freezed == correctAnswer
-          ? _self.correctAnswer
-          : correctAnswer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      questionText: freezed == questionText
-          ? _self.questionText
-          : questionText // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }

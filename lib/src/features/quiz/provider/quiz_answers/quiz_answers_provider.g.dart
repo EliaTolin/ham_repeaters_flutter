@@ -13,12 +13,12 @@ part of 'quiz_answers_provider.dart';
 const quizAnswersProvider = QuizAnswersFamily._();
 
 final class QuizAnswersProvider extends $FunctionalProvider<
-        AsyncValue<List<QuizSetQuestionResultModel>>,
-        List<QuizSetQuestionResultModel>,
-        FutureOr<List<QuizSetQuestionResultModel>>>
+        AsyncValue<List<QuizSetQuestionResult>>,
+        List<QuizSetQuestionResult>,
+        FutureOr<List<QuizSetQuestionResult>>>
     with
-        $FutureModifier<List<QuizSetQuestionResultModel>>,
-        $FutureProvider<List<QuizSetQuestionResultModel>> {
+        $FutureModifier<List<QuizSetQuestionResult>>,
+        $FutureProvider<List<QuizSetQuestionResult>> {
   const QuizAnswersProvider._(
       {required QuizAnswersFamily super.from, required String super.argument})
       : super(
@@ -41,12 +41,12 @@ final class QuizAnswersProvider extends $FunctionalProvider<
 
   @$internal
   @override
-  $FutureProviderElement<List<QuizSetQuestionResultModel>> $createElement(
+  $FutureProviderElement<List<QuizSetQuestionResult>> $createElement(
           $ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<QuizSetQuestionResultModel>> create(Ref ref) {
+  FutureOr<List<QuizSetQuestionResult>> create(Ref ref) {
     final argument = this.argument as String;
     return quizAnswers(
       ref,
@@ -65,11 +65,11 @@ final class QuizAnswersProvider extends $FunctionalProvider<
   }
 }
 
-String _$quizAnswersHash() => r'0197c86c3dcaedfbd1ed5ddbf47629602ffe5b0c';
+String _$quizAnswersHash() => r'340373e06202b3f5e631c10b0f3270b2813bf1a9';
 
 final class QuizAnswersFamily extends $Family
     with
-        $FunctionalFamilyOverride<FutureOr<List<QuizSetQuestionResultModel>>,
+        $FunctionalFamilyOverride<FutureOr<List<QuizSetQuestionResult>>,
             String> {
   const QuizAnswersFamily._()
       : super(

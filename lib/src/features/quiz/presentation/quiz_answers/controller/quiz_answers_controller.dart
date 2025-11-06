@@ -1,5 +1,5 @@
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question_result/quiz_set_question_result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -8,7 +8,7 @@ part 'quiz_answers_controller.g.dart';
 @riverpod
 class QuizAnswersController extends _$QuizAnswersController {
   @override
-  Future<List<QuizSetQuestionResultModel>> build(String setId) async {
+  Future<List<QuizSetQuestionResult>> build(String setId) async {
     try {
       final repository = ref.read(quizRepositoryProvider);
 

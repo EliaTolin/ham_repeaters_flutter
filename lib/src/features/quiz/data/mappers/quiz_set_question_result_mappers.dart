@@ -7,20 +7,7 @@ class QuizSetQuestionResultMapper
     implements Mapper<QuizSetQuestionResult, QuizSetQuestionResultModel> {
   @override
   QuizSetQuestionResultModel toModel(QuizSetQuestionResult entity) {
-    return QuizSetQuestionResultModel(
-      setId: entity.setId,
-      questionId: entity.questionId,
-      topicName: entity.topicName,
-      exam: entity.exam.value,
-      correctLetter: entity.correctLetter,
-      isCorrect: entity.isCorrect,
-      chosenLetter: entity.chosenLetter,
-      answeredAt: entity.answeredAt?.toIso8601String() ?? '',
-      timeMs: entity.timeMs ?? 0,
-      chosenAnswer: entity.chosenAnswer,
-      correctAnswer: entity.correctAnswer,
-      questionText: entity.questionText,
-    );
+    throw UnimplementedError();
   }
 
   @override
@@ -33,7 +20,7 @@ class QuizSetQuestionResultMapper
       correctLetter: model.correctLetter,
       isCorrect: model.isCorrect,
       chosenLetter: model.chosenLetter,
-      answeredAt: model.answeredAt.isNotEmpty ? DateTime.parse(model.answeredAt) : null,
+      answeredAt: model.answeredAt,
       timeMs: model.timeMs,
       chosenAnswer: model.chosenAnswer,
       correctAnswer: model.correctAnswer,

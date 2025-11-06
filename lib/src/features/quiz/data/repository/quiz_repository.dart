@@ -1,18 +1,17 @@
 import 'package:quiz_radioamatori/src/features/quiz/data/datasource/quiz_datasource_supabase.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/curated_set_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/curated_set_preview_mappers.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_question_result_mappers.dart';
+import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_question_result_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/quiz_set_score_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_accuracy_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/topic_with_stats_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/mappers/total_accuracy_mappers.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_model/quiz_set_question_model.dart';
-import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_question_result_model/quiz_set_question_result_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/curated_set/curated_set.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/curated_set_preview/curated_set_preview.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/exam_type.dart';
-import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_question_result/quiz_question_result.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question_result/quiz_set_question_result.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_response/quiz_set_response.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic/topic.dart';
@@ -34,6 +33,7 @@ class QuizRepository {
   final TopicWithStatsMapper _topicWithStatsMapper = TopicWithStatsMapper();
   final TopicAccuracyMapper _topicAccuracyMapper = TopicAccuracyMapper();
   final TotalAccuracyMapper _totalAccuracyMapper = TotalAccuracyMapper();
+  final QuizSetQuestionResultMapper _quizSetQuestionResultMapper = QuizSetQuestionResultMapper();
 
   // Quiz Set methods
   Future<QuizSetResponse> getQuizSet({
@@ -73,16 +73,6 @@ class QuizRepository {
     return _scoreMapper.fromModel(model);
   }
 
-  Future<void> saveQuizResults({
-    required String setId,
-    required List<Map<String, dynamic>> results,
-  }) async {
-    return _dataSource.saveQuizResults(
-      setId: setId,
-      results: results,
-    );
-  }
-
   Future<List<QuizSetScore>> getAllQuizScores() async {
     final models = await _dataSource.getAllQuizScores();
     return models.map(_scoreMapper.fromModel).toList();
@@ -93,10 +83,9 @@ class QuizRepository {
     return models.map(_scoreMapper.fromModel).toList();
   }
 
-  Future<List<QuizQuestionResult>> getQuestionStatistics() async {
-    final resultMapper = QuizQuestionResultMapper();
+  Future<List<QuizSetQuestionResult>> getQuestionStatistics() async {
     final models = await _dataSource.getQuestionStatistics();
-    return models.map(resultMapper.fromModel).toList();
+    return models.map(_quizSetQuestionResultMapper.fromModel).toList();
   }
 
   // Quiz Answers methods
@@ -147,8 +136,10 @@ class QuizRepository {
   }
 
   // Get quiz answers with results
-  Future<List<QuizSetQuestionResultModel>> getQuizAnswersWithResults(String setId) async {
-    return _dataSource.getQuizAnswersWithResults(setId);
+  Future<List<QuizSetQuestionResult>> getQuizAnswersWithResults(String setId) async {
+    final resultMapper = QuizSetQuestionResultMapper();
+    final models = await _dataSource.getQuizAnswersWithResults(setId);
+    return models.map(resultMapper.fromModel).toList();
   }
 
   // Get Topics

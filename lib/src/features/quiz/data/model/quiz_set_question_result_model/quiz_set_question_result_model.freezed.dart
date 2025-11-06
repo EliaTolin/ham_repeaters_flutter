@@ -18,25 +18,25 @@ mixin _$QuizSetQuestionResultModel {
   String get setId;
   @JsonKey(name: 'question_id')
   int get questionId;
-  @JsonKey(name: 'answered_at')
-  String get answeredAt;
-  @JsonKey(name: 'time_ms')
-  int get timeMs;
+  String get exam;
   @JsonKey(name: 'topic_name')
   String get topicName;
-  String get exam;
   @JsonKey(name: 'correct_letter')
   String get correctLetter;
+  @JsonKey(name: 'question_text')
+  String get questionText;
   @JsonKey(name: 'is_correct')
   bool get isCorrect;
+  @JsonKey(name: 'correct_answer')
+  String get correctAnswer;
+  @JsonKey(name: 'answered_at')
+  DateTime? get answeredAt;
+  @JsonKey(name: 'time_ms')
+  int? get timeMs;
   @JsonKey(name: 'chosen_letter')
   String? get chosenLetter;
   @JsonKey(name: 'chosen_answer')
   String? get chosenAnswer;
-  @JsonKey(name: 'correct_answer')
-  String? get correctAnswer;
-  @JsonKey(name: 'question_text')
-  String? get questionText;
 
   /// Create a copy of QuizSetQuestionResultModel
   /// with the given fields replaced by the non-null parameter values.
@@ -58,24 +58,24 @@ mixin _$QuizSetQuestionResultModel {
             (identical(other.setId, setId) || other.setId == setId) &&
             (identical(other.questionId, questionId) ||
                 other.questionId == questionId) &&
+            (identical(other.exam, exam) || other.exam == exam) &&
+            (identical(other.topicName, topicName) ||
+                other.topicName == topicName) &&
+            (identical(other.correctLetter, correctLetter) ||
+                other.correctLetter == correctLetter) &&
+            (identical(other.questionText, questionText) ||
+                other.questionText == questionText) &&
+            (identical(other.isCorrect, isCorrect) ||
+                other.isCorrect == isCorrect) &&
+            (identical(other.correctAnswer, correctAnswer) ||
+                other.correctAnswer == correctAnswer) &&
             (identical(other.answeredAt, answeredAt) ||
                 other.answeredAt == answeredAt) &&
             (identical(other.timeMs, timeMs) || other.timeMs == timeMs) &&
-            (identical(other.topicName, topicName) ||
-                other.topicName == topicName) &&
-            (identical(other.exam, exam) || other.exam == exam) &&
-            (identical(other.correctLetter, correctLetter) ||
-                other.correctLetter == correctLetter) &&
-            (identical(other.isCorrect, isCorrect) ||
-                other.isCorrect == isCorrect) &&
             (identical(other.chosenLetter, chosenLetter) ||
                 other.chosenLetter == chosenLetter) &&
             (identical(other.chosenAnswer, chosenAnswer) ||
-                other.chosenAnswer == chosenAnswer) &&
-            (identical(other.correctAnswer, correctAnswer) ||
-                other.correctAnswer == correctAnswer) &&
-            (identical(other.questionText, questionText) ||
-                other.questionText == questionText));
+                other.chosenAnswer == chosenAnswer));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -84,20 +84,20 @@ mixin _$QuizSetQuestionResultModel {
       runtimeType,
       setId,
       questionId,
+      exam,
+      topicName,
+      correctLetter,
+      questionText,
+      isCorrect,
+      correctAnswer,
       answeredAt,
       timeMs,
-      topicName,
-      exam,
-      correctLetter,
-      isCorrect,
       chosenLetter,
-      chosenAnswer,
-      correctAnswer,
-      questionText);
+      chosenAnswer);
 
   @override
   String toString() {
-    return 'QuizSetQuestionResultModel(setId: $setId, questionId: $questionId, answeredAt: $answeredAt, timeMs: $timeMs, topicName: $topicName, exam: $exam, correctLetter: $correctLetter, isCorrect: $isCorrect, chosenLetter: $chosenLetter, chosenAnswer: $chosenAnswer, correctAnswer: $correctAnswer, questionText: $questionText)';
+    return 'QuizSetQuestionResultModel(setId: $setId, questionId: $questionId, exam: $exam, topicName: $topicName, correctLetter: $correctLetter, questionText: $questionText, isCorrect: $isCorrect, correctAnswer: $correctAnswer, answeredAt: $answeredAt, timeMs: $timeMs, chosenLetter: $chosenLetter, chosenAnswer: $chosenAnswer)';
   }
 }
 
@@ -110,16 +110,16 @@ abstract mixin class $QuizSetQuestionResultModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'set_id') String setId,
       @JsonKey(name: 'question_id') int questionId,
-      @JsonKey(name: 'answered_at') String answeredAt,
-      @JsonKey(name: 'time_ms') int timeMs,
-      @JsonKey(name: 'topic_name') String topicName,
       String exam,
+      @JsonKey(name: 'topic_name') String topicName,
       @JsonKey(name: 'correct_letter') String correctLetter,
+      @JsonKey(name: 'question_text') String questionText,
       @JsonKey(name: 'is_correct') bool isCorrect,
+      @JsonKey(name: 'correct_answer') String correctAnswer,
+      @JsonKey(name: 'answered_at') DateTime? answeredAt,
+      @JsonKey(name: 'time_ms') int? timeMs,
       @JsonKey(name: 'chosen_letter') String? chosenLetter,
-      @JsonKey(name: 'chosen_answer') String? chosenAnswer,
-      @JsonKey(name: 'correct_answer') String? correctAnswer,
-      @JsonKey(name: 'question_text') String? questionText});
+      @JsonKey(name: 'chosen_answer') String? chosenAnswer});
 }
 
 /// @nodoc
@@ -137,16 +137,16 @@ class _$QuizSetQuestionResultModelCopyWithImpl<$Res>
   $Res call({
     Object? setId = null,
     Object? questionId = null,
-    Object? answeredAt = null,
-    Object? timeMs = null,
-    Object? topicName = null,
     Object? exam = null,
+    Object? topicName = null,
     Object? correctLetter = null,
+    Object? questionText = null,
     Object? isCorrect = null,
+    Object? correctAnswer = null,
+    Object? answeredAt = freezed,
+    Object? timeMs = freezed,
     Object? chosenLetter = freezed,
     Object? chosenAnswer = freezed,
-    Object? correctAnswer = freezed,
-    Object? questionText = freezed,
   }) {
     return _then(_self.copyWith(
       setId: null == setId
@@ -157,30 +157,38 @@ class _$QuizSetQuestionResultModelCopyWithImpl<$Res>
           ? _self.questionId
           : questionId // ignore: cast_nullable_to_non_nullable
               as int,
-      answeredAt: null == answeredAt
-          ? _self.answeredAt
-          : answeredAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      timeMs: null == timeMs
-          ? _self.timeMs
-          : timeMs // ignore: cast_nullable_to_non_nullable
-              as int,
-      topicName: null == topicName
-          ? _self.topicName
-          : topicName // ignore: cast_nullable_to_non_nullable
-              as String,
       exam: null == exam
           ? _self.exam
           : exam // ignore: cast_nullable_to_non_nullable
+              as String,
+      topicName: null == topicName
+          ? _self.topicName
+          : topicName // ignore: cast_nullable_to_non_nullable
               as String,
       correctLetter: null == correctLetter
           ? _self.correctLetter
           : correctLetter // ignore: cast_nullable_to_non_nullable
               as String,
+      questionText: null == questionText
+          ? _self.questionText
+          : questionText // ignore: cast_nullable_to_non_nullable
+              as String,
       isCorrect: null == isCorrect
           ? _self.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
+      correctAnswer: null == correctAnswer
+          ? _self.correctAnswer
+          : correctAnswer // ignore: cast_nullable_to_non_nullable
+              as String,
+      answeredAt: freezed == answeredAt
+          ? _self.answeredAt
+          : answeredAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      timeMs: freezed == timeMs
+          ? _self.timeMs
+          : timeMs // ignore: cast_nullable_to_non_nullable
+              as int?,
       chosenLetter: freezed == chosenLetter
           ? _self.chosenLetter
           : chosenLetter // ignore: cast_nullable_to_non_nullable
@@ -188,14 +196,6 @@ class _$QuizSetQuestionResultModelCopyWithImpl<$Res>
       chosenAnswer: freezed == chosenAnswer
           ? _self.chosenAnswer
           : chosenAnswer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      correctAnswer: freezed == correctAnswer
-          ? _self.correctAnswer
-          : correctAnswer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      questionText: freezed == questionText
-          ? _self.questionText
-          : questionText // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -297,16 +297,16 @@ extension QuizSetQuestionResultModelPatterns on QuizSetQuestionResultModel {
     TResult Function(
             @JsonKey(name: 'set_id') String setId,
             @JsonKey(name: 'question_id') int questionId,
-            @JsonKey(name: 'answered_at') String answeredAt,
-            @JsonKey(name: 'time_ms') int timeMs,
-            @JsonKey(name: 'topic_name') String topicName,
             String exam,
+            @JsonKey(name: 'topic_name') String topicName,
             @JsonKey(name: 'correct_letter') String correctLetter,
+            @JsonKey(name: 'question_text') String questionText,
             @JsonKey(name: 'is_correct') bool isCorrect,
+            @JsonKey(name: 'correct_answer') String correctAnswer,
+            @JsonKey(name: 'answered_at') DateTime? answeredAt,
+            @JsonKey(name: 'time_ms') int? timeMs,
             @JsonKey(name: 'chosen_letter') String? chosenLetter,
-            @JsonKey(name: 'chosen_answer') String? chosenAnswer,
-            @JsonKey(name: 'correct_answer') String? correctAnswer,
-            @JsonKey(name: 'question_text') String? questionText)?
+            @JsonKey(name: 'chosen_answer') String? chosenAnswer)?
         $default, {
     required TResult orElse(),
   }) {
@@ -316,16 +316,16 @@ extension QuizSetQuestionResultModelPatterns on QuizSetQuestionResultModel {
         return $default(
             _that.setId,
             _that.questionId,
+            _that.exam,
+            _that.topicName,
+            _that.correctLetter,
+            _that.questionText,
+            _that.isCorrect,
+            _that.correctAnswer,
             _that.answeredAt,
             _that.timeMs,
-            _that.topicName,
-            _that.exam,
-            _that.correctLetter,
-            _that.isCorrect,
             _that.chosenLetter,
-            _that.chosenAnswer,
-            _that.correctAnswer,
-            _that.questionText);
+            _that.chosenAnswer);
       case _:
         return orElse();
     }
@@ -349,16 +349,16 @@ extension QuizSetQuestionResultModelPatterns on QuizSetQuestionResultModel {
     TResult Function(
             @JsonKey(name: 'set_id') String setId,
             @JsonKey(name: 'question_id') int questionId,
-            @JsonKey(name: 'answered_at') String answeredAt,
-            @JsonKey(name: 'time_ms') int timeMs,
-            @JsonKey(name: 'topic_name') String topicName,
             String exam,
+            @JsonKey(name: 'topic_name') String topicName,
             @JsonKey(name: 'correct_letter') String correctLetter,
+            @JsonKey(name: 'question_text') String questionText,
             @JsonKey(name: 'is_correct') bool isCorrect,
+            @JsonKey(name: 'correct_answer') String correctAnswer,
+            @JsonKey(name: 'answered_at') DateTime? answeredAt,
+            @JsonKey(name: 'time_ms') int? timeMs,
             @JsonKey(name: 'chosen_letter') String? chosenLetter,
-            @JsonKey(name: 'chosen_answer') String? chosenAnswer,
-            @JsonKey(name: 'correct_answer') String? correctAnswer,
-            @JsonKey(name: 'question_text') String? questionText)
+            @JsonKey(name: 'chosen_answer') String? chosenAnswer)
         $default,
   ) {
     final _that = this;
@@ -367,16 +367,16 @@ extension QuizSetQuestionResultModelPatterns on QuizSetQuestionResultModel {
         return $default(
             _that.setId,
             _that.questionId,
+            _that.exam,
+            _that.topicName,
+            _that.correctLetter,
+            _that.questionText,
+            _that.isCorrect,
+            _that.correctAnswer,
             _that.answeredAt,
             _that.timeMs,
-            _that.topicName,
-            _that.exam,
-            _that.correctLetter,
-            _that.isCorrect,
             _that.chosenLetter,
-            _that.chosenAnswer,
-            _that.correctAnswer,
-            _that.questionText);
+            _that.chosenAnswer);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -399,16 +399,16 @@ extension QuizSetQuestionResultModelPatterns on QuizSetQuestionResultModel {
     TResult? Function(
             @JsonKey(name: 'set_id') String setId,
             @JsonKey(name: 'question_id') int questionId,
-            @JsonKey(name: 'answered_at') String answeredAt,
-            @JsonKey(name: 'time_ms') int timeMs,
-            @JsonKey(name: 'topic_name') String topicName,
             String exam,
+            @JsonKey(name: 'topic_name') String topicName,
             @JsonKey(name: 'correct_letter') String correctLetter,
+            @JsonKey(name: 'question_text') String questionText,
             @JsonKey(name: 'is_correct') bool isCorrect,
+            @JsonKey(name: 'correct_answer') String correctAnswer,
+            @JsonKey(name: 'answered_at') DateTime? answeredAt,
+            @JsonKey(name: 'time_ms') int? timeMs,
             @JsonKey(name: 'chosen_letter') String? chosenLetter,
-            @JsonKey(name: 'chosen_answer') String? chosenAnswer,
-            @JsonKey(name: 'correct_answer') String? correctAnswer,
-            @JsonKey(name: 'question_text') String? questionText)?
+            @JsonKey(name: 'chosen_answer') String? chosenAnswer)?
         $default,
   ) {
     final _that = this;
@@ -417,16 +417,16 @@ extension QuizSetQuestionResultModelPatterns on QuizSetQuestionResultModel {
         return $default(
             _that.setId,
             _that.questionId,
+            _that.exam,
+            _that.topicName,
+            _that.correctLetter,
+            _that.questionText,
+            _that.isCorrect,
+            _that.correctAnswer,
             _that.answeredAt,
             _that.timeMs,
-            _that.topicName,
-            _that.exam,
-            _that.correctLetter,
-            _that.isCorrect,
             _that.chosenLetter,
-            _that.chosenAnswer,
-            _that.correctAnswer,
-            _that.questionText);
+            _that.chosenAnswer);
       case _:
         return null;
     }
@@ -439,16 +439,16 @@ class _QuizSetQuestionResultModel implements QuizSetQuestionResultModel {
   const _QuizSetQuestionResultModel(
       {@JsonKey(name: 'set_id') required this.setId,
       @JsonKey(name: 'question_id') required this.questionId,
-      @JsonKey(name: 'answered_at') required this.answeredAt,
-      @JsonKey(name: 'time_ms') required this.timeMs,
-      @JsonKey(name: 'topic_name') required this.topicName,
       required this.exam,
+      @JsonKey(name: 'topic_name') required this.topicName,
       @JsonKey(name: 'correct_letter') required this.correctLetter,
+      @JsonKey(name: 'question_text') required this.questionText,
       @JsonKey(name: 'is_correct') required this.isCorrect,
+      @JsonKey(name: 'correct_answer') required this.correctAnswer,
+      @JsonKey(name: 'answered_at') this.answeredAt,
+      @JsonKey(name: 'time_ms') this.timeMs,
       @JsonKey(name: 'chosen_letter') this.chosenLetter,
-      @JsonKey(name: 'chosen_answer') this.chosenAnswer,
-      @JsonKey(name: 'correct_answer') this.correctAnswer,
-      @JsonKey(name: 'question_text') this.questionText});
+      @JsonKey(name: 'chosen_answer') this.chosenAnswer});
   factory _QuizSetQuestionResultModel.fromJson(Map<String, dynamic> json) =>
       _$QuizSetQuestionResultModelFromJson(json);
 
@@ -459,34 +459,34 @@ class _QuizSetQuestionResultModel implements QuizSetQuestionResultModel {
   @JsonKey(name: 'question_id')
   final int questionId;
   @override
-  @JsonKey(name: 'answered_at')
-  final String answeredAt;
-  @override
-  @JsonKey(name: 'time_ms')
-  final int timeMs;
+  final String exam;
   @override
   @JsonKey(name: 'topic_name')
   final String topicName;
   @override
-  final String exam;
-  @override
   @JsonKey(name: 'correct_letter')
   final String correctLetter;
   @override
+  @JsonKey(name: 'question_text')
+  final String questionText;
+  @override
   @JsonKey(name: 'is_correct')
   final bool isCorrect;
+  @override
+  @JsonKey(name: 'correct_answer')
+  final String correctAnswer;
+  @override
+  @JsonKey(name: 'answered_at')
+  final DateTime? answeredAt;
+  @override
+  @JsonKey(name: 'time_ms')
+  final int? timeMs;
   @override
   @JsonKey(name: 'chosen_letter')
   final String? chosenLetter;
   @override
   @JsonKey(name: 'chosen_answer')
   final String? chosenAnswer;
-  @override
-  @JsonKey(name: 'correct_answer')
-  final String? correctAnswer;
-  @override
-  @JsonKey(name: 'question_text')
-  final String? questionText;
 
   /// Create a copy of QuizSetQuestionResultModel
   /// with the given fields replaced by the non-null parameter values.
@@ -512,24 +512,24 @@ class _QuizSetQuestionResultModel implements QuizSetQuestionResultModel {
             (identical(other.setId, setId) || other.setId == setId) &&
             (identical(other.questionId, questionId) ||
                 other.questionId == questionId) &&
+            (identical(other.exam, exam) || other.exam == exam) &&
+            (identical(other.topicName, topicName) ||
+                other.topicName == topicName) &&
+            (identical(other.correctLetter, correctLetter) ||
+                other.correctLetter == correctLetter) &&
+            (identical(other.questionText, questionText) ||
+                other.questionText == questionText) &&
+            (identical(other.isCorrect, isCorrect) ||
+                other.isCorrect == isCorrect) &&
+            (identical(other.correctAnswer, correctAnswer) ||
+                other.correctAnswer == correctAnswer) &&
             (identical(other.answeredAt, answeredAt) ||
                 other.answeredAt == answeredAt) &&
             (identical(other.timeMs, timeMs) || other.timeMs == timeMs) &&
-            (identical(other.topicName, topicName) ||
-                other.topicName == topicName) &&
-            (identical(other.exam, exam) || other.exam == exam) &&
-            (identical(other.correctLetter, correctLetter) ||
-                other.correctLetter == correctLetter) &&
-            (identical(other.isCorrect, isCorrect) ||
-                other.isCorrect == isCorrect) &&
             (identical(other.chosenLetter, chosenLetter) ||
                 other.chosenLetter == chosenLetter) &&
             (identical(other.chosenAnswer, chosenAnswer) ||
-                other.chosenAnswer == chosenAnswer) &&
-            (identical(other.correctAnswer, correctAnswer) ||
-                other.correctAnswer == correctAnswer) &&
-            (identical(other.questionText, questionText) ||
-                other.questionText == questionText));
+                other.chosenAnswer == chosenAnswer));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -538,20 +538,20 @@ class _QuizSetQuestionResultModel implements QuizSetQuestionResultModel {
       runtimeType,
       setId,
       questionId,
+      exam,
+      topicName,
+      correctLetter,
+      questionText,
+      isCorrect,
+      correctAnswer,
       answeredAt,
       timeMs,
-      topicName,
-      exam,
-      correctLetter,
-      isCorrect,
       chosenLetter,
-      chosenAnswer,
-      correctAnswer,
-      questionText);
+      chosenAnswer);
 
   @override
   String toString() {
-    return 'QuizSetQuestionResultModel(setId: $setId, questionId: $questionId, answeredAt: $answeredAt, timeMs: $timeMs, topicName: $topicName, exam: $exam, correctLetter: $correctLetter, isCorrect: $isCorrect, chosenLetter: $chosenLetter, chosenAnswer: $chosenAnswer, correctAnswer: $correctAnswer, questionText: $questionText)';
+    return 'QuizSetQuestionResultModel(setId: $setId, questionId: $questionId, exam: $exam, topicName: $topicName, correctLetter: $correctLetter, questionText: $questionText, isCorrect: $isCorrect, correctAnswer: $correctAnswer, answeredAt: $answeredAt, timeMs: $timeMs, chosenLetter: $chosenLetter, chosenAnswer: $chosenAnswer)';
   }
 }
 
@@ -567,16 +567,16 @@ abstract mixin class _$QuizSetQuestionResultModelCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'set_id') String setId,
       @JsonKey(name: 'question_id') int questionId,
-      @JsonKey(name: 'answered_at') String answeredAt,
-      @JsonKey(name: 'time_ms') int timeMs,
-      @JsonKey(name: 'topic_name') String topicName,
       String exam,
+      @JsonKey(name: 'topic_name') String topicName,
       @JsonKey(name: 'correct_letter') String correctLetter,
+      @JsonKey(name: 'question_text') String questionText,
       @JsonKey(name: 'is_correct') bool isCorrect,
+      @JsonKey(name: 'correct_answer') String correctAnswer,
+      @JsonKey(name: 'answered_at') DateTime? answeredAt,
+      @JsonKey(name: 'time_ms') int? timeMs,
       @JsonKey(name: 'chosen_letter') String? chosenLetter,
-      @JsonKey(name: 'chosen_answer') String? chosenAnswer,
-      @JsonKey(name: 'correct_answer') String? correctAnswer,
-      @JsonKey(name: 'question_text') String? questionText});
+      @JsonKey(name: 'chosen_answer') String? chosenAnswer});
 }
 
 /// @nodoc
@@ -594,16 +594,16 @@ class __$QuizSetQuestionResultModelCopyWithImpl<$Res>
   $Res call({
     Object? setId = null,
     Object? questionId = null,
-    Object? answeredAt = null,
-    Object? timeMs = null,
-    Object? topicName = null,
     Object? exam = null,
+    Object? topicName = null,
     Object? correctLetter = null,
+    Object? questionText = null,
     Object? isCorrect = null,
+    Object? correctAnswer = null,
+    Object? answeredAt = freezed,
+    Object? timeMs = freezed,
     Object? chosenLetter = freezed,
     Object? chosenAnswer = freezed,
-    Object? correctAnswer = freezed,
-    Object? questionText = freezed,
   }) {
     return _then(_QuizSetQuestionResultModel(
       setId: null == setId
@@ -614,30 +614,38 @@ class __$QuizSetQuestionResultModelCopyWithImpl<$Res>
           ? _self.questionId
           : questionId // ignore: cast_nullable_to_non_nullable
               as int,
-      answeredAt: null == answeredAt
-          ? _self.answeredAt
-          : answeredAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      timeMs: null == timeMs
-          ? _self.timeMs
-          : timeMs // ignore: cast_nullable_to_non_nullable
-              as int,
-      topicName: null == topicName
-          ? _self.topicName
-          : topicName // ignore: cast_nullable_to_non_nullable
-              as String,
       exam: null == exam
           ? _self.exam
           : exam // ignore: cast_nullable_to_non_nullable
+              as String,
+      topicName: null == topicName
+          ? _self.topicName
+          : topicName // ignore: cast_nullable_to_non_nullable
               as String,
       correctLetter: null == correctLetter
           ? _self.correctLetter
           : correctLetter // ignore: cast_nullable_to_non_nullable
               as String,
+      questionText: null == questionText
+          ? _self.questionText
+          : questionText // ignore: cast_nullable_to_non_nullable
+              as String,
       isCorrect: null == isCorrect
           ? _self.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
+      correctAnswer: null == correctAnswer
+          ? _self.correctAnswer
+          : correctAnswer // ignore: cast_nullable_to_non_nullable
+              as String,
+      answeredAt: freezed == answeredAt
+          ? _self.answeredAt
+          : answeredAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      timeMs: freezed == timeMs
+          ? _self.timeMs
+          : timeMs // ignore: cast_nullable_to_non_nullable
+              as int?,
       chosenLetter: freezed == chosenLetter
           ? _self.chosenLetter
           : chosenLetter // ignore: cast_nullable_to_non_nullable
@@ -645,14 +653,6 @@ class __$QuizSetQuestionResultModelCopyWithImpl<$Res>
       chosenAnswer: freezed == chosenAnswer
           ? _self.chosenAnswer
           : chosenAnswer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      correctAnswer: freezed == correctAnswer
-          ? _self.correctAnswer
-          : correctAnswer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      questionText: freezed == questionText
-          ? _self.questionText
-          : questionText // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }

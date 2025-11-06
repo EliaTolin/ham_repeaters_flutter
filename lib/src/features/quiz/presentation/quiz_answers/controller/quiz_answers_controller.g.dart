@@ -13,7 +13,7 @@ part of 'quiz_answers_controller.dart';
 const quizAnswersControllerProvider = QuizAnswersControllerFamily._();
 
 final class QuizAnswersControllerProvider extends $AsyncNotifierProvider<
-    QuizAnswersController, List<QuizSetQuestionResultModel>> {
+    QuizAnswersController, List<QuizSetQuestionResult>> {
   const QuizAnswersControllerProvider._(
       {required QuizAnswersControllerFamily super.from,
       required String super.argument})
@@ -51,15 +51,15 @@ final class QuizAnswersControllerProvider extends $AsyncNotifierProvider<
 }
 
 String _$quizAnswersControllerHash() =>
-    r'b97a4f270f225ccfc3273916a68cb7255c028a3e';
+    r'8da8838d058febed3381b7ee0fac950c8ea7bdae';
 
 final class QuizAnswersControllerFamily extends $Family
     with
         $ClassFamilyOverride<
             QuizAnswersController,
-            AsyncValue<List<QuizSetQuestionResultModel>>,
-            List<QuizSetQuestionResultModel>,
-            FutureOr<List<QuizSetQuestionResultModel>>,
+            AsyncValue<List<QuizSetQuestionResult>>,
+            List<QuizSetQuestionResult>,
+            FutureOr<List<QuizSetQuestionResult>>,
             String> {
   const QuizAnswersControllerFamily._()
       : super(
@@ -80,11 +80,11 @@ final class QuizAnswersControllerFamily extends $Family
 }
 
 abstract class _$QuizAnswersController
-    extends $AsyncNotifier<List<QuizSetQuestionResultModel>> {
+    extends $AsyncNotifier<List<QuizSetQuestionResult>> {
   late final _$args = ref.$arg as String;
   String get setId => _$args;
 
-  FutureOr<List<QuizSetQuestionResultModel>> build(
+  FutureOr<List<QuizSetQuestionResult>> build(
     String setId,
   );
   @$mustCallSuper
@@ -93,12 +93,12 @@ abstract class _$QuizAnswersController
     final created = build(
       _$args,
     );
-    final ref = this.ref as $Ref<AsyncValue<List<QuizSetQuestionResultModel>>,
-        List<QuizSetQuestionResultModel>>;
+    final ref = this.ref as $Ref<AsyncValue<List<QuizSetQuestionResult>>,
+        List<QuizSetQuestionResult>>;
     final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<List<QuizSetQuestionResultModel>>,
-            List<QuizSetQuestionResultModel>>,
-        AsyncValue<List<QuizSetQuestionResultModel>>,
+        AnyNotifier<AsyncValue<List<QuizSetQuestionResult>>,
+            List<QuizSetQuestionResult>>,
+        AsyncValue<List<QuizSetQuestionResult>>,
         Object?,
         Object?>;
     element.handleValue(ref, created);
