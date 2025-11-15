@@ -13,8 +13,8 @@ part of 'get_quiz_results_provider.dart';
 const getQuizResultsProvider = GetQuizResultsFamily._();
 
 final class GetQuizResultsProvider extends $FunctionalProvider<
-        AsyncValue<QuizSetScore?>, QuizSetScore?, FutureOr<QuizSetScore?>>
-    with $FutureModifier<QuizSetScore?>, $FutureProvider<QuizSetScore?> {
+        AsyncValue<QuizSetScore>, QuizSetScore, FutureOr<QuizSetScore>>
+    with $FutureModifier<QuizSetScore>, $FutureProvider<QuizSetScore> {
   const GetQuizResultsProvider._(
       {required GetQuizResultsFamily super.from,
       required String super.argument})
@@ -38,12 +38,12 @@ final class GetQuizResultsProvider extends $FunctionalProvider<
 
   @$internal
   @override
-  $FutureProviderElement<QuizSetScore?> $createElement(
+  $FutureProviderElement<QuizSetScore> $createElement(
           $ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<QuizSetScore?> create(Ref ref) {
+  FutureOr<QuizSetScore> create(Ref ref) {
     final argument = this.argument as String;
     return getQuizResults(
       ref,
@@ -62,10 +62,10 @@ final class GetQuizResultsProvider extends $FunctionalProvider<
   }
 }
 
-String _$getQuizResultsHash() => r'1c8da324c61f9619a035b2f8cfb2ad063c16ad9f';
+String _$getQuizResultsHash() => r'16f782dcb60945bd815cf994e56c906502fea965';
 
 final class GetQuizResultsFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<QuizSetScore?>, String> {
+    with $FunctionalFamilyOverride<FutureOr<QuizSetScore>, String> {
   const GetQuizResultsFamily._()
       : super(
           retry: null,

@@ -26,26 +26,13 @@ class QuizResultsPage extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: resultsState.when(
-          data: (results) {
-            if (results == null) {
-              return const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 16),
-                    Text('Caricamento risultati...'),
-                  ],
-                ),
-              );
-            }
-
+          data: (state) {
             return CustomScrollView(
               slivers: [
                 // Header with celebration animation
                 SliverToBoxAdapter(
                   child: QuizResultsHeader(
-                    score: results,
+                    score: state.score,
                     onBackPressed: () {
                       context.router.pop();
                     },
@@ -78,32 +65,32 @@ class QuizResultsPage extends ConsumerWidget {
                         const SizedBox(height: 24),
 
                         // Main statistics grid
-                        QuizStatisticsCard(score: results),
+                        QuizStatisticsCard(score: state.score),
 
                         const SizedBox(height: 24),
 
                         // Accuracy chart
-                        QuizAccuracyChart(score: results),
+                        QuizAccuracyChart(score: state.score),
 
                         const SizedBox(height: 32),
 
                         // Action buttons
                         QuizActionButtons(
-                          score: results,
+                          score: state.score,
                           onBackToHome: () {
                             context.router
                                 .pushAndPopUntil(const HomeRoute(), predicate: (_) => false);
                           },
-                          onRetakeQuiz: results.exam != null
+                          onRetakeQuiz: state.score.exam != null
                               ? () => {
                                     context.router.popAndPush(
-                                      QuizRoute(examType: results.exam),
+                                      QuizRoute(examType: state.score.exam),
                                     ),
                                   }
                               : null,
                           onViewDetails: () {
                             // Navigate to detailed answers page
-                            context.router.push(QuizAnswersRoute(setId: results.setId));
+                            context.router.push(QuizAnswersRoute(setId: state.score.setId));
                           },
                         ),
 

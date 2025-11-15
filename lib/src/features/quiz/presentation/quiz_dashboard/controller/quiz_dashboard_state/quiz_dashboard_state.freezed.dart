@@ -19,6 +19,7 @@ mixin _$QuizDashboardState {
   int get totalQuizzes;
   double get averageAccuracy;
   Profile? get profile;
+  LeaderboardEntry? get userPosition;
   String? get errorMessage;
 
   /// Create a copy of QuizDashboardState
@@ -43,6 +44,8 @@ mixin _$QuizDashboardState {
             (identical(other.averageAccuracy, averageAccuracy) ||
                 other.averageAccuracy == averageAccuracy) &&
             (identical(other.profile, profile) || other.profile == profile) &&
+            (identical(other.userPosition, userPosition) ||
+                other.userPosition == userPosition) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -55,11 +58,12 @@ mixin _$QuizDashboardState {
       totalQuizzes,
       averageAccuracy,
       profile,
+      userPosition,
       errorMessage);
 
   @override
   String toString() {
-    return 'QuizDashboardState(recentScores: $recentScores, curatedSetsPreviews: $curatedSetsPreviews, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, curatedSetsPreviews: $curatedSetsPreviews, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, userPosition: $userPosition, errorMessage: $errorMessage)';
   }
 }
 
@@ -75,9 +79,11 @@ abstract mixin class $QuizDashboardStateCopyWith<$Res> {
       int totalQuizzes,
       double averageAccuracy,
       Profile? profile,
+      LeaderboardEntry? userPosition,
       String? errorMessage});
 
   $ProfileCopyWith<$Res>? get profile;
+  $LeaderboardEntryCopyWith<$Res>? get userPosition;
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
     Object? totalQuizzes = null,
     Object? averageAccuracy = null,
     Object? profile = freezed,
+    Object? userPosition = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_self.copyWith(
@@ -121,6 +128,10 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
           ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile?,
+      userPosition: freezed == userPosition
+          ? _self.userPosition
+          : userPosition // ignore: cast_nullable_to_non_nullable
+              as LeaderboardEntry?,
       errorMessage: freezed == errorMessage
           ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -139,6 +150,20 @@ class _$QuizDashboardStateCopyWithImpl<$Res>
 
     return $ProfileCopyWith<$Res>(_self.profile!, (value) {
       return _then(_self.copyWith(profile: value));
+    });
+  }
+
+  /// Create a copy of QuizDashboardState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LeaderboardEntryCopyWith<$Res>? get userPosition {
+    if (_self.userPosition == null) {
+      return null;
+    }
+
+    return $LeaderboardEntryCopyWith<$Res>(_self.userPosition!, (value) {
+      return _then(_self.copyWith(userPosition: value));
     });
   }
 }
@@ -242,6 +267,7 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
             int totalQuizzes,
             double averageAccuracy,
             Profile? profile,
+            LeaderboardEntry? userPosition,
             String? errorMessage)?
         $default, {
     required TResult orElse(),
@@ -255,6 +281,7 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
             _that.totalQuizzes,
             _that.averageAccuracy,
             _that.profile,
+            _that.userPosition,
             _that.errorMessage);
       case _:
         return orElse();
@@ -282,6 +309,7 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
             int totalQuizzes,
             double averageAccuracy,
             Profile? profile,
+            LeaderboardEntry? userPosition,
             String? errorMessage)
         $default,
   ) {
@@ -294,6 +322,7 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
             _that.totalQuizzes,
             _that.averageAccuracy,
             _that.profile,
+            _that.userPosition,
             _that.errorMessage);
       case _:
         throw StateError('Unexpected subclass');
@@ -320,6 +349,7 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
             int totalQuizzes,
             double averageAccuracy,
             Profile? profile,
+            LeaderboardEntry? userPosition,
             String? errorMessage)?
         $default,
   ) {
@@ -332,6 +362,7 @@ extension QuizDashboardStatePatterns on QuizDashboardState {
             _that.totalQuizzes,
             _that.averageAccuracy,
             _that.profile,
+            _that.userPosition,
             _that.errorMessage);
       case _:
         return null;
@@ -348,6 +379,7 @@ class _QuizDashboardState implements QuizDashboardState {
       this.totalQuizzes = 0,
       this.averageAccuracy = 0.0,
       this.profile,
+      this.userPosition,
       this.errorMessage})
       : _recentScores = recentScores,
         _curatedSetsPreviews = curatedSetsPreviews;
@@ -382,6 +414,8 @@ class _QuizDashboardState implements QuizDashboardState {
   @override
   final Profile? profile;
   @override
+  final LeaderboardEntry? userPosition;
+  @override
   final String? errorMessage;
 
   /// Create a copy of QuizDashboardState
@@ -406,6 +440,8 @@ class _QuizDashboardState implements QuizDashboardState {
             (identical(other.averageAccuracy, averageAccuracy) ||
                 other.averageAccuracy == averageAccuracy) &&
             (identical(other.profile, profile) || other.profile == profile) &&
+            (identical(other.userPosition, userPosition) ||
+                other.userPosition == userPosition) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -418,11 +454,12 @@ class _QuizDashboardState implements QuizDashboardState {
       totalQuizzes,
       averageAccuracy,
       profile,
+      userPosition,
       errorMessage);
 
   @override
   String toString() {
-    return 'QuizDashboardState(recentScores: $recentScores, curatedSetsPreviews: $curatedSetsPreviews, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, errorMessage: $errorMessage)';
+    return 'QuizDashboardState(recentScores: $recentScores, curatedSetsPreviews: $curatedSetsPreviews, totalQuizzes: $totalQuizzes, averageAccuracy: $averageAccuracy, profile: $profile, userPosition: $userPosition, errorMessage: $errorMessage)';
   }
 }
 
@@ -440,10 +477,13 @@ abstract mixin class _$QuizDashboardStateCopyWith<$Res>
       int totalQuizzes,
       double averageAccuracy,
       Profile? profile,
+      LeaderboardEntry? userPosition,
       String? errorMessage});
 
   @override
   $ProfileCopyWith<$Res>? get profile;
+  @override
+  $LeaderboardEntryCopyWith<$Res>? get userPosition;
 }
 
 /// @nodoc
@@ -464,6 +504,7 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
     Object? totalQuizzes = null,
     Object? averageAccuracy = null,
     Object? profile = freezed,
+    Object? userPosition = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_QuizDashboardState(
@@ -487,6 +528,10 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
           ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile?,
+      userPosition: freezed == userPosition
+          ? _self.userPosition
+          : userPosition // ignore: cast_nullable_to_non_nullable
+              as LeaderboardEntry?,
       errorMessage: freezed == errorMessage
           ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -505,6 +550,20 @@ class __$QuizDashboardStateCopyWithImpl<$Res>
 
     return $ProfileCopyWith<$Res>(_self.profile!, (value) {
       return _then(_self.copyWith(profile: value));
+    });
+  }
+
+  /// Create a copy of QuizDashboardState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LeaderboardEntryCopyWith<$Res>? get userPosition {
+    if (_self.userPosition == null) {
+      return null;
+    }
+
+    return $LeaderboardEntryCopyWith<$Res>(_self.userPosition!, (value) {
+      return _then(_self.copyWith(userPosition: value));
     });
   }
 }
