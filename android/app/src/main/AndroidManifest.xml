@@ -15,7 +15,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="http" android:host="quiz_radioamatori.auroradigital.it"/>
+        <data android:scheme="http" android:host="quizradiomatori.it"/>
         <data android:scheme="https"/>
       </intent-filter>
     </activity>

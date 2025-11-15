@@ -15,4 +15,12 @@ enum ExamType {
         throw ArgumentError('Invalid ExamType value: $value');
     }
   }
+
+  @override
+  String toString() {
+    return switch (this) {
+      ExamType.parziale => 'Normativa',
+      ExamType.completo => 'Radiotecnica',
+    };
+  }
 }

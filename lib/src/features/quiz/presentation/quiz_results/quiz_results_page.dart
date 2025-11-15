@@ -6,6 +6,7 @@ import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/controller/quiz_results_controller.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/widgets/quiz_accuracy_chart.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/widgets/quiz_action_buttons.dart';
+import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/widgets/quiz_exam_type_accuracy_section.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/widgets/quiz_results_header.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_results/widgets/quiz_statistics_card.dart';
 
@@ -71,6 +72,13 @@ class QuizResultsPage extends ConsumerWidget {
 
                         // Accuracy chart
                         QuizAccuracyChart(score: state.score),
+
+                        const SizedBox(height: 24),
+
+                        // Exam type accuracy section
+                        QuizExamTypeAccuracySection(
+                          examTypeAccuracy: state.examTypeAccuracy,
+                        ),
 
                         const SizedBox(height: 32),
 
