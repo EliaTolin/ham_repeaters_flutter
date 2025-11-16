@@ -15,10 +15,17 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 @RoutePage()
 class QuizPage extends HookConsumerWidget {
-  const QuizPage({this.examType, this.topics, this.curatedSetId, super.key});
+  const QuizPage({
+    this.examType,
+    this.topics,
+    this.curatedSetId,
+    this.isTrainingMode = false,
+    super.key,
+  });
   final ExamType? examType;
   final List<TopicRequest>? topics;
   final String? curatedSetId;
+  final bool isTrainingMode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -96,7 +103,9 @@ class QuizPage extends HookConsumerWidget {
                     question: state.currentQuestion,
                     currentAnswer: state.currentAnswer,
                     topicLabel: _getTopicLabel(state.topics, state.currentQuestion.topicName),
+                    isTrainingMode: isTrainingMode,
                     onAnswerSelected: (answer) {
+                      if (isTrainingMode && state.currentAnswer != null) return;
                       ref
                           .read(
                             quizControllerProvider(

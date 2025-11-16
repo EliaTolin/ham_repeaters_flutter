@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_radioamatori/common/dialogs/quiz_mode_picker.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request/topic_request.dart';
@@ -192,8 +193,13 @@ class MarathonQuizPage extends HookConsumerWidget {
 
       // Navigate to quiz page with marathon topic
       if (context.mounted) {
+        // Ask for mode (training/exam)
+        final mode = await showQuizModePicker(context);
+        if (mode == null) return;
+        final isTraining = mode == QuizStartMode.training;
+
         await context.router.push(
-          QuizRoute(topics: [topicRequest]),
+          QuizRoute(topics: [topicRequest], isTrainingMode: isTraining),
         );
       }
     } catch (e) {

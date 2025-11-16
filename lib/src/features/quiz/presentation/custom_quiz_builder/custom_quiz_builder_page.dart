@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_radioamatori/common/dialogs/quiz_mode_picker.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/topic_request/topic_request.dart';
@@ -338,9 +339,14 @@ class CustomQuizBuilderPage extends HookConsumerWidget {
         Navigator.of(context).pop(); // Close loading dialog
       }
 
+      // Ask for mode (training/exam)
+      final mode = await showQuizModePicker(context);
+      if (mode == null) return;
+      final isTraining = mode == QuizStartMode.training;
+
       // Navigate to quiz page with custom quiz set
       if (context.mounted) {
-        await context.router.push(QuizRoute(topics: topicRequests));
+        await context.router.push(QuizRoute(topics: topicRequests, isTrainingMode: isTraining));
       }
     } catch (e) {
       // Close loading dialog

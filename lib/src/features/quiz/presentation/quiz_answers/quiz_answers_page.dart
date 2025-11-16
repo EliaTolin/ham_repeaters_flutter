@@ -234,13 +234,13 @@ class _AnswerCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isCorrect
-              ? theme.colorScheme.primary.withValues(alpha: 0.2)
+              ? theme.colorScheme.tertiary.withValues(alpha: 0.2)
               : theme.colorScheme.error.withValues(alpha: 0.2),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: (isCorrect ? theme.colorScheme.primary : theme.colorScheme.error)
+            color: (isCorrect ? theme.colorScheme.tertiary : theme.colorScheme.error)
                 .withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, 4),
@@ -257,8 +257,8 @@ class _AnswerCard extends StatelessWidget {
               gradient: LinearGradient(
                 colors: isCorrect
                     ? [
-                        theme.colorScheme.primaryContainer.withValues(alpha: 0.6),
-                        theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+                        theme.colorScheme.tertiaryContainer.withValues(alpha: 0.6),
+                        theme.colorScheme.tertiaryContainer.withValues(alpha: 0.3),
                       ]
                     : [
                         theme.colorScheme.errorContainer.withValues(alpha: 0.6),
@@ -278,11 +278,11 @@ class _AnswerCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: isCorrect ? theme.colorScheme.primary : theme.colorScheme.error,
+                    color: isCorrect ? theme.colorScheme.tertiary : theme.colorScheme.error,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: (isCorrect ? theme.colorScheme.primary : theme.colorScheme.error)
+                        color: (isCorrect ? theme.colorScheme.tertiary : theme.colorScheme.error)
                             .withValues(alpha: 0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
@@ -314,14 +314,14 @@ class _AnswerCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: isCorrect
-                        ? theme.colorScheme.primary.withValues(alpha: 0.15)
+                        ? theme.colorScheme.tertiary.withValues(alpha: 0.15)
                         : theme.colorScheme.error.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
                     isCorrect ? 'Corretta' : 'Sbagliata',
                     style: theme.textTheme.labelMedium?.copyWith(
-                      color: isCorrect ? theme.colorScheme.primary : theme.colorScheme.error,
+                      color: isCorrect ? theme.colorScheme.tertiary : theme.colorScheme.error,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -340,10 +340,10 @@ class _AnswerCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                    color: theme.colorScheme.tertiary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: theme.colorScheme.primary.withValues(alpha: 0.3),
+                      color: theme.colorScheme.tertiary.withValues(alpha: 0.3),
                     ),
                   ),
                   child: Text(
@@ -422,9 +422,9 @@ class _AnswerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = isCorrectAnswer
-        ? theme.colorScheme.primary
+        ? theme.colorScheme.tertiary
         : isCorrect
-            ? theme.colorScheme.primary
+            ? theme.colorScheme.tertiary
             : theme.colorScheme.error;
 
     return Container(

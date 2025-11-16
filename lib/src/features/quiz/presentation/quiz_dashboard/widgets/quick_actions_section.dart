@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quiz_radioamatori/common/dialogs/quiz_mode_picker.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
@@ -230,7 +231,18 @@ class QuickActionsSection extends HookConsumerWidget {
   }
 
   void _startQuiz(BuildContext context, ExamType examType) {
-    context.router.push(QuizRoute(examType: examType));
+    _chooseModeAndStart(context, examType);
+  }
+
+  Future<void> _chooseModeAndStart(BuildContext context, ExamType examType) async {
+    final mode = await showQuizModePicker(context);
+
+    if (mode == null) return;
+
+    final isTraining = mode == QuizStartMode.training;
+    if (context.mounted) {
+      await context.router.push(QuizRoute(examType: examType, isTrainingMode: isTraining));
+    }
   }
 
   Future<void> _startCustomQuiz(BuildContext context, WidgetRef ref) async {
@@ -261,3 +273,5 @@ class QuickActionsSection extends HookConsumerWidget {
     }
   }
 }
+
+// Local enum removed: using shared QuizStartMode from common dialog
