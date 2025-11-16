@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 class AppConfigs {
   static String getSite() {
-    return 'https://quiz_radioamatori.auroradigital.it/';
+    return 'https://quizradiomatori.it/';
   }
 
   static String getSupabaseKey() {

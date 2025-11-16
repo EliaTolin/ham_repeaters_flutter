@@ -1,4 +1,6 @@
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
+import 'package:quiz_radioamatori/src/features/leaderboard/domain/leaderboard_entry/leaderboard_entry.dart';
+import 'package:quiz_radioamatori/src/features/leaderboard/provider/get_user_position/get_user_position_provider.dart';
 import 'package:quiz_radioamatori/src/features/profile/domain/profile/profile.dart';
 import 'package:quiz_radioamatori/src/features/profile/provider/get_profile/get_profile_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/curated_set_preview/curated_set_preview.dart';
@@ -26,11 +28,13 @@ class QuizDashboardController extends _$QuizDashboardController {
           : <CuratedSetPreview>[];
 
       final profile = await ref.watch(getProfileProvider.future);
+      final userPosition = await ref.watch(getUserPositionProvider.future);
       return _loadDashboardData(
         recentScores: recentScores,
         allScores: allScores,
         profile: profile,
         curatedSetsPreviews: curatedSetsPreviews,
+        userPosition: userPosition,
       );
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
@@ -47,6 +51,7 @@ class QuizDashboardController extends _$QuizDashboardController {
     required List<QuizSetScore> allScores,
     required Profile profile,
     required List<CuratedSetPreview> curatedSetsPreviews,
+    required LeaderboardEntry? userPosition,
   }) async {
     try {
       // Calcola le statistiche reali
@@ -61,6 +66,7 @@ class QuizDashboardController extends _$QuizDashboardController {
         averageAccuracy: averageAccuracy,
         profile: profile,
         curatedSetsPreviews: curatedSetsPreviews,
+        userPosition: userPosition,
       );
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
@@ -79,6 +85,7 @@ class QuizDashboardController extends _$QuizDashboardController {
       final allScores = await ref.read(allQuizScoresProvider.future);
       final profile = await ref.read(getProfileProvider.future);
       final userId = await ref.read(getUserIdProvider.future);
+      final userPosition = await ref.read(getUserPositionProvider.future);
       final curatedSetsPreviews = userId != null
           ? await ref.read(curatedSetNonAttemptedProvider(userId).future)
           : <CuratedSetPreview>[];
@@ -87,6 +94,7 @@ class QuizDashboardController extends _$QuizDashboardController {
         allScores: allScores,
         profile: profile,
         curatedSetsPreviews: curatedSetsPreviews,
+        userPosition: userPosition,
       );
     });
   }

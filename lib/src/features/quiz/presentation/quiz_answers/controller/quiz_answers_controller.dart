@@ -1,5 +1,5 @@
-import 'package:quiz_radioamatori/src/features/quiz/data/repository/quiz_repository.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_question_result/quiz_set_question_result.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/quiz_answers/quiz_answers_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -10,16 +10,8 @@ class QuizAnswersController extends _$QuizAnswersController {
   @override
   Future<List<QuizSetQuestionResult>> build(String setId) async {
     try {
-      final repository = ref.read(quizRepositoryProvider);
-
-      final result = await repository.getQuizAnswersWithResults(setId).timeout(
-        const Duration(seconds: 30),
-        onTimeout: () {
-          throw Exception('Timeout loading quiz answers');
-        },
-      );
-
-      return result;
+      final answers = await ref.read(quizAnswersProvider(setId).future);
+      return answers;
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
       rethrow;

@@ -13,7 +13,7 @@ part of 'quiz_results_controller.dart';
 const quizResultsControllerProvider = QuizResultsControllerFamily._();
 
 final class QuizResultsControllerProvider
-    extends $AsyncNotifierProvider<QuizResultsController, QuizSetScore?> {
+    extends $AsyncNotifierProvider<QuizResultsController, QuizResultsState> {
   const QuizResultsControllerProvider._(
       {required QuizResultsControllerFamily super.from,
       required String super.argument})
@@ -51,12 +51,16 @@ final class QuizResultsControllerProvider
 }
 
 String _$quizResultsControllerHash() =>
-    r'7515b39b5388ce2be9fa57c73fdcc4add0e16a9a';
+    r'2fff9f7085514931f1740903c0ec073230f283f6';
 
 final class QuizResultsControllerFamily extends $Family
     with
-        $ClassFamilyOverride<QuizResultsController, AsyncValue<QuizSetScore?>,
-            QuizSetScore?, FutureOr<QuizSetScore?>, String> {
+        $ClassFamilyOverride<
+            QuizResultsController,
+            AsyncValue<QuizResultsState>,
+            QuizResultsState,
+            FutureOr<QuizResultsState>,
+            String> {
   const QuizResultsControllerFamily._()
       : super(
           retry: null,
@@ -75,11 +79,12 @@ final class QuizResultsControllerFamily extends $Family
   String toString() => r'quizResultsControllerProvider';
 }
 
-abstract class _$QuizResultsController extends $AsyncNotifier<QuizSetScore?> {
+abstract class _$QuizResultsController
+    extends $AsyncNotifier<QuizResultsState> {
   late final _$args = ref.$arg as String;
   String get setId => _$args;
 
-  FutureOr<QuizSetScore?> build(
+  FutureOr<QuizResultsState> build(
     String setId,
   );
   @$mustCallSuper
@@ -88,10 +93,11 @@ abstract class _$QuizResultsController extends $AsyncNotifier<QuizSetScore?> {
     final created = build(
       _$args,
     );
-    final ref = this.ref as $Ref<AsyncValue<QuizSetScore?>, QuizSetScore?>;
+    final ref =
+        this.ref as $Ref<AsyncValue<QuizResultsState>, QuizResultsState>;
     final element = ref.element as $ClassProviderElement<
-        AnyNotifier<AsyncValue<QuizSetScore?>, QuizSetScore?>,
-        AsyncValue<QuizSetScore?>,
+        AnyNotifier<AsyncValue<QuizResultsState>, QuizResultsState>,
+        AsyncValue<QuizResultsState>,
         Object?,
         Object?>;
     element.handleValue(ref, created);

@@ -2,15 +2,18 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:quiz_radioamatori/common/widgets/card/error_card.dart';
 import 'package:quiz_radioamatori/common/widgets/soft_icon.dart';
 import 'package:quiz_radioamatori/router/app_router.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/is_anonymous/is_anonymous_provider.dart';
 import 'package:quiz_radioamatori/src/features/leaderboard/domain/leaderboard_entry/leaderboard_entry.dart';
-import 'package:quiz_radioamatori/src/features/leaderboard/provider/get_user_position/get_user_position_provider.dart';
 
 class LeaderboardPositionSection extends HookConsumerWidget {
-  const LeaderboardPositionSection({super.key});
+  const LeaderboardPositionSection({
+    required this.userPosition,
+    super.key,
+  });
+
+  final LeaderboardEntry? userPosition;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,26 +49,11 @@ class LeaderboardPositionSection extends HookConsumerWidget {
     // Se l'utente è anonimo, non mostrare il widget
     return isAnonymous.when(
       data: (anonymous) {
-        // L'utente è registrato, mostra la posizione
-        final userPosition = ref.watch(getUserPositionProvider);
-
         return FadeTransition(
           opacity: fadeAnimation,
-          child: userPosition.when(
-            data: (position) {
-              if (position == null) {
-                // Non in classifica - invito a rispondere a un quiz
-                return _buildNotInLeaderboardCard(context);
-              }
-
-              // In classifica - mostra posizione
-              return _buildPositionCard(context, position, ref);
-            },
-            loading: () => _buildLoadingCard(context),
-            error: (error, stack) => ErrorCard(
-              errorMessage: error.toString(),
-            ),
-          ),
+          child: userPosition == null
+              ? _buildNotInLeaderboardCard(context)
+              : _buildPositionCard(context, userPosition!, ref),
         );
       },
       loading: () => const SizedBox.shrink(),
@@ -269,21 +257,6 @@ class LeaderboardPositionSection extends HookConsumerWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildLoadingCard(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: const Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }

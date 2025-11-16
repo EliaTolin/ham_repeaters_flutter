@@ -67,9 +67,9 @@ class QuizRepository {
     return models.map(_curatedSetMapper.fromModel).toList();
   }
 
-  Future<QuizSetScore?> getQuizResults(String setId) async {
+  Future<QuizSetScore> getQuizResults(String setId) async {
     final model = await _dataSource.getQuizResults(setId);
-    if (model == null) return null;
+    if (model == null) throw Exception('Quiz results not found');
     return _scoreMapper.fromModel(model);
   }
 

@@ -3,9 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "it.auroradigital.quizradiamatori",
+      "package_name": "it.auroradigital.quiz_radioamatori",
       "sha256_cert_fingerprints": [
-        "8F:E1:26:6A:92:D0:9A:5F:0A:FC:1E:2C:16:BE:C8:47:7D:69:E9:EF:C7:FC:91:E1:BC:67:A4:C0:56:06:DA:7F"
+        "10:BA:D4:49:E4:4C:4B:BA:04:18:51:E2:CF:EF:01:E6:07:36:10:CC:D8:43:3F:B7:FC:B7:57:19:9D:EE:4F:9A"
       ]
     }
   }
