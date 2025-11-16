@@ -197,10 +197,11 @@ class MarathonQuizPage extends HookConsumerWidget {
         final mode = await showQuizModePicker(context);
         if (mode == null) return;
         final isTraining = mode == QuizStartMode.training;
-
-        await context.router.push(
-          QuizRoute(topics: [topicRequest], isTrainingMode: isTraining),
-        );
+        if (context.mounted) {
+          await context.router.push(
+            QuizRoute(topics: [topicRequest], isTrainingMode: isTraining),
+          );
+        }
       }
     } catch (e) {
       if (context.mounted) {

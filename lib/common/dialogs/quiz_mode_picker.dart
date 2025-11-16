@@ -29,8 +29,10 @@ Future<QuizStartMode?> showQuizModePicker(BuildContext context) {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  Icon(Icons.tips_and_updates_rounded,
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
+                  Icon(
+                    Icons.tips_and_updates_rounded,
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     'Scegli la modalità',
@@ -114,5 +116,3 @@ Future<QuizStartMode?> showQuizModePicker(BuildContext context) {
     },
   );
 }
-
-

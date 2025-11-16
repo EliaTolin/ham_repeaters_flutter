@@ -340,6 +340,7 @@ class CustomQuizBuilderPage extends HookConsumerWidget {
       }
 
       // Ask for mode (training/exam)
+      if (!context.mounted) return;
       final mode = await showQuizModePicker(context);
       if (mode == null) return;
       final isTraining = mode == QuizStartMode.training;
