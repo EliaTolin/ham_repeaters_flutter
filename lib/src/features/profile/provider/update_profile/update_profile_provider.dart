@@ -6,6 +6,6 @@ part 'update_profile_provider.g.dart';
 
 @riverpod
 Future<void> updateProfile(Ref ref, Profile profile) async {
-  final repository = ref.read(profileRepositoryProvider);
+  final repository = await ref.read(profileRepositoryProvider.future);
   await repository.updateProfile(profile);
 }

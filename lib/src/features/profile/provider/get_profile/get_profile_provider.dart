@@ -7,7 +7,7 @@ part 'get_profile_provider.g.dart';
 
 @riverpod
 Future<Profile> getProfile(Ref ref) async {
-  final repository = ref.watch(profileRepositoryProvider);
+  final repository = await ref.read(profileRepositoryProvider.future);
   final userId = await ref.read(getUserIdProvider.future);
   if (userId == null) {
     throw Exception('User ID is null. Cannot fetch profile.');

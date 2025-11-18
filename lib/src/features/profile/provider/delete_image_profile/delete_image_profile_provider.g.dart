@@ -41,4 +41,4 @@ final class DeleteImageProfileProvider
 }
 
 String _$deleteImageProfileHash() =>
-    r'69c26345ecaa50ac0060e1d4e8b583b73933d9b1';
+    r'54ea23b5893490342d4c342ca9f62975635b6491';

@@ -44,7 +44,7 @@ class AppConfigs {
   }
 
   static int defaultExpiresInSecondsImage() {
-    const day = 365;
+    const day = 15;
     return day * 24 * 60 * 60;
   }
 

@@ -6,7 +6,7 @@ part 'delete_image_profile_provider.g.dart';
 
 @riverpod
 Future<void> deleteImageProfile(Ref ref) async {
-  final repository = ref.read(profileRepositoryProvider);
+  final repository = await ref.read(profileRepositoryProvider.future);
   final userId = await ref.read(getUserIdProvider.future);
   return repository.deleteImagePropic(userId!);
 }

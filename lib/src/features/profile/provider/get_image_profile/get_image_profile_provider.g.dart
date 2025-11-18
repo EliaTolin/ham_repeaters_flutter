@@ -61,7 +61,7 @@ final class GetImageProfileProvider
   }
 }
 
-String _$getImageProfileHash() => r'42834af68b3b966cca7a4823a9e9b8035ae535ea';
+String _$getImageProfileHash() => r'42edf364bae34dae48acc99b2255edb67a14d1bc';
 
 final class GetImageProfileFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<String>, String> {

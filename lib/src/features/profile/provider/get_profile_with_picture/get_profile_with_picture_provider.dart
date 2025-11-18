@@ -6,7 +6,7 @@ part 'get_profile_with_picture_provider.g.dart';
 
 @riverpod
 Future<ProfileWithPicture> getProfileWithPicture(Ref ref, String userId) async {
-  final repository = ref.watch(profileRepositoryProvider);
+  final repository = await ref.read(profileRepositoryProvider.future);
   final profile = await repository.getProfile(userId);
   if (profile.propic == null) {
     return ProfileWithPicture(profile: profile, propic: null);

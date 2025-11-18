@@ -67,7 +67,7 @@ final class GetProfileWithPictureProvider extends $FunctionalProvider<
 }
 
 String _$getProfileWithPictureHash() =>
-    r'08783a4263cf824c01f663fac6354090319c718f';
+    r'2744fff2d1b8d70f2ed3eb3a12de1ee38db2ef30';
 
 final class GetProfileWithPictureFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ProfileWithPicture>, String> {

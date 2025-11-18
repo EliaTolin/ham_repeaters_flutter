@@ -5,5 +5,6 @@ part 'get_image_profile_provider.g.dart';
 
 @riverpod
 Future<String> getImageProfile(Ref ref, String path) async {
-  return ref.read(profileRepositoryProvider).getImagePropicUrl(path);
+  final repository = await ref.read(profileRepositoryProvider.future);
+  return repository.getImagePropicUrl(path);
 }

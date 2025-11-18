@@ -8,7 +8,7 @@ part 'upload_propics_provider.g.dart';
 
 @riverpod
 Future<void> uploadPropics(Ref ref, File image) async {
-  final repository = ref.read(profileRepositoryProvider);
+  final repository = await ref.read(profileRepositoryProvider.future);
   final userId = await ref.read(getUserIdProvider.future);
   await repository.uploadPropics(userId!, image);
 }

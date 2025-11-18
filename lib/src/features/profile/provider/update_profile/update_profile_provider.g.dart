@@ -61,7 +61,7 @@ final class UpdateProfileProvider
   }
 }
 
-String _$updateProfileHash() => r'5db1e905783fae77585b8e7fd6cbc8b31f3f6950';
+String _$updateProfileHash() => r'66146972803fdcd57f88e40db273a54225f36ff8';
 
 final class UpdateProfileFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<void>, Profile> {

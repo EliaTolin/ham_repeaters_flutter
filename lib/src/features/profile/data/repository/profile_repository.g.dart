@@ -13,9 +13,12 @@ part of 'profile_repository.dart';
 const profileRepositoryProvider = ProfileRepositoryProvider._();
 
 final class ProfileRepositoryProvider extends $FunctionalProvider<
-    ProfileRepository,
-    ProfileRepository,
-    ProfileRepository> with $Provider<ProfileRepository> {
+        AsyncValue<ProfileRepository>,
+        ProfileRepository,
+        FutureOr<ProfileRepository>>
+    with
+        $FutureModifier<ProfileRepository>,
+        $FutureProvider<ProfileRepository> {
   const ProfileRepositoryProvider._()
       : super(
           from: null,
@@ -32,22 +35,14 @@ final class ProfileRepositoryProvider extends $FunctionalProvider<
 
   @$internal
   @override
-  $ProviderElement<ProfileRepository> $createElement(
+  $FutureProviderElement<ProfileRepository> $createElement(
           $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+      $FutureProviderElement(pointer);
 
   @override
-  ProfileRepository create(Ref ref) {
+  FutureOr<ProfileRepository> create(Ref ref) {
     return profileRepository(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ProfileRepository value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<ProfileRepository>(value),
-    );
   }
 }
 
-String _$profileRepositoryHash() => r'6b33890ef967640963f1585bf43ae453135874cd';
+String _$profileRepositoryHash() => r'0af936923f411973b7cef5f16838f9b1b3aeb7bf';
