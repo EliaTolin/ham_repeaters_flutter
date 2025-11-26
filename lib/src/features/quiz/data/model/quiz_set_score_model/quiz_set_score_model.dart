@@ -17,7 +17,8 @@ abstract class QuizSetScoreModel with _$QuizSetScoreModel {
     required int wrong,
     required int total,
     @JsonKey(name: 'accuracy_pct') required double accuracyPct,
-    @JsonKey(name: 'started_at') required String startedAt,
+    @JsonKey(name: 'started_at') required DateTime startedAt,
+    @JsonKey(name: 'finished_at') DateTime? finishedAt,
     @ExamTypeConverter() ExamType? exam,
     @JsonKey(name: 'custom_topics') List<String>? customTopics,
   }) = _QuizSetScoreModel;

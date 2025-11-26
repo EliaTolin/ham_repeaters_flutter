@@ -1,7 +1,27 @@
+import 'package:quiz_radioamatori/common/abstracts/mapper.dart';
 import 'package:quiz_radioamatori/src/features/quiz/data/model/quiz_set_score_model/quiz_set_score_model.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
 
-class QuizSetScoreMapper {
+class QuizSetScoreMapper implements Mapper<QuizSetScore, QuizSetScoreModel> {
+  @override
+  QuizSetScoreModel toModel(QuizSetScore entity) {
+    return QuizSetScoreModel(
+      setId: entity.setId,
+      userId: entity.userId,
+      mode: entity.mode,
+      answered: entity.answered,
+      correct: entity.correct,
+      wrong: entity.wrong,
+      total: entity.total,
+      accuracyPct: entity.accuracyPct,
+      exam: entity.exam,
+      customTopics: entity.customTopics,
+      startedAt: entity.startedAt,
+      finishedAt: entity.finishedAt,
+    );
+  }
+
+  @override
   QuizSetScore fromModel(QuizSetScoreModel model) {
     return QuizSetScore(
       setId: model.setId,
@@ -14,7 +34,8 @@ class QuizSetScoreMapper {
       accuracyPct: model.accuracyPct,
       exam: model.exam,
       customTopics: model.customTopics,
-      startedAt: model.startedAt.isNotEmpty ? DateTime.tryParse(model.startedAt) : null,
+      startedAt: model.startedAt,
+      finishedAt: model.finishedAt,
     );
   }
 }

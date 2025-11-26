@@ -27,7 +27,9 @@ mixin _$QuizSetScoreModel {
   @JsonKey(name: 'accuracy_pct')
   double get accuracyPct;
   @JsonKey(name: 'started_at')
-  String get startedAt;
+  DateTime get startedAt;
+  @JsonKey(name: 'finished_at')
+  DateTime? get finishedAt;
   @ExamTypeConverter()
   ExamType? get exam;
   @JsonKey(name: 'custom_topics')
@@ -61,6 +63,8 @@ mixin _$QuizSetScoreModel {
                 other.accuracyPct == accuracyPct) &&
             (identical(other.startedAt, startedAt) ||
                 other.startedAt == startedAt) &&
+            (identical(other.finishedAt, finishedAt) ||
+                other.finishedAt == finishedAt) &&
             (identical(other.exam, exam) || other.exam == exam) &&
             const DeepCollectionEquality()
                 .equals(other.customTopics, customTopics));
@@ -79,12 +83,13 @@ mixin _$QuizSetScoreModel {
       total,
       accuracyPct,
       startedAt,
+      finishedAt,
       exam,
       const DeepCollectionEquality().hash(customTopics));
 
   @override
   String toString() {
-    return 'QuizSetScoreModel(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, startedAt: $startedAt, exam: $exam, customTopics: $customTopics)';
+    return 'QuizSetScoreModel(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, startedAt: $startedAt, finishedAt: $finishedAt, exam: $exam, customTopics: $customTopics)';
   }
 }
 
@@ -103,7 +108,8 @@ abstract mixin class $QuizSetScoreModelCopyWith<$Res> {
       int wrong,
       int total,
       @JsonKey(name: 'accuracy_pct') double accuracyPct,
-      @JsonKey(name: 'started_at') String startedAt,
+      @JsonKey(name: 'started_at') DateTime startedAt,
+      @JsonKey(name: 'finished_at') DateTime? finishedAt,
       @ExamTypeConverter() ExamType? exam,
       @JsonKey(name: 'custom_topics') List<String>? customTopics});
 }
@@ -130,6 +136,7 @@ class _$QuizSetScoreModelCopyWithImpl<$Res>
     Object? total = null,
     Object? accuracyPct = null,
     Object? startedAt = null,
+    Object? finishedAt = freezed,
     Object? exam = freezed,
     Object? customTopics = freezed,
   }) {
@@ -169,7 +176,11 @@ class _$QuizSetScoreModelCopyWithImpl<$Res>
       startedAt: null == startedAt
           ? _self.startedAt
           : startedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
+      finishedAt: freezed == finishedAt
+          ? _self.finishedAt
+          : finishedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       exam: freezed == exam
           ? _self.exam
           : exam // ignore: cast_nullable_to_non_nullable
@@ -284,7 +295,8 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
-            @JsonKey(name: 'started_at') String startedAt,
+            @JsonKey(name: 'started_at') DateTime startedAt,
+            @JsonKey(name: 'finished_at') DateTime? finishedAt,
             @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)?
         $default, {
@@ -303,6 +315,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             _that.total,
             _that.accuracyPct,
             _that.startedAt,
+            _that.finishedAt,
             _that.exam,
             _that.customTopics);
       case _:
@@ -334,7 +347,8 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
-            @JsonKey(name: 'started_at') String startedAt,
+            @JsonKey(name: 'started_at') DateTime startedAt,
+            @JsonKey(name: 'finished_at') DateTime? finishedAt,
             @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)
         $default,
@@ -352,6 +366,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             _that.total,
             _that.accuracyPct,
             _that.startedAt,
+            _that.finishedAt,
             _that.exam,
             _that.customTopics);
       case _:
@@ -382,7 +397,8 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             int wrong,
             int total,
             @JsonKey(name: 'accuracy_pct') double accuracyPct,
-            @JsonKey(name: 'started_at') String startedAt,
+            @JsonKey(name: 'started_at') DateTime startedAt,
+            @JsonKey(name: 'finished_at') DateTime? finishedAt,
             @ExamTypeConverter() ExamType? exam,
             @JsonKey(name: 'custom_topics') List<String>? customTopics)?
         $default,
@@ -400,6 +416,7 @@ extension QuizSetScoreModelPatterns on QuizSetScoreModel {
             _that.total,
             _that.accuracyPct,
             _that.startedAt,
+            _that.finishedAt,
             _that.exam,
             _that.customTopics);
       case _:
@@ -421,6 +438,7 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
       required this.total,
       @JsonKey(name: 'accuracy_pct') required this.accuracyPct,
       @JsonKey(name: 'started_at') required this.startedAt,
+      @JsonKey(name: 'finished_at') this.finishedAt,
       @ExamTypeConverter() this.exam,
       @JsonKey(name: 'custom_topics') final List<String>? customTopics})
       : _customTopics = customTopics;
@@ -449,7 +467,10 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
   final double accuracyPct;
   @override
   @JsonKey(name: 'started_at')
-  final String startedAt;
+  final DateTime startedAt;
+  @override
+  @JsonKey(name: 'finished_at')
+  final DateTime? finishedAt;
   @override
   @ExamTypeConverter()
   final ExamType? exam;
@@ -496,6 +517,8 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
                 other.accuracyPct == accuracyPct) &&
             (identical(other.startedAt, startedAt) ||
                 other.startedAt == startedAt) &&
+            (identical(other.finishedAt, finishedAt) ||
+                other.finishedAt == finishedAt) &&
             (identical(other.exam, exam) || other.exam == exam) &&
             const DeepCollectionEquality()
                 .equals(other._customTopics, _customTopics));
@@ -514,12 +537,13 @@ class _QuizSetScoreModel implements QuizSetScoreModel {
       total,
       accuracyPct,
       startedAt,
+      finishedAt,
       exam,
       const DeepCollectionEquality().hash(_customTopics));
 
   @override
   String toString() {
-    return 'QuizSetScoreModel(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, startedAt: $startedAt, exam: $exam, customTopics: $customTopics)';
+    return 'QuizSetScoreModel(setId: $setId, userId: $userId, mode: $mode, answered: $answered, correct: $correct, wrong: $wrong, total: $total, accuracyPct: $accuracyPct, startedAt: $startedAt, finishedAt: $finishedAt, exam: $exam, customTopics: $customTopics)';
   }
 }
 
@@ -540,7 +564,8 @@ abstract mixin class _$QuizSetScoreModelCopyWith<$Res>
       int wrong,
       int total,
       @JsonKey(name: 'accuracy_pct') double accuracyPct,
-      @JsonKey(name: 'started_at') String startedAt,
+      @JsonKey(name: 'started_at') DateTime startedAt,
+      @JsonKey(name: 'finished_at') DateTime? finishedAt,
       @ExamTypeConverter() ExamType? exam,
       @JsonKey(name: 'custom_topics') List<String>? customTopics});
 }
@@ -567,6 +592,7 @@ class __$QuizSetScoreModelCopyWithImpl<$Res>
     Object? total = null,
     Object? accuracyPct = null,
     Object? startedAt = null,
+    Object? finishedAt = freezed,
     Object? exam = freezed,
     Object? customTopics = freezed,
   }) {
@@ -606,7 +632,11 @@ class __$QuizSetScoreModelCopyWithImpl<$Res>
       startedAt: null == startedAt
           ? _self.startedAt
           : startedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
+      finishedAt: freezed == finishedAt
+          ? _self.finishedAt
+          : finishedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       exam: freezed == exam
           ? _self.exam
           : exam // ignore: cast_nullable_to_non_nullable
