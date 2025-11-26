@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:quiz_radioamatori/common/service/in_app_rating/in_app_rating_service.dart';
 import 'package:quiz_radioamatori/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
 import 'package:quiz_radioamatori/src/features/leaderboard/domain/leaderboard_entry/leaderboard_entry.dart';
 import 'package:quiz_radioamatori/src/features/leaderboard/provider/get_user_position/get_user_position_provider.dart';
@@ -59,6 +62,13 @@ class QuizDashboardController extends _$QuizDashboardController {
       final averageAccuracy = allScores.isEmpty
           ? 0.0
           : allScores.fold<double>(0, (sum, score) => sum + score.accuracyPct) / allScores.length;
+
+      // * Show app review prompt based on total quizzes completed
+      unawaited(
+        ref.read(inAppRatingServiceProvider).requestReviewIfNeeded(
+              totalQuizzes: totalQuizzes,
+            ),
+      );
 
       return QuizDashboardState(
         recentScores: recentScores,
