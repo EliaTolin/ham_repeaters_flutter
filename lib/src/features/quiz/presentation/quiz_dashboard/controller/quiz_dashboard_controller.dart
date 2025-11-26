@@ -8,9 +8,11 @@ import 'package:quiz_radioamatori/src/features/profile/domain/profile/profile.da
 import 'package:quiz_radioamatori/src/features/profile/provider/get_profile/get_profile_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/curated_set_preview/curated_set_preview.dart';
 import 'package:quiz_radioamatori/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
+import 'package:quiz_radioamatori/src/features/quiz/domain/total_accuracy/total_accuracy.dart';
 import 'package:quiz_radioamatori/src/features/quiz/presentation/quiz_dashboard/controller/quiz_dashboard_state/quiz_dashboard_state.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/all_quiz_scores/all_quiz_scores_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/curated_set_non_attempted/curated_set_non_attempted_provider.dart';
+import 'package:quiz_radioamatori/src/features/quiz/provider/get_user_total_accuracy/get_user_total_accuracy_provider.dart';
 import 'package:quiz_radioamatori/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -32,12 +34,18 @@ class QuizDashboardController extends _$QuizDashboardController {
 
       final profile = await ref.watch(getProfileProvider.future);
       final userPosition = await ref.watch(getUserPositionProvider.future);
+
+      // Usa getUserTotalAccuracy per calcolare la precisione totale (stesso calcolo della statistica)
+      final totalAccuracy =
+          userId != null ? await ref.watch(getUserTotalAccuracyProvider(userId).future) : null;
+
       return _loadDashboardData(
         recentScores: recentScores,
         allScores: allScores,
         profile: profile,
         curatedSetsPreviews: curatedSetsPreviews,
         userPosition: userPosition,
+        totalAccuracy: totalAccuracy,
       );
     } catch (e, st) {
       await Sentry.captureException(e, stackTrace: st);
@@ -55,13 +63,14 @@ class QuizDashboardController extends _$QuizDashboardController {
     required Profile profile,
     required List<CuratedSetPreview> curatedSetsPreviews,
     required LeaderboardEntry? userPosition,
+    required TotalAccuracy? totalAccuracy,
   }) async {
     try {
       // Calcola le statistiche reali
       final totalQuizzes = allScores.length;
-      final averageAccuracy = allScores.isEmpty
-          ? 0.0
-          : allScores.fold<double>(0, (sum, score) => sum + score.accuracyPct) / allScores.length;
+      // Usa la precisione totale dalla view (stesso calcolo della statistica)
+      // Se totalAccuracy è null, usa 0.0 come fallback
+      final averageAccuracy = totalAccuracy?.accuracyPercent ?? 0.0;
 
       // * Show app review prompt based on total quizzes completed
       unawaited(
@@ -99,12 +108,18 @@ class QuizDashboardController extends _$QuizDashboardController {
       final curatedSetsPreviews = userId != null
           ? await ref.read(curatedSetNonAttemptedProvider(userId).future)
           : <CuratedSetPreview>[];
+
+      // Usa getUserTotalAccuracy per calcolare la precisione totale (stesso calcolo della statistica)
+      final totalAccuracy =
+          userId != null ? await ref.read(getUserTotalAccuracyProvider(userId).future) : null;
+
       return _loadDashboardData(
         recentScores: recentScores,
         allScores: allScores,
         profile: profile,
         curatedSetsPreviews: curatedSetsPreviews,
         userPosition: userPosition,
+        totalAccuracy: totalAccuracy,
       );
     });
   }
