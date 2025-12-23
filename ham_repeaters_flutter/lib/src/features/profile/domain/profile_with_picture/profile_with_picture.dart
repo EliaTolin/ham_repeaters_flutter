@@ -7,5 +7,5 @@ part 'profile_with_picture.freezed.dart';
 abstract class ProfileWithPicture with _$ProfileWithPicture {
   const factory ProfileWithPicture(
       {required Profile profile,
-      required String? propic}) = _ProfileWithPicture;
+      required String? propic,}) = _ProfileWithPicture;
 }

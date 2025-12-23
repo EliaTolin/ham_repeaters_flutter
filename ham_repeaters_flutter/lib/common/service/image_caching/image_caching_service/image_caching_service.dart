@@ -27,7 +27,7 @@ class ImageCachingService {
       path: path,
     );
     await storageClient.write(
-        'image_cached_$imageId', jsonEncode(imageCached.toJson()));
+        'image_cached_$imageId', jsonEncode(imageCached.toJson()),);
   }
 
   Future<ImageEntity?> getCachedImage(String imageId) async {

@@ -4,13 +4,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ham_repeaters/common/extension/hard_coded_string.dart';
 import 'package:ham_repeaters/common/widgets/button/save_button.dart';
 import 'package:ham_repeaters/common/widgets/profile_avatar.dart';
 import 'package:ham_repeaters/router/app_router.dart';
 import 'package:ham_repeaters/src/features/profile/presentation/user_settings/controller/user_settings_controller.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 @RoutePage()
 class UserSettingsScreen extends HookConsumerWidget {
@@ -40,7 +40,7 @@ class UserSettingsScreen extends HookConsumerWidget {
                       alignment: Alignment.bottomRight,
                       children: [
                         ProfileAvatar(
-                            imageProfileUrl: state.imageProfileUrl, size: 200),
+                            imageProfileUrl: state.imageProfileUrl, size: 200,),
                         Positioned(
                           top: 0,
                           left: 0,
@@ -51,7 +51,7 @@ class UserSettingsScreen extends HookConsumerWidget {
                               onPressed: () {
                                 ref
                                     .read(
-                                        userSettingsControllerProvider.notifier)
+                                        userSettingsControllerProvider.notifier,)
                                     .deleteImageProfile();
                               },
                             ),
@@ -64,7 +64,7 @@ class UserSettingsScreen extends HookConsumerWidget {
                             backgroundColor: Colors.white,
                             child: IconButton(
                               icon: const Icon(Icons.camera_alt,
-                                  color: Colors.blue),
+                                  color: Colors.blue,),
                               onPressed: () async {
                                 final pickedFile = await picker.pickImage(
                                   source: ImageSource.gallery,
@@ -72,9 +72,9 @@ class UserSettingsScreen extends HookConsumerWidget {
                                 if (pickedFile != null) {
                                   await ref
                                       .read(userSettingsControllerProvider
-                                          .notifier)
+                                          .notifier,)
                                       .updateImageProfile(
-                                          File(pickedFile.path));
+                                          File(pickedFile.path),);
                                 }
                               },
                             ),
@@ -87,7 +87,7 @@ class UserSettingsScreen extends HookConsumerWidget {
                     // Form per nome e cognome
                     Card(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                          borderRadius: BorderRadius.circular(12),),
                       elevation: 3,
                       child: Padding(
                         padding: const EdgeInsets.all(16),
@@ -145,7 +145,7 @@ class UserSettingsScreen extends HookConsumerWidget {
                                     );
                                     ref
                                         .read(userSettingsControllerProvider
-                                            .notifier)
+                                            .notifier,)
                                         .updateProfile(updatedProfile);
                                   },
                                 ),

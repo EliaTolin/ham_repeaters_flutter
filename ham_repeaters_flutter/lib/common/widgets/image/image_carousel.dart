@@ -14,7 +14,7 @@ class ImageCarousel extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       child: CarouselSlider(
         options: CarouselOptions(
-            enlargeCenterPage: true, enableInfiniteScroll: false),
+            enlargeCenterPage: true, enableInfiniteScroll: false,),
         items: imageUrls.map((url) {
           return Stack(
             children: [

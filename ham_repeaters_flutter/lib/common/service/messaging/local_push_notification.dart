@@ -71,7 +71,7 @@ class LocalPushNotification {
   }
 
   Future<void> showNotification(
-      ReceivedNotification receivedNotification) async {
+      ReceivedNotification receivedNotification,) async {
     await _localNotificationsPlugin.show(
       receivedNotification.id,
       receivedNotification.title,

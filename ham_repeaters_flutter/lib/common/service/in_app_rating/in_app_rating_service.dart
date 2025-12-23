@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:ham_repeaters/clients/in_app_review/in_app_review_provider.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

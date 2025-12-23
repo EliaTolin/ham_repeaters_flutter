@@ -8,6 +8,6 @@ class ShareIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GenericIconButton(
-        onPressed: onPressed, icon: Icons.groups, color: Colors.pink);
+        onPressed: onPressed, icon: Icons.groups, color: Colors.pink,);
   }
 }

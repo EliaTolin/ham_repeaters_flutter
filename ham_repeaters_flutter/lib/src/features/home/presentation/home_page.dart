@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ham_repeaters/common/dialogs/show_telegram_invite_dialog.dart';
 import 'package:ham_repeaters/router/app_router.dart';
 import 'package:ham_repeaters/src/features/home/presentation/controller/home_controller.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
 class HomePage extends HookConsumerWidget {
@@ -48,7 +48,7 @@ class HomePage extends HookConsumerWidget {
               destinations: const [
                 NavigationDestination(icon: Icon(Icons.quiz), label: 'Quiz'),
                 NavigationDestination(
-                    icon: Icon(Icons.person), label: 'Profilo'),
+                    icon: Icon(Icons.person), label: 'Profilo',),
               ],
             );
           },

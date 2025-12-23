@@ -4,7 +4,7 @@ import 'package:ham_repeaters/common/widgets/form/base_field.dart';
 
 class PasswordField extends StatelessWidget {
   const PasswordField(
-      {required this.controller, required this.label, super.key});
+      {required this.controller, required this.label, super.key,});
 
   final TextEditingController controller;
   final String label;

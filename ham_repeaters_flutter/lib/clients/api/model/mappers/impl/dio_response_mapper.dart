@@ -6,6 +6,6 @@ class DioResponseMapper implements ResponseMappers<Response> {
   @override
   ResponseModel mapResponseModel(Response response) {
     return ResponseModel(
-        statusCode: response.statusCode ?? 0, data: response.data);
+        statusCode: response.statusCode ?? 0, data: response.data,);
   }
 }

@@ -15,7 +15,7 @@ class HomeController extends _$HomeController {
     //final profile = await ref.read(getProfileProvider.future);
     //final needToExtraConfig = profile.surname == null;
     return HomeState(
-        showTelegram: needToShowTelegram, needToExtraConfig: false);
+        showTelegram: needToShowTelegram, needToExtraConfig: false,);
   }
 
   Future<void> setTelegramGroupMember() async {

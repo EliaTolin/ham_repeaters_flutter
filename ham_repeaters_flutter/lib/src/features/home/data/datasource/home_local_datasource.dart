@@ -39,7 +39,7 @@ class HomeLocalDatasource implements HomeDatasource {
   @override
   Future<void> setTelegramInviteLastShownDate(DateTime time) {
     return sharedPreferences.write(
-        'lastTelegramInviteDate', time.toIso8601String());
+        'lastTelegramInviteDate', time.toIso8601String(),);
   }
 }
 

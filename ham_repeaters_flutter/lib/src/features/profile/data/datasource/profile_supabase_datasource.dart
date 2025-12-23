@@ -44,7 +44,7 @@ class ProfileSupabaseDatasource implements ProfileDatasource {
         await _client.storage.from('propics').remove([profile.propic!]);
       }
       await _client.storage.from('propics').upload(fileName, image,
-          fileOptions: const FileOptions(upsert: true));
+          fileOptions: const FileOptions(upsert: true),);
       await _client
           .from('profiles')
           .update({'propic': fileName})

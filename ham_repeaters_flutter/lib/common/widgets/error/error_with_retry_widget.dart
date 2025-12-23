@@ -14,7 +14,7 @@ class ErrorWidgetWithRetry extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.error_outline,
-                color: Theme.of(context).colorScheme.error, size: 64),
+                color: Theme.of(context).colorScheme.error, size: 64,),
             const SizedBox(height: 16),
             Text(
               context.localization.error,
@@ -39,7 +39,7 @@ class ErrorWidgetWithRetry extends StatelessWidget {
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8),),
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               ),

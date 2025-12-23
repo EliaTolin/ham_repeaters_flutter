@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ham_repeaters/clients/package_info/package_info.dart';
 import 'package:ham_repeaters/common/extension/hard_coded_string.dart';
 import 'package:ham_repeaters/common/widgets/profile_avatar.dart';
@@ -10,6 +9,7 @@ import 'package:ham_repeaters/config/app_configs.dart';
 import 'package:ham_repeaters/router/app_router.dart';
 import 'package:ham_repeaters/src/features/authentication/presentation/auth/show_signup_dialog.dart';
 import 'package:ham_repeaters/src/features/profile/presentation/profile/controller/profile_controller.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
@@ -28,7 +28,7 @@ class ProfileScreen extends HookConsumerWidget {
                 child: Column(
                   children: [
                     ProfileAvatar(
-                        imageProfileUrl: state.imageProfileUrl, size: 200),
+                        imageProfileUrl: state.imageProfileUrl, size: 200,),
                     const Gap(20),
                     if (!state.isAnonymous) ...[
                       Text(
@@ -112,7 +112,7 @@ class ProfileScreen extends HookConsumerWidget {
                                   },
                                   style: FilledButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
+                                        vertical: 12,),
                                   ),
                                   child: Text(
                                     'Registrati o Accedi'.hardcoded,
@@ -136,10 +136,10 @@ class ProfileScreen extends HookConsumerWidget {
                       Card(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
+                            borderRadius: BorderRadius.circular(8),),
                         child: ListTile(
                           leading: const Icon(Icons.settings,
-                              color: Colors.blueAccent),
+                              color: Colors.blueAccent,),
                           title: Text(
                             'Impostazioni'.hardcoded,
                             style: Theme.of(context).textTheme.bodyLarge,
@@ -157,7 +157,7 @@ class ProfileScreen extends HookConsumerWidget {
                       Card(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
+                            borderRadius: BorderRadius.circular(8),),
                         child: ListTile(
                           leading:
                               const Icon(Icons.logout, color: Colors.redAccent),
@@ -185,7 +185,7 @@ class ProfileScreen extends HookConsumerWidget {
                     Card(
                       elevation: 2,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8),),
                       child: ListTile(
                         leading:
                             const Icon(Icons.email, color: Colors.greenAccent),
@@ -199,7 +199,7 @@ class ProfileScreen extends HookConsumerWidget {
                             scheme: 'mailto',
                             path: 'info@auroradigital.it',
                             queryParameters: {
-                              'subject': 'HamRepeaters-Supporto'
+                              'subject': 'HamRepeaters-Supporto',
                             },
                           );
                           if (await canLaunchUrl(emailLaunchUri)) {
@@ -221,10 +221,10 @@ class ProfileScreen extends HookConsumerWidget {
                     Card(
                       elevation: 2,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8),),
                       child: ListTile(
                         leading: const Icon(Icons.telegram,
-                            color: Colors.blueAccent),
+                            color: Colors.blueAccent,),
                         title: Text(
                           'Entra nella community Telegram'.hardcoded,
                           style: Theme.of(context).textTheme.bodyLarge,

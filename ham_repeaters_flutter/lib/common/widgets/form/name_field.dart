@@ -4,7 +4,7 @@ import 'package:ham_repeaters/common/widgets/form/base_field.dart';
 
 class NameField extends StatelessWidget {
   const NameField(
-      {required this.controller, required this.isRequired, super.key});
+      {required this.controller, required this.isRequired, super.key,});
 
   final TextEditingController controller;
   final bool isRequired;

@@ -4,7 +4,7 @@ import 'package:ham_repeaters/common/widgets/form/base_field.dart';
 
 class AddressField extends StatelessWidget {
   const AddressField(
-      {required this.controller, this.isRequired = false, super.key});
+      {required this.controller, this.isRequired = false, super.key,});
 
   final TextEditingController controller;
   final bool isRequired;

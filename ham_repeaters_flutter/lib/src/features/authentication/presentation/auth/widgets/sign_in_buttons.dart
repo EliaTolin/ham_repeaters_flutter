@@ -31,8 +31,9 @@ class SignInButtons extends ConsumerWidget {
                   await ref.read(signInWithAppleProvider.future);
                   onSignInComplete();
                 } on Exception catch (e) {
-                  if (context.mounted)
+                  if (context.mounted) {
                     showErrorSnackbar(context, 'Errore durante il login');
+                  }
                   log(e.toString());
                 }
               },
@@ -46,8 +47,9 @@ class SignInButtons extends ConsumerWidget {
                 await ref.read(signInWithGoogleProvider.future);
                 onSignInComplete();
               } on Exception catch (e) {
-                if (context.mounted)
+                if (context.mounted) {
                   showErrorSnackbar(context, 'Errore durante il login');
+                }
                 log(e.toString());
               }
             },

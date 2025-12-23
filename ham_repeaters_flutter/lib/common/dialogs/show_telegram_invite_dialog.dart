@@ -31,7 +31,7 @@ Future<void> showTelegramInviteDialog(
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(Icons.telegram,
-                      size: 50, color: Colors.blueAccent),
+                      size: 50, color: Colors.blueAccent,),
                 ),
                 const SizedBox(height: 20),
                 // Title
@@ -94,7 +94,7 @@ Future<void> showTelegramInviteDialog(
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 12),
+                            horizontal: 24, vertical: 12,),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

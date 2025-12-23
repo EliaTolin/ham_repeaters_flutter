@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:ham_repeaters/clients/image_picker/image_picker.dart';
+import 'package:ham_repeaters/common/extension/hard_coded_string.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:ham_repeaters/clients/image_picker/image_picker.dart';
-import 'package:ham_repeaters/common/extension/hard_coded_string.dart';
 
 class UploadImageButton extends ConsumerWidget {
   const UploadImageButton({required this.uploadImage, super.key});
@@ -34,7 +34,7 @@ class UploadImageButton extends ConsumerWidget {
   }
 
   Future<void> _showPermissionDeniedDialog(
-      BuildContext context, String rationale) async {
+      BuildContext context, String rationale,) async {
     await showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -60,7 +60,7 @@ class UploadImageButton extends ConsumerWidget {
   }
 
   Future<void> _pickImage(
-      BuildContext context, WidgetRef ref, ImageSource source) async {
+      BuildContext context, WidgetRef ref, ImageSource source,) async {
     try {
       final imagePicker = ref.read(imagePickerProvider);
 

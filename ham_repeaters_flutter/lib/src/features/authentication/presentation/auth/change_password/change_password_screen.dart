@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ham_repeaters/common/extension/hard_coded_string.dart';
 import 'package:ham_repeaters/common/widgets/button/save_button.dart';
 import 'package:ham_repeaters/common/widgets/card/error_card.dart';
@@ -10,6 +9,7 @@ import 'package:ham_repeaters/common/widgets/snackbars/show_error_snackbar.dart'
 import 'package:ham_repeaters/common/widgets/snackbars/show_success_snackbar.dart';
 import 'package:ham_repeaters/router/app_router.dart';
 import 'package:ham_repeaters/src/features/authentication/presentation/auth/change_password/controller/change_password_controller_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
 class ChangePasswordScreen extends HookConsumerWidget {

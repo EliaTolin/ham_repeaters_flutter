@@ -62,7 +62,7 @@ Future<QuizStartMode?> showQuizModePicker(BuildContext context) {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(Icons.school_rounded,
-                        color: theme.colorScheme.primary),
+                        color: theme.colorScheme.primary,),
                   ),
                   title: Text(
                     'Allenamento',
@@ -74,7 +74,7 @@ Future<QuizStartMode?> showQuizModePicker(BuildContext context) {
                   subtitle:
                       const Text('Ricevi subito feedback su corretto/errato'),
                   trailing: Icon(Icons.chevron_right_rounded,
-                      color: theme.colorScheme.primary),
+                      color: theme.colorScheme.primary,),
                   onTap: () => Navigator.of(ctx).pop(QuizStartMode.training),
                 ),
               ),
@@ -99,7 +99,7 @@ Future<QuizStartMode?> showQuizModePicker(BuildContext context) {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(Icons.fact_check_rounded,
-                        color: theme.colorScheme.tertiary),
+                        color: theme.colorScheme.tertiary,),
                   ),
                   title: Text(
                     'Esame',
@@ -111,7 +111,7 @@ Future<QuizStartMode?> showQuizModePicker(BuildContext context) {
                   subtitle:
                       const Text('Modalità esame, senza feedback immediato'),
                   trailing: Icon(Icons.chevron_right_rounded,
-                      color: theme.colorScheme.tertiary),
+                      color: theme.colorScheme.tertiary,),
                   onTap: () => Navigator.of(ctx).pop(QuizStartMode.exam),
                 ),
               ),

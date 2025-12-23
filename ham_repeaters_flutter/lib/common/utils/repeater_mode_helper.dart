@@ -27,8 +27,8 @@ class RepeaterModeHelper {
   /// Generates a custom icon bitmap for a repeater mode using Icons.radio
   /// Returns Uint8List representing a PNG image
   static Future<Uint8List> generateRepeaterIcon(RepeaterMode mode) async {
-    const size = 48.0;
-    const iconSize = 28.0;
+    const size = 72.0;
+    const iconSize = 44.0;
 
     final recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
@@ -68,7 +68,6 @@ class RepeaterModeHelper {
       ),
       textDirection: TextDirection.ltr,
     );
-
     textPainter.layout();
 
     // Center the icon

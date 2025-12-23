@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:ham_repeaters/clients/package_info/package_info.dart';
 import 'package:ham_repeaters/common/utils/version_utils.dart';
 import 'package:ham_repeaters/config/app_configs.dart';
@@ -12,6 +11,7 @@ import 'package:ham_repeaters/src/features/authentication/provider/get_user_id/g
 import 'package:ham_repeaters/src/features/params/provider/get_params/get_params_provider.dart';
 import 'package:ham_repeaters/src/features/splashscreen/errors/update_required_exception.dart';
 import 'package:ham_repeaters/src/features/splashscreen/provider/get_has_seen_onboarding/get_has_seen_onboarding_provider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 

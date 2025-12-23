@@ -181,7 +181,7 @@ Future<void> _syncAnnotations(
       PointAnnotationOptions(
         geometry: Point(coordinates: Position(lon, lat)),
         image: iconBytes,
-        iconSize: 1,
+        iconSize: 1.2,
         iconAnchor: IconAnchor.BOTTOM,
         customData: {'repeaterId': repeater.id},
       ),

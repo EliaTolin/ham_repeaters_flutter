@@ -8,6 +8,6 @@ class AddIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GenericIconButton(
-        onPressed: onPressed, icon: Icons.add, color: Colors.green);
+        onPressed: onPressed, icon: Icons.add, color: Colors.green,);
   }
 }

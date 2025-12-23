@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AddButton extends StatelessWidget {
   const AddButton(
-      {required this.onAdd, this.text, super.key, this.enabled = true});
+      {required this.onAdd, this.text, super.key, this.enabled = true,});
   final String? text;
   final VoidCallback onAdd;
   final bool enabled;

@@ -8,6 +8,6 @@ class DeleteIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GenericIconButton(
-        onPressed: onPressed, icon: Icons.delete, color: Colors.red);
+        onPressed: onPressed, icon: Icons.delete, color: Colors.red,);
   }
 }
