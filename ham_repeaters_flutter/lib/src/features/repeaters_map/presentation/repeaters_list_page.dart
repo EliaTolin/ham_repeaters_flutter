@@ -26,32 +26,37 @@ class RepeatersListPage extends HookConsumerWidget {
     // Debounce search query - starts timer when user types
     useEffect(
       () {
-        final currentText = searchController.text;
+        void onTextChanged() {
+          final currentText = searchController.text.trim();
 
-        // Cancel previous timer if exists
-        if (debounceTimer.value != null) {
-          debounceTimer.value!.cancel();
+          // Cancel previous timer if exists
+          debounceTimer.value?.cancel();
+
+          // If text is empty, update immediately
+          if (currentText.isEmpty) {
+            searchQuery.value = '';
+            return;
+          }
+
+          // Start debounce timer - updates query after user stops typing
+          debounceTimer.value = Timer(
+            const Duration(milliseconds: 500),
+            () {
+              searchQuery.value = currentText;
+            },
+          );
         }
 
-        // If text is empty, update immediately
-        if (currentText.trim().isEmpty) {
-          searchQuery.value = '';
-          return null;
-        }
+        // Add listener to controller
+        searchController.addListener(onTextChanged);
 
-        // Start debounce timer
-        debounceTimer.value = Timer(
-          const Duration(milliseconds: 500),
-          () {
-            searchQuery.value = currentText.trim();
-          },
-        );
-
+        // Cleanup: remove listener and cancel timer
         return () {
+          searchController.removeListener(onTextChanged);
           debounceTimer.value?.cancel();
         };
       },
-      [searchController.text],
+      [searchController],
     );
 
     final nearbyAsyncState = ref.watch(repeatersMapControllerProvider);
@@ -61,19 +66,20 @@ class RepeatersListPage extends HookConsumerWidget {
     final currentSearchText = searchController.text.trim();
     final isSearchMode = currentSearchText.isNotEmpty;
     final debouncedQuery = searchQuery.value.trim();
+    final isTyping = isSearchMode && currentSearchText != debouncedQuery;
 
-    // Use debounced query for search, or empty string if still typing
-    // This ensures the provider is always called when in search mode
-    final searchAsyncState = isSearchMode
+    // Only trigger search provider when we have a debounced query
+    // If user is typing, we'll show loading state manually
+    final searchAsyncState = debouncedQuery.isNotEmpty
         ? ref.watch(
             searchRepeatersProvider(
-              query: debouncedQuery.isNotEmpty ? debouncedQuery : currentSearchText,
+              query: debouncedQuery,
               modes: nearbyAsyncState.value?.selectedModes.isEmpty ?? true
                   ? null
                   : nearbyAsyncState.value!.selectedModes.toList(),
             ),
           )
-        : const AsyncValue<List<Repeater>>.data(<Repeater>[]);
+        : null;
 
     final l10n = context.localization;
     final theme = Theme.of(context);
@@ -115,6 +121,7 @@ class RepeatersListPage extends HookConsumerWidget {
               context,
               ref,
               searchAsyncState,
+              isTyping,
               nearbyAsyncState.value?.selectedModes ?? <RepeaterMode>{},
               nearbyNotifier,
             )
@@ -130,13 +137,21 @@ class RepeatersListPage extends HookConsumerWidget {
   Widget _buildSearchResults(
     BuildContext context,
     WidgetRef ref,
-    AsyncValue<List<Repeater>> searchAsyncState,
+    AsyncValue<List<Repeater>>? searchAsyncState,
+    bool isTyping,
     Set<RepeaterMode> selectedModes,
     RepeatersMapController notifier,
   ) {
     final l10n = context.localization;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
+    // Show loading if user is typing or if provider is loading
+    if (isTyping || searchAsyncState == null || searchAsyncState.isLoading) {
+      return const Center(
+        child: CircularProgressIndicator.adaptive(),
+      );
+    }
 
     return searchAsyncState.when(
       data: (repeaters) {
