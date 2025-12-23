@@ -4,7 +4,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ham_repeaters/common/extension/l10n_extension.dart';
-import 'package:ham_repeaters/config/app_configs.dart';
+import 'package:ham_repeaters/common/utils/repeater_mode_helper.dart';
+import 'package:ham_repeaters/l10n/app_localizations.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/domain/repeater/repeater.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/presentation/controller/repeaters_map_controller.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/service/location_service.dart';
@@ -21,33 +22,33 @@ class RepeatersMapPage extends HookConsumerWidget {
     final asyncState = ref.watch(repeatersMapControllerProvider);
     final notifier = ref.read(repeatersMapControllerProvider.notifier);
     final mapController = useState<MapboxMap?>(null);
-    final circleManager = useState<CircleAnnotationManager?>(null);
+    final pointManager = useState<PointAnnotationManager?>(null);
 
     final mapState = asyncState.value;
 
-    useEffect(() {
-      MapboxOptions.setAccessToken(AppConfigs.getMapboxAccessToken());
-      return null;
-    }, const []);
-
-    useEffect(() {
-      if (mapState == null || mapController.value == null) return null;
-      _syncAnnotations(
-        mapController.value!,
-        circleManager.value,
-        mapState.repeaters,
-      );
-      if (mapState.latitude != null && mapState.longitude != null) {
+    useEffect(
+      () {
+        if (mapState == null || mapController.value == null) return null;
         unawaited(
-          _moveCamera(
+          _syncAnnotations(
             mapController.value!,
-            mapState.latitude!,
-            mapState.longitude!,
+            pointManager.value,
+            mapState.repeaters,
           ),
         );
-      }
-      return null;
-    }, [mapState, mapController.value]);
+        if (mapState.latitude != null && mapState.longitude != null) {
+          unawaited(
+            _moveCamera(
+              mapController.value!,
+              mapState.latitude!,
+              mapState.longitude!,
+            ),
+          );
+        }
+        return null;
+      },
+      [mapState, mapController.value],
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -73,8 +74,26 @@ class RepeatersMapPage extends HookConsumerWidget {
             styleUri: MapboxStyles.MAPBOX_STREETS,
             onMapCreated: (mapboxMap) async {
               mapController.value = mapboxMap;
-              circleManager.value =
-                  await mapboxMap.annotations.createCircleAnnotationManager();
+              final manager = await mapboxMap.annotations.createPointAnnotationManager();
+              pointManager.value = manager;
+
+              // Setup tap listener for annotations
+              manager.tapEvents(
+                onTap: (annotation) {
+                  final repeaterId = annotation.customData?['repeaterId'] as String?;
+                  if (repeaterId != null) {
+                    final currentState = ref.read(repeatersMapControllerProvider).value;
+                    if (currentState != null) {
+                      final repeater = currentState.repeaters.firstWhere(
+                        (r) => r.id == repeaterId,
+                        orElse: () => throw StateError('Repeater not found'),
+                      );
+                      _showRepeaterDetails(context, repeater);
+                    }
+                  }
+                },
+              );
+
               await mapboxMap.location.updateSettings(
                 LocationComponentSettings(
                   enabled: true,
@@ -90,7 +109,10 @@ class RepeatersMapPage extends HookConsumerWidget {
                 );
               }
               await _syncAnnotations(
-                  mapboxMap, circleManager.value, mapState?.repeaters ?? []);
+                mapboxMap,
+                manager,
+                mapState?.repeaters ?? [],
+              );
             },
           ),
           if (asyncState.isLoading)
@@ -117,7 +139,7 @@ class RepeatersMapPage extends HookConsumerWidget {
               icon: const Icon(Icons.location_off_outlined),
               label: context.localization.repeatersMapEmpty,
             ),
-          if ((mapState?.repeaters.isNotEmpty ?? false))
+          if (mapState?.repeaters.isNotEmpty ?? false)
             Positioned(
               top: 12,
               left: 12,
@@ -140,26 +162,28 @@ class RepeatersMapPage extends HookConsumerWidget {
 
 Future<void> _syncAnnotations(
   MapboxMap map,
-  CircleAnnotationManager? manager,
+  PointAnnotationManager? manager,
   List<Repeater> repeaters,
 ) async {
   if (manager == null) return;
   await manager.deleteAll();
 
-  final annotations = <CircleAnnotationOptions>[];
+  final annotations = <PointAnnotationOptions>[];
   for (final repeater in repeaters) {
     final lat = repeater.latitude;
     final lon = repeater.longitude;
     if (lat == null || lon == null) continue;
 
+    // Generate icon for this mode
+    final iconBytes = await RepeaterModeHelper.generateRepeaterIcon(repeater.mode);
+
     annotations.add(
-      CircleAnnotationOptions(
+      PointAnnotationOptions(
         geometry: Point(coordinates: Position(lon, lat)),
-        circleRadius: 7,
-        circleColor: 0xFF1E88E5,
-        circleOpacity: 0.9,
-        circleStrokeColor: 0xFFFFFFFF,
-        circleStrokeWidth: 2,
+        image: iconBytes,
+        iconSize: 1,
+        iconAnchor: IconAnchor.BOTTOM,
+        customData: {'repeaterId': repeater.id},
       ),
     );
   }
@@ -167,6 +191,17 @@ Future<void> _syncAnnotations(
   if (annotations.isNotEmpty) {
     await manager.createMulti(annotations);
   }
+}
+
+void _showRepeaterDetails(BuildContext context, Repeater repeater) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) => _RepeaterDetailsSheet(repeater: repeater),
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+  );
 }
 
 Future<void> _moveCamera(MapboxMap map, double latitude, double longitude) {
@@ -279,11 +314,9 @@ class _PermissionBanner extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.localization;
     final description = switch (errorType) {
-      LocationErrorType.servicesDisabled =>
-        l10n.repeatersMapLocationServicesDisabled,
+      LocationErrorType.servicesDisabled => l10n.repeatersMapLocationServicesDisabled,
       LocationErrorType.permissionDenied => l10n.repeatersMapPermissionMessage,
-      LocationErrorType.permissionPermanentlyDenied =>
-        l10n.repeatersMapPermissionPermanentlyDenied,
+      LocationErrorType.permissionPermanentlyDenied => l10n.repeatersMapPermissionPermanentlyDenied,
     };
 
     return _InfoBanner(
@@ -304,6 +337,182 @@ class _PermissionBanner extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _RepeaterDetailsSheet extends ConsumerWidget {
+  const _RepeaterDetailsSheet({required this.repeater});
+
+  final Repeater repeater;
+
+  String _getModeLabel(RepeaterMode mode, AppLocalizations l10n) {
+    return switch (mode) {
+      RepeaterMode.analog => l10n.repeaterModeAnalog,
+      RepeaterMode.c4fm => l10n.repeaterModeC4fm,
+      RepeaterMode.dstar => l10n.repeaterModeDstar,
+      RepeaterMode.dmr => l10n.repeaterModeDmr,
+      RepeaterMode.allmode => l10n.repeaterModeAllmode,
+      RepeaterMode.echolink => l10n.repeaterModeEcholink,
+      RepeaterMode.winlink => l10n.repeaterModeWinlink,
+    };
+  }
+
+  String _formatFrequency(int frequencyHz) {
+    if (frequencyHz >= 1000000) {
+      return '${(frequencyHz / 1000000).toStringAsFixed(3)} MHz';
+    } else if (frequencyHz >= 1000) {
+      return '${(frequencyHz / 1000).toStringAsFixed(1)} kHz';
+    }
+    return '$frequencyHz Hz';
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.localization;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+        left: 16,
+        right: 16,
+        top: 8,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: colorScheme.onSurface.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+          Text(
+            repeater.callsign,
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          if (repeater.name != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              repeater.name!,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: colorScheme.onSurface.withValues(alpha: 0.7),
+              ),
+            ),
+          ],
+          const SizedBox(height: 16),
+          _DetailRow(
+            icon: Icons.radio,
+            label: l10n.repeaterMode,
+            value: _getModeLabel(repeater.mode, l10n),
+            modeColor: RepeaterModeHelper.getModeColorObject(repeater.mode),
+          ),
+          const SizedBox(height: 12),
+          _DetailRow(
+            icon: Icons.waves,
+            label: l10n.repeaterFrequency,
+            value: _formatFrequency(repeater.frequencyHz),
+          ),
+          if (repeater.locality != null || repeater.region != null) ...[
+            const SizedBox(height: 12),
+            _DetailRow(
+              icon: Icons.location_on,
+              label: l10n.repeaterLocation,
+              value: [
+                repeater.locality,
+                repeater.region,
+              ].whereType<String>().join(', '),
+            ),
+          ],
+          if (repeater.distanceMeters != null) ...[
+            const SizedBox(height: 12),
+            _DetailRow(
+              icon: Icons.straighten,
+              label: l10n.repeaterDistance,
+              value: repeater.distanceMeters! < 1000
+                  ? '${repeater.distanceMeters!.toStringAsFixed(0)} m'
+                  : '${(repeater.distanceMeters! / 1000).toStringAsFixed(1)} km',
+            ),
+          ],
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.modeColor,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color? modeColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final iconColor = modeColor ?? theme.colorScheme.primary;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 20, color: iconColor),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
+              ),
+              const SizedBox(height: 2),
+              Row(
+                children: [
+                  if (modeColor != null) ...[
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: modeColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                  Text(
+                    value,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -172,4 +172,37 @@ class AppLocalizationsIt extends AppLocalizations {
   String repeatersMapFound(int count) {
     return '$count ripetitori trovati';
   }
+
+  @override
+  String get repeaterMode => 'Modalità';
+
+  @override
+  String get repeaterModeAnalog => 'Analog';
+
+  @override
+  String get repeaterModeC4fm => 'C4FM';
+
+  @override
+  String get repeaterModeDstar => 'D-STAR';
+
+  @override
+  String get repeaterModeDmr => 'DMR';
+
+  @override
+  String get repeaterModeAllmode => 'ALLMODE';
+
+  @override
+  String get repeaterModeEcholink => 'Echolink';
+
+  @override
+  String get repeaterModeWinlink => 'Winlink';
+
+  @override
+  String get repeaterFrequency => 'Frequenza';
+
+  @override
+  String get repeaterLocation => 'Posizione';
+
+  @override
+  String get repeaterDistance => 'Distanza';
 }

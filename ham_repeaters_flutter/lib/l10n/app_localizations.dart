@@ -399,6 +399,72 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'{count} ripetitori trovati'**
   String repeatersMapFound(int count);
+
+  /// No description provided for @repeaterMode.
+  ///
+  /// In it, this message translates to:
+  /// **'Modalità'**
+  String get repeaterMode;
+
+  /// No description provided for @repeaterModeAnalog.
+  ///
+  /// In it, this message translates to:
+  /// **'Analog'**
+  String get repeaterModeAnalog;
+
+  /// No description provided for @repeaterModeC4fm.
+  ///
+  /// In it, this message translates to:
+  /// **'C4FM'**
+  String get repeaterModeC4fm;
+
+  /// No description provided for @repeaterModeDstar.
+  ///
+  /// In it, this message translates to:
+  /// **'D-STAR'**
+  String get repeaterModeDstar;
+
+  /// No description provided for @repeaterModeDmr.
+  ///
+  /// In it, this message translates to:
+  /// **'DMR'**
+  String get repeaterModeDmr;
+
+  /// No description provided for @repeaterModeAllmode.
+  ///
+  /// In it, this message translates to:
+  /// **'ALLMODE'**
+  String get repeaterModeAllmode;
+
+  /// No description provided for @repeaterModeEcholink.
+  ///
+  /// In it, this message translates to:
+  /// **'Echolink'**
+  String get repeaterModeEcholink;
+
+  /// No description provided for @repeaterModeWinlink.
+  ///
+  /// In it, this message translates to:
+  /// **'Winlink'**
+  String get repeaterModeWinlink;
+
+  /// No description provided for @repeaterFrequency.
+  ///
+  /// In it, this message translates to:
+  /// **'Frequenza'**
+  String get repeaterFrequency;
+
+  /// No description provided for @repeaterLocation.
+  ///
+  /// In it, this message translates to:
+  /// **'Posizione'**
+  String get repeaterLocation;
+
+  /// No description provided for @repeaterDistance.
+  ///
+  /// In it, this message translates to:
+  /// **'Distanza'**
+  String get repeaterDistance;
 }
 
 class _AppLocalizationsDelegate

@@ -3,14 +3,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'repeater.freezed.dart';
 
 enum RepeaterMode {
-  fm,
+  analog,
   c4fm,
   dstar,
   dmr,
   allmode,
   echolink,
   winlink,
-  other,
 }
 
 enum RepeaterStatus {
@@ -25,18 +24,18 @@ abstract class Repeater with _$Repeater {
     required String id,
     required DateTime createdAt,
     required DateTime updatedAt,
-    String? name,
     required String callsign,
+    required int frequencyHz,
+    required RepeaterMode mode,
+    required RepeaterStatus status,
+    String? name,
     int? nodeNumber,
     String? managerCallsign,
-    required int frequencyHz,
     int? shiftHz,
     String? shiftRaw,
     String? toneRaw,
     double? ctcssHz,
-    required RepeaterMode mode,
     String? network,
-    required RepeaterStatus status,
     String? region,
     String? provinceCode,
     String? locality,

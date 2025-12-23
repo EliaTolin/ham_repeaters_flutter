@@ -19,8 +19,7 @@ class RepeatersMapController extends _$RepeatersMapController {
 
   Future<RepeatersMapState> _loadRepeaters() async {
     try {
-      final position =
-          await ref.read(locationServiceProvider).getCurrentPosition();
+      final position = await ref.read(locationServiceProvider).getCurrentPosition();
       final repeaters = await ref.read(
         getRepeatersNearbyProvider(
           latitude: position.latitude,

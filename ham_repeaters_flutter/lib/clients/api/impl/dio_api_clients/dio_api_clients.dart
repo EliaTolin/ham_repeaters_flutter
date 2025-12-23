@@ -17,7 +17,9 @@ class DioApiClient extends ApiClient {
   Future<ResponseModel> get(String url) async {
     final response = await dio.get(url);
     final responseModel = ResponseModel(
-        statusCode: response.statusCode ?? 0, data: response.data);
+      statusCode: response.statusCode ?? 0,
+      data: response.data,
+    );
     return responseModel;
   }
 
@@ -25,7 +27,9 @@ class DioApiClient extends ApiClient {
   Future<ResponseModel> post(String url, dynamic data) async {
     final response = await dio.post(url, data: data);
     final responseModel = ResponseModel(
-        statusCode: response.statusCode ?? 0, data: response.data);
+      statusCode: response.statusCode ?? 0,
+      data: response.data,
+    );
     return responseModel;
   }
 
@@ -33,7 +37,9 @@ class DioApiClient extends ApiClient {
   Future<ResponseModel> put(String url, dynamic data) async {
     final response = await dio.put(url, data: data);
     final responseModel = ResponseModel(
-        statusCode: response.statusCode ?? 0, data: response.data);
+      statusCode: response.statusCode ?? 0,
+      data: response.data,
+    );
     return responseModel;
   }
 
@@ -41,7 +47,9 @@ class DioApiClient extends ApiClient {
   Future<ResponseModel> delete(String url) async {
     final response = await dio.delete(url);
     final responseModel = ResponseModel(
-        statusCode: response.statusCode ?? 0, data: response.data);
+      statusCode: response.statusCode ?? 0,
+      data: response.data,
+    );
     return responseModel;
   }
 }
@@ -69,15 +77,19 @@ ResponseMappers dioResponseMapper(Ref ref) {
 }
 
 @riverpod
-Future<DioApiClient> dioApiClient(Ref ref,
-    {String? baseUrl, String? token}) async {
-  ref
-      .watch(talkerServiceProvider)
-      .info('Init DioApiClient with baseUrl: $baseUrl, token: $token');
+Future<DioApiClient> dioApiClient(
+  Ref ref, {
+  String? baseUrl,
+  String? token,
+}) async {
+  ref.watch(talkerServiceProvider).info('Init DioApiClient with baseUrl: $baseUrl, token: $token');
   final talkerDioLogger = ref.watch(talkerDioLoggerProvider);
   final dio = ref.watch(
     _dioProvider(
-        baseUrl: baseUrl ?? '', talkerDioLogger: talkerDioLogger, token: token),
+      baseUrl: baseUrl ?? '',
+      talkerDioLogger: talkerDioLogger,
+      token: token,
+    ),
   );
   final dioResponseMapper = ref.watch(dioResponseMapperProvider);
   return DioApiClient(dio: dio, responseMappers: dioResponseMapper);

@@ -63,5 +63,16 @@
         "type": "int"
       }
     }
-  }
+  },
+  "repeaterMode": "Modalità",
+  "repeaterModeAnalog": "Analog",
+  "repeaterModeC4fm": "C4FM",
+  "repeaterModeDstar": "D-STAR",
+  "repeaterModeDmr": "DMR",
+  "repeaterModeAllmode": "ALLMODE",
+  "repeaterModeEcholink": "Echolink",
+  "repeaterModeWinlink": "Winlink",
+  "repeaterFrequency": "Frequenza",
+  "repeaterLocation": "Posizione",
+  "repeaterDistance": "Distanza"
 }

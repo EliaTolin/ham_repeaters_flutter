@@ -68,8 +68,8 @@ class RepeatersMappers implements Mapper<Repeater, RepeaterModel> {
   RepeaterMode _modeFromString(String value) {
     final normalized = value.toLowerCase();
     switch (normalized) {
-      case 'fm':
-        return RepeaterMode.fm;
+      case 'analog':
+        return RepeaterMode.analog;
       case 'c4fm':
         return RepeaterMode.c4fm;
       case 'dstar':
@@ -83,14 +83,14 @@ class RepeatersMappers implements Mapper<Repeater, RepeaterModel> {
       case 'winlink':
         return RepeaterMode.winlink;
       default:
-        return RepeaterMode.other;
+        return RepeaterMode.analog;
     }
   }
 
   String _modeToString(RepeaterMode mode) {
     switch (mode) {
-      case RepeaterMode.fm:
-        return 'FM';
+      case RepeaterMode.analog:
+        return 'Analog';
       case RepeaterMode.c4fm:
         return 'C4FM';
       case RepeaterMode.dstar:
@@ -103,8 +103,6 @@ class RepeatersMappers implements Mapper<Repeater, RepeaterModel> {
         return 'Echolink';
       case RepeaterMode.winlink:
         return 'Winlink';
-      case RepeaterMode.other:
-        return 'Other';
     }
   }
 
