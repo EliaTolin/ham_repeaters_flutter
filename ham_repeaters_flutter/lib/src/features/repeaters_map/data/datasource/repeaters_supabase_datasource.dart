@@ -48,6 +48,68 @@ class RepeatersSupabaseDatasource implements RepeatersDatasource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<RepeaterModel>> searchRepeaters({
+    required String query,
+    int limit = 100,
+    List<String>? modes,
+  }) async {
+    try {
+      // Build OR conditions for searching multiple fields using PostgREST syntax
+      // Search in: callsign, name, locality, region, locator, manager_callsign
+      final searchPattern = '%$query%';
+      // Format: field1.ilike.pattern,field2.ilike.pattern
+      final orConditions =
+          'callsign.ilike.$searchPattern,name.ilike.$searchPattern,locality.ilike.$searchPattern,region.ilike.$searchPattern,locator.ilike.$searchPattern,manager_callsign.ilike.$searchPattern';
+
+      var request = _client.from('repeaters').select().or(orConditions);
+
+      // Apply mode filter if provided
+      if (modes != null && modes.isNotEmpty) {
+        request = request.inFilter('mode', modes);
+      }
+
+      // Limit results
+      final data = await request.limit(limit);
+
+      final dataList = data as List;
+      return dataList
+          .map(
+            (e) => RepeaterModel.fromJson(
+              Map<String, dynamic>.from(e as Map<dynamic, dynamic>),
+            ),
+          )
+          .toList();
+    } catch (error, stackTrace) {
+      log('Error searching repeaters: $error', stackTrace: stackTrace);
+      // If OR doesn't work, fallback to simple callsign search
+      try {
+        log('Falling back to callsign-only search');
+        var request = _client.from('repeaters').select().ilike('callsign', '%$query%');
+
+        if (modes != null && modes.isNotEmpty) {
+          request = request.inFilter('mode', modes);
+        }
+
+        final data = await request.limit(limit);
+        final dataList = data as List;
+        return dataList
+            .map(
+              (e) => RepeaterModel.fromJson(
+                Map<String, dynamic>.from(e as Map<dynamic, dynamic>),
+              ),
+            )
+            .toList();
+      } catch (fallbackError, fallbackStack) {
+        log(
+          'Error with fallback search: $fallbackError',
+          stackTrace: fallbackStack,
+        );
+        return [];
+      }
+    }
+  }
 }
 
 @riverpod

@@ -15,7 +15,9 @@ class RepeatersMapController extends _$RepeatersMapController {
 
   Future<void> toggleModeFilter(RepeaterMode mode) async {
     final currentState = state.value;
-    if (currentState == null || currentState.latitude == null || currentState.longitude == null) {
+    if (currentState == null ||
+        currentState.latitude == null ||
+        currentState.longitude == null) {
       return;
     }
 
@@ -31,7 +33,8 @@ class RepeatersMapController extends _$RepeatersMapController {
       () => _loadRepeaters(
         latitude: currentState.latitude,
         longitude: currentState.longitude,
-        selectedModes: newSelectedModes.isEmpty ? null : newSelectedModes.toList(),
+        selectedModes:
+            newSelectedModes.isEmpty ? null : newSelectedModes.toList(),
       ),
     );
   }
@@ -49,7 +52,8 @@ class RepeatersMapController extends _$RepeatersMapController {
     // If we don't have a position, try to get it
     if (finalLatitude == null || finalLongitude == null) {
       try {
-        final position = await ref.read(locationServiceProvider).getCurrentPosition();
+        final position =
+            await ref.read(locationServiceProvider).getCurrentPosition();
         return await _loadRepeaters(
           latitude: position.latitude,
           longitude: position.longitude,
@@ -61,7 +65,8 @@ class RepeatersMapController extends _$RepeatersMapController {
           repeaters: currentState?.repeaters ?? const [],
           latitude: currentState?.latitude,
           longitude: currentState?.longitude,
-          selectedModes: currentState?.selectedModes ?? (modesToFilter?.toSet() ?? {}),
+          selectedModes:
+              currentState?.selectedModes ?? (modesToFilter?.toSet() ?? {}),
         );
       }
     }
@@ -81,7 +86,8 @@ class RepeatersMapController extends _$RepeatersMapController {
         repeaters: repeaters,
         latitude: finalLatitude,
         longitude: finalLongitude,
-        selectedModes: modesToFilter?.toSet() ?? currentState?.selectedModes ?? {},
+        selectedModes:
+            modesToFilter?.toSet() ?? currentState?.selectedModes ?? {},
       );
     } on LocationException catch (error) {
       return RepeatersMapState(
@@ -89,7 +95,8 @@ class RepeatersMapController extends _$RepeatersMapController {
         repeaters: currentState?.repeaters ?? const [],
         latitude: currentState?.latitude,
         longitude: currentState?.longitude,
-        selectedModes: currentState?.selectedModes ?? (modesToFilter?.toSet() ?? {}),
+        selectedModes:
+            currentState?.selectedModes ?? (modesToFilter?.toSet() ?? {}),
       );
     }
   }

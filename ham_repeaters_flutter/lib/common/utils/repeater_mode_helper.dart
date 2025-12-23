@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:ham_repeaters/l10n/app_localizations.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/domain/repeater/repeater.dart';
 
 class RepeaterModeHelper {
@@ -22,6 +23,19 @@ class RepeaterModeHelper {
   /// Returns the Flutter Color object for a repeater mode
   static Color getModeColorObject(RepeaterMode mode) {
     return Color(getModeColor(mode));
+  }
+
+  /// Returns the localized label for a repeater mode
+  static String getModeLabel(RepeaterMode mode, AppLocalizations l10n) {
+    return switch (mode) {
+      RepeaterMode.analog => l10n.repeaterModeAnalog,
+      RepeaterMode.c4fm => l10n.repeaterModeC4fm,
+      RepeaterMode.dstar => l10n.repeaterModeDstar,
+      RepeaterMode.dmr => l10n.repeaterModeDmr,
+      RepeaterMode.allmode => l10n.repeaterModeAllmode,
+      RepeaterMode.echolink => l10n.repeaterModeEcholink,
+      RepeaterMode.winlink => l10n.repeaterModeWinlink,
+    };
   }
 
   /// Generates a custom icon bitmap for a repeater mode using Icons.radio

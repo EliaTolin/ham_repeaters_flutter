@@ -6,9 +6,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ham_repeaters/common/extension/l10n_extension.dart';
 import 'package:ham_repeaters/common/utils/repeater_mode_helper.dart';
 import 'package:ham_repeaters/config/app_configs.dart';
-import 'package:ham_repeaters/l10n/app_localizations.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/domain/repeater/repeater.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/presentation/controller/repeaters_map_controller.dart';
+import 'package:ham_repeaters/src/features/repeaters_map/presentation/widgets/repeater_details_sheet.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/service/location_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
@@ -142,7 +142,7 @@ class RepeatersMapPage extends HookConsumerWidget {
             ),
           if (mapState?.repeaters.isNotEmpty ?? false)
             Positioned(
-              top: 12,
+              top: 32,
               left: 12,
               right: 12,
               child: SafeArea(
@@ -204,7 +204,7 @@ Future<void> _syncAnnotations(
 void _showRepeaterDetails(BuildContext context, Repeater repeater) {
   showModalBottomSheet(
     context: context,
-    builder: (context) => _RepeaterDetailsSheet(repeater: repeater),
+    builder: (context) => RepeaterDetailsSheet(repeater: repeater),
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -349,182 +349,6 @@ class _PermissionBanner extends ConsumerWidget {
   }
 }
 
-class _RepeaterDetailsSheet extends ConsumerWidget {
-  const _RepeaterDetailsSheet({required this.repeater});
-
-  final Repeater repeater;
-
-  String _getModeLabel(RepeaterMode mode, AppLocalizations l10n) {
-    return switch (mode) {
-      RepeaterMode.analog => l10n.repeaterModeAnalog,
-      RepeaterMode.c4fm => l10n.repeaterModeC4fm,
-      RepeaterMode.dstar => l10n.repeaterModeDstar,
-      RepeaterMode.dmr => l10n.repeaterModeDmr,
-      RepeaterMode.allmode => l10n.repeaterModeAllmode,
-      RepeaterMode.echolink => l10n.repeaterModeEcholink,
-      RepeaterMode.winlink => l10n.repeaterModeWinlink,
-    };
-  }
-
-  String _formatFrequency(int frequencyHz) {
-    if (frequencyHz >= 1000000) {
-      return '${(frequencyHz / 1000000).toStringAsFixed(3)} MHz';
-    } else if (frequencyHz >= 1000) {
-      return '${(frequencyHz / 1000).toStringAsFixed(1)} kHz';
-    }
-    return '$frequencyHz Hz';
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.localization;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: 16,
-        right: 16,
-        top: 8,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              margin: const EdgeInsets.only(bottom: 16),
-              decoration: BoxDecoration(
-                color: colorScheme.onSurface.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
-          Text(
-            repeater.callsign,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          if (repeater.name != null) ...[
-            const SizedBox(height: 4),
-            Text(
-              repeater.name!,
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: colorScheme.onSurface.withValues(alpha: 0.7),
-              ),
-            ),
-          ],
-          const SizedBox(height: 16),
-          _DetailRow(
-            icon: Icons.radio,
-            label: l10n.repeaterMode,
-            value: _getModeLabel(repeater.mode, l10n),
-            modeColor: RepeaterModeHelper.getModeColorObject(repeater.mode),
-          ),
-          const SizedBox(height: 12),
-          _DetailRow(
-            icon: Icons.waves,
-            label: l10n.repeaterFrequency,
-            value: _formatFrequency(repeater.frequencyHz),
-          ),
-          if (repeater.locality != null || repeater.region != null) ...[
-            const SizedBox(height: 12),
-            _DetailRow(
-              icon: Icons.location_on,
-              label: l10n.repeaterLocation,
-              value: [
-                repeater.locality,
-                repeater.region,
-              ].whereType<String>().join(', '),
-            ),
-          ],
-          if (repeater.distanceMeters != null) ...[
-            const SizedBox(height: 12),
-            _DetailRow(
-              icon: Icons.straighten,
-              label: l10n.repeaterDistance,
-              value: repeater.distanceMeters! < 1000
-                  ? '${repeater.distanceMeters!.toStringAsFixed(0)} m'
-                  : '${(repeater.distanceMeters! / 1000).toStringAsFixed(1)} km',
-            ),
-          ],
-          const SizedBox(height: 16),
-        ],
-      ),
-    );
-  }
-}
-
-class _DetailRow extends StatelessWidget {
-  const _DetailRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-    this.modeColor,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color? modeColor;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final iconColor = modeColor ?? theme.colorScheme.primary;
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(icon, size: 20, color: iconColor),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                ),
-              ),
-              const SizedBox(height: 2),
-              Row(
-                children: [
-                  if (modeColor != null) ...[
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: modeColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                  Text(
-                    value,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _ModeFilterChips extends ConsumerWidget {
   const _ModeFilterChips({
     required this.selectedModes,
@@ -533,18 +357,6 @@ class _ModeFilterChips extends ConsumerWidget {
 
   final Set<RepeaterMode> selectedModes;
   final ValueChanged<RepeaterMode> onModeToggled;
-
-  String _getModeLabel(RepeaterMode mode, AppLocalizations l10n) {
-    return switch (mode) {
-      RepeaterMode.analog => l10n.repeaterModeAnalog,
-      RepeaterMode.c4fm => l10n.repeaterModeC4fm,
-      RepeaterMode.dstar => l10n.repeaterModeDstar,
-      RepeaterMode.dmr => l10n.repeaterModeDmr,
-      RepeaterMode.allmode => l10n.repeaterModeAllmode,
-      RepeaterMode.echolink => l10n.repeaterModeEcholink,
-      RepeaterMode.winlink => l10n.repeaterModeWinlink,
-    };
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -577,7 +389,7 @@ class _ModeFilterChips extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: FilterChip(
                 selected: isSelected,
-                label: Text(_getModeLabel(mode, l10n)),
+                label: Text(RepeaterModeHelper.getModeLabel(mode, l10n)),
                 avatar: CircleAvatar(
                   backgroundColor: modeColor,
                   radius: 8,

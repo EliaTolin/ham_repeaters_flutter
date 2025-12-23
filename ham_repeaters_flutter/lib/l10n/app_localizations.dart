@@ -370,6 +370,18 @@ abstract class AppLocalizations {
   /// **'Nessun ripetitore trovato vicino a te.'**
   String get repeatersMapEmpty;
 
+  /// No description provided for @repeatersSearchHint.
+  ///
+  /// In it, this message translates to:
+  /// **'Cerca ripetitori…'**
+  String get repeatersSearchHint;
+
+  /// No description provided for @repeatersSearchEmpty.
+  ///
+  /// In it, this message translates to:
+  /// **'Nessun ripetitore trovato.'**
+  String get repeatersSearchEmpty;
+
   /// No description provided for @repeatersMapRetry.
   ///
   /// In it, this message translates to:

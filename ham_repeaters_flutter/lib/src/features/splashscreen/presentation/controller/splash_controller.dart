@@ -26,7 +26,7 @@ class SplashController extends _$SplashController {
       final hasSeenOnboarding = await ref.read(getHasSeenOnboardingProvider.future);
       var userId = await ref.read(getUserIdProvider.future);
       userId ??= await ref.read(anonymousSignInProvider.future);
-      final targetRoute = hasSeenOnboarding ? const RepeatersMapRoute() : const OnboardingRoute();
+      final targetRoute = hasSeenOnboarding ? const HomeRoute() : const OnboardingRoute();
       final packageInfo = await ref.read(packageInfoProvider.future);
       try {
         await _ensureMinimumVersion(packageInfo);

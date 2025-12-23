@@ -28,6 +28,19 @@ class RepeatersRepository {
     );
     return data.map(_mapper.fromModel).toList();
   }
+
+  Future<List<Repeater>> searchRepeaters({
+    required String query,
+    int limit = 100,
+    List<RepeaterMode>? modes,
+  }) async {
+    final data = await _datasource.searchRepeaters(
+      query: query,
+      limit: limit,
+      modes: _mapper.mapModesToValues(modes),
+    );
+    return data.map(_mapper.fromModel).toList();
+  }
 }
 
 @riverpod

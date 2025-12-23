@@ -574,6 +574,19 @@ class [Feature]NotFoundException extends [Feature]Exception {
   - `@freezed` classes
   - `part` files
 
+### Riduzione del Codice Duplicato
+- **Riduci al minimo il codice boilerplate o duplicato**, specialmente per widget e helper
+- Quando ci sono componenti UI in comune tra più pagine o widget, crea un widget separato riutilizzabile
+- Posiziona i widget condivisi in `presentation/widgets/` della feature specifica, o in `lib/common/widgets/` se condivisi tra più features
+- Per funzioni di utilità comuni (es. formattazione, conversioni), crea helper classi o metodi statici in `lib/common/utils/`
+- **NON duplicare**: metodi helper, widget UI, logica di formattazione, funzioni di validazione
+- Se un widget o metodo viene usato in più di un posto, estrailo in un componente riutilizzabile
+- Esempi di codice che DEVE essere estratto:
+  - Widget che compaiono identici in più pagine (es. `_RepeaterDetailsSheet`)
+  - Metodi di formattazione duplicati (es. `_formatFrequency`, `_getModeLabel`)
+  - Logica di validazione ripetuta
+  - Helper functions usate in più controller o pagine
+
 ---
 
 ## 13. Checklist per Nuova Feature

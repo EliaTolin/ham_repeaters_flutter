@@ -8,4 +8,10 @@ abstract interface class RepeatersDatasource {
     int limit,
     List<String>? modes,
   });
+
+  Future<List<RepeaterModel>> searchRepeaters({
+    required String query,
+    int limit,
+    List<String>? modes,
+  });
 }
