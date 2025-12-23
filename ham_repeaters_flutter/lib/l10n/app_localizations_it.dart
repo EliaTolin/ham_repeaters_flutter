@@ -142,6 +142,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get repeatersMapTitle => 'Mappa ripetitori';
 
   @override
+  String get repeatersListTitle => 'Lista ripetitori';
+
+  @override
   String get repeatersMapLoading => 'Caricamento mappa dei ripetitori…';
 
   @override

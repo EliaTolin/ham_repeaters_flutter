@@ -91,6 +91,22 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RepeatersListPage]
+class RepeatersListRoute extends PageRouteInfo<void> {
+  const RepeatersListRoute({List<PageRouteInfo>? children})
+      : super(RepeatersListRoute.name, initialChildren: children);
+
+  static const String name = 'RepeatersListRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RepeatersListPage();
+    },
+  );
+}
+
+/// generated route for
 /// [RepeatersMapPage]
 class RepeatersMapRoute extends PageRouteInfo<void> {
   const RepeatersMapRoute({List<PageRouteInfo>? children})

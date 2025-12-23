@@ -18,6 +18,7 @@ mixin _$RepeatersMapState {
   double? get latitude;
   double? get longitude;
   LocationErrorType? get locationError;
+  Set<RepeaterMode> get selectedModes;
 
   /// Create a copy of RepeatersMapState
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +39,9 @@ mixin _$RepeatersMapState {
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
             (identical(other.locationError, locationError) ||
-                other.locationError == locationError));
+                other.locationError == locationError) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedModes, selectedModes));
   }
 
   @override
@@ -47,11 +50,12 @@ mixin _$RepeatersMapState {
       const DeepCollectionEquality().hash(repeaters),
       latitude,
       longitude,
-      locationError);
+      locationError,
+      const DeepCollectionEquality().hash(selectedModes));
 
   @override
   String toString() {
-    return 'RepeatersMapState(repeaters: $repeaters, latitude: $latitude, longitude: $longitude, locationError: $locationError)';
+    return 'RepeatersMapState(repeaters: $repeaters, latitude: $latitude, longitude: $longitude, locationError: $locationError, selectedModes: $selectedModes)';
   }
 }
 
@@ -65,7 +69,8 @@ abstract mixin class $RepeatersMapStateCopyWith<$Res> {
       {List<Repeater> repeaters,
       double? latitude,
       double? longitude,
-      LocationErrorType? locationError});
+      LocationErrorType? locationError,
+      Set<RepeaterMode> selectedModes});
 }
 
 /// @nodoc
@@ -85,6 +90,7 @@ class _$RepeatersMapStateCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? locationError = freezed,
+    Object? selectedModes = null,
   }) {
     return _then(_self.copyWith(
       repeaters: null == repeaters
@@ -103,6 +109,10 @@ class _$RepeatersMapStateCopyWithImpl<$Res>
           ? _self.locationError
           : locationError // ignore: cast_nullable_to_non_nullable
               as LocationErrorType?,
+      selectedModes: null == selectedModes
+          ? _self.selectedModes
+          : selectedModes // ignore: cast_nullable_to_non_nullable
+              as Set<RepeaterMode>,
     ));
   }
 }
@@ -200,8 +210,12 @@ extension RepeatersMapStatePatterns on RepeatersMapState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<Repeater> repeaters, double? latitude,
-            double? longitude, LocationErrorType? locationError)?
+    TResult Function(
+            List<Repeater> repeaters,
+            double? latitude,
+            double? longitude,
+            LocationErrorType? locationError,
+            Set<RepeaterMode> selectedModes)?
         $default, {
     required TResult orElse(),
   }) {
@@ -209,7 +223,7 @@ extension RepeatersMapStatePatterns on RepeatersMapState {
     switch (_that) {
       case _RepeatersMapState() when $default != null:
         return $default(_that.repeaters, _that.latitude, _that.longitude,
-            _that.locationError);
+            _that.locationError, _that.selectedModes);
       case _:
         return orElse();
     }
@@ -230,15 +244,19 @@ extension RepeatersMapStatePatterns on RepeatersMapState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<Repeater> repeaters, double? latitude,
-            double? longitude, LocationErrorType? locationError)
+    TResult Function(
+            List<Repeater> repeaters,
+            double? latitude,
+            double? longitude,
+            LocationErrorType? locationError,
+            Set<RepeaterMode> selectedModes)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _RepeatersMapState():
         return $default(_that.repeaters, _that.latitude, _that.longitude,
-            _that.locationError);
+            _that.locationError, _that.selectedModes);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -258,15 +276,19 @@ extension RepeatersMapStatePatterns on RepeatersMapState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<Repeater> repeaters, double? latitude,
-            double? longitude, LocationErrorType? locationError)?
+    TResult? Function(
+            List<Repeater> repeaters,
+            double? latitude,
+            double? longitude,
+            LocationErrorType? locationError,
+            Set<RepeaterMode> selectedModes)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _RepeatersMapState() when $default != null:
         return $default(_that.repeaters, _that.latitude, _that.longitude,
-            _that.locationError);
+            _that.locationError, _that.selectedModes);
       case _:
         return null;
     }
@@ -280,8 +302,10 @@ class _RepeatersMapState implements RepeatersMapState {
       {final List<Repeater> repeaters = const <Repeater>[],
       this.latitude,
       this.longitude,
-      this.locationError})
-      : _repeaters = repeaters;
+      this.locationError,
+      final Set<RepeaterMode> selectedModes = const <RepeaterMode>{}})
+      : _repeaters = repeaters,
+        _selectedModes = selectedModes;
 
   final List<Repeater> _repeaters;
   @override
@@ -298,6 +322,14 @@ class _RepeatersMapState implements RepeatersMapState {
   final double? longitude;
   @override
   final LocationErrorType? locationError;
+  final Set<RepeaterMode> _selectedModes;
+  @override
+  @JsonKey()
+  Set<RepeaterMode> get selectedModes {
+    if (_selectedModes is EqualUnmodifiableSetView) return _selectedModes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_selectedModes);
+  }
 
   /// Create a copy of RepeatersMapState
   /// with the given fields replaced by the non-null parameter values.
@@ -319,7 +351,9 @@ class _RepeatersMapState implements RepeatersMapState {
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
             (identical(other.locationError, locationError) ||
-                other.locationError == locationError));
+                other.locationError == locationError) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedModes, _selectedModes));
   }
 
   @override
@@ -328,11 +362,12 @@ class _RepeatersMapState implements RepeatersMapState {
       const DeepCollectionEquality().hash(_repeaters),
       latitude,
       longitude,
-      locationError);
+      locationError,
+      const DeepCollectionEquality().hash(_selectedModes));
 
   @override
   String toString() {
-    return 'RepeatersMapState(repeaters: $repeaters, latitude: $latitude, longitude: $longitude, locationError: $locationError)';
+    return 'RepeatersMapState(repeaters: $repeaters, latitude: $latitude, longitude: $longitude, locationError: $locationError, selectedModes: $selectedModes)';
   }
 }
 
@@ -348,7 +383,8 @@ abstract mixin class _$RepeatersMapStateCopyWith<$Res>
       {List<Repeater> repeaters,
       double? latitude,
       double? longitude,
-      LocationErrorType? locationError});
+      LocationErrorType? locationError,
+      Set<RepeaterMode> selectedModes});
 }
 
 /// @nodoc
@@ -368,6 +404,7 @@ class __$RepeatersMapStateCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? locationError = freezed,
+    Object? selectedModes = null,
   }) {
     return _then(_RepeatersMapState(
       repeaters: null == repeaters
@@ -386,6 +423,10 @@ class __$RepeatersMapStateCopyWithImpl<$Res>
           ? _self.locationError
           : locationError // ignore: cast_nullable_to_non_nullable
               as LocationErrorType?,
+      selectedModes: null == selectedModes
+          ? _self._selectedModes
+          : selectedModes // ignore: cast_nullable_to_non_nullable
+              as Set<RepeaterMode>,
     ));
   }
 }

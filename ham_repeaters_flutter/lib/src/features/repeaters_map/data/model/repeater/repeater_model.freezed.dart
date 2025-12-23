@@ -19,14 +19,16 @@ mixin _$RepeaterModel {
   String get createdAt;
   @JsonKey(name: 'updated_at')
   String get updatedAt;
-  String? get name;
   String get callsign;
+  @JsonKey(name: 'frequency_hz')
+  int get frequencyHz;
+  String get mode;
+  String get status;
+  String? get name;
   @JsonKey(name: 'node_number')
   int? get nodeNumber;
   @JsonKey(name: 'manager_callsign')
   String? get managerCallsign;
-  @JsonKey(name: 'frequency_hz')
-  int get frequencyHz;
   @JsonKey(name: 'shift_hz')
   int? get shiftHz;
   @JsonKey(name: 'shift_raw')
@@ -35,9 +37,7 @@ mixin _$RepeaterModel {
   String? get toneRaw;
   @JsonKey(name: 'ctcss_hz')
   double? get ctcssHz;
-  String get mode;
   String? get network;
-  String get status;
   String? get region;
   @JsonKey(name: 'province_code')
   String? get provinceCode;
@@ -69,23 +69,23 @@ mixin _$RepeaterModel {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.name, name) || other.name == name) &&
             (identical(other.callsign, callsign) ||
                 other.callsign == callsign) &&
+            (identical(other.frequencyHz, frequencyHz) ||
+                other.frequencyHz == frequencyHz) &&
+            (identical(other.mode, mode) || other.mode == mode) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.nodeNumber, nodeNumber) ||
                 other.nodeNumber == nodeNumber) &&
             (identical(other.managerCallsign, managerCallsign) ||
                 other.managerCallsign == managerCallsign) &&
-            (identical(other.frequencyHz, frequencyHz) ||
-                other.frequencyHz == frequencyHz) &&
             (identical(other.shiftHz, shiftHz) || other.shiftHz == shiftHz) &&
             (identical(other.shiftRaw, shiftRaw) ||
                 other.shiftRaw == shiftRaw) &&
             (identical(other.toneRaw, toneRaw) || other.toneRaw == toneRaw) &&
             (identical(other.ctcssHz, ctcssHz) || other.ctcssHz == ctcssHz) &&
-            (identical(other.mode, mode) || other.mode == mode) &&
             (identical(other.network, network) || other.network == network) &&
-            (identical(other.status, status) || other.status == status) &&
             (identical(other.region, region) || other.region == region) &&
             (identical(other.provinceCode, provinceCode) ||
                 other.provinceCode == provinceCode) &&
@@ -105,18 +105,18 @@ mixin _$RepeaterModel {
         id,
         createdAt,
         updatedAt,
-        name,
         callsign,
+        frequencyHz,
+        mode,
+        status,
+        name,
         nodeNumber,
         managerCallsign,
-        frequencyHz,
         shiftHz,
         shiftRaw,
         toneRaw,
         ctcssHz,
-        mode,
         network,
-        status,
         region,
         provinceCode,
         locality,
@@ -128,7 +128,7 @@ mixin _$RepeaterModel {
 
   @override
   String toString() {
-    return 'RepeaterModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, name: $name, callsign: $callsign, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, frequencyHz: $frequencyHz, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, mode: $mode, network: $network, status: $status, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, lat: $lat, lon: $lon, distanceM: $distanceM)';
+    return 'RepeaterModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, callsign: $callsign, frequencyHz: $frequencyHz, mode: $mode, status: $status, name: $name, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, network: $network, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, lat: $lat, lon: $lon, distanceM: $distanceM)';
   }
 }
 
@@ -142,18 +142,18 @@ abstract mixin class $RepeaterModelCopyWith<$Res> {
       {String id,
       @JsonKey(name: 'created_at') String createdAt,
       @JsonKey(name: 'updated_at') String updatedAt,
-      String? name,
       String callsign,
+      @JsonKey(name: 'frequency_hz') int frequencyHz,
+      String mode,
+      String status,
+      String? name,
       @JsonKey(name: 'node_number') int? nodeNumber,
       @JsonKey(name: 'manager_callsign') String? managerCallsign,
-      @JsonKey(name: 'frequency_hz') int frequencyHz,
       @JsonKey(name: 'shift_hz') int? shiftHz,
       @JsonKey(name: 'shift_raw') String? shiftRaw,
       @JsonKey(name: 'tone_raw') String? toneRaw,
       @JsonKey(name: 'ctcss_hz') double? ctcssHz,
-      String mode,
       String? network,
-      String status,
       String? region,
       @JsonKey(name: 'province_code') String? provinceCode,
       String? locality,
@@ -179,18 +179,18 @@ class _$RepeaterModelCopyWithImpl<$Res>
     Object? id = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? name = freezed,
     Object? callsign = null,
+    Object? frequencyHz = null,
+    Object? mode = null,
+    Object? status = null,
+    Object? name = freezed,
     Object? nodeNumber = freezed,
     Object? managerCallsign = freezed,
-    Object? frequencyHz = null,
     Object? shiftHz = freezed,
     Object? shiftRaw = freezed,
     Object? toneRaw = freezed,
     Object? ctcssHz = freezed,
-    Object? mode = null,
     Object? network = freezed,
-    Object? status = null,
     Object? region = freezed,
     Object? provinceCode = freezed,
     Object? locality = freezed,
@@ -212,14 +212,26 @@ class _$RepeaterModelCopyWithImpl<$Res>
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
-      name: freezed == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
       callsign: null == callsign
           ? _self.callsign
           : callsign // ignore: cast_nullable_to_non_nullable
               as String,
+      frequencyHz: null == frequencyHz
+          ? _self.frequencyHz
+          : frequencyHz // ignore: cast_nullable_to_non_nullable
+              as int,
+      mode: null == mode
+          ? _self.mode
+          : mode // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: freezed == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       nodeNumber: freezed == nodeNumber
           ? _self.nodeNumber
           : nodeNumber // ignore: cast_nullable_to_non_nullable
@@ -228,10 +240,6 @@ class _$RepeaterModelCopyWithImpl<$Res>
           ? _self.managerCallsign
           : managerCallsign // ignore: cast_nullable_to_non_nullable
               as String?,
-      frequencyHz: null == frequencyHz
-          ? _self.frequencyHz
-          : frequencyHz // ignore: cast_nullable_to_non_nullable
-              as int,
       shiftHz: freezed == shiftHz
           ? _self.shiftHz
           : shiftHz // ignore: cast_nullable_to_non_nullable
@@ -248,18 +256,10 @@ class _$RepeaterModelCopyWithImpl<$Res>
           ? _self.ctcssHz
           : ctcssHz // ignore: cast_nullable_to_non_nullable
               as double?,
-      mode: null == mode
-          ? _self.mode
-          : mode // ignore: cast_nullable_to_non_nullable
-              as String,
       network: freezed == network
           ? _self.network
           : network // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: null == status
-          ? _self.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
       region: freezed == region
           ? _self.region
           : region // ignore: cast_nullable_to_non_nullable
@@ -389,18 +389,18 @@ extension RepeaterModelPatterns on RepeaterModel {
             String id,
             @JsonKey(name: 'created_at') String createdAt,
             @JsonKey(name: 'updated_at') String updatedAt,
-            String? name,
             String callsign,
+            @JsonKey(name: 'frequency_hz') int frequencyHz,
+            String mode,
+            String status,
+            String? name,
             @JsonKey(name: 'node_number') int? nodeNumber,
             @JsonKey(name: 'manager_callsign') String? managerCallsign,
-            @JsonKey(name: 'frequency_hz') int frequencyHz,
             @JsonKey(name: 'shift_hz') int? shiftHz,
             @JsonKey(name: 'shift_raw') String? shiftRaw,
             @JsonKey(name: 'tone_raw') String? toneRaw,
             @JsonKey(name: 'ctcss_hz') double? ctcssHz,
-            String mode,
             String? network,
-            String status,
             String? region,
             @JsonKey(name: 'province_code') String? provinceCode,
             String? locality,
@@ -418,18 +418,18 @@ extension RepeaterModelPatterns on RepeaterModel {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.name,
             _that.callsign,
+            _that.frequencyHz,
+            _that.mode,
+            _that.status,
+            _that.name,
             _that.nodeNumber,
             _that.managerCallsign,
-            _that.frequencyHz,
             _that.shiftHz,
             _that.shiftRaw,
             _that.toneRaw,
             _that.ctcssHz,
-            _that.mode,
             _that.network,
-            _that.status,
             _that.region,
             _that.provinceCode,
             _that.locality,
@@ -461,18 +461,18 @@ extension RepeaterModelPatterns on RepeaterModel {
             String id,
             @JsonKey(name: 'created_at') String createdAt,
             @JsonKey(name: 'updated_at') String updatedAt,
-            String? name,
             String callsign,
+            @JsonKey(name: 'frequency_hz') int frequencyHz,
+            String mode,
+            String status,
+            String? name,
             @JsonKey(name: 'node_number') int? nodeNumber,
             @JsonKey(name: 'manager_callsign') String? managerCallsign,
-            @JsonKey(name: 'frequency_hz') int frequencyHz,
             @JsonKey(name: 'shift_hz') int? shiftHz,
             @JsonKey(name: 'shift_raw') String? shiftRaw,
             @JsonKey(name: 'tone_raw') String? toneRaw,
             @JsonKey(name: 'ctcss_hz') double? ctcssHz,
-            String mode,
             String? network,
-            String status,
             String? region,
             @JsonKey(name: 'province_code') String? provinceCode,
             String? locality,
@@ -489,18 +489,18 @@ extension RepeaterModelPatterns on RepeaterModel {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.name,
             _that.callsign,
+            _that.frequencyHz,
+            _that.mode,
+            _that.status,
+            _that.name,
             _that.nodeNumber,
             _that.managerCallsign,
-            _that.frequencyHz,
             _that.shiftHz,
             _that.shiftRaw,
             _that.toneRaw,
             _that.ctcssHz,
-            _that.mode,
             _that.network,
-            _that.status,
             _that.region,
             _that.provinceCode,
             _that.locality,
@@ -531,18 +531,18 @@ extension RepeaterModelPatterns on RepeaterModel {
             String id,
             @JsonKey(name: 'created_at') String createdAt,
             @JsonKey(name: 'updated_at') String updatedAt,
-            String? name,
             String callsign,
+            @JsonKey(name: 'frequency_hz') int frequencyHz,
+            String mode,
+            String status,
+            String? name,
             @JsonKey(name: 'node_number') int? nodeNumber,
             @JsonKey(name: 'manager_callsign') String? managerCallsign,
-            @JsonKey(name: 'frequency_hz') int frequencyHz,
             @JsonKey(name: 'shift_hz') int? shiftHz,
             @JsonKey(name: 'shift_raw') String? shiftRaw,
             @JsonKey(name: 'tone_raw') String? toneRaw,
             @JsonKey(name: 'ctcss_hz') double? ctcssHz,
-            String mode,
             String? network,
-            String status,
             String? region,
             @JsonKey(name: 'province_code') String? provinceCode,
             String? locality,
@@ -559,18 +559,18 @@ extension RepeaterModelPatterns on RepeaterModel {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.name,
             _that.callsign,
+            _that.frequencyHz,
+            _that.mode,
+            _that.status,
+            _that.name,
             _that.nodeNumber,
             _that.managerCallsign,
-            _that.frequencyHz,
             _that.shiftHz,
             _that.shiftRaw,
             _that.toneRaw,
             _that.ctcssHz,
-            _that.mode,
             _that.network,
-            _that.status,
             _that.region,
             _that.provinceCode,
             _that.locality,
@@ -591,18 +591,18 @@ class _RepeaterModel implements RepeaterModel {
       {required this.id,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt,
-      this.name,
       required this.callsign,
+      @JsonKey(name: 'frequency_hz') required this.frequencyHz,
+      required this.mode,
+      required this.status,
+      this.name,
       @JsonKey(name: 'node_number') this.nodeNumber,
       @JsonKey(name: 'manager_callsign') this.managerCallsign,
-      @JsonKey(name: 'frequency_hz') required this.frequencyHz,
       @JsonKey(name: 'shift_hz') this.shiftHz,
       @JsonKey(name: 'shift_raw') this.shiftRaw,
       @JsonKey(name: 'tone_raw') this.toneRaw,
       @JsonKey(name: 'ctcss_hz') this.ctcssHz,
-      required this.mode,
       this.network,
-      required this.status,
       this.region,
       @JsonKey(name: 'province_code') this.provinceCode,
       this.locality,
@@ -622,18 +622,22 @@ class _RepeaterModel implements RepeaterModel {
   @JsonKey(name: 'updated_at')
   final String updatedAt;
   @override
-  final String? name;
-  @override
   final String callsign;
+  @override
+  @JsonKey(name: 'frequency_hz')
+  final int frequencyHz;
+  @override
+  final String mode;
+  @override
+  final String status;
+  @override
+  final String? name;
   @override
   @JsonKey(name: 'node_number')
   final int? nodeNumber;
   @override
   @JsonKey(name: 'manager_callsign')
   final String? managerCallsign;
-  @override
-  @JsonKey(name: 'frequency_hz')
-  final int frequencyHz;
   @override
   @JsonKey(name: 'shift_hz')
   final int? shiftHz;
@@ -647,11 +651,7 @@ class _RepeaterModel implements RepeaterModel {
   @JsonKey(name: 'ctcss_hz')
   final double? ctcssHz;
   @override
-  final String mode;
-  @override
   final String? network;
-  @override
-  final String status;
   @override
   final String? region;
   @override
@@ -694,23 +694,23 @@ class _RepeaterModel implements RepeaterModel {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.name, name) || other.name == name) &&
             (identical(other.callsign, callsign) ||
                 other.callsign == callsign) &&
+            (identical(other.frequencyHz, frequencyHz) ||
+                other.frequencyHz == frequencyHz) &&
+            (identical(other.mode, mode) || other.mode == mode) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.nodeNumber, nodeNumber) ||
                 other.nodeNumber == nodeNumber) &&
             (identical(other.managerCallsign, managerCallsign) ||
                 other.managerCallsign == managerCallsign) &&
-            (identical(other.frequencyHz, frequencyHz) ||
-                other.frequencyHz == frequencyHz) &&
             (identical(other.shiftHz, shiftHz) || other.shiftHz == shiftHz) &&
             (identical(other.shiftRaw, shiftRaw) ||
                 other.shiftRaw == shiftRaw) &&
             (identical(other.toneRaw, toneRaw) || other.toneRaw == toneRaw) &&
             (identical(other.ctcssHz, ctcssHz) || other.ctcssHz == ctcssHz) &&
-            (identical(other.mode, mode) || other.mode == mode) &&
             (identical(other.network, network) || other.network == network) &&
-            (identical(other.status, status) || other.status == status) &&
             (identical(other.region, region) || other.region == region) &&
             (identical(other.provinceCode, provinceCode) ||
                 other.provinceCode == provinceCode) &&
@@ -730,18 +730,18 @@ class _RepeaterModel implements RepeaterModel {
         id,
         createdAt,
         updatedAt,
-        name,
         callsign,
+        frequencyHz,
+        mode,
+        status,
+        name,
         nodeNumber,
         managerCallsign,
-        frequencyHz,
         shiftHz,
         shiftRaw,
         toneRaw,
         ctcssHz,
-        mode,
         network,
-        status,
         region,
         provinceCode,
         locality,
@@ -753,7 +753,7 @@ class _RepeaterModel implements RepeaterModel {
 
   @override
   String toString() {
-    return 'RepeaterModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, name: $name, callsign: $callsign, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, frequencyHz: $frequencyHz, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, mode: $mode, network: $network, status: $status, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, lat: $lat, lon: $lon, distanceM: $distanceM)';
+    return 'RepeaterModel(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, callsign: $callsign, frequencyHz: $frequencyHz, mode: $mode, status: $status, name: $name, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, network: $network, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, lat: $lat, lon: $lon, distanceM: $distanceM)';
   }
 }
 
@@ -769,18 +769,18 @@ abstract mixin class _$RepeaterModelCopyWith<$Res>
       {String id,
       @JsonKey(name: 'created_at') String createdAt,
       @JsonKey(name: 'updated_at') String updatedAt,
-      String? name,
       String callsign,
+      @JsonKey(name: 'frequency_hz') int frequencyHz,
+      String mode,
+      String status,
+      String? name,
       @JsonKey(name: 'node_number') int? nodeNumber,
       @JsonKey(name: 'manager_callsign') String? managerCallsign,
-      @JsonKey(name: 'frequency_hz') int frequencyHz,
       @JsonKey(name: 'shift_hz') int? shiftHz,
       @JsonKey(name: 'shift_raw') String? shiftRaw,
       @JsonKey(name: 'tone_raw') String? toneRaw,
       @JsonKey(name: 'ctcss_hz') double? ctcssHz,
-      String mode,
       String? network,
-      String status,
       String? region,
       @JsonKey(name: 'province_code') String? provinceCode,
       String? locality,
@@ -806,18 +806,18 @@ class __$RepeaterModelCopyWithImpl<$Res>
     Object? id = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? name = freezed,
     Object? callsign = null,
+    Object? frequencyHz = null,
+    Object? mode = null,
+    Object? status = null,
+    Object? name = freezed,
     Object? nodeNumber = freezed,
     Object? managerCallsign = freezed,
-    Object? frequencyHz = null,
     Object? shiftHz = freezed,
     Object? shiftRaw = freezed,
     Object? toneRaw = freezed,
     Object? ctcssHz = freezed,
-    Object? mode = null,
     Object? network = freezed,
-    Object? status = null,
     Object? region = freezed,
     Object? provinceCode = freezed,
     Object? locality = freezed,
@@ -839,14 +839,26 @@ class __$RepeaterModelCopyWithImpl<$Res>
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
-      name: freezed == name
-          ? _self.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
       callsign: null == callsign
           ? _self.callsign
           : callsign // ignore: cast_nullable_to_non_nullable
               as String,
+      frequencyHz: null == frequencyHz
+          ? _self.frequencyHz
+          : frequencyHz // ignore: cast_nullable_to_non_nullable
+              as int,
+      mode: null == mode
+          ? _self.mode
+          : mode // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: freezed == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       nodeNumber: freezed == nodeNumber
           ? _self.nodeNumber
           : nodeNumber // ignore: cast_nullable_to_non_nullable
@@ -855,10 +867,6 @@ class __$RepeaterModelCopyWithImpl<$Res>
           ? _self.managerCallsign
           : managerCallsign // ignore: cast_nullable_to_non_nullable
               as String?,
-      frequencyHz: null == frequencyHz
-          ? _self.frequencyHz
-          : frequencyHz // ignore: cast_nullable_to_non_nullable
-              as int,
       shiftHz: freezed == shiftHz
           ? _self.shiftHz
           : shiftHz // ignore: cast_nullable_to_non_nullable
@@ -875,18 +883,10 @@ class __$RepeaterModelCopyWithImpl<$Res>
           ? _self.ctcssHz
           : ctcssHz // ignore: cast_nullable_to_non_nullable
               as double?,
-      mode: null == mode
-          ? _self.mode
-          : mode // ignore: cast_nullable_to_non_nullable
-              as String,
       network: freezed == network
           ? _self.network
           : network // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: null == status
-          ? _self.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
       region: freezed == region
           ? _self.region
           : region // ignore: cast_nullable_to_non_nullable

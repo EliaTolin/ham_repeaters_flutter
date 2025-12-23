@@ -346,6 +346,12 @@ abstract class AppLocalizations {
   /// **'Mappa ripetitori'**
   String get repeatersMapTitle;
 
+  /// No description provided for @repeatersListTitle.
+  ///
+  /// In it, this message translates to:
+  /// **'Lista ripetitori'**
+  String get repeatersListTitle;
+
   /// No description provided for @repeatersMapLoading.
   ///
   /// In it, this message translates to:

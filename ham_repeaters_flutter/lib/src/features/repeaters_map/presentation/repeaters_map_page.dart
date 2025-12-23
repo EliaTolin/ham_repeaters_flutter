@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ham_repeaters/common/extension/l10n_extension.dart';
 import 'package:ham_repeaters/common/utils/repeater_mode_helper.dart';
+import 'package:ham_repeaters/config/app_configs.dart';
 import 'package:ham_repeaters/l10n/app_localizations.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/domain/repeater/repeater.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/presentation/controller/repeaters_map_controller.dart';
@@ -25,6 +26,14 @@ class RepeatersMapPage extends HookConsumerWidget {
     final pointManager = useState<PointAnnotationManager?>(null);
 
     final mapState = asyncState.value;
+
+    useEffect(
+      () {
+        MapboxOptions.setAccessToken(AppConfigs.getMapboxAccessToken());
+        return null;
+      },
+      const [],
+    );
 
     useEffect(
       () {
@@ -53,13 +62,6 @@ class RepeatersMapPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.localization.repeatersMapTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.my_location),
-            tooltip: context.localization.repeatersMapRetry,
-            onPressed: notifier.refresh,
-          ),
-        ],
       ),
       body: Stack(
         children: [
@@ -123,16 +125,15 @@ class RepeatersMapPage extends HookConsumerWidget {
           if (mapState?.locationError != null)
             _PermissionBanner(
               errorType: mapState!.locationError!,
-              onRetry: notifier.refresh,
+              onRetry: () {
+                // Reload by toggling a filter
+                notifier.toggleModeFilter(RepeaterMode.analog);
+              },
             ),
           if (asyncState.hasError && mapState?.locationError == null)
             _InfoBanner(
               icon: const Icon(Icons.warning_amber_rounded),
               label: context.localization.repeatersMapGenericError,
-              trailing: TextButton(
-                onPressed: notifier.refresh,
-                child: Text(context.localization.repeatersMapRetry),
-              ),
             ),
           if (!asyncState.isLoading && (mapState?.repeaters.isEmpty ?? false))
             _InfoBanner(
@@ -150,11 +151,18 @@ class RepeatersMapPage extends HookConsumerWidget {
                 ),
               ),
             ),
+          Positioned(
+            bottom: 16,
+            left: 16,
+            right: 16,
+            child: SafeArea(
+              child: _ModeFilterChips(
+                selectedModes: mapState?.selectedModes ?? {},
+                onModeToggled: notifier.toggleModeFilter,
+              ),
+            ),
+          ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: notifier.refresh,
-        child: const Icon(Icons.refresh),
       ),
     );
   }
@@ -513,6 +521,83 @@ class _DetailRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ModeFilterChips extends ConsumerWidget {
+  const _ModeFilterChips({
+    required this.selectedModes,
+    required this.onModeToggled,
+  });
+
+  final Set<RepeaterMode> selectedModes;
+  final ValueChanged<RepeaterMode> onModeToggled;
+
+  String _getModeLabel(RepeaterMode mode, AppLocalizations l10n) {
+    return switch (mode) {
+      RepeaterMode.analog => l10n.repeaterModeAnalog,
+      RepeaterMode.c4fm => l10n.repeaterModeC4fm,
+      RepeaterMode.dstar => l10n.repeaterModeDstar,
+      RepeaterMode.dmr => l10n.repeaterModeDmr,
+      RepeaterMode.allmode => l10n.repeaterModeAllmode,
+      RepeaterMode.echolink => l10n.repeaterModeEcholink,
+      RepeaterMode.winlink => l10n.repeaterModeWinlink,
+    };
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.localization;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: colorScheme.surface.withValues(alpha: 0.95),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: RepeaterMode.values.map((mode) {
+            final isSelected = selectedModes.contains(mode);
+            final modeColor = RepeaterModeHelper.getModeColorObject(mode);
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: FilterChip(
+                selected: isSelected,
+                label: Text(_getModeLabel(mode, l10n)),
+                avatar: CircleAvatar(
+                  backgroundColor: modeColor,
+                  radius: 8,
+                ),
+                selectedColor: modeColor.withValues(alpha: 0.2),
+                checkmarkColor: modeColor,
+                labelStyle: TextStyle(
+                  color: isSelected ? modeColor : colorScheme.onSurface.withValues(alpha: 0.7),
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                ),
+                onSelected: (_) => onModeToggled(mode),
+                side: BorderSide(
+                  color: isSelected ? modeColor : colorScheme.outline.withValues(alpha: 0.3),
+                  width: isSelected ? 1.5 : 1,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 }

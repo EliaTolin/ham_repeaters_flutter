@@ -23,13 +23,10 @@ class SplashController extends _$SplashController {
   Future<SplashAction?> build() async {
     try {
       await Future.delayed(const Duration(seconds: 2));
-      final hasSeenOnboarding =
-          await ref.read(getHasSeenOnboardingProvider.future);
+      final hasSeenOnboarding = await ref.read(getHasSeenOnboardingProvider.future);
       var userId = await ref.read(getUserIdProvider.future);
       userId ??= await ref.read(anonymousSignInProvider.future);
-      final targetRoute = hasSeenOnboarding
-          ? const RepeatersMapRoute()
-          : const OnboardingRoute();
+      final targetRoute = hasSeenOnboarding ? const RepeatersMapRoute() : const OnboardingRoute();
       final packageInfo = await ref.read(packageInfoProvider.future);
       try {
         await _ensureMinimumVersion(packageInfo);
@@ -57,12 +54,10 @@ class SplashController extends _$SplashController {
 
   Future<void> _ensureMinimumVersion(PackageInfo packageInfo) async {
     final installedVersion = packageInfo.version;
-    final minVersionKey =
-        Platform.isIOS ? 'min_version_app_store' : 'min_version_play_store';
+    final minVersionKey = Platform.isIOS ? 'min_version_app_store' : 'min_version_play_store';
 
     try {
-      final minVersionParam =
-          await ref.read(getParamByKeyProvider(minVersionKey).future);
+      final minVersionParam = await ref.read(getParamByKeyProvider(minVersionKey).future);
       if (minVersionParam == null) return;
 
       final minVersion = minVersionParam.value;

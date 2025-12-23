@@ -11,5 +11,6 @@ abstract class RepeatersMapState with _$RepeatersMapState {
     double? latitude,
     double? longitude,
     LocationErrorType? locationError,
+    @Default(<RepeaterMode>{}) Set<RepeaterMode> selectedModes,
   }) = _RepeatersMapState;
 }

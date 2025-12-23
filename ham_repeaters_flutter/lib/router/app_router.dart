@@ -5,6 +5,7 @@ import 'package:ham_repeaters/src/features/home/presentation/home_page.dart';
 import 'package:ham_repeaters/src/features/onboarding/presentation/onboarding_page.dart';
 import 'package:ham_repeaters/src/features/profile/presentation/profile/profile_screen.dart';
 import 'package:ham_repeaters/src/features/profile/presentation/user_settings/user_settings_screen.dart';
+import 'package:ham_repeaters/src/features/repeaters_map/presentation/repeaters_list_page.dart';
 import 'package:ham_repeaters/src/features/repeaters_map/presentation/repeaters_map_page.dart';
 import 'package:ham_repeaters/src/features/splashscreen/presentation/splashscreen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -20,7 +21,6 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(path: '/splash', page: SplashRoute.page, initial: true),
-        AutoRoute(path: '/map', page: RepeatersMapRoute.page),
         AutoRoute(page: OnboardingRoute.page),
         AutoRoute(page: AuthRoute.page),
         AutoRoute(path: '/change-password', page: ChangePasswordRoute.page),
@@ -30,7 +30,10 @@ class AppRouter extends RootStackRouter implements AutoRouteGuard {
           children: [
             AutoRoute(
               page: const EmptyShellRoute('MainRouter'),
-              children: const [],
+              children: [
+                AutoRoute(path: 'map', page: RepeatersMapRoute.page),
+                AutoRoute(path: 'list', page: RepeatersListRoute.page),
+              ],
             ),
             AutoRoute(
               page: const EmptyShellRoute('ProfileRouter'),
