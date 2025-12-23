@@ -535,7 +535,7 @@ abstract class AppLocalizations {
   /// No description provided for @authJoinTitle.
   ///
   /// In it, this message translates to:
-  /// **'Unisciti a Ham Repeaters'**
+  /// **'Unisciti a HamQRG'**
   String get authJoinTitle;
 
   /// No description provided for @authUnlockFeatures.

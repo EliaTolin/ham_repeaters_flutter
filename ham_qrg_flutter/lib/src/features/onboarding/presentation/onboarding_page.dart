@@ -156,7 +156,7 @@ class OnboardingPage extends HookConsumerWidget {
 
     return [
       PageViewModel(
-        title: 'Benvenuto in Ham Repeaters'.hardcoded,
+        title: 'Benvenuto in HamQRG'.hardcoded,
         body:
             'Allena la teoria, memorizza sigle e normative e prepara la patente da radioamatore con quiz aggiornati.'
                 .hardcoded,

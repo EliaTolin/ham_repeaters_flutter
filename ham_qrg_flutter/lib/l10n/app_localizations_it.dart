@@ -246,7 +246,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get authJoinTitle => 'Unisciti a Ham Repeaters';
+  String get authJoinTitle => 'Unisciti a HamQRG';
 
   @override
   String get authUnlockFeatures =>

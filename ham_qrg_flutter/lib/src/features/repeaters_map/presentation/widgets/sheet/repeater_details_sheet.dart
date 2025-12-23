@@ -44,12 +44,14 @@ class RepeaterDetailsSheet extends ConsumerWidget {
             ),
           ),
         ),
-        Text(
-          repeater.callsign,
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.bold,
+        if (repeater.callsign != null) ...[
+          Text(
+            repeater.callsign!,
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
+        ],
         if (repeater.name != null) ...[
           const SizedBox(height: 4),
           Text(

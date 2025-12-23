@@ -168,7 +168,7 @@ class _SplashView extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Ham Repeaters',
+                            'HamQRG',
                             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                   color: colorScheme.onSecondaryContainer,
                                   fontWeight: FontWeight.w600,

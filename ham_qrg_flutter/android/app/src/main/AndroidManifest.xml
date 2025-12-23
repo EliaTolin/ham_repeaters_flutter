@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-  <application android:label="Ham Repeaters" android:name="${applicationName}" android:icon="@mipmap/launcher_icon">
+  <application android:label="HamQRG" android:name="${applicationName}" android:icon="@mipmap/launcher_icon">
     <meta-data
       android:name="com.mapbox.token"
       android:value="ABC_DEF_1244564" />

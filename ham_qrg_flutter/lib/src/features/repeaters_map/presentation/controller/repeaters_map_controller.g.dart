@@ -34,7 +34,7 @@ final class RepeatersMapControllerProvider
 }
 
 String _$repeatersMapControllerHash() =>
-    r'dc232c317e87e148565cfc03699b2c38ac251df3';
+    r'bc2edf79c6442fc5442d81cba537995d2691219a';
 
 abstract class _$RepeatersMapController
     extends $AsyncNotifier<RepeatersMapState> {

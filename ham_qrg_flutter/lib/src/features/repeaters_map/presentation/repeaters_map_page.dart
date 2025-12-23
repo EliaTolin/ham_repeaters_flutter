@@ -6,14 +6,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:ham_qrg/common/extension/l10n_extension.dart';
 import 'package:ham_qrg/common/utils/repeater_mode_helper.dart';
-import 'package:ham_qrg/config/app_configs.dart';
 import 'package:ham_qrg/src/features/repeaters_map/domain/repeater/repeater.dart';
 import 'package:ham_qrg/src/features/repeaters_map/presentation/controller/repeaters_map_controller.dart';
-import 'package:ham_qrg/src/features/repeaters_map/presentation/widgets/repeater_details_sheet.dart';
-import 'package:ham_qrg/src/features/repeaters_map/service/location_service.dart';
+import 'package:ham_qrg/src/features/repeaters_map/presentation/widgets/info_banner.dart';
+import 'package:ham_qrg/src/features/repeaters_map/presentation/widgets/mode_filter_chips.dart';
+import 'package:ham_qrg/src/features/repeaters_map/presentation/widgets/permission_banner.dart';
+import 'package:ham_qrg/src/features/repeaters_map/presentation/widgets/sheet/repeater_details_sheet.dart';
+import 'package:ham_qrg/src/features/repeaters_map/presentation/widgets/summary_chip.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 @RoutePage()
 class RepeatersMapPage extends HookConsumerWidget {
@@ -31,37 +32,29 @@ class RepeatersMapPage extends HookConsumerWidget {
 
     final mapState = asyncState.value;
 
-    useEffect(
-      () {
-        MapboxOptions.setAccessToken(AppConfigs.getMapboxAccessToken());
-        return null;
-      },
-      const [],
-    );
+    // Show loading while controller is loading
+    if (asyncState.isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(context.localization.repeatersMapTitle),
+        ),
+        body: const Center(
+          child: CircularProgressIndicator.adaptive(),
+        ),
+      );
+    }
 
-    useEffect(
-      () {
-        if (mapState == null || mapController.value == null) return null;
-        unawaited(
-          _syncAnnotations(
-            mapController.value!,
-            pointManager.value,
-            mapState.repeaters,
-          ),
-        );
-        if (mapState.latitude != null && mapState.longitude != null) {
-          unawaited(
-            _moveCamera(
-              mapController.value!,
-              mapState.latitude!,
-              mapState.longitude!,
-            ),
-          );
-        }
-        return null;
-      },
-      [mapState, mapController.value],
-    );
+    // Get initial camera position from state or fallback to Rome
+    final initialLat = mapState?.latitude ?? 41.9028;
+    final initialLon = mapState?.longitude ?? 12.4964;
+    final initialZoom = mapState?.latitude != null ? 13.0 : 5.5;
+
+    if (mapState != null && mapState.latitude != null && mapState.longitude != null) {
+      userLocation.value = (
+        lat: mapState.latitude!,
+        lon: mapState.longitude!,
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -70,41 +63,17 @@ class RepeatersMapPage extends HookConsumerWidget {
       body: Stack(
         children: [
           MapWidget(
-            key: const ValueKey('repeaters-map'),
+            key: ValueKey('repeaters-map-${mapState?.latitude}-${mapState?.longitude}'),
             cameraOptions: CameraOptions(
               center: Point(
-                coordinates: Position(12.4964, 41.9028),
+                coordinates: Position(initialLon, initialLat),
               ),
-              zoom: 5.5,
+              zoom: initialZoom,
               bearing: 0,
               pitch: 0,
             ),
             styleUri: MapboxStyles.MAPBOX_STREETS,
             onCameraChangeListener: (cameraState) async {
-              // Lock bearing to 0 (north up) whenever camera changes
-              if (mapController.value != null) {
-                try {
-                  final currentState = await mapController.value!.getCameraState();
-                  final bearing = currentState.bearing;
-                  final pitch = currentState.pitch;
-
-                  // Reset bearing and pitch if they deviate from 0
-                  if (bearing.abs() > 0.1 || pitch.abs() > 0.1) {
-                    await mapController.value!.setCamera(
-                      CameraOptions(
-                        center: currentState.center,
-                        zoom: currentState.zoom,
-                        bearing: 0,
-                        pitch: 0,
-                      ),
-                    );
-                    return; // Skip debounce if we're resetting rotation
-                  }
-                } catch (e) {
-                  // Ignore errors
-                }
-              }
-
               // Debounce camera changes to avoid too many API calls
               cameraChangeTimer.value?.cancel();
               cameraChangeTimer.value = Timer(
@@ -182,13 +151,9 @@ class RepeatersMapPage extends HookConsumerWidget {
                   showAccuracyRing: true,
                 ),
               );
-              if (mapState?.latitude != null && mapState?.longitude != null) {
-                // Store user location
-                final lat = mapState!.latitude!;
-                final lon = mapState.longitude!;
-                userLocation.value = (lat: lat, lon: lon);
-                await _moveCamera(mapboxMap, lat, lon);
-              }
+
+              // Wait a bit to ensure map is fully initialized before creating annotations
+              await Future.delayed(const Duration(milliseconds: 200));
               await _syncAnnotations(
                 mapboxMap,
                 manager,
@@ -196,13 +161,8 @@ class RepeatersMapPage extends HookConsumerWidget {
               );
             },
           ),
-          if (asyncState.isLoading)
-            _InfoBanner(
-              icon: const CircularProgressIndicator.adaptive(),
-              label: context.localization.repeatersMapLoading,
-            ),
           if (mapState?.locationError != null)
-            _PermissionBanner(
+            PermissionBanner(
               errorType: mapState!.locationError!,
               onRetry: () {
                 // Reload by toggling a filter
@@ -210,12 +170,12 @@ class RepeatersMapPage extends HookConsumerWidget {
               },
             ),
           if (asyncState.hasError && mapState?.locationError == null)
-            _InfoBanner(
+            InfoBanner(
               icon: const Icon(Icons.warning_amber_rounded),
               label: context.localization.repeatersMapGenericError,
             ),
           if (!asyncState.isLoading && (mapState?.repeaters.isEmpty ?? false))
-            _InfoBanner(
+            InfoBanner(
               icon: const Icon(Icons.location_off_outlined),
               label: context.localization.repeatersMapEmpty,
             ),
@@ -225,7 +185,7 @@ class RepeatersMapPage extends HookConsumerWidget {
               left: 12,
               right: 12,
               child: SafeArea(
-                child: _SummaryChip(
+                child: SummaryChip(
                   count: mapState!.repeaters.length,
                 ),
               ),
@@ -235,7 +195,7 @@ class RepeatersMapPage extends HookConsumerWidget {
             left: 16,
             right: 16,
             child: SafeArea(
-              child: _ModeFilterChips(
+              child: ModeFilterChips(
                 selectedModes: mapState?.selectedModes ?? {},
                 onModeToggled: notifier.toggleModeFilter,
               ),
@@ -285,30 +245,34 @@ Future<void> _syncAnnotations(
   List<Repeater> repeaters,
 ) async {
   if (manager == null) return;
-  await manager.deleteAll();
 
-  final annotations = <PointAnnotationOptions>[];
-  for (final repeater in repeaters) {
-    final lat = repeater.latitude;
-    final lon = repeater.longitude;
-    if (lat == null || lon == null) continue;
+  try {
+    await manager.deleteAll();
 
-    // Generate icon for this mode
-    final iconBytes = await RepeaterModeHelper.generateRepeaterIcon(repeater.mode);
+    final annotations = <PointAnnotationOptions>[];
+    for (final repeater in repeaters) {
+      final lat = repeater.latitude;
+      final lon = repeater.longitude;
+      if (lat == null || lon == null) continue;
 
-    annotations.add(
-      PointAnnotationOptions(
-        geometry: Point(coordinates: Position(lon, lat)),
-        image: iconBytes,
-        iconSize: 1.2,
-        iconAnchor: IconAnchor.BOTTOM,
-        customData: {'repeaterId': repeater.id},
-      ),
-    );
-  }
+      final iconBytes = await RepeaterModeHelper.generateRepeaterIcon(repeater.mode);
+      annotations.add(
+        PointAnnotationOptions(
+          geometry: Point(coordinates: Position(lon, lat)),
+          image: iconBytes,
+          iconSize: 1.2,
+          iconAnchor: IconAnchor.BOTTOM,
+          customData: {'repeaterId': repeater.id},
+        ),
+      );
+    }
 
-  if (annotations.isNotEmpty) {
-    await manager.createMulti(annotations);
+    if (annotations.isNotEmpty) {
+      await manager.createMulti(annotations);
+    }
+  } catch (e) {
+    // Ignore errors if map is not fully initialized yet
+    // The annotations will be synced again when the map is ready
   }
 }
 
@@ -335,194 +299,4 @@ Future<void> _moveCamera(MapboxMap map, double latitude, double longitude) {
     ),
     MapAnimationOptions(duration: 800),
   );
-}
-
-class _InfoBanner extends StatelessWidget {
-  const _InfoBanner({
-    required this.icon,
-    required this.label,
-    this.trailing,
-  });
-
-  final Widget icon;
-  final String label;
-  final Widget? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.92),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            icon,
-            const SizedBox(width: 12),
-            Flexible(
-              child: Text(
-                label,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ),
-            if (trailing != null) ...[
-              const SizedBox(width: 12),
-              trailing!,
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SummaryChip extends StatelessWidget {
-  const _SummaryChip({required this.count});
-
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.9),
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.broadcast_on_home, size: 18),
-          const SizedBox(width: 8),
-          Text(
-            context.localization.repeatersMapFound(count),
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PermissionBanner extends ConsumerWidget {
-  const _PermissionBanner({
-    required this.errorType,
-    required this.onRetry,
-  });
-
-  final LocationErrorType errorType;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.localization;
-    final description = switch (errorType) {
-      LocationErrorType.servicesDisabled => l10n.repeatersMapLocationServicesDisabled,
-      LocationErrorType.permissionDenied => l10n.repeatersMapPermissionMessage,
-      LocationErrorType.permissionPermanentlyDenied => l10n.repeatersMapPermissionPermanentlyDenied,
-    };
-
-    return _InfoBanner(
-      icon: const Icon(Icons.my_location_outlined),
-      label: description,
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextButton(
-            onPressed: () async {
-              await openAppSettings();
-            },
-            child: Text(l10n.repeatersMapOpenSettings),
-          ),
-          TextButton(
-            onPressed: onRetry,
-            child: Text(l10n.repeatersMapRetry),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ModeFilterChips extends ConsumerWidget {
-  const _ModeFilterChips({
-    required this.selectedModes,
-    required this.onModeToggled,
-  });
-
-  final Set<RepeaterMode> selectedModes;
-  final ValueChanged<RepeaterMode> onModeToggled;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = context.localization;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: colorScheme.surface.withValues(alpha: 0.95),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: RepeaterMode.values.map((mode) {
-            final isSelected = selectedModes.contains(mode);
-            final modeColor = RepeaterModeHelper.getModeColorObject(mode);
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: FilterChip(
-                selected: isSelected,
-                label: Text(RepeaterModeHelper.getModeLabel(mode, l10n)),
-                avatar: CircleAvatar(
-                  backgroundColor: modeColor,
-                  radius: 8,
-                ),
-                selectedColor: modeColor.withValues(alpha: 0.2),
-                checkmarkColor: modeColor,
-                labelStyle: TextStyle(
-                  color: isSelected ? modeColor : colorScheme.onSurface.withValues(alpha: 0.7),
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                ),
-                onSelected: (_) => onModeToggled(mode),
-                side: BorderSide(
-                  color: isSelected ? modeColor : colorScheme.outline.withValues(alpha: 0.3),
-                  width: isSelected ? 1.5 : 1,
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
 }

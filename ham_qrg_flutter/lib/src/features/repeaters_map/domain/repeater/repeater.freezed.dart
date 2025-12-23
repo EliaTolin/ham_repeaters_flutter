@@ -17,10 +17,10 @@ mixin _$Repeater {
   String get id;
   DateTime get createdAt;
   DateTime get updatedAt;
-  String get callsign;
   int get frequencyHz;
   RepeaterMode get mode;
   RepeaterStatus get status;
+  String? get callsign;
   String? get name;
   int? get nodeNumber;
   String? get managerCallsign;
@@ -54,12 +54,12 @@ mixin _$Repeater {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.callsign, callsign) ||
-                other.callsign == callsign) &&
             (identical(other.frequencyHz, frequencyHz) ||
                 other.frequencyHz == frequencyHz) &&
             (identical(other.mode, mode) || other.mode == mode) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.callsign, callsign) ||
+                other.callsign == callsign) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.nodeNumber, nodeNumber) ||
                 other.nodeNumber == nodeNumber) &&
@@ -91,10 +91,10 @@ mixin _$Repeater {
         id,
         createdAt,
         updatedAt,
-        callsign,
         frequencyHz,
         mode,
         status,
+        callsign,
         name,
         nodeNumber,
         managerCallsign,
@@ -114,7 +114,7 @@ mixin _$Repeater {
 
   @override
   String toString() {
-    return 'Repeater(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, callsign: $callsign, frequencyHz: $frequencyHz, mode: $mode, status: $status, name: $name, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, network: $network, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, latitude: $latitude, longitude: $longitude, distanceMeters: $distanceMeters)';
+    return 'Repeater(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, frequencyHz: $frequencyHz, mode: $mode, status: $status, callsign: $callsign, name: $name, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, network: $network, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, latitude: $latitude, longitude: $longitude, distanceMeters: $distanceMeters)';
   }
 }
 
@@ -127,10 +127,10 @@ abstract mixin class $RepeaterCopyWith<$Res> {
       {String id,
       DateTime createdAt,
       DateTime updatedAt,
-      String callsign,
       int frequencyHz,
       RepeaterMode mode,
       RepeaterStatus status,
+      String? callsign,
       String? name,
       int? nodeNumber,
       String? managerCallsign,
@@ -163,10 +163,10 @@ class _$RepeaterCopyWithImpl<$Res> implements $RepeaterCopyWith<$Res> {
     Object? id = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? callsign = null,
     Object? frequencyHz = null,
     Object? mode = null,
     Object? status = null,
+    Object? callsign = freezed,
     Object? name = freezed,
     Object? nodeNumber = freezed,
     Object? managerCallsign = freezed,
@@ -196,10 +196,6 @@ class _$RepeaterCopyWithImpl<$Res> implements $RepeaterCopyWith<$Res> {
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      callsign: null == callsign
-          ? _self.callsign
-          : callsign // ignore: cast_nullable_to_non_nullable
-              as String,
       frequencyHz: null == frequencyHz
           ? _self.frequencyHz
           : frequencyHz // ignore: cast_nullable_to_non_nullable
@@ -212,6 +208,10 @@ class _$RepeaterCopyWithImpl<$Res> implements $RepeaterCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as RepeaterStatus,
+      callsign: freezed == callsign
+          ? _self.callsign
+          : callsign // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -373,10 +373,10 @@ extension RepeaterPatterns on Repeater {
             String id,
             DateTime createdAt,
             DateTime updatedAt,
-            String callsign,
             int frequencyHz,
             RepeaterMode mode,
             RepeaterStatus status,
+            String? callsign,
             String? name,
             int? nodeNumber,
             String? managerCallsign,
@@ -402,10 +402,10 @@ extension RepeaterPatterns on Repeater {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.callsign,
             _that.frequencyHz,
             _that.mode,
             _that.status,
+            _that.callsign,
             _that.name,
             _that.nodeNumber,
             _that.managerCallsign,
@@ -445,10 +445,10 @@ extension RepeaterPatterns on Repeater {
             String id,
             DateTime createdAt,
             DateTime updatedAt,
-            String callsign,
             int frequencyHz,
             RepeaterMode mode,
             RepeaterStatus status,
+            String? callsign,
             String? name,
             int? nodeNumber,
             String? managerCallsign,
@@ -473,10 +473,10 @@ extension RepeaterPatterns on Repeater {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.callsign,
             _that.frequencyHz,
             _that.mode,
             _that.status,
+            _that.callsign,
             _that.name,
             _that.nodeNumber,
             _that.managerCallsign,
@@ -515,10 +515,10 @@ extension RepeaterPatterns on Repeater {
             String id,
             DateTime createdAt,
             DateTime updatedAt,
-            String callsign,
             int frequencyHz,
             RepeaterMode mode,
             RepeaterStatus status,
+            String? callsign,
             String? name,
             int? nodeNumber,
             String? managerCallsign,
@@ -543,10 +543,10 @@ extension RepeaterPatterns on Repeater {
             _that.id,
             _that.createdAt,
             _that.updatedAt,
-            _that.callsign,
             _that.frequencyHz,
             _that.mode,
             _that.status,
+            _that.callsign,
             _that.name,
             _that.nodeNumber,
             _that.managerCallsign,
@@ -575,10 +575,10 @@ class _Repeater implements Repeater {
       {required this.id,
       required this.createdAt,
       required this.updatedAt,
-      required this.callsign,
       required this.frequencyHz,
       required this.mode,
       required this.status,
+      this.callsign,
       this.name,
       this.nodeNumber,
       this.managerCallsign,
@@ -602,13 +602,13 @@ class _Repeater implements Repeater {
   @override
   final DateTime updatedAt;
   @override
-  final String callsign;
-  @override
   final int frequencyHz;
   @override
   final RepeaterMode mode;
   @override
   final RepeaterStatus status;
+  @override
+  final String? callsign;
   @override
   final String? name;
   @override
@@ -658,12 +658,12 @@ class _Repeater implements Repeater {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            (identical(other.callsign, callsign) ||
-                other.callsign == callsign) &&
             (identical(other.frequencyHz, frequencyHz) ||
                 other.frequencyHz == frequencyHz) &&
             (identical(other.mode, mode) || other.mode == mode) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.callsign, callsign) ||
+                other.callsign == callsign) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.nodeNumber, nodeNumber) ||
                 other.nodeNumber == nodeNumber) &&
@@ -695,10 +695,10 @@ class _Repeater implements Repeater {
         id,
         createdAt,
         updatedAt,
-        callsign,
         frequencyHz,
         mode,
         status,
+        callsign,
         name,
         nodeNumber,
         managerCallsign,
@@ -718,7 +718,7 @@ class _Repeater implements Repeater {
 
   @override
   String toString() {
-    return 'Repeater(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, callsign: $callsign, frequencyHz: $frequencyHz, mode: $mode, status: $status, name: $name, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, network: $network, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, latitude: $latitude, longitude: $longitude, distanceMeters: $distanceMeters)';
+    return 'Repeater(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, frequencyHz: $frequencyHz, mode: $mode, status: $status, callsign: $callsign, name: $name, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, network: $network, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, latitude: $latitude, longitude: $longitude, distanceMeters: $distanceMeters)';
   }
 }
 
@@ -733,10 +733,10 @@ abstract mixin class _$RepeaterCopyWith<$Res>
       {String id,
       DateTime createdAt,
       DateTime updatedAt,
-      String callsign,
       int frequencyHz,
       RepeaterMode mode,
       RepeaterStatus status,
+      String? callsign,
       String? name,
       int? nodeNumber,
       String? managerCallsign,
@@ -769,10 +769,10 @@ class __$RepeaterCopyWithImpl<$Res> implements _$RepeaterCopyWith<$Res> {
     Object? id = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? callsign = null,
     Object? frequencyHz = null,
     Object? mode = null,
     Object? status = null,
+    Object? callsign = freezed,
     Object? name = freezed,
     Object? nodeNumber = freezed,
     Object? managerCallsign = freezed,
@@ -802,10 +802,6 @@ class __$RepeaterCopyWithImpl<$Res> implements _$RepeaterCopyWith<$Res> {
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      callsign: null == callsign
-          ? _self.callsign
-          : callsign // ignore: cast_nullable_to_non_nullable
-              as String,
       frequencyHz: null == frequencyHz
           ? _self.frequencyHz
           : frequencyHz // ignore: cast_nullable_to_non_nullable
@@ -818,6 +814,10 @@ class __$RepeaterCopyWithImpl<$Res> implements _$RepeaterCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as RepeaterStatus,
+      callsign: freezed == callsign
+          ? _self.callsign
+          : callsign // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _self.name
           : name // ignore: cast_nullable_to_non_nullable
