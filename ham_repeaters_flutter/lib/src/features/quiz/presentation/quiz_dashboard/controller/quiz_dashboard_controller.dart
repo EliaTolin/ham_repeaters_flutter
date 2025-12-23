@@ -1,0 +1,132 @@
+import 'dart:async';
+
+import 'package:ham_repeaters/common/service/in_app_rating/in_app_rating_service.dart';
+import 'package:ham_repeaters/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
+import 'package:ham_repeaters/src/features/leaderboard/domain/leaderboard_entry/leaderboard_entry.dart';
+import 'package:ham_repeaters/src/features/leaderboard/provider/get_user_position/get_user_position_provider.dart';
+import 'package:ham_repeaters/src/features/profile/domain/profile/profile.dart';
+import 'package:ham_repeaters/src/features/profile/provider/get_profile/get_profile_provider.dart';
+import 'package:ham_repeaters/src/features/quiz/domain/curated_set_preview/curated_set_preview.dart';
+import 'package:ham_repeaters/src/features/quiz/domain/quiz_set_score/quiz_set_score.dart';
+import 'package:ham_repeaters/src/features/quiz/domain/total_accuracy/total_accuracy.dart';
+import 'package:ham_repeaters/src/features/quiz/presentation/quiz_dashboard/controller/quiz_dashboard_state/quiz_dashboard_state.dart';
+import 'package:ham_repeaters/src/features/quiz/provider/all_quiz_scores/all_quiz_scores_provider.dart';
+import 'package:ham_repeaters/src/features/quiz/provider/curated_set_non_attempted/curated_set_non_attempted_provider.dart';
+import 'package:ham_repeaters/src/features/quiz/provider/get_user_total_accuracy/get_user_total_accuracy_provider.dart';
+import 'package:ham_repeaters/src/features/quiz/provider/recent_quiz_scores/recent_quiz_scores_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+
+part 'quiz_dashboard_controller.g.dart';
+
+@riverpod
+class QuizDashboardController extends _$QuizDashboardController {
+  @override
+  Future<QuizDashboardState> build() async {
+    try {
+      final recentScores = await ref.watch(recentQuizScoresProvider().future);
+      final allScores = await ref.watch(allQuizScoresProvider.future);
+      final userId = await ref.watch(getUserIdProvider.future);
+
+      final curatedSetsPreviews = userId != null
+          ? await ref.watch(curatedSetNonAttemptedProvider(userId).future)
+          : <CuratedSetPreview>[];
+
+      final profile = await ref.watch(getProfileProvider.future);
+      final userPosition = await ref.watch(getUserPositionProvider.future);
+
+      // Usa getUserTotalAccuracy per calcolare la precisione totale (stesso calcolo della statistica)
+      final totalAccuracy = userId != null
+          ? await ref.watch(getUserTotalAccuracyProvider(userId).future)
+          : null;
+
+      return _loadDashboardData(
+        recentScores: recentScores,
+        allScores: allScores,
+        profile: profile,
+        curatedSetsPreviews: curatedSetsPreviews,
+        userPosition: userPosition,
+        totalAccuracy: totalAccuracy,
+      );
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+      return QuizDashboardState(
+        recentScores: [],
+        curatedSetsPreviews: [],
+        errorMessage: 'Errore nel caricamento dei dati: $e',
+      );
+    }
+  }
+
+  Future<QuizDashboardState> _loadDashboardData({
+    required List<QuizSetScore> recentScores,
+    required List<QuizSetScore> allScores,
+    required Profile profile,
+    required List<CuratedSetPreview> curatedSetsPreviews,
+    required LeaderboardEntry? userPosition,
+    required TotalAccuracy? totalAccuracy,
+  }) async {
+    try {
+      // Calcola le statistiche reali
+      final totalQuizzes = allScores.length;
+      // Usa la precisione totale dalla view (stesso calcolo della statistica)
+      // Se totalAccuracy è null, usa 0.0 come fallback
+      final averageAccuracy = totalAccuracy?.accuracyPercent ?? 0.0;
+
+      // * Show app review prompt based on total quizzes completed
+      unawaited(
+        ref.read(inAppRatingServiceProvider).requestReviewIfNeeded(
+              totalQuizzes: totalQuizzes,
+            ),
+      );
+
+      return QuizDashboardState(
+        recentScores: recentScores,
+        totalQuizzes: totalQuizzes,
+        averageAccuracy: averageAccuracy,
+        profile: profile,
+        curatedSetsPreviews: curatedSetsPreviews,
+        userPosition: userPosition,
+      );
+    } catch (e, st) {
+      await Sentry.captureException(e, stackTrace: st);
+      return QuizDashboardState(
+        recentScores: [],
+        curatedSetsPreviews: [],
+        errorMessage: 'Errore nel caricamento dei dati: $e',
+      );
+    }
+  }
+
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final recentScores = await ref.read(recentQuizScoresProvider().future);
+      final allScores = await ref.read(allQuizScoresProvider.future);
+      final profile = await ref.read(getProfileProvider.future);
+      final userId = await ref.read(getUserIdProvider.future);
+      final userPosition = await ref.read(getUserPositionProvider.future);
+      final curatedSetsPreviews = userId != null
+          ? await ref.read(curatedSetNonAttemptedProvider(userId).future)
+          : <CuratedSetPreview>[];
+
+      // Usa getUserTotalAccuracy per calcolare la precisione totale (stesso calcolo della statistica)
+      final totalAccuracy = userId != null
+          ? await ref.read(getUserTotalAccuracyProvider(userId).future)
+          : null;
+
+      return _loadDashboardData(
+        recentScores: recentScores,
+        allScores: allScores,
+        profile: profile,
+        curatedSetsPreviews: curatedSetsPreviews,
+        userPosition: userPosition,
+        totalAccuracy: totalAccuracy,
+      );
+    });
+  }
+
+  void clearError() {
+    state = state.whenData((data) => data.copyWith(errorMessage: null));
+  }
+}
