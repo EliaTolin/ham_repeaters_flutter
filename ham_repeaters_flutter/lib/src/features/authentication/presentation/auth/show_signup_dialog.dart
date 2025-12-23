@@ -73,7 +73,7 @@ Future<void> showSignUpDialog(
                         ),
                         // Titolo persuasivo
                         Text(
-                          'Unisciti a Quiz Radioamatori',
+                          'Unisciti a Ham Repeaters',
                           style: Theme.of(dialogBuildContext)
                               .textTheme
                               .headlineLarge

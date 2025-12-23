@@ -9,17 +9,17 @@ class AppConfigs {
 
   static String getSupabaseKey() {
     if (kDebugMode) {
-      return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpqb21yeW92bWVqY2J2aXBqZ3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2NjU1MDYsImV4cCI6MjA3NjI0MTUwNn0.17DlxMoJDv0n6Yg9i7GCUgfBpHMPuVwwz7CZXCI7hmM';
+      return 'sb_publishable_-cqwNT33Pqa9pFczqIITCA_HUscMay6';
     } else {
-      return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpqb21yeW92bWVqY2J2aXBqZ3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2NjU1MDYsImV4cCI6MjA3NjI0MTUwNn0.17DlxMoJDv0n6Yg9i7GCUgfBpHMPuVwwz7CZXCI7hmM';
+      return 'sb_publishable_-cqwNT33Pqa9pFczqIITCA_HUscMay6';
     }
   }
 
   static String getSupabaseUrl() {
     if (kDebugMode) {
-      return 'https://zjomryovmejcbvipjgui.supabase.co';
+      return 'https://dhmzkhipxvxtbbchvquc.supabase.co';
     } else {
-      return 'https://zjomryovmejcbvipjgui.supabase.co';
+      return 'https://dhmzkhipxvxtbbchvquc.supabase.co';
     }
   }
 
@@ -29,9 +29,7 @@ class AppConfigs {
           ? 'ca-app-pub-3940256099942544/6300978111'
           : 'ca-app-pub-3940256099942544/2934735716';
     }
-    return Platform.isAndroid
-        ? 'banner_ad_unit_id_android'
-        : 'banner_ad_unit_id_ios';
+    return Platform.isAndroid ? 'banner_ad_unit_id_android' : 'banner_ad_unit_id_ios';
   }
 
   static String interstitialAdUnitId() {
@@ -56,5 +54,9 @@ class AppConfigs {
 
   static String getAppStoreId() {
     return '6754508610';
+  }
+
+  static String getMapboxAccessToken() {
+    return 'pk.eyJ1IjoiZWxpYXRvbGluIiwiYSI6ImNtOTh3aWRweTA3ZTMybHNic3NoeGI1dmcifQ.e4bCIdcgXs0iddLhEbhhiA';
   }
 }

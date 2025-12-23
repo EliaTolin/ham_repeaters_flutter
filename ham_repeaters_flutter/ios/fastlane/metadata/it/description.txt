@@ -1,6 +1,6 @@
 Allenati e preparati per l'esame da Radioamatore!
 
-Quiz Radioamatori è l’app completa per esercitarti e superare l’esame per la patente da radioamatore in Italia. 
+Ham Repeaters è l’app completa per esercitarti e superare l’esame per la patente da radioamatore in Italia. 
 Include banche dati aggiornate, modalità d’esame e strumenti di allenamento avanzati per aiutarti a imparare più in fretta e con metodo.
 
 Allenamento su misura
@@ -21,4 +21,4 @@ Tieni traccia dei risultati, scopri i tuoi punti deboli e monitora i miglioramen
 Contenuti sempre aggiornati
 Quiz basati sulle domande ufficiali ministeriali, con riferimenti a normativa, tecnica, bande, abbreviazioni e procedure operative.
 
-Che tu stia iniziando da zero o stia ripassando per l’esame, Quiz Radioamatori è il modo più semplice, veloce e completo per ottenere la tua patente.
+Che tu stia iniziando da zero o stia ripassando per l’esame, Ham Repeaters è il modo più semplice, veloce e completo per ottenere la tua patente.

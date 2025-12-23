@@ -6,13 +6,13 @@ class DateField extends StatelessWidget {
   const DateField({
     required this.controller,
     this.label = 'Data',
-    this.isRequired = true, 
+    this.isRequired = true,
     super.key,
   });
 
   final TextEditingController controller;
   final String label;
-  final bool isRequired; 
+  final bool isRequired;
 
   Future<void> _selectDate(BuildContext context) async {
     final selectedDate = await showDatePicker(

@@ -4,8 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:ham_repeaters/common/extension/hard_coded_string.dart';
 import 'package:ham_repeaters/common/extension/l10n_extension.dart';
 import 'package:ham_repeaters/router/app_router.dart';
@@ -14,6 +12,8 @@ import 'package:ham_repeaters/src/features/authentication/presentation/auth/widg
 import 'package:ham_repeaters/src/features/authentication/provider/anonymous_signin/anonymous_signin_provider.dart';
 import 'package:ham_repeaters/src/features/authentication/provider/get_user_id/get_user_id_provider.dart';
 import 'package:ham_repeaters/src/features/splashscreen/provider/set_onboarding_seen/set_onboarding_seen_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 
 @RoutePage()
 class OnboardingPage extends HookConsumerWidget {
@@ -106,10 +106,8 @@ class OnboardingPage extends HookConsumerWidget {
                             dotsDecorator: DotsDecorator(
                               size: const Size.square(8),
                               activeSize: const Size(16, 8),
-                              spacing:
-                                  const EdgeInsets.symmetric(horizontal: 4),
-                              color: theme.colorScheme.onSurface
-                                  .withValues(alpha: .20),
+                              spacing: const EdgeInsets.symmetric(horizontal: 4),
+                              color: theme.colorScheme.onSurface.withValues(alpha: .20),
                               activeColor: color.primary,
                               activeShape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
@@ -158,7 +156,7 @@ class OnboardingPage extends HookConsumerWidget {
 
     return [
       PageViewModel(
-        title: 'Benvenuto in Quiz Radioamatori'.hardcoded,
+        title: 'Benvenuto in Ham Repeaters'.hardcoded,
         body:
             'Allena la teoria, memorizza sigle e normative e prepara la patente da radioamatore con quiz aggiornati.'
                 .hardcoded,
@@ -188,17 +186,15 @@ class OnboardingPage extends HookConsumerWidget {
       ),
       PageViewModel(
         title: 'Modalità Esame'.hardcoded,
-        body:
-            'Per prepararti al meglio scegli tra \n• Esonero PARZIALE  \n• Esame COMPLETO'
-                .hardcoded,
+        body: 'Per prepararti al meglio scegli tra \n• Esonero PARZIALE  \n• Esame COMPLETO'
+            .hardcoded,
         image: _iconBadge(context, Icons.playlist_add_check),
         decoration: deco(),
         footer: _modeBadges(context),
       ),
       PageViewModel(
         title: 'Allenamento intelligente'.hardcoded,
-        body: 'Verifica gli errori, domande casuali, timer, e molto altro.'
-            .hardcoded,
+        body: 'Verifica gli errori, domande casuali, timer, e molto altro.'.hardcoded,
         image: _iconBadge(context, Icons.psychology),
         decoration: deco(),
         footer: _featureChips(context, const [
@@ -319,15 +315,17 @@ class OnboardingPage extends HookConsumerWidget {
             ? color.primary.withValues(alpha: .10)
             : Theme.of(context).colorScheme.surface.withValues(alpha: .6),
         border: Border.all(
-          color:
-              highlight ? color.primary : color.primary.withValues(alpha: .2),
+          color: highlight ? color.primary : color.primary.withValues(alpha: .2),
           width: 1.4,
         ),
       ),
       child: Row(
         children: [
-          Icon(icon,
-              size: 22, color: highlight ? color.primary : color.onSurface),
+          Icon(
+            icon,
+            size: 22,
+            color: highlight ? color.primary : color.onSurface,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -342,10 +340,7 @@ class OnboardingPage extends HookConsumerWidget {
                 Text(
                   subtitle,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withValues(alpha: .7),
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: .7),
                       ),
                 ),
               ],
@@ -375,8 +370,10 @@ class OnboardingPage extends HookConsumerWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(value,
-            style: text.titleLarge?.copyWith(fontWeight: FontWeight.w900)),
+        Text(
+          value,
+          style: text.titleLarge?.copyWith(fontWeight: FontWeight.w900),
+        ),
         Text(label, style: text.labelLarge?.copyWith(color: on)),
       ],
     );
@@ -524,8 +521,7 @@ class OnboardingPage extends HookConsumerWidget {
             TextButton(
               onPressed: () => _onContinueAsGuest(context, ref),
               style: TextButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
@@ -601,12 +597,14 @@ class OnboardingPage extends HookConsumerWidget {
     await ref.read(setOnboardingSeenProvider.future);
     ref.invalidate(getUserIdProvider);
     if (context.mounted) {
-      await context.router.replace(const HomeRoute());
+      await context.router.replace(const RepeatersMapRoute());
     }
   }
 
   Future<void> _openEmailSignUpDialog(
-      BuildContext context, WidgetRef ref) async {
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     if (context.mounted) {
       await showSignUpDialog(
         context,
@@ -624,12 +622,12 @@ class OnboardingPage extends HookConsumerWidget {
       ref.invalidate(getUserIdProvider);
       // Vai alla home
       if (context.mounted) {
-        await context.router.replace(const HomeRoute());
+        await context.router.replace(const RepeatersMapRoute());
       }
     } catch (e) {
       // Se fallisce, vai comunque alla home
       if (context.mounted) {
-        await context.router.replace(const HomeRoute());
+        await context.router.replace(const RepeatersMapRoute());
       }
     }
   }

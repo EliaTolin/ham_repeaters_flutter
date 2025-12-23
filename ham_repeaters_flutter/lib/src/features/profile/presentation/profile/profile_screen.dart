@@ -199,7 +199,7 @@ class ProfileScreen extends HookConsumerWidget {
                             scheme: 'mailto',
                             path: 'info@auroradigital.it',
                             queryParameters: {
-                              'subject': 'QuizRadioamatori-Supporto'
+                              'subject': 'HamRepeaters-Supporto'
                             },
                           );
                           if (await canLaunchUrl(emailLaunchUri)) {

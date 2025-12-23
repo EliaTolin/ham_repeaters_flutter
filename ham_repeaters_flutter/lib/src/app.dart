@@ -7,8 +7,8 @@ import 'package:ham_repeaters/l10n/app_localizations.dart';
 import 'package:ham_repeaters/router/app_router.dart';
 import 'package:ham_repeaters/themes/light_themes.dart';
 
-class QuizRadioamatori extends ConsumerWidget {
-  const QuizRadioamatori({super.key});
+class HamRepeaters extends ConsumerWidget {
+  const HamRepeaters({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,12 +19,15 @@ class QuizRadioamatori extends ConsumerWidget {
         deepLinkTransformer: (uri) {
           log('uri: $uri');
           return SynchronousFuture(
-              uri.replace(path: uri.path.replaceFirst('/app-deeplink', '')));
+            uri.replace(
+              path: uri.path.replaceFirst('/app-deeplink', ''),
+            ),
+          );
         },
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      title: 'QuizRadioamatori',
+      title: 'HamRepeaters',
       theme: lightTheme,
     );
   }

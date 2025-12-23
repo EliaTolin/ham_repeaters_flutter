@@ -39,7 +39,7 @@ class AuthScreen extends ConsumerWidget {
                 const LogoIcon(size: 100),
                 const Gap(16),
                 Text(
-                  'Quiz Radioamatori'.hardcoded,
+                  'Ham Repeaters'.hardcoded,
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,

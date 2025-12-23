@@ -11,5 +11,6 @@ abstract class ImageCached with _$ImageCached {
     required String url,
   }) = _ImageCached;
 
-  factory ImageCached.fromJson(Map<String, dynamic> json) => _$ImageCachedFromJson(json);
+  factory ImageCached.fromJson(Map<String, dynamic> json) =>
+      _$ImageCachedFromJson(json);
 }

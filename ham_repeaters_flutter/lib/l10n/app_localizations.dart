@@ -339,6 +339,66 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Errore durante l\'apertura di Telegram'**
   String get errorOpenTelegram;
+
+  /// No description provided for @repeatersMapTitle.
+  ///
+  /// In it, this message translates to:
+  /// **'Mappa ripetitori'**
+  String get repeatersMapTitle;
+
+  /// No description provided for @repeatersMapLoading.
+  ///
+  /// In it, this message translates to:
+  /// **'Caricamento mappa dei ripetitori…'**
+  String get repeatersMapLoading;
+
+  /// No description provided for @repeatersMapGenericError.
+  ///
+  /// In it, this message translates to:
+  /// **'Impossibile caricare i ripetitori.'**
+  String get repeatersMapGenericError;
+
+  /// No description provided for @repeatersMapEmpty.
+  ///
+  /// In it, this message translates to:
+  /// **'Nessun ripetitore trovato vicino a te.'**
+  String get repeatersMapEmpty;
+
+  /// No description provided for @repeatersMapRetry.
+  ///
+  /// In it, this message translates to:
+  /// **'Riprova'**
+  String get repeatersMapRetry;
+
+  /// No description provided for @repeatersMapOpenSettings.
+  ///
+  /// In it, this message translates to:
+  /// **'Apri impostazioni'**
+  String get repeatersMapOpenSettings;
+
+  /// No description provided for @repeatersMapPermissionMessage.
+  ///
+  /// In it, this message translates to:
+  /// **'Consenti l\'accesso alla posizione per mostrare i ripetitori vicino a te.'**
+  String get repeatersMapPermissionMessage;
+
+  /// No description provided for @repeatersMapPermissionPermanentlyDenied.
+  ///
+  /// In it, this message translates to:
+  /// **'Permesso posizione negato in modo permanente. Abilitalo dalle impostazioni di sistema.'**
+  String get repeatersMapPermissionPermanentlyDenied;
+
+  /// No description provided for @repeatersMapLocationServicesDisabled.
+  ///
+  /// In it, this message translates to:
+  /// **'Attiva i servizi di localizzazione per trovare i ripetitori vicini.'**
+  String get repeatersMapLocationServicesDisabled;
+
+  /// No description provided for @repeatersMapFound.
+  ///
+  /// In it, this message translates to:
+  /// **'{count} ripetitori trovati'**
+  String repeatersMapFound(int count);
 }
 
 class _AppLocalizationsDelegate

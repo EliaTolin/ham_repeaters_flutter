@@ -63,8 +63,8 @@ class LocalPushNotification {
   AndroidNotificationChannel _notificationChannelAndroid() {
     const channel = AndroidNotificationChannel(
       'firebase_local_notification',
-      'QuizRadioamatori Notifications',
-      description: 'Your QuizRadioamatori Notifications',
+      'HamRepeaters Notifications',
+      description: 'Your HamRepeaters Notifications',
       importance: Importance.max,
     );
     return channel;

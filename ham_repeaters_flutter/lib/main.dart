@@ -31,7 +31,7 @@ Future<void> main() async {
     (options) {
       options
         ..dsn =
-            'https://6face62446edd512d2ac93457b9df9b5@o4508342166224896.ingest.de.sentry.io/4510252171001936'
+            'https://ac0e0ee4b693d04dc57ba63e8d1b5f29@o4508342166224896.ingest.de.sentry.io/4510584835342416'
         ..sendDefaultPii = true
         ..enableLogs = true
         ..tracesSampleRate = 1.0
@@ -42,7 +42,7 @@ Future<void> main() async {
         ProviderScope(
           retry: (retryCount, error) => null,
           child: SentryWidget(
-            child: const QuizRadioamatori(),
+            child: const HamRepeaters(),
           ),
         ),
       );

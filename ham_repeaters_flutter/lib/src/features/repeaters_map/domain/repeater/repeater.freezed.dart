@@ -1,0 +1,885 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'repeater.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+// dart format off
+T _$identity<T>(T value) => value;
+
+/// @nodoc
+mixin _$Repeater {
+  String get id;
+  DateTime get createdAt;
+  DateTime get updatedAt;
+  String? get name;
+  String get callsign;
+  int? get nodeNumber;
+  String? get managerCallsign;
+  int get frequencyHz;
+  int? get shiftHz;
+  String? get shiftRaw;
+  String? get toneRaw;
+  double? get ctcssHz;
+  RepeaterMode get mode;
+  String? get network;
+  RepeaterStatus get status;
+  String? get region;
+  String? get provinceCode;
+  String? get locality;
+  String? get locator;
+  double? get latitude;
+  double? get longitude;
+  double? get distanceMeters;
+
+  /// Create a copy of Repeater
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $RepeaterCopyWith<Repeater> get copyWith =>
+      _$RepeaterCopyWithImpl<Repeater>(this as Repeater, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Repeater &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.callsign, callsign) ||
+                other.callsign == callsign) &&
+            (identical(other.nodeNumber, nodeNumber) ||
+                other.nodeNumber == nodeNumber) &&
+            (identical(other.managerCallsign, managerCallsign) ||
+                other.managerCallsign == managerCallsign) &&
+            (identical(other.frequencyHz, frequencyHz) ||
+                other.frequencyHz == frequencyHz) &&
+            (identical(other.shiftHz, shiftHz) || other.shiftHz == shiftHz) &&
+            (identical(other.shiftRaw, shiftRaw) ||
+                other.shiftRaw == shiftRaw) &&
+            (identical(other.toneRaw, toneRaw) || other.toneRaw == toneRaw) &&
+            (identical(other.ctcssHz, ctcssHz) || other.ctcssHz == ctcssHz) &&
+            (identical(other.mode, mode) || other.mode == mode) &&
+            (identical(other.network, network) || other.network == network) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.region, region) || other.region == region) &&
+            (identical(other.provinceCode, provinceCode) ||
+                other.provinceCode == provinceCode) &&
+            (identical(other.locality, locality) ||
+                other.locality == locality) &&
+            (identical(other.locator, locator) || other.locator == locator) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.distanceMeters, distanceMeters) ||
+                other.distanceMeters == distanceMeters));
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        createdAt,
+        updatedAt,
+        name,
+        callsign,
+        nodeNumber,
+        managerCallsign,
+        frequencyHz,
+        shiftHz,
+        shiftRaw,
+        toneRaw,
+        ctcssHz,
+        mode,
+        network,
+        status,
+        region,
+        provinceCode,
+        locality,
+        locator,
+        latitude,
+        longitude,
+        distanceMeters
+      ]);
+
+  @override
+  String toString() {
+    return 'Repeater(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, name: $name, callsign: $callsign, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, frequencyHz: $frequencyHz, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, mode: $mode, network: $network, status: $status, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, latitude: $latitude, longitude: $longitude, distanceMeters: $distanceMeters)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $RepeaterCopyWith<$Res> {
+  factory $RepeaterCopyWith(Repeater value, $Res Function(Repeater) _then) =
+      _$RepeaterCopyWithImpl;
+  @useResult
+  $Res call(
+      {String id,
+      DateTime createdAt,
+      DateTime updatedAt,
+      String? name,
+      String callsign,
+      int? nodeNumber,
+      String? managerCallsign,
+      int frequencyHz,
+      int? shiftHz,
+      String? shiftRaw,
+      String? toneRaw,
+      double? ctcssHz,
+      RepeaterMode mode,
+      String? network,
+      RepeaterStatus status,
+      String? region,
+      String? provinceCode,
+      String? locality,
+      String? locator,
+      double? latitude,
+      double? longitude,
+      double? distanceMeters});
+}
+
+/// @nodoc
+class _$RepeaterCopyWithImpl<$Res> implements $RepeaterCopyWith<$Res> {
+  _$RepeaterCopyWithImpl(this._self, this._then);
+
+  final Repeater _self;
+  final $Res Function(Repeater) _then;
+
+  /// Create a copy of Repeater
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+    Object? name = freezed,
+    Object? callsign = null,
+    Object? nodeNumber = freezed,
+    Object? managerCallsign = freezed,
+    Object? frequencyHz = null,
+    Object? shiftHz = freezed,
+    Object? shiftRaw = freezed,
+    Object? toneRaw = freezed,
+    Object? ctcssHz = freezed,
+    Object? mode = null,
+    Object? network = freezed,
+    Object? status = null,
+    Object? region = freezed,
+    Object? provinceCode = freezed,
+    Object? locality = freezed,
+    Object? locator = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? distanceMeters = freezed,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      name: freezed == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      callsign: null == callsign
+          ? _self.callsign
+          : callsign // ignore: cast_nullable_to_non_nullable
+              as String,
+      nodeNumber: freezed == nodeNumber
+          ? _self.nodeNumber
+          : nodeNumber // ignore: cast_nullable_to_non_nullable
+              as int?,
+      managerCallsign: freezed == managerCallsign
+          ? _self.managerCallsign
+          : managerCallsign // ignore: cast_nullable_to_non_nullable
+              as String?,
+      frequencyHz: null == frequencyHz
+          ? _self.frequencyHz
+          : frequencyHz // ignore: cast_nullable_to_non_nullable
+              as int,
+      shiftHz: freezed == shiftHz
+          ? _self.shiftHz
+          : shiftHz // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shiftRaw: freezed == shiftRaw
+          ? _self.shiftRaw
+          : shiftRaw // ignore: cast_nullable_to_non_nullable
+              as String?,
+      toneRaw: freezed == toneRaw
+          ? _self.toneRaw
+          : toneRaw // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ctcssHz: freezed == ctcssHz
+          ? _self.ctcssHz
+          : ctcssHz // ignore: cast_nullable_to_non_nullable
+              as double?,
+      mode: null == mode
+          ? _self.mode
+          : mode // ignore: cast_nullable_to_non_nullable
+              as RepeaterMode,
+      network: freezed == network
+          ? _self.network
+          : network // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as RepeaterStatus,
+      region: freezed == region
+          ? _self.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provinceCode: freezed == provinceCode
+          ? _self.provinceCode
+          : provinceCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      locality: freezed == locality
+          ? _self.locality
+          : locality // ignore: cast_nullable_to_non_nullable
+              as String?,
+      locator: freezed == locator
+          ? _self.locator
+          : locator // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latitude: freezed == latitude
+          ? _self.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _self.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      distanceMeters: freezed == distanceMeters
+          ? _self.distanceMeters
+          : distanceMeters // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [Repeater].
+extension RepeaterPatterns on Repeater {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Repeater value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Repeater() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Repeater value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Repeater():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Repeater value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Repeater() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String id,
+            DateTime createdAt,
+            DateTime updatedAt,
+            String? name,
+            String callsign,
+            int? nodeNumber,
+            String? managerCallsign,
+            int frequencyHz,
+            int? shiftHz,
+            String? shiftRaw,
+            String? toneRaw,
+            double? ctcssHz,
+            RepeaterMode mode,
+            String? network,
+            RepeaterStatus status,
+            String? region,
+            String? provinceCode,
+            String? locality,
+            String? locator,
+            double? latitude,
+            double? longitude,
+            double? distanceMeters)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Repeater() when $default != null:
+        return $default(
+            _that.id,
+            _that.createdAt,
+            _that.updatedAt,
+            _that.name,
+            _that.callsign,
+            _that.nodeNumber,
+            _that.managerCallsign,
+            _that.frequencyHz,
+            _that.shiftHz,
+            _that.shiftRaw,
+            _that.toneRaw,
+            _that.ctcssHz,
+            _that.mode,
+            _that.network,
+            _that.status,
+            _that.region,
+            _that.provinceCode,
+            _that.locality,
+            _that.locator,
+            _that.latitude,
+            _that.longitude,
+            _that.distanceMeters);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String id,
+            DateTime createdAt,
+            DateTime updatedAt,
+            String? name,
+            String callsign,
+            int? nodeNumber,
+            String? managerCallsign,
+            int frequencyHz,
+            int? shiftHz,
+            String? shiftRaw,
+            String? toneRaw,
+            double? ctcssHz,
+            RepeaterMode mode,
+            String? network,
+            RepeaterStatus status,
+            String? region,
+            String? provinceCode,
+            String? locality,
+            String? locator,
+            double? latitude,
+            double? longitude,
+            double? distanceMeters)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Repeater():
+        return $default(
+            _that.id,
+            _that.createdAt,
+            _that.updatedAt,
+            _that.name,
+            _that.callsign,
+            _that.nodeNumber,
+            _that.managerCallsign,
+            _that.frequencyHz,
+            _that.shiftHz,
+            _that.shiftRaw,
+            _that.toneRaw,
+            _that.ctcssHz,
+            _that.mode,
+            _that.network,
+            _that.status,
+            _that.region,
+            _that.provinceCode,
+            _that.locality,
+            _that.locator,
+            _that.latitude,
+            _that.longitude,
+            _that.distanceMeters);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String id,
+            DateTime createdAt,
+            DateTime updatedAt,
+            String? name,
+            String callsign,
+            int? nodeNumber,
+            String? managerCallsign,
+            int frequencyHz,
+            int? shiftHz,
+            String? shiftRaw,
+            String? toneRaw,
+            double? ctcssHz,
+            RepeaterMode mode,
+            String? network,
+            RepeaterStatus status,
+            String? region,
+            String? provinceCode,
+            String? locality,
+            String? locator,
+            double? latitude,
+            double? longitude,
+            double? distanceMeters)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Repeater() when $default != null:
+        return $default(
+            _that.id,
+            _that.createdAt,
+            _that.updatedAt,
+            _that.name,
+            _that.callsign,
+            _that.nodeNumber,
+            _that.managerCallsign,
+            _that.frequencyHz,
+            _that.shiftHz,
+            _that.shiftRaw,
+            _that.toneRaw,
+            _that.ctcssHz,
+            _that.mode,
+            _that.network,
+            _that.status,
+            _that.region,
+            _that.provinceCode,
+            _that.locality,
+            _that.locator,
+            _that.latitude,
+            _that.longitude,
+            _that.distanceMeters);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+
+class _Repeater implements Repeater {
+  const _Repeater(
+      {required this.id,
+      required this.createdAt,
+      required this.updatedAt,
+      this.name,
+      required this.callsign,
+      this.nodeNumber,
+      this.managerCallsign,
+      required this.frequencyHz,
+      this.shiftHz,
+      this.shiftRaw,
+      this.toneRaw,
+      this.ctcssHz,
+      required this.mode,
+      this.network,
+      required this.status,
+      this.region,
+      this.provinceCode,
+      this.locality,
+      this.locator,
+      this.latitude,
+      this.longitude,
+      this.distanceMeters});
+
+  @override
+  final String id;
+  @override
+  final DateTime createdAt;
+  @override
+  final DateTime updatedAt;
+  @override
+  final String? name;
+  @override
+  final String callsign;
+  @override
+  final int? nodeNumber;
+  @override
+  final String? managerCallsign;
+  @override
+  final int frequencyHz;
+  @override
+  final int? shiftHz;
+  @override
+  final String? shiftRaw;
+  @override
+  final String? toneRaw;
+  @override
+  final double? ctcssHz;
+  @override
+  final RepeaterMode mode;
+  @override
+  final String? network;
+  @override
+  final RepeaterStatus status;
+  @override
+  final String? region;
+  @override
+  final String? provinceCode;
+  @override
+  final String? locality;
+  @override
+  final String? locator;
+  @override
+  final double? latitude;
+  @override
+  final double? longitude;
+  @override
+  final double? distanceMeters;
+
+  /// Create a copy of Repeater
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$RepeaterCopyWith<_Repeater> get copyWith =>
+      __$RepeaterCopyWithImpl<_Repeater>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Repeater &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.callsign, callsign) ||
+                other.callsign == callsign) &&
+            (identical(other.nodeNumber, nodeNumber) ||
+                other.nodeNumber == nodeNumber) &&
+            (identical(other.managerCallsign, managerCallsign) ||
+                other.managerCallsign == managerCallsign) &&
+            (identical(other.frequencyHz, frequencyHz) ||
+                other.frequencyHz == frequencyHz) &&
+            (identical(other.shiftHz, shiftHz) || other.shiftHz == shiftHz) &&
+            (identical(other.shiftRaw, shiftRaw) ||
+                other.shiftRaw == shiftRaw) &&
+            (identical(other.toneRaw, toneRaw) || other.toneRaw == toneRaw) &&
+            (identical(other.ctcssHz, ctcssHz) || other.ctcssHz == ctcssHz) &&
+            (identical(other.mode, mode) || other.mode == mode) &&
+            (identical(other.network, network) || other.network == network) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.region, region) || other.region == region) &&
+            (identical(other.provinceCode, provinceCode) ||
+                other.provinceCode == provinceCode) &&
+            (identical(other.locality, locality) ||
+                other.locality == locality) &&
+            (identical(other.locator, locator) || other.locator == locator) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.distanceMeters, distanceMeters) ||
+                other.distanceMeters == distanceMeters));
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        createdAt,
+        updatedAt,
+        name,
+        callsign,
+        nodeNumber,
+        managerCallsign,
+        frequencyHz,
+        shiftHz,
+        shiftRaw,
+        toneRaw,
+        ctcssHz,
+        mode,
+        network,
+        status,
+        region,
+        provinceCode,
+        locality,
+        locator,
+        latitude,
+        longitude,
+        distanceMeters
+      ]);
+
+  @override
+  String toString() {
+    return 'Repeater(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, name: $name, callsign: $callsign, nodeNumber: $nodeNumber, managerCallsign: $managerCallsign, frequencyHz: $frequencyHz, shiftHz: $shiftHz, shiftRaw: $shiftRaw, toneRaw: $toneRaw, ctcssHz: $ctcssHz, mode: $mode, network: $network, status: $status, region: $region, provinceCode: $provinceCode, locality: $locality, locator: $locator, latitude: $latitude, longitude: $longitude, distanceMeters: $distanceMeters)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$RepeaterCopyWith<$Res>
+    implements $RepeaterCopyWith<$Res> {
+  factory _$RepeaterCopyWith(_Repeater value, $Res Function(_Repeater) _then) =
+      __$RepeaterCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      DateTime createdAt,
+      DateTime updatedAt,
+      String? name,
+      String callsign,
+      int? nodeNumber,
+      String? managerCallsign,
+      int frequencyHz,
+      int? shiftHz,
+      String? shiftRaw,
+      String? toneRaw,
+      double? ctcssHz,
+      RepeaterMode mode,
+      String? network,
+      RepeaterStatus status,
+      String? region,
+      String? provinceCode,
+      String? locality,
+      String? locator,
+      double? latitude,
+      double? longitude,
+      double? distanceMeters});
+}
+
+/// @nodoc
+class __$RepeaterCopyWithImpl<$Res> implements _$RepeaterCopyWith<$Res> {
+  __$RepeaterCopyWithImpl(this._self, this._then);
+
+  final _Repeater _self;
+  final $Res Function(_Repeater) _then;
+
+  /// Create a copy of Repeater
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+    Object? name = freezed,
+    Object? callsign = null,
+    Object? nodeNumber = freezed,
+    Object? managerCallsign = freezed,
+    Object? frequencyHz = null,
+    Object? shiftHz = freezed,
+    Object? shiftRaw = freezed,
+    Object? toneRaw = freezed,
+    Object? ctcssHz = freezed,
+    Object? mode = null,
+    Object? network = freezed,
+    Object? status = null,
+    Object? region = freezed,
+    Object? provinceCode = freezed,
+    Object? locality = freezed,
+    Object? locator = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? distanceMeters = freezed,
+  }) {
+    return _then(_Repeater(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      name: freezed == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      callsign: null == callsign
+          ? _self.callsign
+          : callsign // ignore: cast_nullable_to_non_nullable
+              as String,
+      nodeNumber: freezed == nodeNumber
+          ? _self.nodeNumber
+          : nodeNumber // ignore: cast_nullable_to_non_nullable
+              as int?,
+      managerCallsign: freezed == managerCallsign
+          ? _self.managerCallsign
+          : managerCallsign // ignore: cast_nullable_to_non_nullable
+              as String?,
+      frequencyHz: null == frequencyHz
+          ? _self.frequencyHz
+          : frequencyHz // ignore: cast_nullable_to_non_nullable
+              as int,
+      shiftHz: freezed == shiftHz
+          ? _self.shiftHz
+          : shiftHz // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shiftRaw: freezed == shiftRaw
+          ? _self.shiftRaw
+          : shiftRaw // ignore: cast_nullable_to_non_nullable
+              as String?,
+      toneRaw: freezed == toneRaw
+          ? _self.toneRaw
+          : toneRaw // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ctcssHz: freezed == ctcssHz
+          ? _self.ctcssHz
+          : ctcssHz // ignore: cast_nullable_to_non_nullable
+              as double?,
+      mode: null == mode
+          ? _self.mode
+          : mode // ignore: cast_nullable_to_non_nullable
+              as RepeaterMode,
+      network: freezed == network
+          ? _self.network
+          : network // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as RepeaterStatus,
+      region: freezed == region
+          ? _self.region
+          : region // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provinceCode: freezed == provinceCode
+          ? _self.provinceCode
+          : provinceCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      locality: freezed == locality
+          ? _self.locality
+          : locality // ignore: cast_nullable_to_non_nullable
+              as String?,
+      locator: freezed == locator
+          ? _self.locator
+          : locator // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latitude: freezed == latitude
+          ? _self.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _self.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      distanceMeters: freezed == distanceMeters
+          ? _self.distanceMeters
+          : distanceMeters // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+// dart format on

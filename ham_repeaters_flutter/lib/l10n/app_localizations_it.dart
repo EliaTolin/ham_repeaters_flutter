@@ -137,4 +137,39 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get errorOpenTelegram => 'Errore durante l\'apertura di Telegram';
+
+  @override
+  String get repeatersMapTitle => 'Mappa ripetitori';
+
+  @override
+  String get repeatersMapLoading => 'Caricamento mappa dei ripetitori…';
+
+  @override
+  String get repeatersMapGenericError => 'Impossibile caricare i ripetitori.';
+
+  @override
+  String get repeatersMapEmpty => 'Nessun ripetitore trovato vicino a te.';
+
+  @override
+  String get repeatersMapRetry => 'Riprova';
+
+  @override
+  String get repeatersMapOpenSettings => 'Apri impostazioni';
+
+  @override
+  String get repeatersMapPermissionMessage =>
+      'Consenti l\'accesso alla posizione per mostrare i ripetitori vicino a te.';
+
+  @override
+  String get repeatersMapPermissionPermanentlyDenied =>
+      'Permesso posizione negato in modo permanente. Abilitalo dalle impostazioni di sistema.';
+
+  @override
+  String get repeatersMapLocationServicesDisabled =>
+      'Attiva i servizi di localizzazione per trovare i ripetitori vicini.';
+
+  @override
+  String repeatersMapFound(int count) {
+    return '$count ripetitori trovati';
+  }
 }

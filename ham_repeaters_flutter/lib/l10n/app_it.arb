@@ -46,5 +46,22 @@
   "benefitActiveCommunity": "Community attiva",
   "joinNowButton": "Unisciti ora!",
   "laterButton": "Più tardi",
-  "errorOpenTelegram": "Errore durante l'apertura di Telegram"
+  "errorOpenTelegram": "Errore durante l'apertura di Telegram",
+  "repeatersMapTitle": "Mappa ripetitori",
+  "repeatersMapLoading": "Caricamento mappa dei ripetitori…",
+  "repeatersMapGenericError": "Impossibile caricare i ripetitori.",
+  "repeatersMapEmpty": "Nessun ripetitore trovato vicino a te.",
+  "repeatersMapRetry": "Riprova",
+  "repeatersMapOpenSettings": "Apri impostazioni",
+  "repeatersMapPermissionMessage": "Consenti l'accesso alla posizione per mostrare i ripetitori vicino a te.",
+  "repeatersMapPermissionPermanentlyDenied": "Permesso posizione negato in modo permanente. Abilitalo dalle impostazioni di sistema.",
+  "repeatersMapLocationServicesDisabled": "Attiva i servizi di localizzazione per trovare i ripetitori vicini.",
+  "repeatersMapFound": "{count} ripetitori trovati",
+  "@repeatersMapFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -27,8 +27,9 @@ class SplashController extends _$SplashController {
           await ref.read(getHasSeenOnboardingProvider.future);
       var userId = await ref.read(getUserIdProvider.future);
       userId ??= await ref.read(anonymousSignInProvider.future);
-      final targetRoute =
-          hasSeenOnboarding ? const HomeRoute() : const OnboardingRoute();
+      final targetRoute = hasSeenOnboarding
+          ? const RepeatersMapRoute()
+          : const OnboardingRoute();
       final packageInfo = await ref.read(packageInfoProvider.future);
       try {
         await _ensureMinimumVersion(packageInfo);
@@ -39,7 +40,7 @@ class SplashController extends _$SplashController {
             playStorePackageName: packageInfo.packageName,
             installedVersion: error.installedVersion,
             minVersion: error.minVersion,
-            fallbackRoute: const HomeRoute(),
+            fallbackRoute: const RepeatersMapRoute(),
           ),
         );
       }
@@ -50,7 +51,7 @@ class SplashController extends _$SplashController {
       return SplashAction.navigate(targetRoute);
     } catch (error, stackTrace) {
       await Sentry.captureException(error, stackTrace: stackTrace);
-      return const SplashAction.navigate(HomeRoute());
+      return const SplashAction.navigate(RepeatersMapRoute());
     }
   }
 

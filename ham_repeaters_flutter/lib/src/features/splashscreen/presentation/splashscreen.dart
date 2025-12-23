@@ -168,7 +168,7 @@ class _SplashView extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Quiz Radioamatori',
+                            'Ham Repeaters',
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall
@@ -179,7 +179,7 @@ class _SplashView extends StatelessWidget {
                           ),
                           const SizedBox(height: 12),
                           Text(
-                            'Caricamento...',
+                            'Loading...',
                             style:
                                 Theme.of(context).textTheme.bodySmall?.copyWith(
                                       color: colorScheme.onSecondaryContainer,

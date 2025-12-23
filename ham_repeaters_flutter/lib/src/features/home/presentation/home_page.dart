@@ -38,7 +38,6 @@ class HomePage extends HookConsumerWidget {
 
         return AutoTabsScaffold(
           routes: const [
-            QuizDashboardRoute(),
             ProfileRoute(),
           ],
           bottomNavigationBuilder: (_, tabsRouter) {

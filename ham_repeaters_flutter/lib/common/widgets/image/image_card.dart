@@ -13,7 +13,8 @@ class ImageCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         child: CachedNetworkImage(
           imageUrl: imageUrl,
-          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+          placeholder: (context, url) =>
+              const Center(child: CircularProgressIndicator()),
           errorWidget: (context, url, error) => const Icon(Icons.error),
           width: double.infinity,
           fit: BoxFit.cover,
